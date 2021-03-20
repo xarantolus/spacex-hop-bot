@@ -39,15 +39,6 @@ func main() {
 	// contains all tweets the bot should check
 	var tweetChan = make(chan twitter.Tweet, 25)
 
-	// TODO: Request lists and go through them like the timeline
-	// tweets, _, err := client.Statuses.Lookup([]int64{1372725108909957121}, &twitter.StatusLookupParams{
-	// 	TweetMode: "extended",
-	// })
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// processThread(client, &tweets[0])
-
 	// Run YouTube scraper in the background,
 	// it will tweet if it discovers that SpaceX is online with a Starship stream
 	go checkYouTubeLive(client, user)
