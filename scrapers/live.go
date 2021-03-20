@@ -2,7 +2,6 @@ package scrapers
 
 import (
 	"errors"
-	"fmt"
 	"math/rand"
 	"net/http"
 	"net/url"
@@ -88,30 +87,20 @@ func YouTubeLive(channelLiveURL string) (lv LiveVideo, err error) {
 
 	// Basically extract the video info and make sure it's live
 
-	var verify = func() bool {
-		return lv.VideoID != "" && (lv.IsLive || lv.IsLiveContent)
-	}
-
 	err = jsonextract.Objects(resp.Body, []jsonextract.ObjectOption{
 		{
 			Keys: []string{"isLive"},
 			Callback: jsonextract.Unmarshal(&lv, func() bool {
 				return lv.VideoID != "" && (lv.IsLive || lv.IsLiveContent)
 			}),
+			Required: true,
 		},
 	})
-	if err != nil {
-		return
-	}
 
-	// If it looks ok, we return it
-	if verify() {
-		return lv, nil
+	// If we never got a video with isLive, it's not live
+	if err == jsonextract.ErrCallbackNeverCalled {
+		err = ErrNotLive
 	}
-
-	// If it's not ok, we return an error; but we also wrap ErrNotLive
-	// Include user agent information in case youtube doesn't serve JSON for certain browsers
-	err = fmt.Errorf("couldn't extract livestream info from %q (useragent %q): %w", channelLiveURL, userAgent, ErrNotLive)
 
 	return
 }

@@ -9,7 +9,7 @@ import (
 
 // Note that all text here must be lowercase because the text is lowercased in the matching function
 var (
-	starshipKeywords = []string{"starship", "superheavy", "raptor", "super heavy", "boca chica", "starbase"}
+	starshipKeywords = []string{"starship", "superheavy", "raptor", "super heavy"}
 
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx
