@@ -72,40 +72,14 @@ func main() {
 			continue
 		}
 
-		// Pass the appropriate tweet to processThread to make sure we don't miss any tweets hidden
-		// in some layers of quoted tweets and replies
-		switch {
-		case match.StarshipTweet(&tweet):
-			// If the tweet itself is about starship, we retweet it
-			processThread(client, &tweet, seenTweets)
-		case tweet.RetweetedStatus != nil:
-			// If it's a retweet of someone, we check that tweet if it's interesting
-			processThread(client, tweet.RetweetedStatus, seenTweets)
-		case tweet.InReplyToStatusID != 0:
-			// If it's a reply to some thread, we want to check out the thread
-			if seenTweets[tweet.InReplyToStatusID] {
-				continue
-			}
-			t, _, err := client.Statuses.Lookup([]int64{tweet.InReplyToStatusID}, &twitter.StatusLookupParams{
-				IncludeEntities: twitter.Bool(false),
-				TweetMode:       "extended",
-			})
-			logError(err, "tweet reply status fetch")
-
-			if len(t) == 0 {
-				continue
-			}
-
-			// Actually process the thread
-			processThread(client, &t[0], seenTweets)
-		case tweet.QuotedStatus != nil:
-			// A quoted tweet might still be interesting
-			if seenTweets[tweet.QuotedStatus.ID] {
-				continue
-			}
-
-			processThread(client, tweet.QuotedStatus, seenTweets)
+		// Skip our own tweets
+		if tweet.User != nil && tweet.User.ID == selfUser.ID {
+			continue
 		}
+
+		// Pass the tweet to processThread to make sure we don't miss any tweets hidden
+		// in some layers of quoted tweets and replies
+		processThread(client, &tweet, seenTweets)
 	}
 }
 
@@ -163,6 +137,9 @@ func checkYouTubeLive(client *twitter.Client, user *twitter.User) {
 	}
 }
 
+// checkHomeTimeline requests the user home timeline about every minute and puts all new tweets in tweetChan.
+// it also includes replies which would normally not be shown in the timeline.
+// TL;DR: it stalks all users the account follows, even their replies
 func checkHomeTimeline(client *twitter.Client, tweetChan chan<- twitter.Tweet) {
 	defer panic("home timeline follower stopped processing even though it shouldn't")
 
@@ -219,6 +196,7 @@ func checkHomeTimeline(client *twitter.Client, tweetChan chan<- twitter.Tweet) {
 	}
 }
 
+// checkListTimeline requests the given lists about every minute or so. Any new tweets are put in tweetChan.
 func checkListTimeline(client *twitter.Client, list twitter.List, tweetChan chan<- twitter.Tweet) {
 	defer panic("list (" + list.Name + ") follower stopped processing even though it shouldn't")
 
@@ -234,6 +212,7 @@ func checkListTimeline(client *twitter.Client, list twitter.List, tweetChan chan
 		tweets, _, err := client.Lists.Statuses(&twitter.ListsStatusesParams{
 			ListID: list.ID,
 
+			IncludeRetweets: twitter.Bool(true),
 			IncludeEntities: twitter.Bool(false), // We also don't care about who was mentioned etc.
 			SinceID:         lastSeenID,          // everything since our last request
 			Count:           200,                 // Maximum number of tweets we can get at once
