@@ -30,18 +30,18 @@ func main() {
 		panic("parsing configuration file: " + err.Error())
 	}
 
-	client, user, err := bot.Login(cfg)
+	client, selfUser, err := bot.Login(cfg)
 	if err != nil {
 		panic("logging in to twitter: " + err.Error())
 	}
-	log.Printf("[Twitter] Logged in @%s\n", user.ScreenName)
+	log.Printf("[Twitter] Logged in @%s\n", selfUser.ScreenName)
 
 	// contains all tweets the bot should check
 	var tweetChan = make(chan twitter.Tweet, 250)
 
 	// Run YouTube scraper in the background,
 	// it will tweet if it discovers that SpaceX is online with a Starship stream
-	go checkYouTubeLive(client, user)
+	go checkYouTubeLive(client, selfUser)
 
 	lists, _, err := client.Lists.List(&twitter.ListsListParams{})
 	if len(lists) == 100 {
@@ -72,13 +72,15 @@ func main() {
 			continue
 		}
 
+		// Pass the appropriate tweet to processThread to make sure we don't miss any tweets hidden
+		// in some layers of quoted tweets and replies
 		switch {
-		case tweet.RetweetedStatus != nil && match.StarshipTweet(tweet.RetweetedStatus):
-			// If it's a retweet of someone, we check that tweet if it's interesting
-			retweet(client, tweet.RetweetedStatus)
 		case match.StarshipTweet(&tweet):
 			// If the tweet itself is about starship, we retweet it
-			retweet(client, &tweet)
+			processThread(client, &tweet, seenTweets)
+		case tweet.RetweetedStatus != nil:
+			// If it's a retweet of someone, we check that tweet if it's interesting
+			processThread(client, tweet.RetweetedStatus, seenTweets)
 		case tweet.InReplyToStatusID != 0:
 			// If it's a reply to some thread, we want to check out the thread
 			if seenTweets[tweet.InReplyToStatusID] {
@@ -96,9 +98,9 @@ func main() {
 
 			// Actually process the thread
 			processThread(client, &t[0], seenTweets)
-		case tweet.QuotedStatusID != 0 && tweet.QuotedStatus != nil:
+		case tweet.QuotedStatus != nil:
 			// A quoted tweet might still be interesting
-			if seenTweets[tweet.QuotedStatusID] {
+			if seenTweets[tweet.QuotedStatus.ID] {
 				continue
 			}
 
@@ -141,7 +143,7 @@ func checkYouTubeLive(client *twitter.Client, user *twitter.User) {
 
 					t, _, err := client.Statuses.Update(tweetText, nil)
 					if err == nil {
-						log.Printf("Tweeted https://twitter.com/%s/status/%s\n", user.ScreenName, t.IDStr)
+						log.Println("Tweeted", tweetURL(t))
 
 						// make sure we don't tweet this again
 						lastTweetedURL = liveURL
@@ -213,7 +215,7 @@ func checkHomeTimeline(client *twitter.Client, tweetChan chan<- twitter.Tweet) {
 		}
 
 		// I guess one request every minute is ok
-		time.Sleep(time.Minute + time.Duration(rand.Intn(30)))
+		time.Sleep(time.Minute + time.Duration(rand.Intn(45))*time.Second)
 	}
 }
 
@@ -266,7 +268,7 @@ func checkListTimeline(client *twitter.Client, list twitter.List, tweetChan chan
 		}
 
 		// Add a random delay
-		time.Sleep(time.Minute + time.Second*time.Duration(rand.Intn(45)))
+		time.Sleep(time.Minute + time.Duration(rand.Intn(45))*time.Second)
 	}
 }
 
@@ -277,8 +279,7 @@ func retweet(client *twitter.Client, tweet *twitter.Tweet) {
 	}
 
 	twurl := tweetURL(tweet)
-	fmt.Print("Would retweet ", twurl)
-	fmt.Println()
+	log.Println("Would retweet", twurl)
 
 	tweet.Retweeted = true
 }
@@ -310,9 +311,10 @@ func processThread(client *twitter.Client, tweet *twitter.Tweet, seenTweets map[
 	// If yes, then we should probably retweet the next stuff.
 	// If not, we can stop here because it won't get any better
 	// (we already checked the last time if it's good)
-	if seenTweets[tweet.ID] {
+	if seenTweets[tweet.ID] || tweet.Retweeted {
 		return tweet.Retweeted
 	}
+	seenTweets[tweet.ID] = true
 
 	// First process the rest of the thread
 	if tweet.InReplyToStatusID != 0 {
@@ -340,8 +342,6 @@ func processThread(client *twitter.Client, tweet *twitter.Tweet, seenTweets map[
 
 		return processThread(client, tweet.QuotedStatus, seenTweets)
 	}
-
-	seenTweets[tweet.ID] = true
 
 	// Now actually match the tweet
 	if didRetweet || match.StarshipTweet(tweet) {
