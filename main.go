@@ -203,7 +203,7 @@ func checkHomeTimeline(client *twitter.Client, tweetChan chan<- twitter.Tweet) {
 		})
 
 		if err != nil {
-			log.Println("Home timeline:", err.Error())
+			logError(err, "home timeline")
 		} else {
 
 			// Sort tweets so the first tweet we process is the oldest one
@@ -232,7 +232,7 @@ func checkHomeTimeline(client *twitter.Client, tweetChan chan<- twitter.Tweet) {
 		}
 
 		// I guess one request every minute is ok
-		time.Sleep(time.Minute)
+		time.Sleep(time.Minute + time.Duration(rand.Intn(30)))
 	}
 }
 
@@ -257,7 +257,7 @@ func checkListTimeline(client *twitter.Client, list twitter.List, tweetChan chan
 		})
 
 		if err != nil {
-			log.Printf("List (%q): %s\n", list.FullName, err.Error())
+			logError(err, "list "+list.FullName)
 		} else {
 			// Sort tweets so the first tweet we process is the oldest one
 			sort.Slice(tweets, func(i, j int) bool {
