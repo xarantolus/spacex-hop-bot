@@ -37,7 +37,7 @@ func main() {
 	log.Printf("[Twitter] Logged in @%s\n", user.ScreenName)
 
 	// contains all tweets the bot should check
-	var tweetChan = make(chan twitter.Tweet, 25)
+	var tweetChan = make(chan twitter.Tweet, 250)
 
 	// Run YouTube scraper in the background,
 	// it will tweet if it discovers that SpaceX is online with a Starship stream
@@ -296,10 +296,10 @@ func logError(err error, location string) {
 	}
 }
 
-// processThread process tweet threads and should retweet everything in them.
+// processThread processes tweet threads retweets everything in them if they are on-topif.
 // This is useful because Elon Musk often replies to people that quote tweeted/asked a questions on his tweets
-// See this one for example: https://twitter.com/elonmusk/status/1372826575293583366
-// OR: https://twitter.com/elonmusk/status/1372725108909957121
+// See this for example: https://twitter.com/elonmusk/status/1372826575293583366
+// or here: https://twitter.com/elonmusk/status/1372725108909957121
 func processThread(client *twitter.Client, tweet *twitter.Tweet, seenTweets map[int64]bool) (didRetweet bool) {
 	if tweet == nil {
 		// Just in case
