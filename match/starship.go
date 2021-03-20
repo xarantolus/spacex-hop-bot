@@ -27,6 +27,7 @@ var (
 		"infographictony": closureTFRRegex,
 		"spacex360":       closureTFRRegex,
 		"bluemoondance74": closureTFRRegex,
+		"nextspaceflight": closureTFRRegex,
 	}
 )
 
