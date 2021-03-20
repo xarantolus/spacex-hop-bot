@@ -9,3 +9,5 @@ require (
 	github.com/xarantolus/jsonextract v1.4.3
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
+
+replace github.com/dghubble/go-twitter => ./bot/go-twitter
