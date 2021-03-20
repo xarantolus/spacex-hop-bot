@@ -18,7 +18,7 @@ var (
 		regexp.MustCompile(`bn\d+`), // TODO: "Booster 1"
 	}
 
-	closureTFRRegex = regexp.MustCompile("(?:closure|TFR|cryo)")
+	closureTFRRegex = regexp.MustCompile("(?:closure|TFR|cryo|FTS)")
 	// Users known to post better information that requires specific filtering
 	specificUserMatchers = map[string]*regexp.Regexp{
 		"bocachicagal":    regexp.MustCompile("(?:alert|static fire)|(?:closure|cryo|evacua)"),
