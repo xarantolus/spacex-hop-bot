@@ -57,7 +57,7 @@ func main() {
 		go checkListTimeline(client, l, tweetChan)
 	}
 
-	log.Printf("Started watching %d lists\n", len(lists))
+	log.Printf("[Twitter] Started watching %d lists\n", len(lists))
 
 	// Check out the home timeline of the bot user, it will contain all kinds of tweets from all kinds of people
 	go checkHomeTimeline(client, tweetChan)
@@ -117,18 +117,18 @@ func checkYouTubeLive(client *twitter.Client, user *twitter.User) {
 
 					t, _, err := client.Statuses.Update(tweetText, nil)
 					if err == nil {
-						log.Println("Tweeted", tweetURL(t))
+						log.Println("[Twitter] Tweeted", tweetURL(t))
 
 						// make sure we don't tweet this again
 						lastTweetedURL = liveURL
 					} else {
-						log.Println("Error while tweeting livestream update:", err.Error())
+						log.Println("[Twitter] Error while tweeting livestream update:", err.Error())
 					}
 				}
 			}
 		} else {
 			if !errors.Is(err, scrapers.ErrNotLive) {
-				log.Println("Unexpected error while scraping YouTube live:", err.Error())
+				log.Println("[YouTube] Unexpected error while scraping YouTube live:", err.Error())
 			}
 		}
 
@@ -257,9 +257,16 @@ func retweet(client *twitter.Client, tweet *twitter.Tweet) {
 		return
 	}
 
-	twurl := tweetURL(tweet)
-	log.Println("Would retweet", twurl)
+	_, _, err := client.Statuses.Retweet(tweet.ID, nil)
+	if err != nil {
+		logError(err, "retweet")
+		return
+	}
 
+	twurl := tweetURL(tweet)
+	log.Println("[Twitter] Retweeted", twurl)
+
+	// Setting Retweeted can help processThread to detect that it should stop
 	tweet.Retweeted = true
 }
 
@@ -272,7 +279,7 @@ func tweetURL(tweet *twitter.Tweet) string {
 
 func logError(err error, location string) {
 	if err != nil {
-		log.Printf("Error (%s): %s\n", location, err.Error())
+		log.Printf("[Error (%s)]: %s\n", location, err.Error())
 	}
 }
 
