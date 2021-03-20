@@ -105,23 +105,13 @@ func main() {
 
 			// Actually process the thread
 			processThread(client, &t[0], seenTweets)
-		case tweet.QuotedStatusID != 0:
+		case tweet.QuotedStatusID != 0 && tweet.QuotedStatus != nil:
 			// A quoted tweet might still be interesting
 			if seenTweets[tweet.QuotedStatusID] {
 				continue
 			}
 
-			t, _, err := client.Statuses.Lookup([]int64{tweet.QuotedStatusID}, &twitter.StatusLookupParams{
-				IncludeEntities: twitter.Bool(false),
-				TweetMode:       "extended",
-			})
-			logError(err, "tweet quoted status fetch")
-
-			if len(t) == 0 {
-				continue
-			}
-
-			processThread(client, &t[0], seenTweets)
+			processThread(client, tweet.QuotedStatus, seenTweets)
 		}
 	}
 }
