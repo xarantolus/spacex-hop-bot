@@ -17,6 +17,8 @@ var (
 		// Not interested in other stuff
 		"doge", "fsd",
 
+		"no tfr",
+
 		"thanks", "thank you", "cheers", "render", "animation",
 
 		"not starship", "non starship", "not about starship",
@@ -44,7 +46,8 @@ var (
 		"nextspaceflight": closureTFRRegex,
 		"tylerg1998":      closureTFRRegex,
 		// For Elon, we try to match anything that could be insider info
-		"elonmusk": regexp.MustCompile("(?:booster|orbit|cryo|static fire|tower|ship|rud|engine)"),
+		"elonmusk":  regexp.MustCompile("(?:booster|orbit|cryo|static fire|tower|ship|rud|engine)"),
+		"spacetfrs": regexp.MustCompile("(?:brownsville)"),
 	}
 )
 

@@ -10,11 +10,18 @@ func TestStarship(t *testing.T) {
 		text string
 		want bool
 	}{
-		// TODO: Add test capses.
+		{"No TFR posted for today", false},
+		{"SN10", true},
+		{"BN10", true},
+		{"Starship SN10", true},
+		{"Starship SN10", true},
+		{"Unrelated doge coin tweet that also contains the keyword Starship", false},
+		{"Unrelated tesla tweet", false},
+		{"this tweet is not starship related", false},
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
-			if got := StarshipText(tt.text); got != tt.want {
+			if got := StarshipText(tt.text, false); got != tt.want {
 				t.Errorf("StarshipText() = %v, want %v", got, tt.want)
 			}
 		})
