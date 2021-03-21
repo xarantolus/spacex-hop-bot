@@ -62,6 +62,8 @@ func main() {
 	// Check out the home timeline of the bot user, it will contain all kinds of tweets from all kinds of people
 	go checkHomeTimeline(client, tweetChan)
 
+	go checkLocationStream(client, tweetChan)
+
 	var (
 		// seenTweets maps the tweet id to an boolean. If the tweet was already processed/seen, it is put here
 		seenTweets = make(map[int64]bool)
@@ -265,6 +267,31 @@ func checkListTimeline(client *twitter.Client, list twitter.List, tweetChan chan
 
 		// Add a random delay
 		time.Sleep(time.Minute + time.Duration(rand.Intn(45))*time.Second)
+	}
+}
+
+// checkLocationStream checks out tweets from a large area around boca chica
+func checkLocationStream(client *twitter.Client, tweetChan chan<- twitter.Tweet) {
+	defer panic("location stream ended even though it never should")
+
+	s, err := client.Streams.Filter(&twitter.StreamFilterParams{
+		// This is a large area around boca chica. We want to catch many tweets from there and then filter them
+		Locations:   []string{"-97.4350,25.5263,-96.7181,26.3919"},
+		FilterLevel: "none",
+		Language:    []string{"en"},
+	})
+	if err != nil {
+		panic("setting up location stream: " + err.Error())
+	}
+
+	// Stream all tweets and serve them to the channel
+	for m := range s.Messages {
+		t, ok := m.(*twitter.Tweet)
+		if !ok || t == nil {
+			continue
+		}
+
+		tweetChan <- *t
 	}
 }
 

@@ -3,6 +3,7 @@ package twitter
 import (
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 	"sync"
 	"time"
@@ -211,6 +212,7 @@ func (s *Stream) retry(req *http.Request, expBackOff backoff.BackOff, aggExpBack
 			// aggressive exponential backoff
 			wait = aggExpBackOff.NextBackOff()
 		default:
+			log.Println("Error:", resp.Status, "(stop stream processing)")
 			// stop retrying for other response codes
 			resp.Body.Close()
 			return
