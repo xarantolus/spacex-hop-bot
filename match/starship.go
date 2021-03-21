@@ -17,7 +17,12 @@ var (
 		// Not interested in other stuff
 		"doge", "fsd",
 
-		"thanks", "thank you",
+		"thanks", "thank you", "cheers", "render", "animation",
+
+		"not starship", "non starship", "not about starship",
+
+		// not that kind of raptor
+		"velociraptor", "jurassic", "cretaceous", "dino",
 	}
 
 	starshipMatchers = []*regexp.Regexp{
@@ -44,12 +49,14 @@ var (
 )
 
 // StarshipText returns whether the given text mentions starship
-func StarshipText(text string) bool {
+func StarshipText(text string, ignoreBlocklist bool) bool {
 	text = strings.ToLower(text)
 
-	for _, k := range antiStarshipKeywords {
-		if strings.Contains(text, k) {
-			return false
+	if !ignoreBlocklist {
+		for _, k := range antiStarshipKeywords {
+			if strings.Contains(text, k) {
+				return false
+			}
 		}
 	}
 
@@ -70,7 +77,7 @@ func StarshipText(text string) bool {
 
 // StarshipTweet returns whether the given tweet mentions starship. It also includes custom matchers for certain users
 func StarshipTweet(tweet *twitter.Tweet) bool {
-	if StarshipText(tweet.FullText) {
+	if StarshipText(tweet.FullText, tweet.User != nil && tweet.User.ScreenName == "elonmusk") {
 		return true
 	}
 

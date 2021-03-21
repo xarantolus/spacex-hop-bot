@@ -118,7 +118,7 @@ func checkYouTubeLive(client *twitter.Client, user *twitter.User) {
 	for {
 		liveVideo, err := scrapers.YouTubeLive(spaceXLiveURL)
 		if err == nil {
-			if liveVideo.VideoID != "" && (match.StarshipText(liveVideo.Title) || match.StarshipText(liveVideo.ShortDescription)) {
+			if liveVideo.VideoID != "" && (match.StarshipText(liveVideo.Title, false) || match.StarshipText(liveVideo.ShortDescription, false)) {
 				// Get the video URL
 				liveURL := liveVideo.URL()
 
