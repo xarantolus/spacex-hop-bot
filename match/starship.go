@@ -11,29 +11,45 @@ import (
 var (
 	starshipKeywords = []string{"starship", "superheavy", "raptor", "super heavy"}
 
+	antiStarshipKeywords = []string{
+		// "electron", "blue origin", "neutron", "rocket lab", "rocketlab",
+
+		// Not interested in other stuff
+		"doge", "fsd",
+	}
+
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx
 		regexp.MustCompile(`sn\d+`),
 		// Booster BNx
-		regexp.MustCompile(`bn\d+`), // TODO: "Booster 1"
+		regexp.MustCompile(`bn\d+`),
 	}
 
-	closureTFRRegex = regexp.MustCompile("(?:closure|TFR|cryo|FTS)")
+	closureTFRRegex = regexp.MustCompile("(?:closure|tfr|cryo|fts)")
 	// Users known to post better information that requires specific filtering
 	specificUserMatchers = map[string]*regexp.Regexp{
-		"bocachicagal":    regexp.MustCompile("(?:alert|static fire)|(?:closure|cryo|evacua)"),
+		"bocachicagal":    regexp.MustCompile("(?:alert|static fire|closure|cryo|evacua)"),
 		"rgvaerialphotos": closureTFRRegex,
 		"bocaroad":        closureTFRRegex,
 		"infographictony": closureTFRRegex,
 		"spacex360":       closureTFRRegex,
 		"bluemoondance74": closureTFRRegex,
 		"nextspaceflight": closureTFRRegex,
+		"tylerg1998":      closureTFRRegex,
+		// For Elon, we try to match anything that could be insider info
+		"elonmusk": regexp.MustCompile("(?:booster|orbit|cryo|static fire|tower|ship|rud|engine)"),
 	}
 )
 
 // StarshipText returns whether the given text mentions starship
 func StarshipText(text string) bool {
 	text = strings.ToLower(text)
+
+	for _, k := range antiStarshipKeywords {
+		if strings.Contains(text, k) {
+			return false
+		}
+	}
 
 	for _, k := range starshipKeywords {
 		if strings.Contains(text, k) {
