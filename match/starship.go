@@ -16,6 +16,8 @@ var (
 
 		// Not interested in other stuff
 		"doge", "fsd",
+
+		"thanks", "thank you",
 	}
 
 	starshipMatchers = []*regexp.Regexp{
