@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/rand"
 	"regexp"
+	"strings"
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
@@ -21,7 +22,9 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 	log.Println("[YouTube] Watching SpaceX channel for live Starship streams")
 
 	const spaceXLiveURL = "https://www.youtube.com/spacex/live"
-	var shipNameRegex = regexp.MustCompile(`(SN\d+)`)
+
+	// This finds strings like SN11, BN2 etc.
+	var shipNameRegex = regexp.MustCompile(`((?:SN|BN)\s*\d+)`)
 
 	var (
 		lastTweetedURL string
@@ -36,13 +39,19 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 
 				if liveURL != lastTweetedURL {
 
-					// See if we can get the starship name, but we tweet without it anyway
-					var shipName = shipNameRegex.FindString(liveVideo.Title)
-					if shipName != "" {
-						shipName = " #" + shipName
-					}
+					// Default text
+					tweetText := fmt.Sprintf("It's hoppening! SpaceX #Starship stream is live\n%s", liveURL)
 
-					tweetText := fmt.Sprintf("It's hoppening! SpaceX #Starship%s stream is live\n%s", shipName, liveURL)
+					// See if we can get the starship name, but we tweet without it anyway
+					var shipName = shipNameRegex.FindString(strings.ToUpper(liveVideo.Title))
+					if shipName != "" {
+						// Booster or Starship?
+						if strings.HasPrefix(shipName, "BN") {
+							tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship Booster #SuperHeavy #%s stream is live\n%s", shipName, liveURL)
+						} else {
+							tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship #%s stream is live\n%s", shipName, liveURL)
+						}
+					}
 
 					// OK, we can tweet this
 
@@ -56,6 +65,8 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 						log.Println("[Twitter] Error while tweeting livestream update:", err.Error())
 					}
 				}
+			} else {
+				log.Printf("[YouTube] Not Tweeting stream link %s with title %q", liveVideo.URL(), liveVideo.Title)
 			}
 		} else {
 			if !errors.Is(err, scrapers.ErrNotLive) {
