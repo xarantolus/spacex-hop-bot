@@ -92,7 +92,7 @@ func main() {
 			// We basically detect if the thread/tweet is about starship and
 			// retweet everything that is appropriate
 			processThread(client, &tweet, seenTweets)
-		case tweet.RetweetedStatus != nil && match.StarshipTweet(tweet.RetweetedStatus):
+		case tweet.RetweetedStatus != nil && match.StarshipTweet(tweet.RetweetedStatus) && !isReply(tweet.RetweetedStatus):
 			// If it's a retweet of someone, we check that tweet if it's interesting
 			retweet(client, tweet.RetweetedStatus)
 		case match.StarshipTweet(&tweet) && !isReply(&tweet):
