@@ -11,6 +11,7 @@ import (
 	"github.com/xarantolus/spacex-hop-bot/config"
 	"github.com/xarantolus/spacex-hop-bot/jobs"
 	"github.com/xarantolus/spacex-hop-bot/match"
+	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
 var flagConfigFile = flag.String("cfg", "config.yaml", "Config file path")
@@ -94,11 +95,23 @@ func main() {
 		case tweet.RetweetedStatus != nil && match.StarshipTweet(tweet.RetweetedStatus):
 			// If it's a retweet of someone, we check that tweet if it's interesting
 			retweet(client, tweet.RetweetedStatus)
-		case match.StarshipTweet(&tweet):
+		case match.StarshipTweet(&tweet) && !isReply(&tweet):
 			// If the tweet itself is about starship, we retweet it
+			// We already filtered out replies, which is important because we don't want to
+			// retweet every question someone posts under an elon post, only those that
+			// elon responded to
 			retweet(client, &tweet)
 		}
 	}
+}
+
+// isReply returns if the given tweet is a reply to another user
+func isReply(t *twitter.Tweet) bool {
+	if t.User == nil || t.InReplyToStatusID == 0 {
+		return false
+	}
+
+	return t.User.ID != t.InReplyToStatusID
 }
 
 // retweet retweets the given tweet, but if it fails it doesn't care
@@ -109,23 +122,15 @@ func retweet(client *twitter.Client, tweet *twitter.Tweet) {
 
 	_, _, err := client.Statuses.Retweet(tweet.ID, nil)
 	if err != nil {
-		logError(err, "retweet")
+		util.LogError(err, "retweet")
 		return
 	}
 
-	twurl := tweetURL(tweet)
+	twurl := util.TweetURL(tweet)
 	log.Println("[Twitter] Retweeted", twurl)
 
 	// Setting Retweeted can help processThread to detect that it should stop
 	tweet.Retweeted = true
-}
-
-// tweetURL returns the URL for this tweet
-func tweetURL(tweet *twitter.Tweet) string {
-	if tweet.User == nil {
-		return "https://twitter.com/i/status/" + tweet.IDStr
-	}
-	return "https://twitter.com/" + tweet.User.ScreenName + "/status/" + tweet.IDStr
 }
 
 // processThread processes tweet threads and retweets everything on-topic.
@@ -154,7 +159,7 @@ func processThread(client *twitter.Client, tweet *twitter.Tweet, seenTweets map[
 			IncludeEntities: twitter.Bool(false),
 			TweetMode:       "extended",
 		})
-		logError(err, "tweet reply status fetch (processThread)")
+		util.LogError(err, "tweet reply status fetch (processThread)")
 
 		if len(t) > 0 {
 			if !processThread(client, &t[0], seenTweets) {
@@ -183,10 +188,4 @@ func processThread(client *twitter.Client, tweet *twitter.Tweet, seenTweets map[
 	}
 
 	return didRetweet
-}
-
-func logError(err error, location string) {
-	if err != nil {
-		log.Printf("[Error (%s)]: %s\n", location, err.Error())
-	}
 }

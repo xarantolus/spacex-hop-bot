@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
 // CheckHomeTimeline requests the user home timeline about every minute and puts all new tweets in tweetChan.
@@ -34,7 +35,7 @@ func CheckHomeTimeline(client *twitter.Client, tweetChan chan<- twitter.Tweet) {
 		})
 
 		if err != nil {
-			logError(err, "home timeline")
+			util.LogError(err, "home timeline")
 		} else {
 
 			// Sort tweets so the first tweet we process is the oldest one

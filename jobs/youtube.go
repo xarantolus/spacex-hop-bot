@@ -11,6 +11,7 @@ import (
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/xarantolus/spacex-hop-bot/match"
 	"github.com/xarantolus/spacex-hop-bot/scrapers"
+	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
 // CheckYouTubeLive checks SpaceX's youtube live stream every 1-2 minutes and tweets if there is a starship launch stream
@@ -47,7 +48,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 
 					t, _, err := client.Statuses.Update(tweetText, nil)
 					if err == nil {
-						log.Println("[Twitter] Tweeted", tweetURL(t))
+						log.Println("[Twitter] Tweeted", util.TweetURL(t))
 
 						// make sure we don't tweet this again
 						lastTweetedURL = liveURL

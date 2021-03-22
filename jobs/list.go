@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
 // CheckListTimeline requests the given lists about every minute or so. Any new tweets are put in tweetChan.
@@ -31,7 +32,7 @@ func CheckListTimeline(client *twitter.Client, list twitter.List, tweetChan chan
 		})
 
 		if err != nil {
-			logError(err, "list "+list.FullName)
+			util.LogError(err, "list "+list.FullName)
 		} else {
 			// Sort tweets so the first tweet we process is the oldest one
 			sort.Slice(tweets, func(i, j int) bool {
