@@ -12,7 +12,7 @@ var (
 	starshipKeywords = []string{"starship", "superheavy", "raptor", "super heavy"}
 
 	antiStarshipKeywords = []string{
-		// "electron", "blue origin", "neutron", "rocket lab", "rocketlab",
+		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "starlink",
 
 		// Not interested in other stuff
 		"doge", "fsd",
