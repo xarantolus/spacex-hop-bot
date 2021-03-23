@@ -23,7 +23,10 @@ var (
 
 		"not starship", "non starship", "not about starship",
 
-		// not that kind of raptor
+		// kerbal space program != "official" news
+		"kerbal space program", "ksp",
+
+		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
 	}
 
