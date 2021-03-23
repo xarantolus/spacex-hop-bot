@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 	"math/rand"
+	"strings"
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
@@ -95,11 +96,13 @@ func main() {
 		case tweet.RetweetedStatus != nil && match.StarshipTweet(tweet.RetweetedStatus) && !isReply(tweet.RetweetedStatus):
 			// If it's a retweet of someone, we check that tweet if it's interesting
 			retweet(client, tweet.RetweetedStatus)
-		case match.StarshipTweet(&tweet) && !isReply(&tweet):
+		case match.StarshipTweet(&tweet) && !isReply(&tweet) && !isQuestionTo(&tweet, "elonmusk"):
 			// If the tweet itself is about starship, we retweet it
 			// We already filtered out replies, which is important because we don't want to
 			// retweet every question someone posts under an elon post, only those that
-			// elon responded to
+			// elon responded to.
+			// Then we also filter out all tweets that tag elon musk, e.g. there could be someone
+			// just tweeting something like "Do you think xyz... @elonmusk"
 			retweet(client, &tweet)
 		}
 	}
@@ -112,6 +115,10 @@ func isReply(t *twitter.Tweet) bool {
 	}
 
 	return t.User.ID != t.InReplyToStatusID
+}
+
+func isQuestionTo(tweet *twitter.Tweet, screenName string) bool {
+	return strings.Contains(strings.ToLower(tweet.FullText), "@"+strings.ToLower(screenName))
 }
 
 // retweet retweets the given tweet, but if it fails it doesn't care
