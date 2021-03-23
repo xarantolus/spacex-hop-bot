@@ -13,6 +13,7 @@ var (
 
 	antiStarshipKeywords = []string{
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "starlink",
+		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink",
 
 		// Not interested in other stuff
 		"doge", "fsd",
