@@ -3,8 +3,10 @@ package match
 import (
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
 // Note that all text here must be lowercase because the text is lowercased in the matching function
@@ -49,14 +51,16 @@ var (
 		"bluemoondance74": closureTFRRegex,
 		"nextspaceflight": closureTFRRegex,
 		"tylerg1998":      closureTFRRegex,
+		"spacetfrs":       regexp.MustCompile("(?:brownsville)"),
+
 		// For Elon, we try to match anything that could be insider info
-		"elonmusk":  regexp.MustCompile("(?:booster|orbit|cryo|static fire|tower|ship|rud|engine)"),
-		"spacetfrs": regexp.MustCompile("(?:brownsville)"),
+		"elonmusk": regexp.MustCompile("(?:booster|orbit|cryo|static fire|tower|ship|rud|engine)"),
 	}
 )
 
 // StarshipText returns whether the given text mentions starship
 func StarshipText(text string, ignoreBlocklist bool) bool {
+
 	text = strings.ToLower(text)
 
 	if !ignoreBlocklist {
@@ -84,10 +88,25 @@ func StarshipText(text string, ignoreBlocklist bool) bool {
 
 // StarshipTweet returns whether the given tweet mentions starship. It also includes custom matchers for certain users
 func StarshipTweet(tweet *twitter.Tweet) bool {
+	// Ignore OLD tweets
+	if d, err := tweet.CreatedAtTime(); err == nil && time.Since(d) > 24*time.Hour {
+		return false
+	}
+
+	// We do not care about tweets that are timestamped with a text more than 24 hours ago
+	// e.g. if someone posts a photo and then writes "took this on March 15, 2002"
+	if d, ok := util.ExtractDate(tweet.FullText); ok && time.Since(d) > 24*time.Hour {
+		return false
+	}
+
+	// Now check if the text of the tweet matches what we're looking for.
+	// if it's elon musk, then we don't check for anti-keywords
 	if StarshipText(tweet.FullText, tweet.User != nil && tweet.User.ScreenName == "elonmusk") {
 		return true
 	}
 
+	// Now check if we have a matcher for this specific user.
+	// These users usually post high-quality information
 	if tweet.User != nil {
 		m, ok := specificUserMatchers[strings.ToLower(tweet.User.ScreenName)]
 		if ok {
