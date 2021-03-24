@@ -89,7 +89,7 @@ func YouTubeLive(channelLiveURL string) (lv LiveVideo, err error) {
 
 	err = jsonextract.Objects(resp.Body, []jsonextract.ObjectOption{
 		{
-			Keys: []string{"isLive"},
+			Keys: []string{"videoId", "isLive"},
 			Callback: jsonextract.Unmarshal(&lv, func() bool {
 				return lv.VideoID != "" && (lv.IsLive || lv.IsLiveContent)
 			}),
