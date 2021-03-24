@@ -15,7 +15,10 @@ import (
 	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
-var flagConfigFile = flag.String("cfg", "config.yaml", "Config file path")
+var (
+	flagConfigFile = flag.String("cfg", "config.yaml", "Config file path")
+	flagDebug      = flag.Bool("debug", false, "Debug mode disables background jobs")
+)
 
 func main() {
 	flag.Parse()
@@ -37,11 +40,20 @@ func main() {
 	// contains all tweets the bot should check
 	var tweetChan = make(chan twitter.Tweet, 250)
 
-	// Run YouTube scraper in the background,
-	// it will tweet if it discovers that SpaceX is online with a Starship stream
-	go jobs.CheckYouTubeLive(client, selfUser)
+	if *flagDebug {
+		log.Println("[Info] Running in debug mode, no background jobs are started")
+	} else {
+		// Run YouTube scraper in the background,
+		// it will tweet if it discovers that SpaceX is online with a Starship stream
+		go jobs.CheckYouTubeLive(client, selfUser)
 
-	{
+		// Check out the home timeline of the bot user, it will contain all kinds of tweets from all kinds of people
+		go jobs.CheckHomeTimeline(client, tweetChan)
+
+		// Get tweets from the general area around boca chica
+		go jobs.CheckLocationStream(client, tweetChan)
+
+		// Start watching all lists the bot account follows
 		lists, _, err := client.Lists.List(&twitter.ListsListParams{})
 		if len(lists) == 100 {
 			// See https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/create-manage-lists/api-reference/get-lists-list
@@ -51,19 +63,13 @@ func main() {
 			panic("initializing bot: couldn't retrieve lists: " + err.Error())
 		}
 
-		// Start watching all lists we follow
+		// Those are also background jobs
 		for _, l := range lists {
 			go jobs.CheckListTimeline(client, l, tweetChan)
 		}
 
 		log.Printf("[Twitter] Started watching %d lists\n", len(lists))
 	}
-
-	// Check out the home timeline of the bot user, it will contain all kinds of tweets from all kinds of people
-	go jobs.CheckHomeTimeline(client, tweetChan)
-
-	// Get tweets from the general area around boca chica
-	go jobs.CheckLocationStream(client, tweetChan)
 
 	var (
 		// seenTweets maps the tweet id to an boolean. If the tweet was already processed/seen, it is put here
