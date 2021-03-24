@@ -168,11 +168,8 @@ func processThread(client *twitter.Client, tweet *twitter.Tweet, seenTweets map[
 		})
 		util.LogError(err, "tweet reply status fetch (processThread)")
 
-		if len(t) > 0 {
-			if !processThread(client, &t[0], seenTweets) {
-				return false
-			}
-
+		// If we have a matching tweet thread
+		if len(t) > 0 && processThread(client, &t[0], seenTweets) {
 			seenTweets[t[0].ID] = true
 			retweet(client, &t[0])
 			didRetweet = true
