@@ -22,7 +22,8 @@ var (
 
 		"no tfr",
 
-		"thanks", "thank you", "cheers", "render", "animation",
+		// 3d models are nice, but we only care about "real info"
+		"thanks", "thank you", "cheers", "render", "animation", "3d",
 
 		"not starship", "non starship", "not about starship",
 
@@ -31,6 +32,8 @@ var (
 
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
+
+		"sale", "buy", "shop",
 	}
 
 	starshipMatchers = []*regexp.Regexp{
