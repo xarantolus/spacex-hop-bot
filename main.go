@@ -120,11 +120,11 @@ func isReply(t *twitter.Tweet) bool {
 		return false
 	}
 
-	return t.User.ID != t.InReplyToStatusID
+	return t.User.ID != t.InReplyToUserID
 }
 
 func isQuestionTo(tweet *twitter.Tweet, screenName string) bool {
-	return strings.Contains(strings.ToLower(tweet.FullText), "@"+strings.ToLower(screenName))
+	return strings.Contains(strings.ToLower(tweet.FullText), "@"+strings.ToLower(screenName)) && strings.Contains(tweet.FullText, "?")
 }
 
 // retweet retweets the given tweet, but if it fails it doesn't care
