@@ -33,7 +33,9 @@ var (
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
 
-		"sale", "buy", "shop", "giveaway", "give away", "retweet", "birthday", "patreon", "download",
+		"prediction", "ocisly", "canaveral",
+
+		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "patreon", "download",
 	}
 
 	starshipMatchers = []*regexp.Regexp{
