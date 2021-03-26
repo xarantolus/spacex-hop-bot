@@ -75,7 +75,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 
 				// If we don't have a SN/BN prefix, we ignore that and tweet anyways
 			case liveVideo.IsUpcoming:
-				tweetText = fmt.Sprintf("SpaceX #Starship stream was posted to YouTube\n%s", liveURL)
+				tweetText = fmt.Sprintf("SpaceX #Starship stream was posted to YouTube, flight likely starting soon\n%s", liveURL)
 			case liveVideo.IsLive:
 				tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship stream is live\n%s", liveURL)
 			default:
