@@ -76,21 +76,13 @@ func main() {
 		seenTweets = make(map[int64]bool)
 	)
 
+	// Now we just pass all tweets to processTweet
 	for tweet := range tweetChan {
-		if seenTweets[tweet.ID] || tweet.Retweeted {
-			continue
-		}
-
-		// Skip our own tweets
-		if tweet.User != nil && tweet.User.ID == selfUser.ID {
-			continue
-		}
-
-		processTweet(client, seenTweets, tweet)
+		processTweet(client, seenTweets, selfUser, tweet)
 	}
 }
 
-func processTweet(client *twitter.Client, seenTweets map[int64]bool, tweet twitter.Tweet) {
+func processTweet(client *twitter.Client, seenTweets map[int64]bool, selfUser *twitter.User, tweet twitter.Tweet) {
 	// So now we got a tweet. There are three categories that interest us:
 	// 1. Elon Musk drops insider info about starship, e.g. as a reply.
 	//    We do not care about his other tweets, so we check if any tweet
@@ -98,6 +90,15 @@ func processTweet(client *twitter.Client, seenTweets map[int64]bool, tweet twitt
 	// 2. We find a retweet
 	// 3. We find a quoted tweet
 	// 4. We find a tweet that is about starship
+
+	if seenTweets[tweet.ID] || tweet.Retweeted {
+		return
+	}
+
+	// Skip our own tweets
+	if tweet.User != nil && tweet.User.ID == selfUser.ID {
+		return
+	}
 
 	switch {
 	case tweet.User != nil && tweet.User.ScreenName == "elonmusk":
@@ -107,9 +108,9 @@ func processTweet(client *twitter.Client, seenTweets map[int64]bool, tweet twitt
 		processThread(client, &tweet, seenTweets)
 	case tweet.QuotedStatus != nil:
 		// If someone quotes a tweet, we only check the tweet that was quoted.
-		processTweet(client, seenTweets, *tweet.QuotedStatus)
+		processTweet(client, seenTweets, selfUser, *tweet.QuotedStatus)
 	case tweet.RetweetedStatus != nil:
-		processTweet(client, seenTweets, *tweet.RetweetedStatus)
+		processTweet(client, seenTweets, selfUser, *tweet.RetweetedStatus)
 	case match.StarshipTweet(&tweet) && !isReply(&tweet) && !isQuestionTo(&tweet, "elonmusk"):
 		// If the tweet itself is about starship, we retweet it
 		// We already filtered out replies, which is important because we don't want to
