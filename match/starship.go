@@ -46,7 +46,10 @@ var (
 	closureTFRRegex = regexp.MustCompile("(?:closure|tfr|cryo|fts)")
 	// Users known to post better information that requires specific filtering
 	specificUserMatchers = map[string]*regexp.Regexp{
-		"bocachicagal":    regexp.MustCompile("(?:alert|static fire|closure|cryo|evacua)"),
+		// One of the most important sources, gets alerted when the village has to evacuate for a flight
+		"bocachicagal": regexp.MustCompile("(?:alert|static fire|closure|cryo|evacua)"),
+
+		// These people likely tweet about test & launch stuff
 		"rgvaerialphotos": closureTFRRegex,
 		"bocaroad":        closureTFRRegex,
 		"infographictony": closureTFRRegex,
@@ -54,7 +57,10 @@ var (
 		"bluemoondance74": closureTFRRegex,
 		"nextspaceflight": closureTFRRegex,
 		"tylerg1998":      closureTFRRegex,
-		"spacetfrs":       regexp.MustCompile("(?:brownsville)"),
+		"nasaspaceflight": closureTFRRegex,
+
+		// Watches temporary flight restrictions
+		"spacetfrs": regexp.MustCompile("(?:brownsville)"),
 
 		// For Elon, we try to match anything that could be insider info
 		"elonmusk": regexp.MustCompile("(?:booster|orbit|heavy|cryo|static fire|tower|ship|rud|engine)"),
