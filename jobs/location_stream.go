@@ -25,6 +25,8 @@ func CheckLocationStream(client *twitter.Client, tweetChan chan<- twitter.Tweet)
 			goto sleep
 		}
 
+		log.Println("[Twitter] Connected to location stream")
+
 		// Stream all tweets and serve them to the channel
 		for m := range s.Messages {
 			t, ok := m.(*twitter.Tweet)
@@ -35,7 +37,7 @@ func CheckLocationStream(client *twitter.Client, tweetChan chan<- twitter.Tweet)
 			tweetChan <- *t
 		}
 
-		log.Println("Location stream ended for some reason, trying again in 5 seconds")
+		log.Println("[Twitter] Location stream ended for some reason, trying again in 5 seconds")
 	sleep:
 		time.Sleep(5 * time.Second)
 	}
