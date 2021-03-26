@@ -57,7 +57,7 @@ var (
 		"spacetfrs":       regexp.MustCompile("(?:brownsville)"),
 
 		// For Elon, we try to match anything that could be insider info
-		"elonmusk": regexp.MustCompile("(?:booster|orbit|cryo|static fire|tower|ship|rud|engine)"),
+		"elonmusk": regexp.MustCompile("(?:booster|orbit|heavy|cryo|static fire|tower|ship|rud|engine)"),
 	}
 )
 
