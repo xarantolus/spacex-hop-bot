@@ -27,7 +27,8 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 	var shipNameRegex = regexp.MustCompile(`((?:SN|BN)\s*\d+)`)
 
 	var (
-		lastTweetedURL string
+		lastTweetedURL      string
+		lastTweetedUpcoming bool
 	)
 
 	for {
@@ -49,23 +50,37 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 			liveURL := liveVideo.URL()
 
 			// Check if we already tweeted this before
-			if liveURL == lastTweetedURL {
-				log.Printf("[YouTube] Not Tweeting stream link %s with title %q", liveVideo.URL(), liveVideo.Title)
+			if liveURL == lastTweetedURL && liveVideo.IsUpcoming == lastTweetedUpcoming {
+				log.Printf("[YouTube] Already tweeted stream link %s with title %q", liveVideo.URL(), liveVideo.Title)
 				goto sleep
 			}
 
-			// Generate Tweet text
-			tweetText := fmt.Sprintf("It's hoppening! SpaceX #Starship stream is live\n%s", liveURL)
-
 			// See if we can get the starship name, but we tweet without it anyway
 			var shipName = shipNameRegex.FindString(strings.ToUpper(liveVideo.Title))
-			if shipName != "" {
-				// Booster or Starship?
-				if strings.HasPrefix(shipName, "BN") {
-					tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship Booster #SuperHeavy #%s stream is live\n%s", shipName, liveURL)
-				} else {
-					tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship #%s stream is live\n%s", shipName, liveURL)
-				}
+
+			// Depending on what flies, we tweet different text
+			var tweetText string
+			switch {
+			// Upcoming video
+			case strings.HasPrefix(shipName, "BN") && liveVideo.IsUpcoming:
+				tweetText = fmt.Sprintf("SpaceX #Starship Booster #SuperHeavy #%s stream was posted to YouTube, flight likely starting soon\n%s", shipName, liveURL)
+			case strings.HasPrefix(shipName, "SN") && liveVideo.IsUpcoming:
+				tweetText = fmt.Sprintf("SpaceX #Starship #%s stream was posted to YouTube, flight likely starting soon\n%s", shipName, liveURL)
+
+				// If it's not upcoming, it's likely live
+			case strings.HasPrefix(shipName, "BN"):
+				tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship Booster #SuperHeavy #%s stream is live\n%s", shipName, liveURL)
+			case strings.HasPrefix(shipName, "SN"):
+				tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship #%s stream is live\n%s", shipName, liveURL)
+
+				// If we don't have a SN/BN prefix, we ignore that and tweet anyways
+			case liveVideo.IsUpcoming:
+				tweetText = fmt.Sprintf("SpaceX #Starship stream was posted to YouTube\n%s", liveURL)
+			case liveVideo.IsLive:
+				tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship stream is live\n%s", liveURL)
+			default:
+				log.Printf("Got stream with title %q and link %s (isUpcoming=%v, isLive=%v), but cannot generate a nice tweet text\n", liveVideo.Title, liveURL, liveVideo.IsUpcoming, liveVideo.IsLive)
+				goto sleep
 			}
 
 			// Now tweet the text we generated
@@ -77,6 +92,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 
 			// make sure we don't tweet this again
 			lastTweetedURL = liveURL
+			lastTweetedUpcoming = liveVideo.IsUpcoming
 
 			log.Println("[Twitter] Tweeted", util.TweetURL(t))
 		}

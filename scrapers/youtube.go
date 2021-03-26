@@ -44,7 +44,7 @@ type LiveVideo struct {
 	Title            string `json:"title"`
 	IsLive           bool   `json:"isLive"`
 	ShortDescription string `json:"shortDescription"`
-	IsLiveContent    bool   `json:"isLiveContent"`
+	IsUpcoming       bool   `json:"isUpcoming"`
 }
 
 // URL returns the youtube video URL for this live stream
@@ -67,6 +67,7 @@ var ErrNotLive = errors.New("not live")
 // YouTubeLive extracts a live stream from a channel live url. This kind of URL looks like the following:
 //     https://www.youtube.com/channel/UCSUu1lih2RifWkKtDOJdsBA/live
 //     https://www.youtube.com/spacex/live
+// It also extract streams that are upcoming
 func YouTubeLive(channelLiveURL string) (lv LiveVideo, err error) {
 	req, err := http.NewRequest(http.MethodGet, channelLiveURL, nil)
 	if err != nil {
@@ -87,20 +88,20 @@ func YouTubeLive(channelLiveURL string) (lv LiveVideo, err error) {
 
 	// Basically extract the video info and make sure it's live
 
-	err = jsonextract.Objects(resp.Body, []jsonextract.ObjectOption{
-		{
-			Keys: []string{"videoId", "isLive"},
-			Callback: jsonextract.Unmarshal(&lv, func() bool {
-				return lv.VideoID != "" && (lv.IsLive || lv.IsLiveContent)
-			}),
-			Required: true,
-		},
+	cb := jsonextract.Unmarshal(&lv, func() bool {
+		return lv.VideoID != "" && (lv.IsLive || lv.IsUpcoming)
 	})
 
-	// If we never got a video with isLive, it's not live
-	if err == jsonextract.ErrCallbackNeverCalled {
-		err = ErrNotLive
-	}
+	err = jsonextract.Objects(resp.Body, []jsonextract.ObjectOption{
+		{
+			Keys:     []string{"videoId", "isLive"},
+			Callback: cb,
+		},
+		{
+			Keys:     []string{"videoId", "isUpcoming"},
+			Callback: cb,
+		},
+	})
 
 	return
 }
