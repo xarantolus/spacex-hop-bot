@@ -94,6 +94,7 @@ func processTweet(client *twitter.Client, seenTweets map[int64]bool, selfUser *t
 	if seenTweets[tweet.ID] || tweet.Retweeted {
 		return
 	}
+	seenTweets[tweet.ID] = true
 
 	// Skip our own tweets
 	if tweet.User != nil && tweet.User.ID == selfUser.ID {
