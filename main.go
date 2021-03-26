@@ -86,31 +86,38 @@ func main() {
 			continue
 		}
 
-		// So now we got a tweet. There are three categories that interest us:
-		// 1. Elon Musk drops insider info about starship, e.g. as a reply.
-		//    We do not care about his other tweets, so we check if any tweet
-		//    in the reply chain matches stuff about starship
-		// 2. We find a retweet of a tweet that contains a certain keyword, e.g. Starship
-		// 3. We find a tweet that is about starship
+		processTweet(client, seenTweets, tweet)
+	}
+}
 
-		switch {
-		case tweet.User != nil && tweet.User.ScreenName == "elonmusk":
-			// When elon drops starship info, we want to retweet it.
-			// We basically detect if the thread/tweet is about starship and
-			// retweet everything that is appropriate
-			processThread(client, &tweet, seenTweets)
-		case tweet.RetweetedStatus != nil && match.StarshipTweet(tweet.RetweetedStatus) && !isReply(tweet.RetweetedStatus):
-			// If it's a retweet of someone, we check that tweet if it's interesting
-			retweet(client, tweet.RetweetedStatus)
-		case match.StarshipTweet(&tweet) && !isReply(&tweet) && !isQuestionTo(&tweet, "elonmusk"):
-			// If the tweet itself is about starship, we retweet it
-			// We already filtered out replies, which is important because we don't want to
-			// retweet every question someone posts under an elon post, only those that
-			// elon responded to.
-			// Then we also filter out all tweets that tag elon musk, e.g. there could be someone
-			// just tweeting something like "Do you think xyz... @elonmusk"
-			retweet(client, &tweet)
-		}
+func processTweet(client *twitter.Client, seenTweets map[int64]bool, tweet twitter.Tweet) {
+	// So now we got a tweet. There are three categories that interest us:
+	// 1. Elon Musk drops insider info about starship, e.g. as a reply.
+	//    We do not care about his other tweets, so we check if any tweet
+	//    in the reply chain matches stuff about starship
+	// 2. We find a retweet
+	// 3. We find a quoted tweet
+	// 4. We find a tweet that is about starship
+
+	switch {
+	case tweet.User != nil && tweet.User.ScreenName == "elonmusk":
+		// When elon drops starship info, we want to retweet it.
+		// We basically detect if the thread/tweet is about starship and
+		// retweet everything that is appropriate
+		processThread(client, &tweet, seenTweets)
+	case tweet.QuotedStatus != nil:
+		// If someone quotes a tweet, we only check the tweet that was quoted.
+		processTweet(client, seenTweets, *tweet.QuotedStatus)
+	case tweet.RetweetedStatus != nil:
+		processTweet(client, seenTweets, *tweet.RetweetedStatus)
+	case match.StarshipTweet(&tweet) && !isReply(&tweet) && !isQuestionTo(&tweet, "elonmusk"):
+		// If the tweet itself is about starship, we retweet it
+		// We already filtered out replies, which is important because we don't want to
+		// retweet every question someone posts under an elon post, only those that
+		// elon responded to.
+		// Then we also filter out all tweets that tag elon musk, e.g. there could be someone
+		// just tweeting something like "Do you think xyz... @elonmusk"
+		retweet(client, &tweet)
 	}
 }
 
