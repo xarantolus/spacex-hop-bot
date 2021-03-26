@@ -34,7 +34,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 	for {
 		liveVideo, err := scrapers.YouTubeLive(spaceXLiveURL)
 		if err != nil {
-			if !errors.Is(err, scrapers.ErrNotLive) {
+			if !errors.Is(err, scrapers.ErrNoVideo) {
 				log.Println("[YouTube] Unexpected error while scraping YouTube live:", err.Error())
 			}
 		}

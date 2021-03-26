@@ -62,7 +62,7 @@ func (lv *LiveVideo) URL() string {
 	return u.String()
 }
 
-var ErrNotLive = errors.New("not live")
+var ErrNoVideo = errors.New("not live")
 
 // YouTubeLive extracts a live stream from a channel live url. This kind of URL looks like the following:
 //     https://www.youtube.com/channel/UCSUu1lih2RifWkKtDOJdsBA/live
@@ -102,6 +102,10 @@ func YouTubeLive(channelLiveURL string) (lv LiveVideo, err error) {
 			Callback: cb,
 		},
 	})
+
+	if err == nil && lv.VideoID == "" {
+		err = ErrNoVideo
+	}
 
 	return
 }
