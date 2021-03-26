@@ -87,23 +87,17 @@ func YouTubeLive(channelLiveURL string) (lv LiveVideo, err error) {
 	defer resp.Body.Close()
 
 	// Basically extract the video info and make sure it's live
-
-	cb := jsonextract.Unmarshal(&lv, func() bool {
-		return lv.VideoID != "" && (lv.IsLive || lv.IsUpcoming)
-	})
-
 	err = jsonextract.Objects(resp.Body, []jsonextract.ObjectOption{
 		{
-			Keys:     []string{"videoId", "isLive"},
-			Callback: cb,
-		},
-		{
-			Keys:     []string{"videoId", "isUpcoming"},
-			Callback: cb,
+			Keys: []string{"videoId"},
+			Callback: jsonextract.Unmarshal(&lv, func() bool {
+				return lv.VideoID != "" && (lv.IsLive || lv.IsUpcoming)
+			}),
+			Required: true,
 		},
 	})
 
-	if err == nil && lv.VideoID == "" {
+	if errors.Is(err, jsonextract.ErrCallbackNeverCalled) {
 		err = ErrNoVideo
 	}
 
