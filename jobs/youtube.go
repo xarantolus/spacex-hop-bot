@@ -63,9 +63,9 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 			switch {
 			// Upcoming video
 			case strings.HasPrefix(shipName, "BN") && liveVideo.IsUpcoming:
-				tweetText = fmt.Sprintf("SpaceX #Starship Booster #SuperHeavy #%s stream was posted to YouTube, flight likely starting soon\n%s", shipName, liveURL)
+				tweetText = fmt.Sprintf("SpaceX #Starship Booster #SuperHeavy #%s stream was posted to YouTube, flight likely starting soon\n#WenHop\n%s", shipName, liveURL)
 			case strings.HasPrefix(shipName, "SN") && liveVideo.IsUpcoming:
-				tweetText = fmt.Sprintf("SpaceX #Starship #%s stream was posted to YouTube, flight likely starting soon\n%s", shipName, liveURL)
+				tweetText = fmt.Sprintf("SpaceX #Starship #%s stream was posted to YouTube, flight likely starting soon\n#WenHop\n%s", shipName, liveURL)
 
 				// If it's not upcoming, it's likely live
 			case strings.HasPrefix(shipName, "BN"):
@@ -75,7 +75,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 
 				// If we don't have a SN/BN prefix, we ignore that and tweet anyways
 			case liveVideo.IsUpcoming:
-				tweetText = fmt.Sprintf("SpaceX #Starship stream was posted to YouTube, flight likely starting soon\n%s", liveURL)
+				tweetText = fmt.Sprintf("SpaceX #Starship stream was posted to YouTube, flight likely starting soon\n#WenHop\n%s", liveURL)
 			case liveVideo.IsLive:
 				tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship stream is live\n%s", liveURL)
 			default:
