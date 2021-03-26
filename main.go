@@ -94,7 +94,6 @@ func processTweet(client *twitter.Client, seenTweets map[int64]bool, selfUser *t
 	if seenTweets[tweet.ID] || tweet.Retweeted {
 		return
 	}
-	seenTweets[tweet.ID] = true
 
 	// Skip our own tweets
 	if tweet.User != nil && tweet.User.ID == selfUser.ID {
@@ -121,6 +120,8 @@ func processTweet(client *twitter.Client, seenTweets map[int64]bool, selfUser *t
 		// just tweeting something like "Do you think xyz... @elonmusk"
 		retweet(client, &tweet)
 	}
+
+	seenTweets[tweet.ID] = true
 }
 
 // isReply returns if the given tweet is a reply to another user
@@ -144,7 +145,7 @@ func retweet(client *twitter.Client, tweet *twitter.Tweet) {
 
 	_, _, err := client.Statuses.Retweet(tweet.ID, nil)
 	if err != nil {
-		util.LogError(err, "retweet")
+		util.LogError(err, "retweeting "+util.TweetURL(tweet))
 		return
 	}
 
