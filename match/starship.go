@@ -23,7 +23,7 @@ var (
 		"no tfr",
 
 		// 3d models are nice, but we only care about "real info"
-		"thanks", "thank you", "cheers", "render", "animation", "3d",
+		"thanks", "thank you", "cheers", "render", "animation", "3d", "speculation", "mysterious",
 
 		"not starship", "non starship", "not about starship",
 

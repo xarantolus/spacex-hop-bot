@@ -47,6 +47,9 @@ func main() {
 		// it will tweet if it discovers that SpaceX is online with a Starship stream
 		go jobs.CheckYouTubeLive(client, selfUser)
 
+		// When the webpage mentions a new date/starship, we tweet about that
+		go jobs.StarshipWebsiteChanges(client)
+
 		// Check out the home timeline of the bot user, it will contain all kinds of tweets from all kinds of people
 		go jobs.CheckHomeTimeline(client, tweetChan)
 
