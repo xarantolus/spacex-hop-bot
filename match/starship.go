@@ -35,7 +35,7 @@ var (
 
 		"turtle", "dog", "cat",
 
-		"predict", "ocisly", "canaveral",
+		"ocisly", "canaveral",
 
 		"bot",
 
