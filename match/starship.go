@@ -37,6 +37,10 @@ var (
 
 		"predict", "ocisly", "canaveral",
 
+		"bot",
+
+		"dearmoon", "dear moon",
+
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "patreon", "download",
 	}
 

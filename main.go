@@ -115,7 +115,7 @@ func processTweet(client *twitter.Client, seenTweets map[int64]bool, selfUser *t
 		processTweet(client, seenTweets, selfUser, *tweet.QuotedStatus)
 	case tweet.RetweetedStatus != nil:
 		processTweet(client, seenTweets, selfUser, *tweet.RetweetedStatus)
-	case match.StarshipTweet(&tweet) && !isReply(&tweet) && !isQuestion(&tweet):
+	case match.StarshipTweet(&tweet) && !isReply(&tweet) && !isQuestion(&tweet) && !isReactionGIF(&tweet):
 		// If the tweet itself is about starship, we retweet it
 		// We already filtered out replies, which is important because we don't want to
 		// retweet every question someone posts under an elon post, only those that
@@ -139,6 +139,15 @@ func isReply(t *twitter.Tweet) bool {
 
 func isQuestion(tweet *twitter.Tweet) bool {
 	return strings.Contains(strings.ToLower(tweet.FullText), "@") && strings.Contains(tweet.FullText, "?")
+}
+
+func isReactionGIF(tweet *twitter.Tweet) bool {
+	if len(tweet.ExtendedEntities.Media) != 1 {
+		return false
+	}
+
+	// Type of a GIF is animated_gif
+	return strings.Contains(tweet.ExtendedEntities.Media[0].Type, "gif")
 }
 
 const spacePeopleListID = 1375480259840212997
