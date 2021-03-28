@@ -35,7 +35,7 @@ var (
 
 		"turtle", "dog", "cat",
 
-		"prediction", "ocisly", "canaveral",
+		"predict", "ocisly", "canaveral",
 
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "patreon", "download",
 	}
@@ -47,8 +47,8 @@ var (
 		regexp.MustCompile(`bn\d+`),
 	}
 
-	closureTFRRegex = regexp.MustCompile("(?:closure|tfr|cryo|fts)")
-	alertRegex      = regexp.MustCompile("(?:alert|static fire|closure|cryo|evacua)")
+	closureTFRRegex = regexp.MustCompile("(?:closure|tfr|cryo|fts|scrub)")
+	alertRegex      = regexp.MustCompile("(?:alert|static fire|closure|cryo|evacua|scrub)")
 
 	// Users known to post better information that requires specific filtering
 	specificUserMatchers = map[string]*regexp.Regexp{
@@ -66,6 +66,7 @@ var (
 		"nextspaceflight": closureTFRRegex,
 		"tylerg1998":      closureTFRRegex,
 		"nasaspaceflight": closureTFRRegex,
+		"spacexboca":      closureTFRRegex,
 
 		// Watches temporary flight restrictions
 		"spacetfrs": regexp.MustCompile("(?:brownsville)"),
