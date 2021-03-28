@@ -142,7 +142,7 @@ func isQuestion(tweet *twitter.Tweet) bool {
 }
 
 func isReactionGIF(tweet *twitter.Tweet) bool {
-	if len(tweet.ExtendedEntities.Media) != 1 {
+	if tweet.ExtendedEntities == nil || len(tweet.ExtendedEntities.Media) != 1 {
 		return false
 	}
 
