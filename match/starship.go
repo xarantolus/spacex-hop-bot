@@ -41,7 +41,7 @@ var (
 
 		"dearmoon", "dear moon",
 
-		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "patreon", "download",
+		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "patreon", "download", "click",
 	}
 
 	starshipMatchers = []*regexp.Regexp{
