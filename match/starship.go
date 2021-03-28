@@ -48,10 +48,14 @@ var (
 	}
 
 	closureTFRRegex = regexp.MustCompile("(?:closure|tfr|cryo|fts)")
+	alertRegex      = regexp.MustCompile("(?:alert|static fire|closure|cryo|evacua)")
+
 	// Users known to post better information that requires specific filtering
 	specificUserMatchers = map[string]*regexp.Regexp{
 		// One of the most important sources, gets alerted when the village has to evacuate for a flight
-		"bocachicagal": regexp.MustCompile("(?:alert|static fire|closure|cryo|evacua)"),
+		"bocachicagal":    alertRegex,
+		"starshipboca":    alertRegex,
+		"bocachicamaria1": alertRegex,
 
 		// These people likely tweet about test & launch stuff
 		"rgvaerialphotos": closureTFRRegex,

@@ -39,6 +39,11 @@ func TestVariables(t *testing.T) {
 			t.Errorf("Keyword %q should be lowercase in starshipKeywords slice", k)
 		}
 	}
+	for _, k := range antiStarshipKeywords {
+		if strings.ToLower(k) != k {
+			t.Errorf("Keyword %q should be lowercase in antiStarshipKeywords slice", k)
+		}
+	}
 	for k := range specificUserMatchers {
 		if strings.ToLower(k) != k {
 			t.Errorf("Account name %q should be lowercase in specificUserMatchers map", k)
