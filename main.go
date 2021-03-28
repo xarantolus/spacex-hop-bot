@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"math/rand"
 	"strings"
@@ -114,7 +115,7 @@ func processTweet(client *twitter.Client, seenTweets map[int64]bool, selfUser *t
 		processTweet(client, seenTweets, selfUser, *tweet.QuotedStatus)
 	case tweet.RetweetedStatus != nil:
 		processTweet(client, seenTweets, selfUser, *tweet.RetweetedStatus)
-	case match.StarshipTweet(&tweet) && !isReply(&tweet) && !isQuestionTo(&tweet, "elonmusk"):
+	case match.StarshipTweet(&tweet) && !isReply(&tweet) && !isQuestion(&tweet):
 		// If the tweet itself is about starship, we retweet it
 		// We already filtered out replies, which is important because we don't want to
 		// retweet every question someone posts under an elon post, only those that
@@ -136,9 +137,13 @@ func isReply(t *twitter.Tweet) bool {
 	return t.User.ID != t.InReplyToUserID
 }
 
-func isQuestionTo(tweet *twitter.Tweet, screenName string) bool {
-	return strings.Contains(strings.ToLower(tweet.FullText), "@"+strings.ToLower(screenName)) && strings.Contains(tweet.FullText, "?")
+func isQuestion(tweet *twitter.Tweet) bool {
+	return strings.Contains(strings.ToLower(tweet.FullText), "@") && strings.Contains(tweet.FullText, "?")
 }
+
+const spacePeopleListID = 1375480259840212997
+
+var spacePeopleMembers = map[int64]bool{}
 
 // retweet retweets the given tweet, but if it fails it doesn't care
 func retweet(client *twitter.Client, tweet *twitter.Tweet) {
@@ -150,6 +155,17 @@ func retweet(client *twitter.Client, tweet *twitter.Tweet) {
 	if err != nil {
 		util.LogError(err, "retweeting "+util.TweetURL(tweet))
 		return
+	}
+
+	// Collect interesting people in a list
+	if tweet.User != nil && !spacePeopleMembers[tweet.User.ID] {
+		spacePeopleMembers[tweet.User.ID] = true
+
+		_, err := client.Lists.MembersCreate(&twitter.ListsMembersCreateParams{
+			ListID: spacePeopleListID,
+			UserID: tweet.User.ID,
+		})
+		util.LogError(err, fmt.Sprintf("adding %s to list", tweet.User.ScreenName))
 	}
 
 	twurl := util.TweetURL(tweet)
