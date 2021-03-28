@@ -23,7 +23,7 @@ var (
 		"no tfr",
 
 		// 3d models are nice, but we only care about "real info"
-		"thanks", "thank you", "cheers", "render", "animation", "3d", "speculation", "mysterious",
+		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious",
 
 		"not starship", "non starship", "not about starship",
 
@@ -32,6 +32,8 @@ var (
 
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
+
+		"turtle", "dog", "cat",
 
 		"prediction", "ocisly", "canaveral",
 
