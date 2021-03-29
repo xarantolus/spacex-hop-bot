@@ -76,7 +76,12 @@ var (
 		"spacetfrs": regexp.MustCompile("(?:brownsville)"),
 
 		// For Elon, we try to match anything that could be insider info
-		"elonmusk": regexp.MustCompile("(?:booster|orbit|heavy|cryo|static fire|tower|ship|rud|engine)"),
+		"elonmusk": regexp.MustCompile("(?:booster|orbit|heavy|cryo|static fire|tower|ship|rud|engine|faa|starbase|boca chica)"),
+	}
+
+	usersWithNoAntikeywords = map[string]bool{
+		"elonmusk": true,
+		"spacex":   true,
 	}
 )
 
@@ -123,7 +128,7 @@ func StarshipTweet(tweet *twitter.Tweet) bool {
 
 	// Now check if the text of the tweet matches what we're looking for.
 	// if it's elon musk, then we don't check for anti-keywords
-	if StarshipText(tweet.FullText, tweet.User != nil && tweet.User.ScreenName == "elonmusk") {
+	if StarshipText(tweet.FullText, tweet.User != nil && usersWithNoAntikeywords[strings.ToLower(tweet.User.ScreenName)]) {
 		return true
 	}
 
