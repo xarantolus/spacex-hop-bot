@@ -24,6 +24,13 @@ var (
 func main() {
 	flag.Parse()
 
+	var dbg string
+	if *flagDebug {
+		dbg = "in debug mode"
+	}
+
+	log.Printf("[Startup] Bot is starting%s\n", dbg)
+
 	// Some stuff depends on randomness
 	rand.Seed(time.Now().UnixNano())
 

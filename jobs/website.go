@@ -20,6 +20,8 @@ const (
 func StarshipWebsiteChanges(client *twitter.Client) {
 	defer panic("website watcher stopped even though it never should")
 
+	log.Println("[SpaceX] Watching Starship page for updates")
+
 	var lastChange scrapers.StarshipInfo
 
 	// Load our last state
