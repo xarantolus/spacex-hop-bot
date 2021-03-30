@@ -34,7 +34,7 @@ type Tweet struct {
 	RetweetedStatus      *Tweet                 `json:"retweeted_status"`
 	Source               string                 `json:"source"`
 	Scopes               map[string]interface{} `json:"scopes"`
-	Text                 string                 `json:"text"`
+	SimpleText           string                 `json:"text"`
 	FullText             string                 `json:"full_text"`
 	DisplayTextRange     Indices                `json:"display_text_range"`
 	Place                *Place                 `json:"place"`
@@ -53,6 +53,13 @@ type Tweet struct {
 // CreatedAtTime returns the time a tweet was created.
 func (t Tweet) CreatedAtTime() (time.Time, error) {
 	return time.Parse(time.RubyDate, t.CreatedAt)
+}
+
+func (t Tweet) Text() string {
+	if t.FullText != "" {
+		return t.FullText
+	}
+	return t.SimpleText
 }
 
 // ExtendedTweet represents fields embedded in extended Tweets when served in

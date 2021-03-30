@@ -122,13 +122,13 @@ func StarshipTweet(tweet *twitter.Tweet) bool {
 
 	// We do not care about tweets that are timestamped with a text more than 24 hours ago
 	// e.g. if someone posts a photo and then writes "took this on March 15, 2002"
-	if d, ok := util.ExtractDate(tweet.FullText); ok && time.Since(d) > 24*time.Hour {
+	if d, ok := util.ExtractDate(tweet.Text()); ok && time.Since(d) > 24*time.Hour {
 		return false
 	}
 
 	// Now check if the text of the tweet matches what we're looking for.
 	// if it's elon musk, then we don't check for anti-keywords
-	if StarshipText(tweet.FullText, tweet.User != nil && usersWithNoAntikeywords[strings.ToLower(tweet.User.ScreenName)]) {
+	if StarshipText(tweet.Text(), tweet.User != nil && usersWithNoAntikeywords[strings.ToLower(tweet.User.ScreenName)]) {
 		return true
 	}
 
@@ -137,7 +137,7 @@ func StarshipTweet(tweet *twitter.Tweet) bool {
 	if tweet.User != nil {
 		m, ok := specificUserMatchers[strings.ToLower(tweet.User.ScreenName)]
 		if ok {
-			return m.MatchString(strings.ToLower(tweet.FullText))
+			return m.MatchString(strings.ToLower(tweet.Text()))
 		}
 	}
 

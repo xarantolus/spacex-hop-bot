@@ -147,7 +147,7 @@ func isReply(t *twitter.Tweet) bool {
 }
 
 func isQuestion(tweet *twitter.Tweet) bool {
-	return strings.Index(strings.ToLower(tweet.FullText), "@") < strings.Index(tweet.FullText, "?")
+	return strings.Index(strings.ToLower(tweet.Text()), "@") < strings.Index(tweet.Text(), "?")
 }
 
 func isReactionGIF(tweet *twitter.Tweet) bool {

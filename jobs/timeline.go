@@ -34,7 +34,7 @@ func CheckHomeTimeline(client *twitter.Client, tweetChan chan<- twitter.Tweet) {
 			IncludeEntities: twitter.Bool(false), // We also don't care about who was mentioned etc.
 			SinceID:         lastSeenID,          // everything since our last request
 			Count:           200,                 // Maximum number of tweets we can get at once
-			TweetMode:       "extended",          // We have to use tweet.FullText instead of .Text
+			TweetMode:       "extended",
 		})
 		if err != nil {
 			util.LogError(err, "home timeline")
