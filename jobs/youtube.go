@@ -17,7 +17,7 @@ import (
 )
 
 // CheckYouTubeLive checks SpaceX's youtube live stream every 1-2 minutes and tweets if there is a starship launch stream
-func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
+func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-chan string) {
 	defer panic("for some reason, the youtube live checker stopped running even though it never should")
 
 	log.Println("[YouTube] Watching SpaceX channel for live Starship streams")
@@ -31,14 +31,22 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 		lastTweetedURL      string
 		lastTweetedUpcoming bool
 
-		lastUpcoming time.Time
+		lastLiveStart time.Time
 	)
 
+	var linkOverwrite string
+
 	for {
-		liveVideo, err := scrapers.YouTubeLive(spaceXLiveURL)
+		if linkOverwrite == "" {
+			linkOverwrite = spaceXLiveURL
+		}
+
+		liveVideo, err := scrapers.YouTubeLive(linkOverwrite)
 		if err != nil && !errors.Is(err, scrapers.ErrNoVideo) {
 			log.Println("[YouTube] Unexpected error while scraping YouTube live:", err.Error())
 		}
+
+		linkOverwrite = ""
 
 		if liveVideo.VideoID == "" || err != nil {
 			goto sleep
@@ -52,9 +60,13 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 			t, d, haveStartTime := liveVideo.TimeUntil()
 
 			// Check if we already tweeted this before
-			if liveURL == lastTweetedURL && liveVideo.IsUpcoming == lastTweetedUpcoming && lastUpcoming.Equal(t) {
+			if liveURL == lastTweetedURL && liveVideo.IsUpcoming == lastTweetedUpcoming && lastLiveStart.Equal(t) {
 				log.Printf("[YouTube] Already tweeted stream link %s with title %q", liveVideo.URL(), liveVideo.Title)
 				goto sleep
+			}
+
+			if haveStartTime {
+				lastLiveStart = t
 			}
 
 			// See if we can get the starship name, but we tweet without it anyway
@@ -114,6 +126,9 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 
 	sleep:
 		// Wait up to two minutes, then check again
-		time.Sleep(time.Minute + time.Duration(rand.Intn(60))*time.Second)
+		select {
+		case <-time.After(time.Minute + time.Duration(rand.Intn(60))*time.Second):
+		case linkOverwrite = <-linkChan:
+		}
 	}
 }

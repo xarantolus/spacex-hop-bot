@@ -17,7 +17,7 @@ const (
 )
 
 // StarshipWebsiteChanges watches the SpaceX starship page and tweets when the date or starship serial number change
-func StarshipWebsiteChanges(client *twitter.Client) {
+func StarshipWebsiteChanges(client *twitter.Client, linkChan chan<- string) {
 	defer panic("website watcher stopped even though it never should")
 
 	log.Println("[SpaceX] Watching Starship page for updates")
@@ -36,6 +36,11 @@ func StarshipWebsiteChanges(client *twitter.Client) {
 
 	for {
 		info, err := scrapers.SpaceXStarship()
+
+		if info.LiveStreamID != "" {
+			linkChan <- fmt.Sprintf("https://www.youtube.com/watch?v=%s", info.LiveStreamID)
+		}
+
 		if err != nil {
 			// Log only interesting errors
 			if !errors.Is(err, scrapers.ErrNoInfo) {

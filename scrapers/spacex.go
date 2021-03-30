@@ -20,6 +20,8 @@ var shipNameRegex = regexp.MustCompile(`((?:SN|BN)\s*\d+)`)
 type StarshipInfo struct {
 	ShipName       string
 	NextFlightDate time.Time
+
+	LiveStreamID string
 }
 
 func (s *StarshipInfo) Equals(b StarshipInfo) bool {
@@ -69,6 +71,8 @@ func SpaceXStarship() (s StarshipInfo, err error) {
 		// if we have both, we break (by returning true)
 		return !date.IsZero() && shipName != ""
 	})
+
+	s.LiveStreamID, _ = doc.Find("a[data-video]").First().Attr("data-video")
 
 	if date.IsZero() {
 		err = fmt.Errorf("couldn't extract date info: %w", ErrNoInfo)

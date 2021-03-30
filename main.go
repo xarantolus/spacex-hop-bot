@@ -51,12 +51,14 @@ func main() {
 	if *flagDebug {
 		log.Println("[Info] Running in debug mode, no background jobs are started")
 	} else {
+		var linkChan = make(chan string, 2)
+
 		// Run YouTube scraper in the background,
 		// it will tweet if it discovers that SpaceX is online with a Starship stream
-		go jobs.CheckYouTubeLive(client, selfUser)
+		go jobs.CheckYouTubeLive(client, selfUser, linkChan)
 
 		// When the webpage mentions a new date/starship, we tweet about that
-		go jobs.StarshipWebsiteChanges(client)
+		go jobs.StarshipWebsiteChanges(client, linkChan)
 
 		// Check out the home timeline of the bot user, it will contain all kinds of tweets from all kinds of people
 		go jobs.CheckHomeTimeline(client, tweetChan)
@@ -163,7 +165,7 @@ var spacePeopleMembers = map[int64]bool{}
 
 // retweet retweets the given tweet, but if it fails it doesn't care
 func retweet(client *twitter.Client, tweet *twitter.Tweet) {
-	if tweet.Retweeted {
+	if tweet.Retweeted || *flagDebug {
 		return
 	}
 
