@@ -13,7 +13,9 @@ These tweets are retweeted, if:
 
 Some keywords are filtered out to prevent spam.
 
-It also checks the [SpaceX YouTube channel](https://www.youtube.com/spacex/) for livestreams. As soon as a stream about Starship goes live, the bot will tweet a link.
+It also does some background tasks: 
+- Watching the [SpaceX YouTube channel](https://www.youtube.com/spacex/) for livestreams. As soon as a stream about Starship goes live, the bot will tweet a link.
+- Checking the [Starship website](https://www.spacex.com/vehicles/starship/) from time to time to tweet if the mentioned date/Starship changed
 
-If you have any suggestions for additional tweet sources or anything else please open an issue. 
+If you have any suggestions for additional sources or anything else please open an issue. 
 If you have suggestions for accounts or lists to follow, you can write the bot a DM on Twitter or open an issue here.
