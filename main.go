@@ -165,7 +165,8 @@ var spacePeopleMembers = map[int64]bool{}
 
 // retweet retweets the given tweet, but if it fails it doesn't care
 func retweet(client *twitter.Client, tweet *twitter.Tweet) {
-	if tweet.Retweeted || *flagDebug {
+	// If we have already retweeted a tweet, we don't try to do it again, that just leads to errors
+	if tweet.Retweeted || tweet.RetweetedStatus != nil && tweet.RetweetedStatus.Retweeted || *flagDebug {
 		return
 	}
 
