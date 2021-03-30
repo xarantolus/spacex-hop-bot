@@ -3,8 +3,10 @@ package scrapers
 import (
 	"encoding/json"
 	"errors"
+	"log"
 	"math/rand"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
 	"strconv"
 	"time"
@@ -163,6 +165,13 @@ func YouTubeLive(channelLiveURL string) (lv LiveVideo, err error) {
 
 	if errors.Is(err, jsonextract.ErrCallbackNeverCalled) {
 		err = ErrNoVideo
+	} else if err != nil {
+		rdetails, derr := httputil.DumpRequest(req, false)
+		if derr == nil {
+			log.Printf("[YouTube Scraper] Failed with %s\n%s", err.Error(), string(rdetails))
+		} else {
+			log.Println("[YouTube Scraper] Cannot get request details")
+		}
 	}
 
 	return
