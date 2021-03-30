@@ -141,6 +141,7 @@ func YouTubeLive(channelLiveURL string) (lv LiveVideo, err error) {
 			Callback: jsonextract.Unmarshal(&lv, func() bool {
 				return lv.VideoID != "" && (lv.IsLive || lv.IsUpcoming)
 			}),
+			Required: true,
 		},
 
 		// There are two ways of getting the Upcoming time of a livestream, so we need to handle both
