@@ -1,10 +1,12 @@
 package scrapers
 
 import (
+	"encoding/json"
 	"errors"
 	"math/rand"
 	"net/http"
 	"net/url"
+	"strconv"
 	"time"
 
 	"github.com/xarantolus/jsonextract"
@@ -15,6 +17,7 @@ var (
 		Timeout: 10 * time.Second,
 	}
 	possibleUserAgents = []string{
+		"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0",
 		"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0",
 		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246",
 		"Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36",
@@ -45,6 +48,50 @@ type LiveVideo struct {
 	IsLive           bool   `json:"isLive"`
 	ShortDescription string `json:"shortDescription"`
 	IsUpcoming       bool   `json:"isUpcoming"`
+
+	upcomingInfo liveBroadcastDetails
+	unixInfo     liveBroadcastUnixInfo
+}
+
+type liveBroadcastDetails struct {
+	StartTimestamp time.Time `json:"startTimestamp"`
+}
+
+type liveBroadcastUnixInfo struct {
+	ScheduledStartTime UnixTime `json:"scheduledStartTime"`
+}
+
+type UnixTime time.Time
+
+func (t *UnixTime) UnmarshalJSON(b []byte) (err error) {
+	var s string
+	err = json.Unmarshal(b, &s)
+	if err != nil {
+		return
+	}
+
+	i, err := strconv.ParseInt(s, 10, 64)
+	if err != nil {
+		return
+	}
+
+	*t = UnixTime(time.Unix(i, 0))
+
+	return nil
+}
+
+func (l LiveVideo) TimeUntil() (t time.Time, d time.Duration, ok bool) {
+	t = l.upcomingInfo.StartTimestamp
+	if t.IsZero() {
+		t = time.Time(l.unixInfo.ScheduledStartTime)
+	}
+	if t.IsZero() {
+		return
+	}
+
+	d = t.UTC().Sub(time.Now().UTC())
+	ok = d > 0
+	return
 }
 
 // URL returns the youtube video URL for this live stream
@@ -86,14 +133,28 @@ func YouTubeLive(channelLiveURL string) (lv LiveVideo, err error) {
 	}
 	defer resp.Body.Close()
 
-	// Basically extract the video info and make sure it's live
+	// Basically extract the video info and make sure it's live/upcoming
+	// We also extract extra info when the livestream will go live
 	err = jsonextract.Objects(resp.Body, []jsonextract.ObjectOption{
 		{
 			Keys: []string{"videoId"},
 			Callback: jsonextract.Unmarshal(&lv, func() bool {
 				return lv.VideoID != "" && (lv.IsLive || lv.IsUpcoming)
 			}),
-			Required: true,
+		},
+
+		// There are two ways of getting the Upcoming time of a livestream, so we need to handle both
+		{
+			Keys: []string{"startTimestamp"},
+			Callback: jsonextract.Unmarshal(&lv.upcomingInfo, func() bool {
+				return !lv.upcomingInfo.StartTimestamp.IsZero()
+			}),
+		},
+		{
+			Keys: []string{"scheduledStartTime"},
+			Callback: jsonextract.Unmarshal(&lv.unixInfo, func() bool {
+				return !time.Time(lv.unixInfo.ScheduledStartTime).IsZero()
+			}),
 		},
 	})
 

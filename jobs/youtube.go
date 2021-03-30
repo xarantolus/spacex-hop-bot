@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
+	"github.com/docker/go-units"
 	"github.com/xarantolus/spacex-hop-bot/match"
 	"github.com/xarantolus/spacex-hop-bot/scrapers"
 	"github.com/xarantolus/spacex-hop-bot/util"
@@ -29,6 +30,8 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 	var (
 		lastTweetedURL      string
 		lastTweetedUpcoming bool
+
+		lastUpcoming time.Time
 	)
 
 	for {
@@ -39,8 +42,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 			}
 		}
 
-		// This combines both the error and any other case where no link can be generated
-		if liveVideo.VideoID == "" {
+		if liveVideo.VideoID == "" || err != nil {
 			goto sleep
 		}
 
@@ -49,8 +51,10 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 			// Get the video URL
 			liveURL := liveVideo.URL()
 
+			t, d, haveStartTime := liveVideo.TimeUntil()
+
 			// Check if we already tweeted this before
-			if liveURL == lastTweetedURL && liveVideo.IsUpcoming == lastTweetedUpcoming {
+			if liveURL == lastTweetedURL && liveVideo.IsUpcoming == lastTweetedUpcoming && lastUpcoming.Equal(t) {
 				log.Printf("[YouTube] Already tweeted stream link %s with title %q", liveVideo.URL(), liveVideo.Title)
 				goto sleep
 			}
@@ -60,12 +64,21 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 
 			// Depending on what flies, we tweet different text
 			var tweetText string
+
 			switch {
 			// Upcoming video
 			case strings.HasPrefix(shipName, "BN") && liveVideo.IsUpcoming:
-				tweetText = fmt.Sprintf("SpaceX #Starship Booster #SuperHeavy #%s stream was posted to YouTube, likely starting soon\n#WenHop\n%s", shipName, liveURL)
+				if haveStartTime {
+					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship Booster #SuperHeavy #%s stream posted to YouTube, likely starting in %s\n#WenHop\n%s", shipName, strings.ToLower(units.HumanDuration(d)), liveURL)
+				} else {
+					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship Booster #SuperHeavy #%s stream posted to YouTube, likely starting soon\n#WenHop\n%s", shipName, liveURL)
+				}
 			case strings.HasPrefix(shipName, "SN") && liveVideo.IsUpcoming:
-				tweetText = fmt.Sprintf("SpaceX #Starship #%s stream was posted to YouTube, likely starting soon\n#WenHop\n%s", shipName, liveURL)
+				if haveStartTime {
+					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship #%s stream posted to YouTube, likely starting in %s\n#WenHop\n%s", shipName, strings.ToLower(units.HumanDuration(d)), liveURL)
+				} else {
+					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship #%s stream posted to YouTube, likely starting soon\n#WenHop\n%s", shipName, liveURL)
+				}
 
 				// If it's not upcoming, it's likely live
 			case strings.HasPrefix(shipName, "BN"):
@@ -75,7 +88,11 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 
 				// If we don't have a SN/BN prefix, we ignore that and tweet anyways
 			case liveVideo.IsUpcoming:
-				tweetText = fmt.Sprintf("SpaceX #Starship stream was posted to YouTube, likely starting soon\n#WenHop\n%s", liveURL)
+				if haveStartTime {
+					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship stream was posted to YouTube, likely starting in %s\n#WenHop\n%s", liveURL, strings.ToLower(units.HumanDuration(d)))
+				} else {
+					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship stream was posted to YouTube, likely starting soon\n#WenHop\n%s", liveURL)
+				}
 			case liveVideo.IsLive:
 				tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship stream is live\n%s", liveURL)
 			default:
@@ -84,7 +101,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 			}
 
 			// Now tweet the text we generated
-			t, _, err := client.Statuses.Update(tweetText, nil)
+			tweet, _, err := client.Statuses.Update(tweetText, nil)
 			if err != nil {
 				log.Println("[Twitter] Error while tweeting livestream update:", err.Error())
 				goto sleep
@@ -94,7 +111,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User) {
 			lastTweetedURL = liveURL
 			lastTweetedUpcoming = liveVideo.IsUpcoming
 
-			log.Println("[Twitter] Tweeted", util.TweetURL(t))
+			log.Println("[Twitter] Tweeted", util.TweetURL(tweet))
 		}
 
 	sleep:
