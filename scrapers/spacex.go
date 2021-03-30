@@ -1,6 +1,7 @@
 package scrapers
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
 	"regexp"
@@ -36,7 +37,7 @@ func SpaceXStarship() (s StarshipInfo, err error) {
 	defer resp.Body.Close()
 
 	// Extract the HTML body text
-	doc, err := goquery.NewDocumentFromReader(resp.Body)
+	doc, err := goquery.NewDocumentFromReader(bufio.NewReader(resp.Body))
 	if err != nil {
 		return
 	}
@@ -46,29 +47,27 @@ func SpaceXStarship() (s StarshipInfo, err error) {
 		shipName string
 	)
 
-	// Let's check the text on the website
-	doc.Find("div").EachWithBreak(func(i int, s *goquery.Selection) bool {
+	// Let's check the text on the website.
+	// We first look for .text-column elements,
+	// but in case something is changed on the site, we also look at all divs
+	doc.Find(".text-column").Add("div").EachWithBreak(func(i int, s *goquery.Selection) bool {
 		content := s.Text()
 
 		// Find the first interesting text
 		if shipName == "" {
-			var eShipName = shipNameRegex.FindString(content)
-			if eShipName != "" {
-				shipName = eShipName
+			shipName = shipNameRegex.FindString(content)
+		}
+
+		if date.IsZero() {
+			// Try to extract a date
+			etime, ok := util.ExtractDate(content)
+			if ok && time.Now().In(util.NorthAmericaTZ).Sub(etime) > 0 {
+				date = etime
 			}
 		}
 
-		// Try to extract a date
-		etime, ok := util.ExtractDate(content)
-		if ok {
-			date = etime
-
-			// This is like "break" in a for loop
-			return false
-		}
-
-		// Continues matching
-		return true
+		// if we have both, we break (by returning true)
+		return !date.IsZero() && shipName != ""
 	})
 
 	if date.IsZero() {

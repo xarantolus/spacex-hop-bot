@@ -26,7 +26,7 @@ func main() {
 
 	var dbg string
 	if *flagDebug {
-		dbg = "in debug mode"
+		dbg = " in debug mode"
 	}
 
 	log.Printf("[Startup] Bot is starting%s\n", dbg)

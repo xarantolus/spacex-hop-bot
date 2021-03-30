@@ -45,7 +45,7 @@ func StarshipWebsiteChanges(client *twitter.Client) {
 		}
 
 		// If it's the same info again, we don't care
-		if info.Equals(lastChange) {
+		if lastChange.NextFlightDate.YearDay() >= info.NextFlightDate.YearDay() {
 			goto sleep
 		}
 
@@ -54,11 +54,6 @@ func StarshipWebsiteChanges(client *twitter.Client) {
 
 		// Save this one
 		util.LogError(util.SaveJSON(changesFile, lastChange), "saving changes file")
-
-		// If the date is in the past, we don't care.
-		if time.Since(lastChange.NextFlightDate) > 0 {
-			goto sleep
-		}
 
 		// OK, now we have an interesting and new change
 		{
