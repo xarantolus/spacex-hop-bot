@@ -32,6 +32,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 		lastTweetedUpcoming bool
 
 		lastLiveStart time.Time
+		lastTweetTime time.Time
 	)
 
 	var linkOverwrite string
@@ -59,8 +60,8 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 
 			t, d, haveStartTime := liveVideo.TimeUntil()
 
-			// Check if we already tweeted this before
-			if liveURL == lastTweetedURL && liveVideo.IsUpcoming == lastTweetedUpcoming && lastLiveStart.Equal(t) {
+			// Check if we already tweeted this before - but also tweet if we didn't tweet within the last 15 minutes
+			if liveURL == lastTweetedURL && liveVideo.IsUpcoming == lastTweetedUpcoming && lastLiveStart.Equal(t) && time.Since(lastTweetTime) < 15*time.Minute {
 				log.Printf("[YouTube] Already tweeted stream link %s with title %q", liveVideo.URL(), liveVideo.Title)
 				goto sleep
 			}
@@ -120,6 +121,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 			// make sure we don't tweet this again
 			lastTweetedURL = liveURL
 			lastTweetedUpcoming = liveVideo.IsUpcoming
+			lastTweetTime = time.Now()
 
 			log.Println("[Twitter] Tweeted", util.TweetURL(tweet))
 		}
