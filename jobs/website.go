@@ -41,6 +41,7 @@ func StarshipWebsiteChanges(client *twitter.Client) {
 			if !errors.Is(err, scrapers.ErrNoInfo) {
 				util.LogError(err, "scraping SpaceX Starship website")
 			}
+
 			goto sleep
 		}
 

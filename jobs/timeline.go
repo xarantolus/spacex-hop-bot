@@ -21,7 +21,7 @@ func CheckHomeTimeline(client *twitter.Client, tweetChan chan<- twitter.Tweet) {
 		lastSeenID int64
 
 		// The first batch of tweets we receive should not acted upon
-		isFirstRequest bool = true
+		isFirstRequest = true
 	)
 
 	log.Println("[Twitter] Watching home timeline")

@@ -18,7 +18,7 @@ func CheckListTimeline(client *twitter.Client, list twitter.List, tweetChan chan
 		lastSeenID int64
 
 		// The first batch of tweets we receive should not acted upon
-		isFirstRequest bool = true
+		isFirstRequest = true
 	)
 	for {
 		// https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/create-manage-lists/api-reference/get-lists-statuses
