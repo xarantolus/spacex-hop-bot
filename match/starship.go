@@ -192,6 +192,12 @@ func isSatireAccount(tweet *twitter.Tweet) bool {
 	if tweet.User == nil {
 		return false
 	}
+	// If we know the user, it can't be satire
+	_, known1 := specificUserMatchers[tweet.User.ScreenName]
+	_, known2 := usersWithNoAntikeywords[tweet.User.ScreenName]
+	if known1 || known2 {
+		return false
+	}
 
 	username := strings.ToLower(tweet.User.ScreenName)
 
