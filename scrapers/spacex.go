@@ -72,7 +72,8 @@ func SpaceXStarship() (s StarshipInfo, err error) {
 		return !date.IsZero() && shipName != ""
 	})
 
-	s.LiveStreamID, _ = doc.Find("a[data-video]").First().Attr("data-video")
+	// Find the first element with a data-video attribute. This is where SpaceX puts replays and other videos
+	liveID, _ := doc.Find("[data-video]").First().Attr("data-video")
 
 	if date.IsZero() {
 		err = fmt.Errorf("couldn't extract date info: %w", ErrNoInfo)
@@ -86,5 +87,6 @@ func SpaceXStarship() (s StarshipInfo, err error) {
 	return StarshipInfo{
 		ShipName:       shipName,
 		NextFlightDate: date,
+		LiveStreamID:   liveID,
 	}, nil
 }
