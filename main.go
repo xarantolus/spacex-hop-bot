@@ -1,10 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
 	"math/rand"
+	"os"
 	"strings"
 	"time"
 
@@ -82,6 +84,8 @@ func main() {
 		}
 
 		log.Printf("[Twitter] Started watching %d lists\n", len(lists))
+
+		match.LoadSatireList(client)
 	}
 
 	var (
@@ -131,7 +135,7 @@ func processTweet(client *twitter.Client, seenTweets map[int64]bool, selfUser *t
 		// elon responded to.
 		// Then we also filter out all tweets that tag elon musk, e.g. there could be someone
 		// just tweeting something like "Do you think xyz... @elonmusk"
-		retweet(client, &tweet)
+		retweet(client, &tweet, "normal matcher")
 	}
 
 	seenTweets[tweet.ID] = true
@@ -164,7 +168,7 @@ const spacePeopleListID = 1375480259840212997
 var spacePeopleMembers = map[int64]bool{}
 
 // retweet retweets the given tweet, but if it fails it doesn't care
-func retweet(client *twitter.Client, tweet *twitter.Tweet) {
+func retweet(client *twitter.Client, tweet *twitter.Tweet, reason string) {
 	// If we have already retweeted a tweet, we don't try to do it again, that just leads to errors
 	if tweet.Retweeted || tweet.RetweetedStatus != nil && tweet.RetweetedStatus.Retweeted || *flagDebug {
 		return
@@ -188,7 +192,19 @@ func retweet(client *twitter.Client, tweet *twitter.Tweet) {
 	}
 
 	twurl := util.TweetURL(tweet)
-	log.Println("[Twitter] Retweeted", twurl)
+	log.Printf("[Twitter] Retweeted %s (%s)", twurl, reason)
+
+	f, err := os.OpenFile("retweeted.ndjson", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+	if err != nil {
+		log.Println("Opening file:", err.Error())
+		return
+	}
+	defer f.Close()
+
+	err = json.NewEncoder(f).Encode(tweet)
+	if err != nil {
+		log.Println("Encoding JSON:", err.Error())
+	}
 
 	// Setting Retweeted can help processThread to detect that it should stop
 	tweet.Retweeted = true
@@ -216,31 +232,29 @@ func processThread(client *twitter.Client, tweet *twitter.Tweet, seenTweets map[
 	// First process the rest of the thread
 	if tweet.InReplyToStatusID != 0 {
 		// Ok, there was a reply. Check if we can do something with that
-		t, _, err := client.Statuses.Lookup([]int64{tweet.InReplyToStatusID}, &twitter.StatusLookupParams{
+		parent, _, err := client.Statuses.Show(tweet.InReplyToStatusID, &twitter.StatusShowParams{
 			IncludeEntities: twitter.Bool(false),
 			TweetMode:       "extended",
 		})
 		util.LogError(err, "tweet reply status fetch (processThread)")
 
 		// If we have a matching tweet thread
-		if len(t) > 0 && processThread(client, &t[0], seenTweets) {
-			seenTweets[t[0].ID] = true
-			retweet(client, &t[0])
+		if parent != nil && processThread(client, parent, seenTweets) {
+			seenTweets[parent.ID] = true
+			retweet(client, parent, "processThread: matched parent")
 			didRetweet = true
 		}
 	}
 
 	// A quoted tweet. Let's see if there's anything interesting
 	if tweet.QuotedStatusID != 0 && tweet.QuotedStatus != nil {
-		seenTweets[tweet.QuotedStatusID] = true
-
 		return processThread(client, tweet.QuotedStatus, seenTweets)
 	}
 
 	// Now actually match the tweet
 	if didRetweet || match.StarshipTweet(tweet) {
 
-		retweet(client, tweet)
+		retweet(client, tweet, "processThread: matched")
 
 		return true
 	}
