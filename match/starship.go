@@ -1,6 +1,7 @@
 package match
 
 import (
+	"log"
 	"regexp"
 	"strings"
 	"time"
@@ -15,7 +16,8 @@ var (
 
 	antiStarshipKeywords = []string{
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "starlink",
-		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "artemis",
+		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "ula", "artemis",
+		"virgingalactic", "virgin galactic", "blueorigin", "boeing", "starliner",
 
 		// Not interested in other stuff
 		"doge", "fsd",
@@ -41,7 +43,7 @@ var (
 
 		"dearmoon", "dear moon", "inspiration4",
 
-		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click",
+		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag",
 	}
 
 	starshipMatchers = []*regexp.Regexp{
@@ -120,15 +122,27 @@ func StarshipTweet(tweet *twitter.Tweet) bool {
 		return false
 	}
 
+	text := tweet.Text()
+
 	// We do not care about tweets that are timestamped with a text more than 24 hours ago
 	// e.g. if someone posts a photo and then writes "took this on March 15, 2002"
-	if d, ok := util.ExtractDate(tweet.Text()); ok && time.Since(d) > 24*time.Hour {
+	if d, ok := util.ExtractDate(text); ok && time.Since(d) > 24*time.Hour {
+		return false
+	}
+
+	text = strings.ToLower(text)
+
+	if strings.Contains(text, "patreon") && hasNoMedia(tweet) {
+		return false
+	}
+
+	if isSatireAccount(tweet) {
 		return false
 	}
 
 	// Now check if the text of the tweet matches what we're looking for.
 	// if it's elon musk, then we don't check for anti-keywords
-	if StarshipText(tweet.Text(), tweet.User != nil && usersWithNoAntikeywords[strings.ToLower(tweet.User.ScreenName)]) {
+	if StarshipText(text, tweet.User != nil && usersWithNoAntikeywords[strings.ToLower(tweet.User.ScreenName)]) {
 		return true
 	}
 
@@ -137,7 +151,59 @@ func StarshipTweet(tweet *twitter.Tweet) bool {
 	if tweet.User != nil {
 		m, ok := specificUserMatchers[strings.ToLower(tweet.User.ScreenName)]
 		if ok {
-			return m.MatchString(strings.ToLower(tweet.Text()))
+			return m.MatchString(text)
+		}
+	}
+
+	return false
+}
+
+func hasNoMedia(tweet *twitter.Tweet) bool {
+	return (tweet.ExtendedEntities == nil || len(tweet.ExtendedEntities.Media) == 0) &&
+		(tweet.Entities == nil || len(tweet.Entities.Media) == 0)
+}
+
+var (
+	// See https://twitter.com/ULASeagull/status/1376913976362217472 and
+	// https://twitter.com/i/lists/1357527189370130432 for a list of names
+	satireNames = []string{}
+
+	satireKeywords = []string{
+		"parody", "joke",
+	}
+)
+
+func LoadSatireList(client *twitter.Client) {
+	users, _, err := client.Lists.Members(&twitter.ListsMembersParams{
+		ListID: 1357527189370130432,
+	})
+	if err != nil {
+		log.Println("[Twitter] Failed loading satire account list:", err.Error())
+		return
+	}
+
+	for _, u := range users.Users {
+		satireNames = append(satireNames, strings.ToLower(u.ScreenName))
+	}
+}
+
+func isSatireAccount(tweet *twitter.Tweet) bool {
+	if tweet.User == nil {
+		return false
+	}
+
+	username := strings.ToLower(tweet.User.ScreenName)
+
+	for _, k := range satireNames {
+		if username == k {
+			return true
+		}
+	}
+
+	desc := strings.ToLower(tweet.User.Description)
+	for _, k := range satireKeywords {
+		if strings.Contains(desc, k) {
+			return true
 		}
 	}
 
