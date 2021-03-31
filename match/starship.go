@@ -173,9 +173,11 @@ var (
 	}
 )
 
+const SatireListID = 1377136100574064647
+
 func LoadSatireList(client *twitter.Client) {
 	users, _, err := client.Lists.Members(&twitter.ListsMembersParams{
-		ListID: 1377136100574064647,
+		ListID: SatireListID,
 		Count:  1000,
 	})
 	if err != nil {

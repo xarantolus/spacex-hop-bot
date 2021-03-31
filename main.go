@@ -79,11 +79,16 @@ func main() {
 		}
 
 		// Those are also background jobs
+		var watchedLists int
 		for _, l := range lists {
+			if l.ID == match.SatireListID {
+				continue
+			}
 			go jobs.CheckListTimeline(client, l, tweetChan)
+			watchedLists++
 		}
 
-		log.Printf("[Twitter] Started watching %d lists\n", len(lists))
+		log.Printf("[Twitter] Started watching %d lists\n", watchedLists)
 
 		match.LoadSatireList(client)
 	}
