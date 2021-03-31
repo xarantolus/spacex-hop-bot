@@ -3,6 +3,7 @@ package twitter
 import (
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/dghubble/sling"
@@ -56,10 +57,18 @@ func (t Tweet) CreatedAtTime() (time.Time, error) {
 }
 
 func (t Tweet) Text() string {
+	var text = t.SimpleText
 	if t.FullText != "" {
-		return t.FullText
+		text = t.FullText
 	}
-	return t.SimpleText
+
+	if t.Entities != nil {
+		for _, e := range t.Entities.Urls {
+			text = strings.ReplaceAll(text, e.URL, e.ExpandedURL)
+		}
+	}
+
+	return text
 }
 
 // ExtendedTweet represents fields embedded in extended Tweets when served in
