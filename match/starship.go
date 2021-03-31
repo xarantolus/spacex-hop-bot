@@ -175,7 +175,8 @@ var (
 
 func LoadSatireList(client *twitter.Client) {
 	users, _, err := client.Lists.Members(&twitter.ListsMembersParams{
-		ListID: 1357527189370130432,
+		ListID: 1377136100574064647,
+		Count:  1000,
 	})
 	if err != nil {
 		log.Println("[Twitter] Failed loading satire account list:", err.Error())
