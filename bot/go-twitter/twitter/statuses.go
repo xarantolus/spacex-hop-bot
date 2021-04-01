@@ -64,7 +64,7 @@ func (t Tweet) Text() string {
 
 	if t.Entities != nil {
 		for _, e := range t.Entities.Urls {
-			text = strings.ReplaceAll(text, e.URL, e.ExpandedURL)
+			text = strings.ReplaceAll(text, e.URL, "")
 		}
 		for _, m := range t.Entities.Media {
 			text = strings.ReplaceAll(text, m.URL, "")
