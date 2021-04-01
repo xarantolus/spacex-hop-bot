@@ -131,6 +131,10 @@ func YouTubeLive(channelLiveURL string) (lv LiveVideo, err error) {
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
 	req.Header.Set("Accept-Language", "en-US;q=0.7,en;q=0.3")
 
+	// This cookie is set after going to that consent page (e.g. when visiting a video in private mode)
+	// Sometimes a redirect to that page causes the scraper to not work, so this is an attempt to go around that
+	req.Header.Set("Cookie", "CONSENT=YES+cb.20210328-17-p0.en+FX+419; PREF=tz=UTC")
+
 	resp, err := c.Do(req)
 	if err != nil {
 		return
