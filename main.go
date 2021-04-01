@@ -133,7 +133,9 @@ func processTweet(client *twitter.Client, seenTweets map[int64]bool, selfUser *t
 		processTweet(client, seenTweets, selfUser, *tweet.QuotedStatus)
 	case tweet.RetweetedStatus != nil:
 		processTweet(client, seenTweets, selfUser, *tweet.RetweetedStatus)
-	case match.StarshipTweet(&tweet) && !isReply(&tweet) && !isQuestion(&tweet) && !isReactionGIF(&tweet):
+	case tweet.QuotedStatusID != 0:
+		// We got a quoted status, but twitter didn't deliver it in QuotedStatus. So we skip this tweet I guess
+	case match.StarshipTweet(&tweet) && !isReply(client, &tweet) && !isQuestion(&tweet) && !isReactionGIF(&tweet):
 		// If the tweet itself is about starship, we retweet it
 		// We already filtered out replies, which is important because we don't want to
 		// retweet every question someone posts under an elon post, only those that
@@ -147,12 +149,24 @@ func processTweet(client *twitter.Client, seenTweets map[int64]bool, selfUser *t
 }
 
 // isReply returns if the given tweet is a reply to another user
-func isReply(t *twitter.Tweet) bool {
+func isReply(c *twitter.Client, t *twitter.Tweet) bool {
 	if t.User == nil || t.InReplyToStatusID == 0 {
 		return false
 	}
 
-	return t.User.ID != t.InReplyToUserID
+	if t.User.ID != t.InReplyToUserID {
+		return true
+	}
+
+	t, _, err := c.Statuses.Show(t.InReplyToStatusID, &twitter.StatusShowParams{
+		TweetMode: "extended",
+	})
+	if err != nil {
+		// If something goes wrong, we just assume it is a reply
+		return true
+	}
+
+	return isReply(c, t)
 }
 
 func isQuestion(tweet *twitter.Tweet) bool {
