@@ -11,8 +11,8 @@ require (
 	github.com/dghubble/oauth1 v0.7.0
 	github.com/docker/go-units v0.4.0
 	github.com/google/go-querystring v1.1.0 // indirect
-	github.com/xarantolus/jsonextract v1.5.1
-	golang.org/x/net v0.0.0-20210330075724-22f4162a9025 // indirect
+	github.com/xarantolus/jsonextract v1.5.2
+	golang.org/x/net v0.0.0-20210331212208-0fccb6fa2b5c // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
 
