@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"strings"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -73,7 +74,16 @@ func SpaceXStarship() (s StarshipInfo, err error) {
 	})
 
 	// Find the first element with a data-video attribute. This is where SpaceX puts replays and other videos
-	liveID, _ := doc.Find("[data-video]").First().Attr("data-video")
+	vidButton := doc.Find("[data-video]").First()
+
+	// Now check if we can get the video id of a video that is not a replay
+	var liveID string
+	if vidButton.Length() > 0 {
+		vt := strings.TrimSpace(vidButton.Text())
+		if !strings.EqualFold(vt, "REPLAY") {
+			liveID, _ = vidButton.Attr("data-video")
+		}
+	}
 
 	if date.IsZero() {
 		err = fmt.Errorf("couldn't extract date info: %w", ErrNoInfo)
