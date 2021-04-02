@@ -5,10 +5,9 @@ import (
 	"log"
 
 	"github.com/dghubble/go-twitter/twitter"
-	"github.com/xarantolus/spacex-hop-bot/match"
 )
 
-func Register(client *twitter.Client, selfUser *twitter.User, tweetChan chan twitter.Tweet) (err error) {
+func Register(client *twitter.Client, selfUser *twitter.User, tweetChan chan twitter.Tweet, skipList int64) (err error) {
 	var linkChan = make(chan string, 2)
 
 	// Run YouTube scraper in the background,
@@ -37,7 +36,7 @@ func Register(client *twitter.Client, selfUser *twitter.User, tweetChan chan twi
 	// Those are also background jobs
 	var watchedLists int
 	for _, l := range lists {
-		if l.ID == match.SatireListID {
+		if l.ID == skipList {
 			continue
 		}
 		go CheckListTimeline(client, l, tweetChan)

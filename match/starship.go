@@ -1,7 +1,6 @@
 package match
 
 import (
-	"log"
 	"regexp"
 	"strings"
 	"time"
@@ -163,60 +162,4 @@ func StarshipTweet(tweet *twitter.Tweet) bool {
 func hasNoMedia(tweet *twitter.Tweet) bool {
 	return (tweet.ExtendedEntities == nil || len(tweet.ExtendedEntities.Media) == 0) &&
 		(tweet.Entities == nil || len(tweet.Entities.Media) == 0)
-}
-
-var (
-	// See https://twitter.com/ULASeagull/status/1376913976362217472 and
-	// https://twitter.com/i/lists/1357527189370130432 for a list of names
-	satireNames = []string{}
-
-	satireKeywords = []string{
-		"parody", "joke",
-	}
-)
-
-const SatireListID = 1377136100574064647
-
-func LoadSatireList(client *twitter.Client) {
-	users, _, err := client.Lists.Members(&twitter.ListsMembersParams{
-		ListID: SatireListID,
-		Count:  1000,
-	})
-	if err != nil {
-		log.Println("[Twitter] Failed loading satire account list:", err.Error())
-		return
-	}
-
-	for _, u := range users.Users {
-		satireNames = append(satireNames, strings.ToLower(u.ScreenName))
-	}
-}
-
-func isSatireAccount(tweet *twitter.Tweet) bool {
-	if tweet.User == nil {
-		return false
-	}
-	// If we know the user, it can't be satire
-	_, known1 := specificUserMatchers[tweet.User.ScreenName]
-	_, known2 := usersWithNoAntikeywords[tweet.User.ScreenName]
-	if known1 || known2 {
-		return false
-	}
-
-	username := strings.ToLower(tweet.User.ScreenName)
-
-	for _, k := range satireNames {
-		if username == k {
-			return true
-		}
-	}
-
-	desc := strings.ToLower(tweet.User.Description)
-	for _, k := range satireKeywords {
-		if strings.Contains(desc, k) {
-			return true
-		}
-	}
-
-	return false
 }

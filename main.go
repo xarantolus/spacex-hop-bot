@@ -45,6 +45,12 @@ func main() {
 	}
 	log.Printf("[Twitter] Logged in @%s\n", selfUser.ScreenName)
 
+	// Twitter list ids for lists we need
+	const (
+		satireListID      = 1377136100574064647
+		spacePeopleListID = 1375480259840212997
+	)
+
 	// The bot should check all tweets that are sent on this channel
 	var tweetChan = make(chan twitter.Tweet, 250)
 
@@ -52,13 +58,12 @@ func main() {
 		log.Println("[Info] Running in debug mode, no background jobs are started")
 	} else {
 		// Register all background jobs, most of them send tweets on tweetChan
-		jobs.Register(client, selfUser, tweetChan)
+		// it should ignore the satire list
+		jobs.Register(client, selfUser, tweetChan, satireListID)
 
 		// Load a list of satire accounts to make sure we don't retweet them
-		match.LoadSatireList(client)
+		match.LoadSatireList(client, satireListID)
 	}
-
-	const spacePeopleListID = 1375480259840212997
 
 	// handler handles tweets by filtering & retweeting the interesting ones
 	var handler = consumer.NewProcessor(*flagDebug, client, selfUser, spacePeopleListID)
