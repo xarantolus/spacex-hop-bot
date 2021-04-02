@@ -32,70 +32,39 @@ func main() {
 	// Some stuff depends on randomness
 	rand.Seed(time.Now().UnixNano())
 
+	// Let's parse our configuration file
 	cfg, err := config.Parse(*flagConfigFile)
 	if err != nil {
 		panic("parsing configuration file: " + err.Error())
 	}
 
+	// Log in to Twitter
 	client, selfUser, err := bot.Login(cfg)
 	if err != nil {
 		panic("logging in to twitter: " + err.Error())
 	}
 	log.Printf("[Twitter] Logged in @%s\n", selfUser.ScreenName)
 
-	// contains all tweets the bot should check
+	// The bot should check all tweets that are sent on this channel
 	var tweetChan = make(chan twitter.Tweet, 250)
 
 	if *flagDebug {
 		log.Println("[Info] Running in debug mode, no background jobs are started")
 	} else {
-		var linkChan = make(chan string, 2)
+		// Register all background jobs, most of them send tweets on tweetChan
+		jobs.Register(client, selfUser, tweetChan)
 
-		// Run YouTube scraper in the background,
-		// it will tweet if it discovers that SpaceX is online with a Starship stream
-		go jobs.CheckYouTubeLive(client, selfUser, linkChan)
-
-		// When the webpage mentions a new date/starship, we tweet about that
-		go jobs.StarshipWebsiteChanges(client, linkChan)
-
-		// Check out the home timeline of the bot user, it will contain all kinds of tweets from all kinds of people
-		go jobs.CheckHomeTimeline(client, tweetChan)
-
-		// Get tweets from the general area around boca chica
-		go jobs.CheckLocationStream(client, tweetChan)
-
-		// Start watching all lists the bot account follows
-		lists, _, err := client.Lists.List(&twitter.ListsListParams{})
-		if len(lists) == 100 {
-			// See https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/create-manage-lists/api-reference/get-lists-list
-			log.Println("[Warning] Lists API call returned 100 lists, which means that it is likely that some lists were not included. See API URL in comment above this line")
-		}
-		if err != nil {
-			panic("initializing bot: couldn't retrieve lists: " + err.Error())
-		}
-
-		// Those are also background jobs
-		var watchedLists int
-		for _, l := range lists {
-			if l.ID == match.SatireListID {
-				continue
-			}
-			go jobs.CheckListTimeline(client, l, tweetChan)
-			watchedLists++
-		}
-
-		log.Printf("[Twitter] Started watching %d lists\n", watchedLists)
-
+		// Load a list of satire accounts to make sure we don't retweet them
 		match.LoadSatireList(client)
 	}
 
 	const spacePeopleListID = 1375480259840212997
 
-	// proc handles tweets by filtering & retweeting the interesting ones
-	var proc = consumer.NewProcessor(*flagDebug, client, selfUser, spacePeopleListID)
+	// handler handles tweets by filtering & retweeting the interesting ones
+	var handler = consumer.NewProcessor(*flagDebug, client, selfUser, spacePeopleListID)
 
-	// Now we just pass all tweets to processTweet
+	// Now we just process every tweet we come across
 	for tweet := range tweetChan {
-		proc.Tweet(tweet)
+		handler.Tweet(tweet)
 	}
 }
