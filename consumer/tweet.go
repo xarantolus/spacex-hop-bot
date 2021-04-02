@@ -43,7 +43,7 @@ func NewProcessor(debug bool, client *twitter.Client, selfUser *twitter.User, sp
 
 // Tweet processes the given tweet and checks whether it should be retweeted.
 // Tweets that have already been seen are ignored. It is not safe for concurrent use.
-func (p *Processor) Tweet(tweet twitter.Tweet) {
+func (p *Processor) Tweet(tweet *twitter.Tweet) {
 	// So now we got a tweet. There are three categories that interest us:
 	// 1. Elon Musk drops insider info about starship, e.g. as a reply.
 	//    We do not care about his other tweets, so we check if any tweet
@@ -66,22 +66,22 @@ func (p *Processor) Tweet(tweet twitter.Tweet) {
 		// When elon drops starship info, we want to retweet it.
 		// We basically detect if the thread/tweet is about starship and
 		// retweet everything that is appropriate
-		p.thread(&tweet)
+		p.thread(tweet)
 	case tweet.QuotedStatus != nil:
 		// If someone quotes a tweet, we only check the tweet that was quoted.
-		p.Tweet(*tweet.QuotedStatus)
+		p.Tweet(tweet.QuotedStatus)
 	case tweet.RetweetedStatus != nil:
-		p.Tweet(*tweet.RetweetedStatus)
+		p.Tweet(tweet.RetweetedStatus)
 	case tweet.QuotedStatusID != 0:
 		// We got a quoted status, but twitter didn't deliver it in QuotedStatus. So we skip this tweet I guess
-	case match.StarshipTweet(&tweet) && !p.isReply(&tweet) && !p.isQuestion(&tweet) && !p.isReactionGIF(&tweet):
+	case match.StarshipTweet(tweet) && !p.isReply(tweet) && !p.isQuestion(tweet) && !p.isReactionGIF(tweet):
 		// If the tweet itself is about starship, we retweet it
 		// We already filtered out replies, which is important because we don't want to
 		// retweet every question someone posts under an elon post, only those that
 		// elon responded to.
 		// Then we also filter out all tweets that tag elon musk, e.g. there could be someone
 		// just tweeting something like "Do you think xyz... @elonmusk"
-		p.retweet(&tweet, "normal matcher")
+		p.retweet(tweet, "normal matcher")
 	}
 
 	p.seenTweets[tweet.ID] = true
@@ -135,10 +135,10 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string) {
 	}
 
 	// save tweet so we can reproduce why it was matched
-	p.saveTweet(*tweet)
+	p.saveTweet(tweet)
 
 	// Add the user to our space people list
-	p.addSpaceMember(*tweet)
+	p.addSpaceMember(tweet)
 
 	twurl := util.TweetURL(tweet)
 	log.Printf("[Twitter] Retweeted %s (%s)", twurl, reason)
@@ -148,7 +148,7 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string) {
 }
 
 // saveTweet appends the given tweet to a JSON file for later inspections, especially in case of wrong retweets
-func (p *Processor) saveTweet(tweet twitter.Tweet) {
+func (p *Processor) saveTweet(tweet *twitter.Tweet) {
 	f, err := os.OpenFile("retweeted.ndjson", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		log.Println("Opening file:", err.Error())
@@ -163,7 +163,7 @@ func (p *Processor) saveTweet(tweet twitter.Tweet) {
 }
 
 // addSpaceMember adds the user of the given tweet to the space people list
-func (p *Processor) addSpaceMember(tweet twitter.Tweet) {
+func (p *Processor) addSpaceMember(tweet *twitter.Tweet) {
 
 	if tweet.User == nil || p.spacePeopleListMembers[tweet.User.ID] {
 		return

@@ -65,6 +65,6 @@ func main() {
 
 	// Now we just process every tweet we come across
 	for tweet := range tweetChan {
-		handler.Tweet(tweet)
+		handler.Tweet(&tweet)
 	}
 }
