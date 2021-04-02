@@ -128,7 +128,7 @@ func StarshipTweet(tweet *twitter.Tweet) bool {
 
 	// We do not care about tweets that are timestamped with a text more than 24 hours ago
 	// e.g. if someone posts a photo and then writes "took this on March 15, 2002"
-	if d, ok := util.ExtractDate(text); ok && time.Since(d) > 24*time.Hour {
+	if d, ok := util.ExtractDate(text); ok && time.Since(d) > 48*time.Hour {
 		return false
 	}
 
