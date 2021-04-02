@@ -123,8 +123,14 @@ func (p *Processor) isReactionGIF(tweet *twitter.Tweet) bool {
 
 // retweet retweets the given tweet, but if it fails it doesn't care
 func (p *Processor) retweet(tweet *twitter.Tweet, reason string) {
+	// don't retweet anything in debug mode
+	if p.debug {
+		log.Printf("Not retweeting %s because we're in debug mode", util.TweetURL(tweet))
+		return
+	}
+
 	// If we have already retweeted a tweet, we don't try to do it again, that just leads to errors
-	if tweet.Retweeted || tweet.RetweetedStatus != nil && tweet.RetweetedStatus.Retweeted || p.debug {
+	if tweet.Retweeted || tweet.RetweetedStatus != nil && tweet.RetweetedStatus.Retweeted {
 		return
 	}
 
@@ -151,20 +157,19 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string) {
 func (p *Processor) saveTweet(tweet *twitter.Tweet) {
 	f, err := os.OpenFile("retweeted.ndjson", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
-		log.Println("Opening file:", err.Error())
+		util.LogError(err, "open tweet file")
 		return
 	}
 	defer f.Close()
 
 	err = json.NewEncoder(f).Encode(tweet)
 	if err != nil {
-		log.Println("Encoding JSON:", err.Error())
+		util.LogError(err, "encoding tweet json")
 	}
 }
 
 // addSpaceMember adds the user of the given tweet to the space people list
 func (p *Processor) addSpaceMember(tweet *twitter.Tweet) {
-
 	if tweet.User == nil || p.spacePeopleListMembers[tweet.User.ID] {
 		return
 	}
