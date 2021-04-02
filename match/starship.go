@@ -36,8 +36,6 @@ var (
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
 
-		"turtle", "dog", "cat",
-
 		"ocisly", "canaveral",
 
 		"bot",
