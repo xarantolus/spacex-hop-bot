@@ -19,6 +19,8 @@ var (
 		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "ula", "artemis",
 		"virgingalactic", "virgin galactic", "blueorigin", "boeing", "starliner", "soyuz",
 
+		"f22", "f-22", "jet",
+
 		// Not interested in other stuff
 		"doge", "fsd",
 
