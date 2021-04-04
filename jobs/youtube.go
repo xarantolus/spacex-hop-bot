@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
-	"regexp"
 	"strings"
 	"time"
 
@@ -23,9 +22,6 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 	log.Println("[YouTube] Watching SpaceX channel for live Starship streams")
 
 	const spaceXLiveURL = "https://www.youtube.com/spacex/live"
-
-	// This finds strings like SN11, BN2 etc.
-	var shipNameRegex = regexp.MustCompile(`((?:SN|BN)\s*\d+)`)
 
 	var (
 		lastTweetedURL      string
@@ -71,7 +67,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 			}
 
 			// See if we can get the starship name, but we tweet without it anyway
-			var shipName = shipNameRegex.FindString(strings.ToUpper(liveVideo.Title))
+			var shipName = scrapers.ShipNameRegex.FindString(strings.ToUpper(liveVideo.Title))
 
 			// Depending on what flies, we tweet different text
 			var tweetText string

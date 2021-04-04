@@ -16,7 +16,7 @@ const (
 	StarshipURL = "https://www.spacex.com/vehicles/starship/"
 )
 
-var shipNameRegex = regexp.MustCompile(`((?:SN|BN)\s*\d+)`)
+var ShipNameRegex = regexp.MustCompile(`((?:SN|BN)-?\s*\d+)`)
 
 type StarshipInfo struct {
 	ShipName       string
@@ -58,7 +58,7 @@ func SpaceXStarship() (s StarshipInfo, err error) {
 
 		// Find the first interesting text
 		if shipName == "" {
-			shipName = shipNameRegex.FindString(content)
+			shipName = ShipNameRegex.FindString(content)
 		}
 
 		if date.IsZero() {
