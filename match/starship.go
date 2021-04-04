@@ -11,7 +11,8 @@ import (
 
 // Note that all text here must be lowercase because the text is lowercased in the matching function
 var (
-	starshipKeywords = []string{"starship", "superheavy", "raptor", "super heavy"}
+	// we also match Raptor, but only if either "SpaceX", "Engine" or "McGregor" is mentioned
+	starshipKeywords = []string{"starship", "superheavy", "super heavy"}
 
 	antiStarshipKeywords = []string{
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "starlink",
@@ -145,6 +146,11 @@ func StarshipTweet(tweet *twitter.Tweet) bool {
 	// Now check if the text of the tweet matches what we're looking for.
 	// if it's elon musk, then we don't check for anti-keywords
 	if StarshipText(text, tweet.User != nil && usersWithNoAntikeywords[strings.ToLower(tweet.User.ScreenName)]) {
+		return true
+	}
+
+	// Raptor has more than one meaning, so we need to be more careful
+	if strings.Contains(text, "raptor") && (strings.Contains(text, "starship") || strings.Contains(text, "spacex") || strings.Contains(text, "mcgregor") || strings.Contains(text, "engine")) {
 		return true
 	}
 
