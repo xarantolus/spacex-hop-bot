@@ -32,7 +32,7 @@ var (
 		"not starship", "non starship", "not about starship",
 
 		// kerbal space program != "official" news
-		"kerbal space program", "ksp",
+		"kerbal space program", "ksp", "no mans sky", "nomanssky",
 
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
@@ -41,7 +41,7 @@ var (
 
 		"bot",
 
-		"dearmoon", "dear moon", "inspiration4",
+		"dearmoon", "dear moon", "inspiration4", "rover",
 
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag",
 

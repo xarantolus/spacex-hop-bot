@@ -89,6 +89,10 @@ func (p *Processor) Tweet(tweet *twitter.Tweet) {
 
 // isReply returns if the given tweet is a reply to another user
 func (p *Processor) isReply(t *twitter.Tweet) bool {
+	if t.QuotedStatusID != 0 {
+		return true
+	}
+
 	if t.User == nil || t.InReplyToStatusID == 0 {
 		return false
 	}
