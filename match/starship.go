@@ -14,41 +14,6 @@ var (
 	// we also match Raptor, but only if either "SpaceX", "Engine" or "McGregor" is mentioned
 	starshipKeywords = []string{"starship", "superheavy", "super heavy"}
 
-	antiStarshipKeywords = []string{
-		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "starlink",
-		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "ula", "artemis",
-		"virgingalactic", "virgin galactic", "blueorigin", "boeing", "starliner", "soyuz",
-
-		"f22", "f-22", "jet",
-
-		// Not interested in other stuff
-		"doge", "fsd",
-
-		"no tfr",
-
-		// 3d models are nice, but we only care about "real info"
-		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious", "simulat" /* or/ed */, "print",
-
-		"not starship", "non starship", "not about starship",
-
-		// kerbal space program != "official" news
-		"kerbal space program", "ksp", "no mans sky", "nomanssky",
-
-		// not *that* kind of raptor
-		"velociraptor", "jurassic", "cretaceous", "dino",
-
-		"ocisly", "canaveral",
-
-		"bot",
-
-		"dearmoon", "dear moon", "inspiration4", "rover",
-
-		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag",
-
-		// stuff that seems like starship, but isn't
-		"starshipent", "monstax", "eshygazit", "wonho",
-	}
-
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx
 		regexp.MustCompile(`\bsn\d+\b`),
@@ -83,10 +48,48 @@ var (
 		// For Elon, we try to match anything that could be insider info
 		"elonmusk": regexp.MustCompile("(?:booster|orbit|heavy|cryo|static fire|tower|ship|rud|engine|faa|starbase|boca chica|lox|liquid oxygen|methane|ch4|relight|fts|flip|cargo|lunar|tfr|fts|scrub|mach)"),
 	}
-
 	usersWithNoAntikeywords = map[string]bool{
 		"elonmusk": true,
 		"spacex":   true,
+	}
+
+	antiStarshipKeywords = []string{
+		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "f9", "starlink",
+		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "ula", "artemis",
+		"virgingalactic", "virgin galactic", "blueorigin", "boeing", "starliner", "soyuz", "orion",
+		"resilience", "shuttle", "new glenn", "new shepard", "tsla",
+
+		// e.g. crew-1, crew-2...
+		"crew-",
+
+		"f22", "f-22", "jet",
+
+		// Not interested in other stuff
+		"doge", "fsd",
+
+		"no tfr",
+
+		// 3d models are nice, but we only care about "real info"
+		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious", "simulat" /* or/ed */, "print",
+
+		"not starship", "non starship", "not about starship",
+
+		// kerbal space program != "official" news
+		"kerbal space program", "ksp", "no mans sky", "nomanssky",
+
+		// not *that* kind of raptor
+		"velociraptor", "jurassic", "cretaceous", "dino",
+
+		"ocisly", "canaveral",
+
+		"bot",
+
+		"dearmoon", "dear moon", "inspiration4", "rover",
+
+		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag",
+
+		// stuff that seems like starship, but isn't
+		"starshipent", "monstax", "eshygazit", "wonho",
 	}
 )
 
