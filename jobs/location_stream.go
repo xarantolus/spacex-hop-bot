@@ -34,6 +34,16 @@ func CheckLocationStream(client *twitter.Client, tweetChan chan<- twitter.Tweet)
 				continue
 			}
 
+			// If we have truncated text, we try to get the whole tweet
+			if t.Truncated {
+				t, _, err = client.Statuses.Show(t.ID, &twitter.StatusShowParams{
+					TweetMode: "extended",
+				})
+				if err != nil {
+					continue
+				}
+			}
+
 			tweetChan <- *t
 		}
 
