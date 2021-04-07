@@ -74,7 +74,7 @@ func (p *Processor) Tweet(tweet *twitter.Tweet) {
 		p.Tweet(tweet.RetweetedStatus)
 	case tweet.QuotedStatusID != 0:
 		// We got a quoted status, but twitter didn't deliver it in QuotedStatus. So we skip this tweet I guess
-	case match.StarshipTweet(tweet) && !p.isQuestion(tweet) && !p.isReactionGIF(tweet) && !p.isReply(tweet):
+	case match.StarshipTweet(tweet) && !p.isReply(tweet) && !p.isQuestion(tweet) && !p.isReactionGIF(tweet):
 		// If the tweet itself is about starship, we retweet it
 		// We already filtered out replies, which is important because we don't want to
 		// retweet every question someone posts under an elon post, only those that
