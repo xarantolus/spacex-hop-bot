@@ -178,6 +178,18 @@ func (p *Processor) addSpaceMember(tweet *twitter.Tweet) {
 		return
 	}
 
+	// Idea: We make the list private, add the member and then make it public again.
+	// That way they are not notified/annoyed
+	defer p.client.Lists.Update(&twitter.ListsUpdateParams{
+		ListID: p.spacePeopleListID,
+		Mode:   "public",
+	})
+	// Set the list to private before updating
+	p.client.Lists.Update(&twitter.ListsUpdateParams{
+		ListID: p.spacePeopleListID,
+		Mode:   "private",
+	})
+
 	p.spacePeopleListMembers[tweet.User.ID] = true
 
 	_, err := p.client.Lists.MembersCreate(&twitter.ListsMembersCreateParams{
