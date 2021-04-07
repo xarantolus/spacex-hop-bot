@@ -42,6 +42,8 @@ var (
 		"nasaspaceflight": closureTFRRegex,
 		"spacexboca":      closureTFRRegex,
 
+		"austinbarnard45": regexp.MustCompile("(?:day in Texas)"),
+
 		// Watches temporary flight restrictions
 		"spacetfrs": regexp.MustCompile("(?:brownsville)"),
 
