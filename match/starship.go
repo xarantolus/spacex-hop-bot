@@ -21,8 +21,8 @@ var (
 		regexp.MustCompile(`\bbn\d+\b`),
 	}
 
-	closureTFRRegex = regexp.MustCompile("(?:closure|tfr|cryo|fts|scrub)")
-	alertRegex      = regexp.MustCompile("(?:alert|static fire|closure|cryo|evacua|scrub)")
+	closureTFRRegex = regexp.MustCompile("\b(?:closure|tfr|cryo|fts|scrub)")
+	alertRegex      = regexp.MustCompile("\b(?:alert|static fire|closure|cryo|evacua|scrub)")
 
 	// Users known to post better information that requires specific filtering
 	specificUserMatchers = map[string]*regexp.Regexp{
@@ -84,7 +84,7 @@ var (
 
 		"ocisly", "canaveral",
 
-		"bot",
+		"bot", "uwu", "qwq",
 
 		"dearmoon", "dear moon", "inspiration4", "rover",
 
