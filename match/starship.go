@@ -48,7 +48,7 @@ var (
 		"spacetfrs": regexp.MustCompile("(?:brownsville)"),
 
 		// For Elon, we try to match anything that could be insider info
-		"elonmusk": regexp.MustCompile("(?:booster|orbit|heavy|cryo|static fire|tower|ship|rud|engine|faa|starbase|boca chica|lox|liquid oxygen|methane|ch4|relight|fts|flip|cargo|lunar|tfr|fts|scrub|mach)"),
+		"elonmusk": regexp.MustCompile("(?:booster|orbit|heavy|cryo|static fire|tower|ship|rud|faa|starbase|boca chica|lox|liquid oxygen|methane|ch4|relight|fts|flip|cargo|lunar|tfr|fts|scrub|mach)"),
 	}
 	usersWithNoAntikeywords = map[string]bool{
 		"elonmusk": true,
@@ -84,7 +84,7 @@ var (
 
 		"ocisly", "canaveral",
 
-		"bot", "uwu", "qwq",
+		"bot", "uwu", "qwq", "reaction",
 
 		"dearmoon", "dear moon", "inspiration4", "rover",
 
@@ -101,10 +101,8 @@ func StarshipText(text string, ignoreBlocklist bool) bool {
 	text = strings.ToLower(text)
 
 	if !ignoreBlocklist {
-		for _, k := range antiStarshipKeywords {
-			if strings.Contains(text, k) {
-				return false
-			}
+		if containsAntikeyword(text) {
+			return false
 		}
 	}
 
@@ -155,7 +153,7 @@ func StarshipTweet(tweet *twitter.Tweet) bool {
 	}
 
 	// Raptor has more than one meaning, so we need to be more careful
-	if strings.Contains(text, "raptor") && (strings.Contains(text, "starship") || strings.Contains(text, "spacex") || strings.Contains(text, "mcgregor") || strings.Contains(text, "engine")) {
+	if !containsAntikeyword(text) && strings.Contains(text, "raptor") && (strings.Contains(text, "starship") || strings.Contains(text, "spacex") || strings.Contains(text, "mcgregor") || strings.Contains(text, "engine")) {
 		return true
 	}
 
@@ -174,4 +172,13 @@ func StarshipTweet(tweet *twitter.Tweet) bool {
 func hasNoMedia(tweet *twitter.Tweet) bool {
 	return (tweet.ExtendedEntities == nil || len(tweet.ExtendedEntities.Media) == 0) &&
 		(tweet.Entities == nil || len(tweet.Entities.Media) == 0)
+}
+
+func containsAntikeyword(text string) bool {
+	for _, k := range antiStarshipKeywords {
+		if strings.Contains(text, k) {
+			return true
+		}
+	}
+	return false
 }
