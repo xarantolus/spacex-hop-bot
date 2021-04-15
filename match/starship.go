@@ -84,11 +84,13 @@ var (
 
 		"ocisly", "canaveral",
 
-		"bot", "uwu", "qwq", "reaction",
+		"bot", "uwu", "qwq", "reaction", "immigrants",
 
-		"dearmoon", "dear moon", "inspiration4", "rover",
+		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag",
+
+		"child", "illegal",
 
 		// stuff that seems like starship, but isn't
 		"starshipent", "monstax", "eshygazit", "wonho",
