@@ -55,24 +55,23 @@ func StarshipWebsiteChanges(client *twitter.Client, linkChan chan<- string) {
 			goto sleep
 		}
 
-		// OK, so now we got an interesting change
-		lastChange = info
-
-		// Save this one
-		util.LogError(util.SaveJSON(changesFile, lastChange), "saving changes file")
-
 		// OK, now we have an interesting and new change
 		{
 			var tweetText = fmt.Sprintf("The SpaceX #Starship website now mentions %s for #%s #WenHop\n%s",
-				lastChange.NextFlightDate.Format("January 02"), lastChange.ShipName, scrapers.StarshipURL)
+				info.NextFlightDate.Format("January 02"), info.ShipName, scrapers.StarshipURL)
 
 			t, _, err := client.Statuses.Update(tweetText, nil)
 			if err != nil {
 				util.LogError(err, "tweeting starship update")
-			} else {
-				log.Println("[Twitter] Tweeted", util.TweetURL(t))
+				goto sleep
 			}
+			log.Println("[Twitter] Tweeted", util.TweetURL(t))
 		}
+
+		// Save this one
+		lastChange = info
+		util.LogError(util.SaveJSON(changesFile, lastChange), "saving changes file")
+
 	sleep:
 		// Wait 5-10 minutes until checking again
 		time.Sleep(5*time.Minute + time.Duration(rand.Intn(300))*time.Second)
