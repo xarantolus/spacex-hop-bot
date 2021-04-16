@@ -62,7 +62,7 @@ var (
 		"resilience", "shuttle", "new glenn", "new shepard", "tsla",
 
 		// e.g. crew-1, crew-2...
-		"crew-",
+		"crew-", "crew dragon",
 
 		"f22", "f-22", "jet",
 
