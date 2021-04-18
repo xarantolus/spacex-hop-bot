@@ -12,6 +12,7 @@ import (
 func CheckLocationStream(client *twitter.Client, tweetChan chan<- twitter.Tweet) {
 	defer panic("location stream ended even though it never should")
 
+	var backoff int = 1
 	for {
 		s, err := client.Streams.Filter(&twitter.StreamFilterParams{
 			// This is a large area around boca chica. We want to catch many tweets from there and then filter them
@@ -29,6 +30,7 @@ func CheckLocationStream(client *twitter.Client, tweetChan chan<- twitter.Tweet)
 
 		// Stream all tweets and serve them to the channel
 		for m := range s.Messages {
+			backoff = 1
 			t, ok := m.(*twitter.Tweet)
 			if !ok || t == nil {
 				continue
@@ -47,8 +49,10 @@ func CheckLocationStream(client *twitter.Client, tweetChan chan<- twitter.Tweet)
 			tweetChan <- *t
 		}
 
-		log.Println("[Twitter] Location stream ended for some reason, trying again in 5 seconds")
+		backoff *= 2
+
+		log.Printf("[Twitter] Location stream ended for some reason, trying again in %d seconds", backoff*5)
 	sleep:
-		time.Sleep(5 * time.Second)
+		time.Sleep(time.Duration(backoff) * 5 * time.Second)
 	}
 }
