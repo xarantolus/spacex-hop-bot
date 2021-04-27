@@ -88,7 +88,7 @@ var (
 
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
-		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag",
+		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 
 		"child", "illegal",
 
