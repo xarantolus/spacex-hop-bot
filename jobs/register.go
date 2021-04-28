@@ -23,6 +23,10 @@ func Register(client *twitter.Client, selfUser *twitter.User, tweetChan chan twi
 	// Get tweets from the general area around boca chica
 	go CheckLocationStream(client, tweetChan)
 
+	// Make we get all tweets from certain users, before this we sometimes missed stuff
+	go CheckUserTimeline(client, "elonmusk", tweetChan)
+	go CheckUserTimeline(client, "SpaceX", tweetChan)
+
 	// Start watching all lists the bot account follows
 	lists, _, err := client.Lists.List(&twitter.ListsListParams{})
 	if len(lists) == 100 {
