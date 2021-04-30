@@ -81,9 +81,9 @@ var (
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
 
-		"ocisly", "canaveral",
+		"ocisly", "jrti", "canaveral",
 
-		"bot", "uwu", "qwq", "reaction", "immigrants",
+		"meme", "bot", "uwu", "qwq", "reaction", "immigrants",
 
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
