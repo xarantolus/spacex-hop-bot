@@ -1,6 +1,7 @@
 package jobs
 
 import (
+	"log"
 	"math/rand"
 	"sort"
 	"time"
@@ -12,6 +13,8 @@ import (
 // CheckUserTimeline requests the given user profile every few minutes or so
 func CheckUserTimeline(client *twitter.Client, name string, tweetChan chan<- twitter.Tweet) {
 	defer panic("user (" + name + ") follower stopped processing even though it shouldn't")
+
+	log.Printf("[Twitter] Start watching %s's Twitter profile", name)
 
 	var (
 		// lastSeenID is the ID of the last tweet we saw

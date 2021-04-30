@@ -52,7 +52,6 @@ var (
 	}
 	usersWithNoAntikeywords = map[string]bool{
 		"elonmusk": true,
-		"spacex":   true,
 	}
 
 	antiStarshipKeywords = []string{
