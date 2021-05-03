@@ -90,7 +90,7 @@ var (
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 		"follow",
 
-		"child", "illegal",
+		"child", "illegal", "nfl",
 
 		// stuff that seems like starship, but isn't
 		"starshipent", "monstax", "eshygazit", "wonho",
