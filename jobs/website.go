@@ -58,7 +58,7 @@ func StarshipWebsiteChanges(client *twitter.Client, linkChan chan<- string) {
 		// OK, now we have an interesting and new change
 		{
 			var tweetText = fmt.Sprintf("The SpaceX #Starship website now mentions %s for #%s #WenHop\n%s",
-				info.NextFlightDate.Format("January 02"), info.ShipName, scrapers.StarshipURL)
+				info.NextFlightDate.Format("January 2"), info.ShipName, scrapers.StarshipURL)
 
 			t, _, err := client.Statuses.Update(tweetText, nil)
 			if err != nil {
