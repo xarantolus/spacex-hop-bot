@@ -7,11 +7,12 @@ import (
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/match"
 	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
 // CheckUserTimeline requests the given user profile every few minutes or so
-func CheckUserTimeline(client *twitter.Client, name string, tweetChan chan<- twitter.Tweet) {
+func CheckUserTimeline(client *twitter.Client, name string, tweetChan chan<- match.TweetWrapper) {
 	defer panic("user (" + name + ") follower stopped processing even though it shouldn't")
 
 	log.Printf("[Twitter] Start watching %s's Twitter profile", name)
@@ -46,7 +47,10 @@ func CheckUserTimeline(client *twitter.Client, name string, tweetChan chan<- twi
 			lastSeenID = tweet.ID
 
 			// OK, process this tweet
-			tweetChan <- tweet
+			tweetChan <- match.TweetWrapper{
+				TweetSource: match.TweetSourceTrustedUser,
+				Tweet:       tweet,
+			}
 		}
 
 	sleep:

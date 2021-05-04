@@ -6,11 +6,12 @@ import (
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/match"
 	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
 // CheckListTimeline requests the given lists about every minute or so. Any new tweets are put in tweetChan.
-func CheckListTimeline(client *twitter.Client, list twitter.List, tweetChan chan<- twitter.Tweet) {
+func CheckListTimeline(client *twitter.Client, list twitter.List, tweetChan chan<- match.TweetWrapper) {
 	defer panic("list (" + list.Name + ") follower stopped processing even though it shouldn't")
 
 	var (
@@ -53,7 +54,10 @@ func CheckListTimeline(client *twitter.Client, list twitter.List, tweetChan chan
 			}
 
 			// OK, process this tweet
-			tweetChan <- tweet
+			tweetChan <- match.TweetWrapper{
+				TweetSource: match.TweetSourceKnownList,
+				Tweet:       tweet,
+			}
 		}
 
 		if isFirstRequest {

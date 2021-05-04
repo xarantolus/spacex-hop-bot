@@ -124,7 +124,7 @@ func StarshipText(text string, ignoreBlocklist bool) bool {
 }
 
 // StarshipTweet returns whether the given tweet mentions starship. It also includes custom matchers for certain users
-func StarshipTweet(tweet *twitter.Tweet) bool {
+func StarshipTweet(tweet TweetWrapper) bool {
 	// Ignore OLD tweets
 	if d, err := tweet.CreatedAtTime(); err == nil && time.Since(d) > 24*time.Hour {
 		return false
@@ -140,11 +140,11 @@ func StarshipTweet(tweet *twitter.Tweet) bool {
 
 	text = strings.ToLower(text)
 
-	if strings.Contains(text, "patreon") && hasNoMedia(tweet) {
+	if strings.Contains(text, "patreon") && hasNoMedia(&tweet.Tweet) {
 		return false
 	}
 
-	if isSatireAccount(tweet) {
+	if isSatireAccount(&tweet.Tweet) {
 		return false
 	}
 

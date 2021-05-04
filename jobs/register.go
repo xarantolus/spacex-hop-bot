@@ -5,9 +5,10 @@ import (
 	"log"
 
 	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/match"
 )
 
-func Register(client *twitter.Client, selfUser *twitter.User, tweetChan chan twitter.Tweet, skipList int64) (err error) {
+func Register(client *twitter.Client, selfUser *twitter.User, tweetChan chan match.TweetWrapper, skipList int64) (err error) {
 	var linkChan = make(chan string, 2)
 
 	// Run YouTube scraper in the background,

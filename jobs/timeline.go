@@ -7,13 +7,14 @@ import (
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/match"
 	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
 // CheckHomeTimeline requests the user home timeline about every minute and puts all new tweets in tweetChan.
 // it also includes replies which would normally not be shown in the timeline.
 // TL;DR: it stalks all users the account follows, even their replies
-func CheckHomeTimeline(client *twitter.Client, tweetChan chan<- twitter.Tweet) {
+func CheckHomeTimeline(client *twitter.Client, tweetChan chan<- match.TweetWrapper) {
 	defer panic("home timeline follower stopped processing even though it shouldn't")
 
 	var (
@@ -57,7 +58,10 @@ func CheckHomeTimeline(client *twitter.Client, tweetChan chan<- twitter.Tweet) {
 				continue
 			}
 			// OK, process this tweet
-			tweetChan <- tweet
+			tweetChan <- match.TweetWrapper{
+				TweetSource: match.TweetSourceTimeline,
+				Tweet:       tweet,
+			}
 		}
 
 		if isFirstRequest {

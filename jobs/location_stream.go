@@ -5,11 +5,12 @@ import (
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/match"
 	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
 // CheckLocationStream checks out tweets from a large area around boca chica
-func CheckLocationStream(client *twitter.Client, tweetChan chan<- twitter.Tweet) {
+func CheckLocationStream(client *twitter.Client, tweetChan chan<- match.TweetWrapper) {
 	defer panic("location stream ended even though it never should")
 
 	var backoff int = 1
@@ -46,7 +47,10 @@ func CheckLocationStream(client *twitter.Client, tweetChan chan<- twitter.Tweet)
 				}
 			}
 
-			tweetChan <- *t
+			tweetChan <- match.TweetWrapper{
+				TweetSource: match.TweetSourceLocationStream,
+				Tweet:       *t,
+			}
 		}
 
 		backoff *= 2
