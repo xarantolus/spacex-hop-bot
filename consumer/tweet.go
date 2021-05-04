@@ -81,7 +81,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// elon responded to.
 		// Then we also filter out all tweets that tag elon musk, e.g. there could be someone
 		// just tweeting something like "Do you think xyz... @elonmusk"
-		p.retweet(&tweet.Tweet, "normal matcher")
+		p.retweet(&tweet.Tweet, "normal matcher", tweet.TweetSource)
 	}
 
 	p.seenTweets[tweet.ID] = true
@@ -126,7 +126,7 @@ func (p *Processor) isReactionGIF(tweet *twitter.Tweet) bool {
 }
 
 // retweet retweets the given tweet, but if it fails it doesn't care
-func (p *Processor) retweet(tweet *twitter.Tweet, reason string) {
+func (p *Processor) retweet(tweet *twitter.Tweet, reason string, source match.TweetSource) {
 	// don't retweet anything in debug mode
 	if p.debug {
 		log.Printf("Not retweeting %s because we're in debug mode", util.TweetURL(tweet))
@@ -148,7 +148,10 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string) {
 	p.saveTweet(tweet)
 
 	// Add the user to our space people list
-	p.addSpaceMember(tweet)
+	// We ignore those from the location stream as they might not always tweet about starship
+	if source != match.TweetSourceLocationStream {
+		p.addSpaceMember(tweet)
+	}
 
 	twurl := util.TweetURL(tweet)
 	log.Printf("[Twitter] Retweeted %s (%s)", twurl, reason)
@@ -230,7 +233,7 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 		// If we have a matching tweet thread
 		if parent != nil && p.thread(parent) {
 			p.seenTweets[parent.ID] = true
-			p.retweet(parent, "thread: matched parent")
+			p.retweet(parent, "thread: matched parent", match.TweetSourceUnknown)
 			didRetweet = true
 		}
 	}
@@ -243,7 +246,7 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 	// Now actually match the tweet
 	if didRetweet || match.StarshipTweet(match.TweetWrapper{TweetSource: match.TweetSourceUnknown, Tweet: *tweet}) {
 
-		p.retweet(tweet, "thread: matched")
+		p.retweet(tweet, "thread: matched", match.TweetSourceUnknown)
 
 		return true
 	}
