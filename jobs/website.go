@@ -73,7 +73,7 @@ func StarshipWebsiteChanges(client *twitter.Client, linkChan chan<- string) {
 		util.LogError(util.SaveJSON(changesFile, lastChange), "saving changes file")
 
 	sleep:
-		// Wait 5-10 minutes until checking again
-		time.Sleep(5*time.Minute + time.Duration(rand.Intn(300))*time.Second)
+		// Wait 2-4 minutes until checking again
+		time.Sleep(2*time.Minute + time.Duration(rand.Intn(120))*time.Second)
 	}
 }

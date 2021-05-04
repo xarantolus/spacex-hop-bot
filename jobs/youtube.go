@@ -54,16 +54,16 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 			// Get the video URL
 			liveURL := liveVideo.URL()
 
-			t, d, haveStartTime := liveVideo.TimeUntil()
+			liveStartTime, d, haveStartTime := liveVideo.TimeUntil()
 
 			// Check if we already tweeted this before - but also tweet if we didn't tweet within the last 15 minutes
-			if liveURL == lastTweetedURL && liveVideo.IsUpcoming == lastTweetedUpcoming && lastLiveStart.Equal(t) && time.Since(lastTweetTime) < 15*time.Minute {
+			if liveURL == lastTweetedURL && liveVideo.IsUpcoming == lastTweetedUpcoming && lastLiveStart.Equal(liveStartTime) && time.Since(lastTweetTime) < tweetInterval(d) {
 				log.Printf("[YouTube] Already tweeted stream link %s with title %q", liveVideo.URL(), liveVideo.Title)
 				goto sleep
 			}
 
 			if haveStartTime {
-				lastLiveStart = t
+				lastLiveStart = liveStartTime
 			}
 
 			// See if we can get the starship name, but we tweet without it anyway
@@ -128,5 +128,16 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 		case <-time.After(time.Minute + time.Duration(rand.Intn(60))*time.Second):
 		case linkOverwrite = <-linkChan:
 		}
+	}
+}
+
+func tweetInterval(streamStartsIn time.Duration) time.Duration {
+	switch {
+	case streamStartsIn < time.Hour:
+		return 15 * time.Minute
+	case streamStartsIn < 4*time.Hour:
+		return time.Hour
+	default:
+		return 2 * time.Hour
 	}
 }
