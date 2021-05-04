@@ -50,13 +50,14 @@ var (
 		// For Elon, we try to match anything that could be insider info
 		"elonmusk": regexp.MustCompile("(?:booster|heavy|cryo|static fire|tower|ship|rud|faa|starbase|boca chica|lox|liquid oxygen|methane|ch4|relight|fts|flip|cargo|lunar|tfr|fts|scrub|mach)"),
 	}
+
 	usersWithNoAntikeywords = map[string]bool{
 		"elonmusk": true,
 	}
 
 	antiStarshipKeywords = []string{
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "f9", "starlink",
-		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "ula", "artemis",
+		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "ula", "vulcan", "artemis",
 		"virgingalactic", "virgin galactic", "blueorigin", "boeing", "starliner", "soyuz", "orion",
 		"resilience", "shuttle", "new glenn", "china", "new shepard", "tsla", "dynetics", "hls",
 

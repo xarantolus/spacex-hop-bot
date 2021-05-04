@@ -256,8 +256,13 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 		return p.thread(tweet.QuotedStatus)
 	}
 
+	realTweet := tweet
+	if tweet.RetweetedStatus != nil {
+		realTweet = tweet.RetweetedStatus
+	}
+
 	// Now actually match the tweet
-	if didRetweet || match.StarshipTweet(match.TweetWrapper{TweetSource: match.TweetSourceUnknown, Tweet: *tweet}) {
+	if didRetweet || match.StarshipTweet(match.TweetWrapper{TweetSource: match.TweetSourceUnknown, Tweet: *realTweet}) {
 
 		p.retweet(tweet, "thread: matched", match.TweetSourceUnknown)
 
