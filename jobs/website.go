@@ -1,7 +1,6 @@
 package jobs
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"math/rand"
@@ -42,16 +41,13 @@ func StarshipWebsiteChanges(client *twitter.Client, linkChan chan<- string) {
 		}
 
 		if err != nil {
-			// Log only interesting errors
-			if !errors.Is(err, scrapers.ErrNoInfo) {
-				util.LogError(err, "scraping SpaceX Starship website")
-			}
+			util.LogError(err, "scraping SpaceX Starship website")
 
 			goto sleep
 		}
 
 		// If it's the same info again, we don't care
-		if lastChange.NextFlightDate.YearDay() >= info.NextFlightDate.YearDay() {
+		if lastChange.NextFlightDate.YearDay() >= info.NextFlightDate.YearDay() && lastChange.NextFlightDate.Year() == info.NextFlightDate.Year() {
 			goto sleep
 		}
 
