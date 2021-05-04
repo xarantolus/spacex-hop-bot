@@ -81,7 +81,16 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// elon responded to.
 		// Then we also filter out all tweets that tag elon musk, e.g. there could be someone
 		// just tweeting something like "Do you think xyz... @elonmusk"
-		p.retweet(&tweet.Tweet, "normal matcher", tweet.TweetSource)
+
+		if tweet.TweetSource == match.TweetSourceLocationStream {
+			if p.hasMedia(&tweet.Tweet) {
+				p.retweet(&tweet.Tweet, "normal + location media", tweet.TweetSource)
+			} else {
+				log.Println("[Twitter] Not retweeting", util.TweetURL(&tweet.Tweet), "because it's from the location stream and has no media")
+			}
+		} else {
+			p.retweet(&tweet.Tweet, "normal matcher", tweet.TweetSource)
+		}
 	}
 
 	p.seenTweets[tweet.ID] = true
@@ -123,6 +132,10 @@ func (p *Processor) isReactionGIF(tweet *twitter.Tweet) bool {
 
 	// Type of a GIF is animated_gif
 	return strings.Contains(tweet.ExtendedEntities.Media[0].Type, "gif")
+}
+
+func (p *Processor) hasMedia(tweet *twitter.Tweet) bool {
+	return len(tweet.Entities.Media) > 0 || len(tweet.ExtendedEntities.Media) > 0
 }
 
 // retweet retweets the given tweet, but if it fails it doesn't care
