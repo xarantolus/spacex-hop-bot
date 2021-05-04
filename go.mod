@@ -13,7 +13,10 @@ require (
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/tdewolff/parse/v2 v2.5.16 // indirect
 	github.com/xarantolus/jsonextract v1.5.2
+	golang.org/x/mod v0.4.2 // indirect
 	golang.org/x/net v0.0.0-20210503060351-7fd8e65b6420 // indirect
+	golang.org/x/sys v0.0.0-20210503173754-0981d6026fa6 // indirect
+	golang.org/x/tools v0.1.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
 

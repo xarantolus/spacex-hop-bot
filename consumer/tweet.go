@@ -154,7 +154,7 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string, source match.Tw
 	}
 
 	twurl := util.TweetURL(tweet)
-	log.Printf("[Twitter] Retweeted %s (%s)", twurl, reason)
+	log.Printf("[Twitter] Retweeted %s (%s - %s)", twurl, reason, source.String())
 
 	// Setting Retweeted can help thread to detect that it should stop
 	tweet.Retweeted = true
