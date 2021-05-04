@@ -135,7 +135,7 @@ func (p *Processor) isReactionGIF(tweet *twitter.Tweet) bool {
 }
 
 func (p *Processor) hasMedia(tweet *twitter.Tweet) bool {
-	return len(tweet.Entities.Media) > 0 || len(tweet.ExtendedEntities.Media) > 0
+	return tweet.Entities != nil && len(tweet.Entities.Media) > 0 || tweet.ExtendedEntities != nil && len(tweet.ExtendedEntities.Media) > 0
 }
 
 // retweet retweets the given tweet, but if it fails it doesn't care
