@@ -82,7 +82,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// Then we also filter out all tweets that tag elon musk, e.g. there could be someone
 		// just tweeting something like "Do you think xyz... @elonmusk"
 
-		if tweet.Lang != "" && tweet.Lang != "en" {
+		if tweet.Lang != "" && tweet.Lang != "en" && tweet.Lang != "und" {
 			log.Println("Skipped", util.TweetURL(&tweet.Tweet), "because of language ", tweet.Lang)
 			break
 		}

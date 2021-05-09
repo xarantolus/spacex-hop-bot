@@ -89,9 +89,9 @@ var (
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
-		"follow",
+		"follow", "pre-order", "merch",
 
-		"child", "illegal", "nfl",
+		"child", "illegal", "nfl", "tiktok", "tik tok",
 
 		// stuff that seems like starship, but isn't
 		"starshipent", "monstax", "eshygazit", "wonho",
