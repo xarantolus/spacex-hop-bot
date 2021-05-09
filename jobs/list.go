@@ -27,9 +27,9 @@ func CheckListTimeline(client *twitter.Client, list twitter.List, tweetChan chan
 			ListID: list.ID,
 
 			IncludeRetweets: twitter.Bool(true),
-			IncludeEntities: twitter.Bool(false), // We also don't care about who was mentioned etc.
-			SinceID:         lastSeenID,          // everything since our last request
-			Count:           200,                 // Maximum number of tweets we can get at once
+			IncludeEntities: twitter.Bool(true),
+			SinceID:         lastSeenID, // everything since our last request
+			Count:           200,        // Maximum number of tweets we can get at once
 		})
 
 		if err != nil {

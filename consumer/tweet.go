@@ -4,12 +4,16 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"net/url"
 	"os"
+	"regexp"
 	"strings"
+	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/xarantolus/spacex-hop-bot/match"
 	"github.com/xarantolus/spacex-hop-bot/util"
+	"mvdan.cc/xurls/v2"
 )
 
 // Process handles and retweets
@@ -20,25 +24,38 @@ type Processor struct {
 
 	selfUser *twitter.User
 
+	// map[URL]last Retweet time
+	seenLinks map[string]time.Time
+
 	seenTweets map[int64]bool
 
 	spacePeopleListID      int64
 	spacePeopleListMembers map[int64]bool
 }
 
+const (
+	articlesFilename = "articles.json"
+)
+
 // NewProcessor returns a new processor with the given options
 func NewProcessor(debug bool, client *twitter.Client, selfUser *twitter.User, spacePeopleListID int64) *Processor {
-	return &Processor{
+	p := &Processor{
 		debug: debug,
 
 		client:   client,
 		selfUser: selfUser,
+
+		seenLinks: make(map[string]time.Time),
 
 		spacePeopleListID: spacePeopleListID,
 
 		seenTweets:             make(map[int64]bool),
 		spacePeopleListMembers: make(map[int64]bool),
 	}
+
+	util.LogError(util.LoadJSON(articlesFilename, &p.seenLinks), "loading links")
+
+	return p
 }
 
 // Tweet processes the given tweet and checks whether it should be retweeted.
@@ -82,11 +99,19 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// Then we also filter out all tweets that tag elon musk, e.g. there could be someone
 		// just tweeting something like "Do you think xyz... @elonmusk"
 
+		// Filter out non-english tweets
 		if tweet.Lang != "" && tweet.Lang != "en" && tweet.Lang != "und" {
 			log.Println("Skipped", util.TweetURL(&tweet.Tweet), "because of language ", tweet.Lang)
 			break
 		}
 
+		// Ignore links if there aren't any images
+		if p.shouldIgnoreLink(&tweet.Tweet) && !p.hasMedia(&tweet.Tweet) {
+			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because of a link we ignore")
+			break
+		}
+
+		// Depending on the tweet source, we require media
 		if tweet.TweetSource == match.TweetSourceLocationStream {
 			if p.hasMedia(&tweet.Tweet) {
 				p.retweet(&tweet.Tweet, "normal + location media", tweet.TweetSource)
@@ -178,6 +203,68 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string, source match.Tw
 	tweet.Retweeted = true
 }
 
+var (
+	ignoredHosts = map[string]bool{
+		"patreon.com": true,
+	}
+	urlRegex *regexp.Regexp
+)
+
+func init() {
+	var err error
+	urlRegex, err = xurls.StrictMatchingScheme("https|http")
+	if err != nil {
+		panic("parsing URL regex: " + err.Error())
+	}
+}
+
+// shouldIgnoreLink returns whether this tweet should be ignored because of a linked article
+func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
+
+	// Get the text *with* URLs
+	var textWithURLs = tweet.SimpleText
+	if textWithURLs == "" {
+		textWithURLs = tweet.FullText
+	}
+
+	// Find all URLs
+	urls := urlRegex.FindAllString(textWithURLs, -1)
+
+	// Now check if any of these URLs is ignored
+	for _, u := range urls {
+		u = util.FindCanonicalURL(u)
+
+		parsed, err := url.ParseRequestURI(u)
+		if err != nil {
+			log.Println("Cannot parse URL:", err.Error())
+			continue
+		}
+
+		// Check if the host is ignored
+		host := strings.ToLower(strings.TrimPrefix("www.", parsed.Hostname()))
+		if ignoredHosts[host] {
+			return true
+		}
+
+		// If we retweeted this link in the last 24 hours, we should
+		// definitely ignore it
+		lastRetweetTime, ok := p.seenLinks[u]
+		if ok && time.Since(lastRetweetTime) < 24*time.Hour {
+			return true
+		}
+
+		// Mark this link as seen, but allow a retweet
+		p.seenLinks[u] = time.Now()
+
+		// Now save it to make sure we still know after a restart
+		util.LogError(util.SaveJSON(articlesFilename, p.seenLinks), "saving links")
+
+		return false
+	}
+
+	return false
+}
+
 // saveTweet appends the given tweet to a JSON file for later inspections, especially in case of wrong retweets
 func (p *Processor) saveTweet(tweet *twitter.Tweet) {
 	f, err := os.OpenFile("retweeted.ndjson", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
@@ -243,7 +330,7 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 	if tweet.InReplyToStatusID != 0 {
 		// Ok, there was a reply. Check if we can do something with that
 		parent, _, err := p.client.Statuses.Show(tweet.InReplyToStatusID, &twitter.StatusShowParams{
-			IncludeEntities: twitter.Bool(false),
+			IncludeEntities: twitter.Bool(true),
 			TweetMode:       "extended",
 		})
 		util.LogError(err, "tweet reply status fetch (thread)")

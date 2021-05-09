@@ -6,7 +6,6 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/dghubble/go-twitter/twitter"
 	"github.com/xarantolus/spacex-hop-bot/bot"
 	"github.com/xarantolus/spacex-hop-bot/config"
 	"github.com/xarantolus/spacex-hop-bot/consumer"
@@ -52,7 +51,7 @@ func main() {
 	)
 
 	// The bot should check all tweets that are sent on this channel
-	var tweetChan = make(chan twitter.Tweet, 250)
+	var tweetChan = make(chan match.TweetWrapper, 250)
 
 	if *flagDebug {
 		log.Println("[Info] Running in debug mode, no background jobs are started")
@@ -70,6 +69,6 @@ func main() {
 
 	// Now we just process every tweet we come across
 	for tweet := range tweetChan {
-		handler.Tweet(&tweet)
+		handler.Tweet(tweet)
 	}
 }
