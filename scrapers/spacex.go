@@ -80,7 +80,7 @@ func SpaceXStarship() (s StarshipInfo, err error) {
 	var liveID string
 	if vidButton.Length() > 0 {
 		vt := strings.TrimSpace(vidButton.Text())
-		if !strings.EqualFold(vt, "REPLAY") {
+		if !strings.EqualFold(vt, "REPLAY") && !strings.EqualFold(vt, "REWATCH") {
 			liveID, _ = vidButton.Attr("data-video")
 		}
 	}

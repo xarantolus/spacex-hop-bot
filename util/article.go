@@ -7,18 +7,33 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/icholy/replace"
+	"golang.org/x/text/transform"
+	"mvdan.cc/xurls/v2"
 )
 
 var (
-	client = http.Client{
-		Timeout: 30 * time.Second,
-	}
+	urlRegex = xurls.Strict()
+
+	noScriptEnter = replace.String("<noscript>", "")
+	noScriptLeave = replace.String("</noscript>", "")
+
+	noScriptReplacer = transform.Chain(noScriptEnter, noScriptLeave)
 )
 
 // FindCanonicalURL returns the canonical URL of an article if possible,
 // else the original input is returned
 func FindCanonicalURL(url string) (out string) {
 	out = url
+
+	client := http.Client{
+		Timeout: 30 * time.Second,
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			// If we were redirected, we now get a different URL
+			out = req.URL.String()
+			return nil
+		},
+	}
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -39,21 +54,31 @@ func FindCanonicalURL(url string) (out string) {
 		return
 	}
 
-	// If we were redirected, we now get a different URL
-	out = resp.Request.URL.String()
+	// t.co doesn't use real redirects. And the <meta http-equiv="refresh" tag is inside a <noscript>
+	// tag which the Go html parser doesn't parse (because it's in script mode and thus parses that node as text...)
+	// So here is the stupid but working solution: replacing any "<noscript>" "</noscript>" text
+	bodyReader := transform.NewReader(bufio.NewReader(resp.Body), noScriptReplacer)
 
 	// Still try to find the tag
-	doc, err := goquery.NewDocumentFromReader(bufio.NewReader(resp.Body))
+	doc, err := goquery.NewDocumentFromReader(bodyReader)
 	if err != nil {
 		return
 	}
 
 	canon := doc.Find("[rel=canonical]").First()
-	if canon.Length() == 0 {
-		return
+	if canon.Length() != 0 {
+		return canon.AttrOr("href", url)
 	}
 
-	return canon.AttrOr("href", url)
+	equiv := doc.Find("[http-equiv]").First()
+	if equiv.Length() != 0 {
+		u := urlRegex.FindString(equiv.AttrOr("content", ""))
+		if u != "" {
+			return u
+		}
+	}
+
+	return
 }
 
 var possibleUserAgents = []string{

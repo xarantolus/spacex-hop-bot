@@ -32,9 +32,9 @@ func CheckHomeTimeline(client *twitter.Client, tweetChan chan<- match.TweetWrapp
 		tweets, _, err := client.Timelines.HomeTimeline(&twitter.HomeTimelineParams{
 			ExcludeReplies:  twitter.Bool(false), // We want to get everything, including replies to tweets
 			TrimUser:        twitter.Bool(false), // We care about the user
-			IncludeEntities: twitter.Bool(true),
-			SinceID:         lastSeenID, // everything since our last request
-			Count:           200,        // Maximum number of tweets we can get at once
+			IncludeEntities: twitter.Bool(true),  // We do care about who was mentioned etc.
+			SinceID:         lastSeenID,          // everything since our last request
+			Count:           200,                 // Maximum number of tweets we can get at once
 			TweetMode:       "extended",
 		})
 		if err != nil {
