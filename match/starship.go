@@ -84,7 +84,7 @@ var (
 
 		"ocisly", "jrti", "canaveral",
 
-		"meme", "bot", "uwu", "qwq", "reaction", "immigrants",
+		"meme", "bot", "suck", "cursed", "uwu", "qwq", "reaction", "immigrants",
 
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
