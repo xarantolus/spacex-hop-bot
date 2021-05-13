@@ -59,7 +59,7 @@ var (
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "f9", "starlink",
 		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "ula", "vulcan", "artemis",
 		"virgingalactic", "virgin galactic", "blueorigin", "boeing", "starliner", "soyuz", "orion",
-		"resilience", "shuttle", "new glenn", "china", "new shepard", "tsla", "dynetics", "hls",
+		"resilience", "shuttle", "new glenn", "china", "russia", "new shepard", "tsla", "dynetics", "hls",
 
 		// e.g. crew-1, crew-2...
 		"crew-", "crew dragon",
@@ -67,7 +67,7 @@ var (
 		"f22", "f-22", "jet",
 
 		// Not interested in other stuff
-		"doge", "fsd",
+		"doge", "coin", "btc", "fsd",
 
 		"no tfr",
 
