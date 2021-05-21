@@ -12,7 +12,7 @@ import (
 // Note that all text here must be lowercase because the text is lowercased in the matching function
 var (
 	// we also match Raptor, but only if either "SpaceX", "Engine" or "McGregor" is mentioned
-	starshipKeywords = []string{"starship", "superheavy", "super heavy"}
+	starshipKeywords = []string{"starship", "superheavy", "super heavy", "orbital launch tower", "gse tank"}
 
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx
@@ -41,6 +41,9 @@ var (
 		"tylerg1998":      closureTFRRegex,
 		"nasaspaceflight": closureTFRRegex,
 		"spacexboca":      closureTFRRegex,
+
+		// Interesting stuff
+		"starshipgazer": regexp.MustCompile(`(?:gse|orbital)`),
 
 		"austinbarnard45": regexp.MustCompile("(?:day in Texas)"),
 
@@ -72,15 +75,18 @@ var (
 		"no tfr",
 
 		// 3d models are nice, but we only care about "real info"
-		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious", "simulat" /* or/ed */, "print",
+		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious", "simulat" /* or/ed */, "print", "vfx",
 
 		"not starship", "non starship", "not about starship",
 
 		// kerbal space program != "official" news
-		"kerbal space program", "ksp", "no mans sky", "nomanssky",
+		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky",
 
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
+
+		// Someone *really* named their delivery robot business "Starship"... why?
+		"delivery", "startup", "groceries", "robots", "starship robot",
 
 		"ocisly", "jrti", "canaveral",
 
