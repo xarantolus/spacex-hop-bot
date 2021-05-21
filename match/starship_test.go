@@ -49,4 +49,9 @@ func TestVariables(t *testing.T) {
 			t.Errorf("Account name %q should be lowercase in specificUserMatchers map", k)
 		}
 	}
+	for k := range hqMediaAccounts {
+		if strings.ToLower(k) != k {
+			t.Errorf("Account name %q should be lowercase in hqMediaAccounts map", k)
+		}
+	}
 }

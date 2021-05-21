@@ -42,9 +42,6 @@ var (
 		"nasaspaceflight": closureTFRRegex,
 		"spacexboca":      closureTFRRegex,
 
-		// Interesting stuff
-		"starshipgazer": regexp.MustCompile(`(?:gse|orbital)`),
-
 		"austinbarnard45": regexp.MustCompile("(?:day in Texas)"),
 
 		// Watches temporary flight restrictions
@@ -56,6 +53,10 @@ var (
 
 	usersWithNoAntikeywords = map[string]bool{
 		"elonmusk": true,
+	}
+
+	hqMediaAccounts = map[string]bool{
+		"starshipgazer": true,
 	}
 
 	antiStarshipKeywords = []string{
@@ -172,6 +173,12 @@ func StarshipTweet(tweet TweetWrapper) bool {
 		m, ok := specificUserMatchers[strings.ToLower(tweet.User.ScreenName)]
 		if ok {
 			return m.MatchString(text)
+		}
+
+		// There are some accounts that always post high-quality pictures and videos.
+		// For them we retweet *everything* that has media
+		if hqMediaAccounts[strings.ToLower(tweet.User.ScreenName)] {
+			return tweet.Entities != nil && len(tweet.Entities.Media) > 0 || tweet.ExtendedEntities != nil && len(tweet.ExtendedEntities.Media) > 0
 		}
 	}
 
