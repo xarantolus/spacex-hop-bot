@@ -8,7 +8,7 @@ import (
 	"github.com/xarantolus/spacex-hop-bot/match"
 )
 
-func Register(client *twitter.Client, selfUser *twitter.User, tweetChan chan match.TweetWrapper, skipList int64) (err error) {
+func Register(client *twitter.Client, selfUser *twitter.User, tweetChan chan match.TweetWrapper, skipLists map[int64]bool) (err error) {
 	var linkChan = make(chan string, 2)
 
 	// Run YouTube scraper in the background,
@@ -41,7 +41,7 @@ func Register(client *twitter.Client, selfUser *twitter.User, tweetChan chan mat
 	// Those are also background jobs
 	var watchedLists int
 	for _, l := range lists {
-		if l.ID == skipList {
+		if skipLists[l.ID] {
 			continue
 		}
 		go CheckListTimeline(client, l, tweetChan)

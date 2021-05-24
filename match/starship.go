@@ -96,7 +96,7 @@ var (
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
-		"follow", "pre-order", "merch",
+		"follow", "pre-order", "merch", "vote",
 
 		"child", "illegal", "nfl", "tiktok", "tik tok",
 
@@ -148,11 +148,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 
 	text = strings.ToLower(text)
 
-	if strings.Contains(text, "patreon") && hasNoMedia(&tweet.Tweet) {
-		return false
-	}
-
-	if isSatireAccount(&tweet.Tweet) {
+	if isIgnoredAccount(&tweet.Tweet) {
 		return false
 	}
 

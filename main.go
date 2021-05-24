@@ -46,7 +46,6 @@ func main() {
 
 	// Twitter list ids for lists we need
 	const (
-		satireListID      = 1377136100574064647
 		spacePeopleListID = 1375480259840212997
 	)
 
@@ -57,11 +56,20 @@ func main() {
 		log.Println("[Info] Running in debug mode, no background jobs are started")
 	} else {
 		// Register all background jobs, most of them send tweets on tweetChan
-		// it should ignore the satire list
-		jobs.Register(client, selfUser, tweetChan, satireListID)
 
-		// Load a list of satire accounts to make sure we don't retweet them
-		match.LoadSatireList(client, satireListID)
+		// We have different account lists that define ignored accounts.
+		// That way I don't have to mute them.
+		var ignoredLists = map[int64]bool{
+			1377136100574064647: true,
+			1396191591686184967: true,
+		}
+
+		jobs.Register(client, selfUser, tweetChan, ignoredLists)
+
+		// Load a ignored accounts to make sure we don't retweet them
+		for lid := range ignoredLists {
+			match.LoadIgnoredList(client, lid)
+		}
 	}
 
 	// handler handles tweets by filtering & retweeting the interesting ones
