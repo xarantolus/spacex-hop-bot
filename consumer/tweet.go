@@ -89,8 +89,8 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		p.Tweet(match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.QuotedStatus})
 	case tweet.RetweetedStatus != nil:
 		p.Tweet(match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.RetweetedStatus})
-	case tweet.QuotedStatusID != 0:
-		// We got a quoted status, but twitter didn't deliver it in QuotedStatus. So we skip this tweet I guess
+	case tweet.QuotedStatusID != 0 && !p.hasMedia(&tweet.Tweet):
+		// Quoted tweets should be skipped, at least if they don't have media
 	case match.StarshipTweet(tweet) && !p.isReply(&tweet.Tweet) && !p.isQuestion(&tweet.Tweet) && !p.isReactionGIF(&tweet.Tweet):
 		// If the tweet itself is about starship, we retweet it
 		// We already filtered out replies, which is important because we don't want to
