@@ -42,6 +42,8 @@ var (
 		"nasaspaceflight": closureTFRRegex,
 		"spacexboca":      closureTFRRegex,
 
+		"sheriffgarza": regexp.MustCompile(`(?:close)`),
+
 		"austinbarnard45": regexp.MustCompile("(?:day in Texas)"),
 
 		// Watches temporary flight restrictions
@@ -102,6 +104,9 @@ var (
 
 		// stuff that seems like starship, but isn't
 		"starshipent", "monstax", "eshygazit", "wonho",
+
+		// Account follows a sheriff
+		"assault", "rape", "deadly", "weapon", "victim", "murder", "crime",
 	}
 )
 
