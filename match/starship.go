@@ -185,16 +185,15 @@ func StarshipTweet(tweet TweetWrapper) bool {
 		// There are some accounts that always post high-quality pictures and videos.
 		// For them we retweet *everything* that has media
 		if hqMediaAccounts[strings.ToLower(tweet.User.ScreenName)] {
-			return tweet.Entities != nil && len(tweet.Entities.Media) > 0 || tweet.ExtendedEntities != nil && len(tweet.ExtendedEntities.Media) > 0
+			return hasMedia(&tweet.Tweet)
 		}
 	}
 
 	return false
 }
 
-func hasNoMedia(tweet *twitter.Tweet) bool {
-	return (tweet.ExtendedEntities == nil || len(tweet.ExtendedEntities.Media) == 0) &&
-		(tweet.Entities == nil || len(tweet.Entities.Media) == 0)
+func hasMedia(tweet *twitter.Tweet) bool {
+	return tweet.Entities != nil && len(tweet.Entities.Media) > 0 || tweet.ExtendedEntities != nil && len(tweet.ExtendedEntities.Media) > 0
 }
 
 func containsAntikeyword(words []string, text string) bool {
