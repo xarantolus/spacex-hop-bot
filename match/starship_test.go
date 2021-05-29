@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestStarship(t *testing.T) {
+func TestStarshipAntiKeywords(t *testing.T) {
 	tests := []struct {
 		text string
 		want bool
@@ -26,13 +26,33 @@ The Falcon 9 first stage rocket booster supporting this mission previously suppo
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
-			if got := StarshipText(tt.text, false); got != tt.want {
-				t.Errorf("StarshipText(%q) = %v, want %v", tt.text, got, tt.want)
+			if got := StarshipText(tt.text, antiStarshipKeywords); got != tt.want {
+				t.Errorf("StarshipText(%q, antiStarshipKeywords) = %v, want %v", tt.text, got, tt.want)
 			}
 		})
 	}
 }
-
+func TestStreamTitles(t *testing.T) {
+	tests := []struct {
+		text string
+		want bool
+	}{
+		{"Starlink Mission", false},
+		{"Starship | SN11 | High-Altitude Flight Test", true},
+		{"Starship | SN10 | High-Altitude Flight Recap", true},
+		{"Starship | SN9 | High-Altitude Flight Test", true},
+		{"Starship | SN8 | High-Altitude Flight Test", true},
+		{"Starship SN20 & BN3: Orbital Flight Test", true},
+		{"Starship | Starlink Mission", true},
+	}
+	for _, tt := range tests {
+		t.Run(t.Name(), func(t *testing.T) {
+			if got := StarshipText(tt.text, nil); got != tt.want {
+				t.Errorf("StarshipText(%q, nil) = %v, want %v", tt.text, got, tt.want)
+			}
+		})
+	}
+}
 func TestVariables(t *testing.T) {
 	for _, k := range starshipKeywords {
 		if strings.ToLower(k) != k {

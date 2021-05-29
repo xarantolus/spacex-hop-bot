@@ -53,8 +53,8 @@ var (
 		"elonmusk": regexp.MustCompile("(?:booster|heavy|cryo|static fire|tower|ship|rud|faa|starbase|boca chica|lox|liquid oxygen|methane|ch4|relight|fts|flip|cargo|lunar|tfr|fts|scrub|mach)"),
 	}
 
-	usersWithNoAntikeywords = map[string]bool{
-		"elonmusk": true,
+	userAntikeywordsOverwrite = map[string][]string{
+		"elonmusk": {"tesla", "model s", "model 3", "model x", "model y", "car", "giga", "falcon", "boring company", "tunnel", "loop", "doge"},
 	}
 
 	hqMediaAccounts = map[string]bool{
@@ -106,19 +106,17 @@ var (
 		"starshipent", "monstax", "eshygazit", "wonho",
 
 		// Account follows a sheriff
-		"assault", "rape", "deadly", "weapon", "victim", "murder", "crime",
+		"assault", "rape", "deadly", "weapon", "victim", "murder", "crime", "investigat", "body", "memorial",
 	}
 )
 
 // StarshipText returns whether the given text mentions starship
-func StarshipText(text string, ignoreBlocklist bool) bool {
+func StarshipText(text string, antiKeywords []string) bool {
 
 	text = strings.ToLower(text)
 
-	if !ignoreBlocklist {
-		if containsAntikeyword(text) {
-			return false
-		}
+	if containsAntikeyword(antiKeywords, text) {
+		return false
 	}
 
 	for _, k := range starshipKeywords {
@@ -158,13 +156,21 @@ func StarshipTweet(tweet TweetWrapper) bool {
 	}
 
 	// Now check if the text of the tweet matches what we're looking for.
-	// if it's elon musk, then we don't check for anti-keywords
-	if StarshipText(text, tweet.User != nil && usersWithNoAntikeywords[strings.ToLower(tweet.User.ScreenName)]) {
+
+	antiKeywords := antiStarshipKeywords
+	if tweet.User != nil {
+		ak, ok := userAntikeywordsOverwrite[strings.ToLower(tweet.User.ScreenName)]
+		if ok {
+			antiKeywords = ak
+		}
+	}
+
+	if StarshipText(text, antiKeywords) {
 		return true
 	}
 
 	// Raptor has more than one meaning, so we need to be more careful
-	if !containsAntikeyword(text) && strings.Contains(text, "raptor") && (strings.Contains(text, "starship") || strings.Contains(text, "spacex") || strings.Contains(text, "mcgregor") || strings.Contains(text, "engine")) {
+	if !containsAntikeyword(antiKeywords, text) && strings.Contains(text, "raptor") && (strings.Contains(text, "starship") || strings.Contains(text, "spacex") || strings.Contains(text, "mcgregor") || strings.Contains(text, "engine")) {
 		return true
 	}
 
@@ -191,8 +197,8 @@ func hasNoMedia(tweet *twitter.Tweet) bool {
 		(tweet.Entities == nil || len(tweet.Entities.Media) == 0)
 }
 
-func containsAntikeyword(text string) bool {
-	for _, k := range antiStarshipKeywords {
+func containsAntikeyword(words []string, text string) bool {
+	for _, k := range words {
 		if strings.Contains(text, k) {
 			return true
 		}

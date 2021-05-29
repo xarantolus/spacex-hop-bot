@@ -38,7 +38,7 @@ func isIgnoredAccount(tweet *twitter.Tweet) bool {
 	}
 	// If we know the user, they can't be ignored
 	_, known1 := specificUserMatchers[tweet.User.ScreenName]
-	_, known2 := usersWithNoAntikeywords[tweet.User.ScreenName]
+	_, known2 := userAntikeywordsOverwrite[tweet.User.ScreenName]
 	if known1 || known2 {
 		return false
 	}

@@ -50,7 +50,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 		}
 
 		// If we have interesting video info
-		if match.StarshipText(liveVideo.Title, true) || match.StarshipText(liveVideo.ShortDescription, true) {
+		if match.StarshipText(liveVideo.Title, nil) || match.StarshipText(liveVideo.ShortDescription, nil) {
 			// Get the video URL
 			liveURL := liveVideo.URL()
 
