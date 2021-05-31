@@ -12,7 +12,7 @@ import (
 // Note that all text here must be lowercase because the text is lowercased in the matching function
 var (
 	// we also match Raptor, but only if either "SpaceX", "Engine" or "McGregor" is mentioned
-	starshipKeywords = []string{"starship", "superheavy", "super heavy", "orbital launch tower", "gse tank"}
+	starshipKeywords = []string{"starship", "superheavy", "super heavy", "orbital launch tower", "gse tank", "orbital launch table"}
 
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx
