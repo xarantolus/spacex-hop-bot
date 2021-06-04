@@ -12,7 +12,13 @@ import (
 // Note that all text here must be lowercase because the text is lowercased in the matching function
 var (
 	// we also match Raptor, but only if either "SpaceX", "Engine" or "McGregor" is mentioned
-	starshipKeywords = []string{"starship", "superheavy", "super heavy", "orbital launch tower", "gse tank", "orbital launch table"}
+	starshipKeywords = []string{
+		"starship",
+		"superheavy", "super heavy",
+		"orbital launch tower", "orbital tower",
+		"gse tank",
+		"orbital launch table", "orbital table",
+	}
 
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx
@@ -66,6 +72,7 @@ var (
 		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "ula", "vulcan", "artemis",
 		"virgingalactic", "virgin galactic", "blueorigin", "boeing", "starliner", "soyuz", "orion",
 		"resilience", "shuttle", "new glenn", "china", "russia", "new shepard", "tsla", "dynetics", "hls",
+		"ares v", "titan iv",
 
 		// e.g. crew-1, crew-2...
 		"crew-", "crew dragon",
@@ -98,9 +105,9 @@ var (
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
-		"follow", "pre-order", "merch", "vote",
+		"follow", "pre-order", "merch", "vote", "podcast",
 
-		"child", "illegal", "nfl", "tiktok", "tik tok",
+		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm",
 
 		// stuff that seems like starship, but isn't
 		"starshipent", "monstax", "eshygazit", "wonho",
