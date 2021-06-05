@@ -72,7 +72,7 @@ var (
 		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "ula", "vulcan", "artemis",
 		"virgingalactic", "virgin galactic", "blueorigin", "boeing", "starliner", "soyuz", "orion",
 		"resilience", "shuttle", "new glenn", "china", "russia", "new shepard", "tsla", "dynetics", "hls",
-		"ares v", "titan iv",
+		"ares", "titan", "ariane",
 
 		// e.g. crew-1, crew-2...
 		"crew-", "crew dragon",
@@ -90,7 +90,7 @@ var (
 		"not starship", "non starship", "not about starship",
 
 		// kerbal space program != "official" news
-		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky", "kerbals",
+		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky", "kerbals", "pocket rocket", "pocketrocket",
 
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
