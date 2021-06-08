@@ -66,7 +66,7 @@ func main() {
 
 		jobs.Register(client, selfUser, tweetChan, ignoredLists)
 
-		// Load a ignored accounts to make sure we don't retweet them
+		// Load all ignored accounts to make sure we don't retweet them
 		for lid := range ignoredLists {
 			match.LoadIgnoredList(client, lid)
 		}
