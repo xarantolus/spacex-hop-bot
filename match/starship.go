@@ -80,7 +80,7 @@ var (
 		"f22", "f-22", "jet",
 
 		// Not interested in other stuff
-		"doge", "coin", "btc", "fsd",
+		"doge", "coin", "btc", "fsd", "spce",
 
 		"no tfr",
 
