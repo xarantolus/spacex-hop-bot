@@ -71,7 +71,7 @@ var (
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "f9", "starlink",
 		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "ula", "vulcan", "artemis",
 		"virgingalactic", "virgin galactic", "blueorigin", "boeing", "starliner", "soyuz", "orion",
-		"resilience", "shuttle", "new glenn", "china", "russia", "new shepard", "tsla", "dynetics", "hls",
+		"resilience", "shuttle", "new glenn", "china", "chinese", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace",
 
 		// e.g. crew-1, crew-2...
@@ -87,7 +87,7 @@ var (
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious", "simulat" /* or/ed */, "print", "vfx",
 
-		"not starship", "non starship", "not about starship",
+		"not starship", "non starship", "not about starship", "discord",
 
 		// kerbal space program != "official" news
 		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky", "kerbals", "pocket rocket", "pocketrocket",
@@ -105,7 +105,7 @@ var (
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
-		"follow", "pre-order", "merch", "vote", "podcast",
+		"follow", "pre-order", "merch", "vote", "podcast", "trending",
 
 		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm",
 
