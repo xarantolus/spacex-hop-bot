@@ -108,6 +108,12 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// Ignore links if there aren't any images
 		if p.shouldIgnoreLink(&tweet.Tweet) && !p.hasMedia(&tweet.Tweet) {
 			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because of a link we ignore")
+
+			break
+		}
+
+		if p.mentionsTooMany(&tweet.Tweet) {
+			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because it mentions too many people")
 			break
 		}
 
@@ -124,6 +130,10 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 	}
 
 	p.seenTweets[tweet.ID] = true
+}
+
+func (p *Processor) mentionsTooMany(t *twitter.Tweet) bool {
+	return strings.Count(t.Text(), "@") > 3
 }
 
 // isReply returns if the given tweet is a reply to another user
@@ -205,7 +215,8 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string, source match.Tw
 
 var (
 	ignoredHosts = map[string]bool{
-		"patreon.com": true,
+		"patreon.com":  true,
+		"gofundme.com": true,
 	}
 	urlRegex *regexp.Regexp
 )
