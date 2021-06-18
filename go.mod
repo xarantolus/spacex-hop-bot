@@ -11,11 +11,11 @@ require (
 	github.com/dghubble/oauth1 v0.7.0
 	github.com/docker/go-units v0.4.0
 	github.com/google/go-querystring v1.1.0 // indirect
-	github.com/icholy/replace v0.4.0 // indirect
+	github.com/icholy/replace v0.4.0
 	github.com/tdewolff/parse/v2 v2.5.16 // indirect
 	github.com/xarantolus/jsonextract v1.5.2
 	golang.org/x/net v0.0.0-20210503060351-7fd8e65b6420 // indirect
-	golang.org/x/text v0.3.6 // indirect
+	golang.org/x/text v0.3.6
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 	mvdan.cc/xurls/v2 v2.2.0
 )

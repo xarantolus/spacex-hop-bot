@@ -91,6 +91,7 @@ var (
 
 		// kerbal space program != "official" news
 		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky", "kerbals", "pocket rocket", "pocketrocket",
+		"star trek", "startrek",
 
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
@@ -178,6 +179,10 @@ func StarshipTweet(tweet TweetWrapper) bool {
 
 	// Raptor has more than one meaning, so we need to be more careful
 	if !containsAntikeyword(antiKeywords, text) && strings.Contains(text, "raptor") && (strings.Contains(text, "starship") || strings.Contains(text, "spacex") || strings.Contains(text, "mcgregor") || strings.Contains(text, "engine")) {
+		return true
+	}
+
+	if !containsAntikeyword(antiKeywords, text) && (strings.Contains(text, "starbase") || strings.Contains(text, "boca chica")) && (strings.Contains(text, "launch site") || strings.Contains(text, "launch tower")) {
 		return true
 	}
 
