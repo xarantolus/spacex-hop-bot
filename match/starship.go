@@ -91,7 +91,7 @@ var (
 
 		// kerbal space program != "official" news
 		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky", "kerbals", "pocket rocket", "pocketrocket",
-		"star trek", "startrek",
+		"star trek", "startrek", "starcitizen", "star citizen",
 
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
