@@ -16,6 +16,7 @@ var (
 		"starship",
 		"superheavy", "super heavy",
 		"orbital launch tower", "orbital tower",
+		"orbital launch integration tower",
 		"gse tank",
 		"orbital launch table", "orbital table",
 	}

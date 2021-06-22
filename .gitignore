@@ -2,3 +2,4 @@ deploy
 *.json
 concept.md
 .vscode/
+*.yaml
