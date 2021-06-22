@@ -9,11 +9,12 @@ require (
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/dghubble/go-twitter v0.0.0-20210609183100-2fdbf421508e
 	github.com/dghubble/oauth1 v0.7.0
+	github.com/dghubble/sling v1.3.0 // indirect
 	github.com/docker/go-units v0.4.0
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/icholy/replace v0.4.0
 	github.com/tdewolff/parse/v2 v2.5.18 // indirect
-	github.com/xarantolus/jsonextract v1.5.2
+	github.com/xarantolus/jsonextract v1.5.3
 	golang.org/x/net v0.0.0-20210614182718-04defd469f4e // indirect
 	golang.org/x/text v0.3.6
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
