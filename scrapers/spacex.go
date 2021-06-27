@@ -16,7 +16,7 @@ const (
 	StarshipURL = "https://www.spacex.com/vehicles/starship/"
 )
 
-var ShipNameRegex = regexp.MustCompile(`((?:SN|BN)-?\s*\d+)`)
+var ShipNameRegex = regexp.MustCompile(`\b((?:SN|BN|S|B)-?\s*\d+)\b`)
 
 type StarshipInfo struct {
 	ShipName       string

@@ -74,13 +74,13 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 
 			switch {
 			// Upcoming video
-			case strings.HasPrefix(shipName, "BN") && liveVideo.IsUpcoming:
+			case strings.HasPrefix(shipName, "B") && liveVideo.IsUpcoming:
 				if haveStartTime {
 					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship Booster #SuperHeavy #%s stream posted to YouTube, likely starting in %s\n#WenHop\n%s", shipName, strings.ToLower(units.HumanDuration(d)), liveURL)
 				} else {
 					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship Booster #SuperHeavy #%s stream posted to YouTube, likely starting soon\n#WenHop\n%s", shipName, liveURL)
 				}
-			case strings.HasPrefix(shipName, "SN") && liveVideo.IsUpcoming:
+			case strings.HasPrefix(shipName, "S") && liveVideo.IsUpcoming:
 				if haveStartTime {
 					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship #%s stream posted to YouTube, likely starting in %s\n#WenHop\n%s", shipName, strings.ToLower(units.HumanDuration(d)), liveURL)
 				} else {
@@ -88,12 +88,12 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 				}
 
 				// If it's not upcoming, it's likely live
-			case strings.HasPrefix(shipName, "BN"):
+			case strings.HasPrefix(shipName, "B"):
 				tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship Booster #SuperHeavy #%s stream is live\n%s", shipName, liveURL)
-			case strings.HasPrefix(shipName, "SN"):
+			case strings.HasPrefix(shipName, "S"):
 				tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship #%s stream is live\n%s", shipName, liveURL)
 
-				// If we don't have a SN/BN prefix, we ignore that and tweet anyways
+				// If we don't have a S/B prefix, we ignore that and tweet anyways
 			case liveVideo.IsUpcoming:
 				if haveStartTime {
 					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship stream was posted to YouTube, likely starting in %s\n#WenHop\n%s", liveURL, strings.ToLower(units.HumanDuration(d)))
