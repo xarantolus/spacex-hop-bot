@@ -15,10 +15,11 @@ var (
 	starshipKeywords = []string{
 		"starship",
 		"superheavy", "super heavy",
-		"orbital launch tower", "orbital tower", "olt segment", "launch tower segment",
+		"orbital launch tower", "orbital tower", "olt segment", "launch tower segment", "olp service tower", "olp tower",
 		"orbital launch integration tower",
 		"gse tank",
 		"orbital launch table", "orbital table",
+		"orbital launch pad",
 	}
 
 	starshipMatchers = []*regexp.Regexp{
