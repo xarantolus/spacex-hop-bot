@@ -15,7 +15,7 @@ var (
 	starshipKeywords = []string{
 		"starship",
 		"superheavy", "super heavy",
-		"orbital launch tower", "orbital tower",
+		"orbital launch tower", "orbital tower", "olt segment", "launch tower segment",
 		"orbital launch integration tower",
 		"gse tank",
 		"orbital launch table", "orbital table",
