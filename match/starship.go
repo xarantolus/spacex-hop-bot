@@ -62,7 +62,7 @@ var (
 	}
 
 	userAntikeywordsOverwrite = map[string][]string{
-		"elonmusk": {"tesla", "model s", "model 3", "model x", "model y", "car", "giga", "falcon", "boring company", "tunnel", "loop", "doge"},
+		"elonmusk": {"tesla", "model s", "model 3", "model x", "model y", "car", "giga", "falcon", "boring company", "tunnel", "loop", "doge", "ula", "tonybruno", "jeff", "fsd"},
 	}
 
 	hqMediaAccounts = map[string]bool{
@@ -74,7 +74,7 @@ var (
 		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "ula", "vulcan", "artemis",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "orion",
 		"resilience", "shuttle", "new glenn", "china", "chinese", "russia", "new shepard", "tsla", "dynetics", "hls",
-		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace",
+		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
 
 		// e.g. crew-1, crew-2...
 		"crew-", "crew dragon",
@@ -87,7 +87,7 @@ var (
 		"no tfr",
 
 		// 3d models are nice, but we only care about "real info"
-		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious", "simulat" /* or/ed */, "print", "vfx",
+		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious", "simulat" /* or/ed */, "print", "vfx", "not real",
 
 		"not starship", "non starship", "not about starship", "discord",
 
@@ -103,14 +103,14 @@ var (
 
 		"ocisly", "jrti", "canaveral",
 
-		"meme", "bot", "suck", "cursed", "uwu", "qwq", "reaction", "immigrants",
+		"meme", "bot", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrants",
 
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 		"follow", "pre-order", "merch", "vote", "podcast", "trending",
 
-		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm",
+		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "gspot",
 
 		// stuff that seems like starship, but isn't
 		"starshipent", "monstax", "eshygazit", "wonho",
