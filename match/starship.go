@@ -24,9 +24,9 @@ var (
 
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx
-		regexp.MustCompile(`\bsn\d+\b`),
+		regexp.MustCompile(`\b(?:sn|starship|starship number)\s?\d+`),
 		// Booster BNx
-		regexp.MustCompile(`\bbn\d+\b`),
+		regexp.MustCompile(`\b(?:bn|booster|booster number)\s?\d+`),
 	}
 
 	closureTFRRegex = regexp.MustCompile("\b(?:closure|tfr|cryo|fts|scrub)")
@@ -87,7 +87,7 @@ var (
 		"no tfr",
 
 		// 3d models are nice, but we only care about "real info"
-		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious", "simulat" /* or/ed */, "print", "vfx", "not real",
+		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious", "simulat" /* or/ed */, "print", "vfx", "not real", "photoshop",
 
 		"not starship", "non starship", "not about starship", "discord",
 

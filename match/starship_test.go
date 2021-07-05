@@ -5,6 +5,46 @@ import (
 	"testing"
 )
 
+func TestShipRegex(t *testing.T) {
+	var shipMatch = starshipMatchers[0]
+
+	var valid = []string{"sn10", "sn15", "sn 15", "starship number 15", "starship 15", "starship sn15s engines", "starship sn15's engines"}
+
+	var invalid = []string{"booster 10", "bn10", "wordsn 10"}
+
+	for _, v := range valid {
+		if shipMatch.FindString(v) == "" {
+			t.Errorf("starshipMatchers[0] should have matched %q, but didn't", v)
+		}
+	}
+
+	for _, i := range invalid {
+		if shipMatch.FindString(i) != "" {
+			t.Errorf("starshipMatchers[0] matched %q, but shouldn't have done that", i)
+		}
+	}
+}
+
+func TestBoosterRegex(t *testing.T) {
+	var boostMatch = starshipMatchers[1]
+
+	var valid = []string{"bn10", "bn1", "bn 15", "booster number 15", "booster 15", "booster 15's engines", "booster number 15s engines"}
+
+	var invalid = []string{"starship 10", "sn10", "wordbn 10"}
+
+	for _, v := range valid {
+		if boostMatch.FindString(v) == "" {
+			t.Errorf("starshipMatchers[1] should have matched %q, but didn't", v)
+		}
+	}
+
+	for _, i := range invalid {
+		if boostMatch.FindString(i) != "" {
+			t.Errorf("starshipMatchers[1] matched %q, but shouldn't have done that", i)
+		}
+	}
+}
+
 func TestStarshipAntiKeywords(t *testing.T) {
 	tests := []struct {
 		text string
