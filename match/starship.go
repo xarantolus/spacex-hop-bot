@@ -24,9 +24,9 @@ var (
 
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx
-		regexp.MustCompile(`\b(?:s|sn|starship|starship number)\s?\d+`),
+		regexp.MustCompile(`\b((s\d+)|(sn|starship|starship number)\s?\d+)`),
 		// Booster BNx
-		regexp.MustCompile(`\b(?:b|bn|booster|booster number)\s?\d+`),
+		regexp.MustCompile(`\b((b\d+)|(bn|booster|booster number)\s?\d+)`),
 	}
 
 	closureTFRRegex = regexp.MustCompile("\b(?:closure|tfr|cryo|fts|scrub)")
@@ -77,7 +77,7 @@ var (
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
 
 		// e.g. crew-1, crew-2...
-		"crew-", "crew dragon",
+		"crew-", "crew dragon", "dragon",
 
 		"f22", "f-22", "jet",
 

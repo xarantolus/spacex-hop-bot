@@ -62,6 +62,7 @@ func main() {
 		var ignoredLists = map[int64]bool{
 			1377136100574064647: true,
 			1396191591686184967: true,
+			1410664386943930368: true,
 		}
 
 		jobs.Register(client, selfUser, tweetChan, ignoredLists)

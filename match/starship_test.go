@@ -8,9 +8,13 @@ import (
 func TestShipRegex(t *testing.T) {
 	var shipMatch = starshipMatchers[0]
 
-	var valid = []string{"sn10", "#sn10", "sn15", "sn 15", "starship s20", "starship number 15", "starship 15", "starship sn15s engines", "starship sn15's engines"}
+	var valid = []string{
+		"sn10", "#sn10", "sn15", "sn 15", "starship s20",
+		"starship number 15", "starship 15",
+		"starship sn15s engines", "starship sn15's engines",
+	}
 
-	var invalid = []string{"booster 10", "bn10", "wordsn 10"}
+	var invalid = []string{"booster 10", "bn10", "wordsn 10", "company's 20 cars", "company's 2021 report"}
 
 	for _, v := range valid {
 		if shipMatch.FindString(v) == "" {
@@ -30,7 +34,7 @@ func TestBoosterRegex(t *testing.T) {
 
 	var valid = []string{"bn10", "bn1", "#b4", "bn 15", "booster b4", "booster number 15", "booster 15", "booster 15's engines", "booster number 15s engines"}
 
-	var invalid = []string{"starship 10", "sn10", "wordbn 10"}
+	var invalid = []string{"starship 10", "sn10", "wordbn 10", "company's 20 cars", "company's 2021 report"}
 
 	for _, v := range valid {
 		if boostMatch.FindString(v) == "" {
