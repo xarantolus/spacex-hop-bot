@@ -24,9 +24,9 @@ var (
 
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx
-		regexp.MustCompile(`\b(?:sn|starship|starship number)\s?\d+`),
+		regexp.MustCompile(`\b(?:s|sn|starship|starship number)\s?\d+`),
 		// Booster BNx
-		regexp.MustCompile(`\b(?:bn|booster|booster number)\s?\d+`),
+		regexp.MustCompile(`\b(?:b|bn|booster|booster number)\s?\d+`),
 	}
 
 	closureTFRRegex = regexp.MustCompile("\b(?:closure|tfr|cryo|fts|scrub)")
