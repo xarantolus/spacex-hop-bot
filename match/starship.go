@@ -98,6 +98,8 @@ var (
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
 
+		"aircraft", "aerial refueling", "firepower",
+
 		// Someone *really* named their delivery robot business "Starship"... why?
 		"delivery", "startup", "groceries", "robots", "starship robot",
 
