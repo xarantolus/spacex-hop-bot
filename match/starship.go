@@ -24,9 +24,9 @@ var (
 
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx
-		regexp.MustCompile(`\b((s\d+)|(sn|starship|starship number)\s?\d+)`),
+		regexp.MustCompile(`\b((s\d{1,2}\b)|(sn|starship|starship number)\s?\d+)`),
 		// Booster BNx
-		regexp.MustCompile(`\b((b\d+)|(bn|booster|booster number)\s?\d+)`),
+		regexp.MustCompile(`\b((b\d{1,2}\b)|(bn|booster|booster number)\s?\d+)`),
 	}
 
 	closureTFRRegex = regexp.MustCompile("\b(?:closure|tfr|cryo|fts|scrub)")
@@ -100,6 +100,9 @@ var (
 
 		"aircraft", "aerial refueling", "firepower",
 
+		// "Star one brazilsat B4"
+		"brasilsat", "star one",
+
 		// Someone *really* named their delivery robot business "Starship"... why?
 		"delivery", "startup", "groceries", "robots", "starship robot",
 
@@ -112,7 +115,7 @@ var (
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 		"follow", "pre-order", "merch", "vote", "podcast", "trending",
 
-		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "gspot",
+		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "s3x", "gspot",
 
 		// stuff that seems like starship, but isn't
 		"starshipent", "monstax", "eshygazit", "wonho",
