@@ -88,6 +88,7 @@ var (
 
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious", "simulat" /* or/ed */, "print", "vfx", "not real", "photoshop",
+		"artwork", "artist",
 
 		"not starship", "non starship", "not about starship", "discord",
 
@@ -185,7 +186,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 	}
 
 	// Raptor has more than one meaning, so we need to be more careful
-	if !containsAntikeyword(antiKeywords, text) && strings.Contains(text, "raptor") && (strings.Contains(text, "starship") || strings.Contains(text, "spacex") || strings.Contains(text, "mcgregor") || strings.Contains(text, "engine")) {
+	if !containsAntikeyword(antiKeywords, text) && strings.Contains(text, "raptor") && (strings.Contains(text, "starship") || strings.Contains(text, "spacex") || strings.Contains(text, "mcgregor") || strings.Contains(text, "engine") || strings.Contains(text, "RB") || strings.Contains(text, "raptorvan")) {
 		return true
 	}
 
