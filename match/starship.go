@@ -75,6 +75,7 @@ var (
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "orion",
 		"resilience", "shuttle", "new glenn", "china", "chinese", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
+		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "vss imagine",
 
 		// e.g. crew-1, crew-2...
 		"crew-", "crew dragon", "dragon",
