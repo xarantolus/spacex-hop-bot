@@ -186,11 +186,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 	}
 
 	// Raptor has more than one meaning, so we need to be more careful
-	if !containsAntikeyword(antiKeywords, text) && strings.Contains(text, "raptor") && (strings.Contains(text, "starship") || strings.Contains(text, "spacex") || strings.Contains(text, "mcgregor") || strings.Contains(text, "engine") || strings.Contains(text, "RB") || strings.Contains(text, "raptorvan")) {
-		return true
-	}
-
-	if !containsAntikeyword(antiKeywords, text) && (strings.Contains(text, "starbase") || strings.Contains(text, "boca chica")) && (strings.Contains(text, "launch site") || strings.Contains(text, "launch tower")) {
+	if !containsAntikeyword(antiKeywords, text) && strings.Contains(text, "raptor") && containsAny(text, "starship", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "raptorvan") {
 		return true
 	}
 
@@ -217,6 +213,10 @@ func hasMedia(tweet *twitter.Tweet) bool {
 }
 
 func containsAntikeyword(words []string, text string) bool {
+	return containsAny(text, words...)
+}
+
+func containsAny(text string, words ...string) bool {
 	for _, k := range words {
 		if strings.Contains(text, k) {
 			return true
