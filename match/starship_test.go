@@ -12,6 +12,7 @@ func TestShipRegex(t *testing.T) {
 		"sn10", "#sn10", "sn15", "sn 15", "starship s20",
 		"starship number 15", "starship 15",
 		"starship sn15s engines", "starship sn15's engines",
+		"ship 20’s", "ship 20's",
 	}
 
 	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report"}
@@ -32,7 +33,7 @@ func TestShipRegex(t *testing.T) {
 func TestBoosterRegex(t *testing.T) {
 	var boostMatch = starshipMatchers[1]
 
-	var valid = []string{"bn10", "bn1", "#b4", "bn 15", "booster b4", "booster number 15", "booster 15", "booster 15's engines", "booster number 15s engines"}
+	var valid = []string{"bn10", "bn1", "#b4", "bn 15", "booster b4", "booster number 15", "booster 15", "booster 15's engines", "booster number 15s engines", "booster 20’s", "booster 20's"}
 
 	var invalid = []string{"starship 10", "b3496", "sn10", "wordbn 10", "company's 20 cars", "company's 2021 report"}
 
