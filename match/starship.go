@@ -187,7 +187,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 	}
 
 	// Raptor has more than one meaning, so we need to be more careful
-	if !containsAntikeyword(antiKeywords, text) && strings.Contains(text, "raptor") && containsAny(text, "starship", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "raptorvan") {
+	if !containsAntikeyword(antiKeywords, text) && strings.Contains(text, "raptor") && containsAny(text, "starship", "vacuum", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "raptorvan", "launch site", "production site", "booster", "super heavy", "superheavy") {
 		return true
 	}
 
