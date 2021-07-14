@@ -75,7 +75,9 @@ var (
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "orion",
 		"resilience", "shuttle", "new glenn", "china", "chinese", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
-		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "vss imagine",
+		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "vss imagine", "samsung",
+
+		"amazon", "kuiper",
 
 		// e.g. crew-1, crew-2...
 		"crew-", "crew dragon", "dragon",
@@ -126,6 +128,8 @@ var (
 		"assault", "rape", "deadly", "weapon", "victim", "murder", "crime", "investigat", "body", "memorial",
 	}
 )
+
+const starbasePlaceID = "124cb6de55957000"
 
 // StarshipText returns whether the given text mentions starship
 func StarshipText(text string, antiKeywords []string) bool {
@@ -188,6 +192,12 @@ func StarshipTweet(tweet TweetWrapper) bool {
 
 	// Raptor has more than one meaning, so we need to be more careful
 	if !containsAntikeyword(antiKeywords, text) && strings.Contains(text, "raptor") && containsAny(text, "starship", "vacuum", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "raptorvan", "launch site", "production site", "booster", "super heavy", "superheavy") {
+		return true
+	}
+
+	// If the tweet is tagged with StarBase as location, we just retweet it
+	// TODO: Maybe only if it has media, not sure
+	if tweet.Place != nil && tweet.Place.ID == starbasePlaceID {
 		return true
 	}
 
