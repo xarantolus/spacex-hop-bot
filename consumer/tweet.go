@@ -215,8 +215,11 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string, source match.Tw
 
 var (
 	ignoredHosts = map[string]bool{
-		"patreon.com":  true,
-		"gofundme.com": true,
+		"patreon.com":          true,
+		"gofundme.com":         true,
+		"shop.spreadshirt.com": true,
+		"spreadshirt.com":      true,
+		"instagram.com":        true,
 	}
 	urlRegex *regexp.Regexp
 )
@@ -257,10 +260,10 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 			return true
 		}
 
-		// If we retweeted this link in the last 24 hours, we should
+		// If we retweeted this link in the last 12 hours, we should
 		// definitely ignore it
 		lastRetweetTime, ok := p.seenLinks[u]
-		if ok && time.Since(lastRetweetTime) < 24*time.Hour {
+		if ok && time.Since(lastRetweetTime) < 12*time.Hour {
 			return true
 		}
 
