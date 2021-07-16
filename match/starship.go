@@ -99,6 +99,10 @@ var (
 		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky", "kerbals", "pocket rocket", "pocketrocket",
 		"star trek", "startrek", "starcitizen", "star citizen",
 
+		// KSP planets, moons, stars etc.
+		"moho", "gilly", "kerbin", "mun", "minmus", "duna", "ike", "jool", "laythe", "vall",
+		"tylo", "bop", "pol", "dres", "eeloo", "kerbol",
+
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
 
