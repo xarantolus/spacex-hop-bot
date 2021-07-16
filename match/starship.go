@@ -133,7 +133,12 @@ var (
 	}
 )
 
-const starbasePlaceID = "124cb6de55957000"
+const (
+	// https://twitter.com/places/124cb6de55957000
+	spaceXLaunchSiteID = "124cb6de55957000"
+	// https://twitter.com/places/1380f3b60f972001
+	starbasePlaceID = "1380f3b60f972001"
+)
 
 // StarshipText returns whether the given text mentions starship
 func StarshipText(text string, antiKeywords []string) bool {
@@ -201,7 +206,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 
 	// If the tweet is tagged with StarBase as location, we just retweet it
 	// TODO: Maybe only if it has media, not sure
-	if tweet.Place != nil && tweet.Place.ID == starbasePlaceID {
+	if tweet.Place != nil && (tweet.Place.ID == starbasePlaceID || tweet.Place.ID == spaceXLaunchSiteID) {
 		return true
 	}
 
