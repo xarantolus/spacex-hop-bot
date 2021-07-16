@@ -101,19 +101,23 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 
 		// Filter out non-english tweets
 		if tweet.Lang != "" && tweet.Lang != "en" && tweet.Lang != "und" {
-			log.Println("Skipped", util.TweetURL(&tweet.Tweet), "because of language ", tweet.Lang)
+			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because of language ", tweet.Lang)
 			break
 		}
 
 		// Ignore links if there aren't any images
 		if p.shouldIgnoreLink(&tweet.Tweet) && !p.hasMedia(&tweet.Tweet) {
 			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because of a link we ignore")
-
 			break
 		}
 
 		if p.mentionsTooMany(&tweet.Tweet) {
 			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because it mentions too many people")
+			break
+		}
+
+		if tweet.Tweet.PossiblySensitive {
+			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because it is possibly sensitive")
 			break
 		}
 
