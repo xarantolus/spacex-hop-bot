@@ -72,6 +72,7 @@ SpaceX is targeting Wednesday, March 24 for launch of 60 Starlink satellites fro
 
 The Falcon 9 first stage rocket booster supporting this mission previously supported launch of the GPS-III Space Vehicle 03 and Turksat 5A missions in addition to three Starlink missions. Following stage separation, SpaceX will land Falcon 9’s first stage on the “Of Course I Still Love You” droneship, which will be located in the Atlantic Ocean. One half of Falcon 9’s fairing supported the Sentinel-6A mission and the other supported a previous Starlink mission.
 `, false},
+		{"I have received an Alert notice for tomorrow, July 19. Possible static fire attempt between noon and 10 p.m. on Booster B3.", true},
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
