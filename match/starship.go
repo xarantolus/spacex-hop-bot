@@ -211,7 +211,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 
 	// If the tweet is tagged with Starbase as location, we just retweet it
 	// TODO: Maybe only if it has media, not sure
-	if tweet.Place != nil && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID) {
+	if tweet.Place != nil && !containsAntikeyword(antiKeywords, text) && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID) {
 		return true
 	}
 
