@@ -166,7 +166,11 @@ func (p *Processor) isReply(t *twitter.Tweet) bool {
 }
 
 func (p *Processor) isQuestion(tweet *twitter.Tweet) bool {
-	return strings.Index(strings.ToLower(tweet.Text()), "@") < strings.Index(tweet.Text(), "?")
+	var atIndex = strings.Index(strings.ToLower(tweet.Text()), "@")
+	if atIndex == -1 {
+		return false
+	}
+	return atIndex < strings.Index(tweet.Text(), "?")
 }
 
 func (p *Processor) isReactionGIF(tweet *twitter.Tweet) bool {
