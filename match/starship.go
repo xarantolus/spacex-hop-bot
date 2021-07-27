@@ -75,7 +75,7 @@ var (
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "orion",
 		"resilience", "shuttle", "new glenn", "china", "chinese", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
-		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "vss imagine", "samsung",
+		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "vss imagine", "samsung", "bezos", "branson",
 
 		"amazon", "kuiper",
 
@@ -91,7 +91,7 @@ var (
 
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious", "simulat" /* or/ed */, "print", "vfx", "not real", "photoshop",
-		"artwork", "artist",
+		"artwork", "artist", "#art",
 
 		"not starship", "non starship", "not about starship", "discord",
 
@@ -100,7 +100,7 @@ var (
 		"star trek", "startrek", "starcitizen", "star citizen",
 
 		// KSP planets, moons, stars etc.
-		"moho", "gilly", "kerbin", "mun", "minmus", "duna", "ike", "jool", "laythe", "vall",
+		"moho", "gilly", "kerbin", "mun", "minmus", "duna", "jool", "laythe", "vall",
 		"tylo", "bop", "pol", "dres", "eeloo", "kerbol",
 
 		// not *that* kind of raptor
@@ -123,7 +123,7 @@ var (
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 		"follow", "pre-order", "merch", "vote", "podcast", "trending",
 
-		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "s3x", "gspot",
+		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot",
 
 		// stuff that seems like starship, but isn't
 		"starshipent", "monstax", "eshygazit", "wonho",

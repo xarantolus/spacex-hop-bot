@@ -3,6 +3,7 @@ package jobs
 import (
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/xarantolus/spacex-hop-bot/match"
@@ -40,15 +41,18 @@ func Register(client *twitter.Client, selfUser *twitter.User, tweetChan chan mat
 
 	// Those are also background jobs
 	var watchedLists int
+	var listNames []string
 	for _, l := range lists {
 		if skipLists[l.ID] {
 			continue
 		}
 		go CheckListTimeline(client, l, tweetChan)
+
+		listNames = append(listNames, fmt.Sprintf("%s's %q", l.User.ScreenName, l.Name))
 		watchedLists++
 	}
 
-	log.Printf("[Twitter] Started watching %d lists\n", watchedLists)
+	log.Printf("[Twitter] Started watching %d lists (%s)\n", watchedLists, strings.Join(listNames, ", "))
 
 	return nil
 }
