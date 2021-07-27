@@ -76,6 +76,7 @@ var (
 		"resilience", "shuttle", "new glenn", "china", "chinese", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "vss imagine", "samsung", "bezos", "branson",
+		"masten",
 
 		"amazon", "kuiper",
 
@@ -166,6 +167,16 @@ func StarshipText(text string, antiKeywords []string) bool {
 		}
 	}
 
+	// Raptor has more than one meaning, so we need to be more careful
+	if strings.Contains(text, "raptor") && containsAny(text, "starship", "vacuum", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "raptorvan", "launch site", "production site", "booster", "super heavy", "superheavy") {
+		return true
+	}
+
+	// The phobos and deimos oil rigs that will be used as sea-spaceports
+	if containsAny(text, "deimos", "phobos") && containsAny(text, "spacex", "starship", "super heavy", "superheavy", "sea launch", "oil") {
+		return true
+	}
+
 	return false
 }
 
@@ -204,14 +215,11 @@ func StarshipTweet(tweet TweetWrapper) bool {
 		return true
 	}
 
-	// Raptor has more than one meaning, so we need to be more careful
-	if !containsAntikeyword(antiKeywords, text) && strings.Contains(text, "raptor") && containsAny(text, "starship", "vacuum", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "raptorvan", "launch site", "production site", "booster", "super heavy", "superheavy") {
-		return true
-	}
+	var containsBadWords = containsAntikeyword(antiKeywords, text)
 
 	// If the tweet is tagged with Starbase as location, we just retweet it
 	// TODO: Maybe only if it has media, not sure
-	if tweet.Place != nil && !containsAntikeyword(antiKeywords, text) && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID) {
+	if tweet.Place != nil && !containsBadWords && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID) {
 		return true
 	}
 

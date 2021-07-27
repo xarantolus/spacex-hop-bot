@@ -74,6 +74,11 @@ The Falcon 9 first stage rocket booster supporting this mission previously suppo
 `, false},
 		{"I have received an Alert notice for tomorrow, July 19. Possible static fire attempt between noon and 10 p.m. on Booster B3.", true},
 		{"Starship and Dogecoin", false},
+		// Oil platform names need at least a bit of context
+		{"Starship will land on Deimos", true},
+		{"Deimos in the Ocean", false},
+		{"SpaceX's Phobos launch platform", true},
+		{"Phobos in the port", false},
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
