@@ -12,12 +12,12 @@ func TestShipRegex(t *testing.T) {
 		"sn10", "#sn10", "sn15", "sn 15", "starship s20",
 		"starship number 15", "starship 15",
 		"starship sn15s engines", "starship sn15's engines",
-		"ship 20’s", "ship 20's",
 		"starship sn20?",
 		"s300",
 	}
 
-	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!"}
+	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!",
+		"u.s. to ship 4 mln covid-19 vaccine doses to nigeria, 5.66 mln to south africa"}
 
 	for _, v := range valid {
 		if shipMatch.FindString(v) == "" {
