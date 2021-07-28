@@ -14,9 +14,10 @@ func TestShipRegex(t *testing.T) {
 		"starship sn15s engines", "starship sn15's engines",
 		"ship 20’s", "ship 20's",
 		"starship sn20?",
+		"s300",
 	}
 
-	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report"}
+	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!"}
 
 	for _, v := range valid {
 		if shipMatch.FindString(v) == "" {
