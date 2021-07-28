@@ -91,14 +91,14 @@ var (
 		"no tfr",
 
 		// 3d models are nice, but we only care about "real info"
-		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious", "simulat" /* or/ed */, "print", "vfx", "not real", "photoshop",
+		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculation", "mysterious", "simulated", "print", "vfx", "not real", "photoshop",
 		"artwork", "artist", "#art",
 
 		"not starship", "non starship", "not about starship", "discord",
 
-		// kerbal space program != "official" news
+		// kerbal space program, games, star wars != "official" news
 		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky", "kerbals", "pocket rocket", "pocketrocket",
-		"star trek", "startrek", "starcitizen", "star citizen",
+		"star trek", "startrek", "starcitizen", "star citizen", "battle droid", "b1-series", "civil war", "jabba the hutt",
 
 		// KSP planets, moons, stars etc.
 		"moho", "gilly", "kerbin", "mun", "minmus", "duna", "jool", "laythe", "vall",
