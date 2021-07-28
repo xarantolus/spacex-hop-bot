@@ -1,9 +1,11 @@
 package match
 
 import (
+	"log"
 	"regexp"
 	"strings"
 	"time"
+	"unicode"
 
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/xarantolus/spacex-hop-bot/util"
@@ -20,6 +22,7 @@ var (
 		"gse tank",
 		"orbital launch table", "orbital table",
 		"orbital launch pad",
+		"olp service tower",
 	}
 
 	starshipMatchers = []*regexp.Regexp{
@@ -117,7 +120,7 @@ var (
 
 		"ocisly", "jrti", "canaveral",
 
-		"meme", "bot", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrants",
+		"meme", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrants",
 
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
@@ -250,10 +253,37 @@ func containsAntikeyword(words []string, text string) bool {
 }
 
 func containsAny(text string, words ...string) bool {
-	for _, k := range words {
-		if strings.Contains(text, k) {
-			return true
+	var iterations = 0
+
+	var currentIndex = 0
+
+	for {
+		iterations++
+
+		for currentIndex < len(text) && unicode.IsSpace(rune(text[currentIndex])) {
+			currentIndex++
+		}
+
+		for _, w := range words {
+			if strings.HasPrefix(text[currentIndex:], w) {
+				return true
+			}
+		}
+
+		// Now skip to the next space character
+		for currentIndex < len(text) && !unicode.IsSpace(rune(text[currentIndex])) {
+			currentIndex++
+		}
+
+		if currentIndex == len(text) {
+			break
+		}
+
+		if iterations > 1000 {
+			log.Printf("Input text %q causes containsAny to loop longer than expected", text)
+			return false
 		}
 	}
+
 	return false
 }
