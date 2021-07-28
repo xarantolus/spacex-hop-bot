@@ -30,6 +30,8 @@ var (
 		regexp.MustCompile(`\b((s\d{2,}\b)|(sn|starship|starship number)\s?\d+['’]?s?)`),
 		// Booster BNx
 		regexp.MustCompile(`\b((b\d{1,2}\b)|(bn|booster|booster number)\s?\d+['’]?s?)`),
+		// Yes. I like watching tanks
+		regexp.MustCompile(`\b(gse)\s?(?:tank|-)?\s?\d*\b`),
 	}
 
 	closureTFRRegex = regexp.MustCompile("\b(?:closure|tfr|cryo|fts|scrub)")

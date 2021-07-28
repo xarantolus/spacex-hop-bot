@@ -55,6 +55,29 @@ func TestBoosterRegex(t *testing.T) {
 	}
 }
 
+func TestGSERegex(t *testing.T) {
+	var gseMatch = starshipMatchers[2]
+
+	var valid = []string{"gse-5", "gse 5", "gse tank 5", "gse 5 tank", "gse tank"}
+
+	var invalid = []string{"bn10", "bn1", "#b4", "bn 15", "booster b4",
+		"booster number 15", "booster 15", "booster 15's engines",
+		"booster number 15s engines", "booster 20’s", "booster 20's",
+		"booster 3?", "starship 10", "b3496", "sn10", "wordbn 10", "company's 20 cars", "company's 2021 report"}
+
+	for _, v := range valid {
+		if gseMatch.FindString(v) == "" {
+			t.Errorf("starshipMatchers[2] should have matched %q, but didn't", v)
+		}
+	}
+
+	for _, i := range invalid {
+		if gseMatch.FindString(i) != "" {
+			t.Errorf("starshipMatchers[2] matched %q, but shouldn't have done that", i)
+		}
+	}
+}
+
 func TestStarshipAntiKeywords(t *testing.T) {
 	tests := []struct {
 		text string
