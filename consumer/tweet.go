@@ -228,6 +228,7 @@ var (
 		"shop.spreadshirt.com": true,
 		"spreadshirt.com":      true,
 		"instagram.com":        true,
+		"soundcloud.com":       true,
 	}
 	urlRegex *regexp.Regexp
 )
