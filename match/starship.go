@@ -55,7 +55,7 @@ var (
 		"nasaspaceflight": closureTFRRegex,
 		"spacexboca":      closureTFRRegex,
 
-		"sheriffgarza": regexp.MustCompile(`(?:close)`),
+		"sheriffgarza": regexp.MustCompile(`(?:close|closure)`),
 
 		"austinbarnard45": regexp.MustCompile("(?:day in Texas)"),
 
@@ -153,19 +153,19 @@ const (
 
 // StarshipText returns whether the given text mentions starship
 func StarshipText(text string, antiKeywords []string) bool {
-
 	text = strings.ToLower(text)
 
+	// If we find ignored words, we ignore the tweet
 	if containsAntikeyword(antiKeywords, text) {
 		return false
 	}
 
-	for _, k := range starshipKeywords {
-		if strings.Contains(text, k) {
-			return true
-		}
+	// else we check if there are any interesting keywords
+	if containsAny(text, starshipKeywords...) {
+		return true
 	}
 
+	// Then we check for more "dynamic" words like "S20", "B4", etc.
 	for _, r := range starshipMatchers {
 		if r.MatchString(text) {
 			return true
@@ -200,14 +200,15 @@ func StarshipTweet(tweet TweetWrapper) bool {
 		return false
 	}
 
-	text = strings.ToLower(text)
-
+	// We ignore certain satire accounts
 	if isIgnoredAccount(&tweet.Tweet) {
 		return false
 	}
 
 	// Now check if the text of the tweet matches what we're looking for.
+	text = strings.ToLower(text)
 
+	// Depending on the user, we use different antiKeywords
 	antiKeywords := antiStarshipKeywords
 	if tweet.User != nil {
 		ak, ok := userAntikeywordsOverwrite[strings.ToLower(tweet.User.ScreenName)]
@@ -216,6 +217,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 		}
 	}
 
+	// Check if the text matches
 	if StarshipText(text, antiKeywords) {
 		return true
 	}
@@ -251,10 +253,21 @@ func hasMedia(tweet *twitter.Tweet) bool {
 }
 
 func containsAntikeyword(words []string, text string) bool {
-	return containsAny(text, words...)
+	return startsWithAny(text, words...)
 }
 
+// containsAny checks whether any of words is *anywhere* in the text
 func containsAny(text string, words ...string) bool {
+	for _, w := range words {
+		if strings.Contains(text, w) {
+			return true
+		}
+	}
+	return false
+}
+
+// startsWithAny checks whether any of words is the start of a sequence of words in the text
+func startsWithAny(text string, words ...string) bool {
 	var iterations = 0
 
 	var currentIndex = 0

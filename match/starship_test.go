@@ -168,7 +168,7 @@ func TestVariables(t *testing.T) {
 	}
 }
 
-func Test_containsAnyGeneric(t *testing.T) {
+func Test_startsWithAnyGeneric(t *testing.T) {
 	var searchedPrefixes = []string{"test", "best", "rest", "more than one word"}
 
 	tests := []struct {
@@ -183,14 +183,14 @@ func Test_containsAnyGeneric(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
-			if got := containsAny(tt.argText, searchedPrefixes...); got != tt.want {
+			if got := startsWithAny(tt.argText, searchedPrefixes...); got != tt.want {
 				t.Errorf("containsAny(%q) = %v, want %v", tt.argText, got, tt.want)
 			}
 		})
 	}
 }
 
-func Test_containsAnyStarship(t *testing.T) {
+func Test_startsWithAnyStarship(t *testing.T) {
 	tests := []struct {
 		argText string
 		want    bool
@@ -202,7 +202,29 @@ func Test_containsAnyStarship(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
-			if got := containsAny(strings.ToLower(tt.argText), antiStarshipKeywords...); got != tt.want {
+			if got := startsWithAny(strings.ToLower(tt.argText), antiStarshipKeywords...); got != tt.want {
+				t.Errorf("containsAny(%q) = %v, want %v", tt.argText, got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_containsAnyGeneric(t *testing.T) {
+	var searchedInfixes = []string{"test", "best", "rest", "more than one word"}
+
+	tests := []struct {
+		argText string
+		want    bool
+	}{
+		{"testing is nice", true},
+		{"wrongprefixtesting is nice", true},
+		{"the test keyword can be at any point in the string", true},
+		{"we want to support more than one word", true},
+		{"we want to support less than one word", false},
+	}
+	for _, tt := range tests {
+		t.Run(t.Name(), func(t *testing.T) {
+			if got := containsAny(tt.argText, searchedInfixes...); got != tt.want {
 				t.Errorf("containsAny(%q) = %v, want %v", tt.argText, got, tt.want)
 			}
 		})
