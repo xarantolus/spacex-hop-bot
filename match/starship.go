@@ -21,7 +21,7 @@ var (
 		"orbital launch integration tower",
 		"gse tank",
 		"orbital launch table", "orbital table",
-		"orbital launch pad",
+		"orbital launch pad", "orbital launch mount",
 		"olp service tower",
 	}
 
@@ -55,7 +55,7 @@ var (
 		"nasaspaceflight": closureTFRRegex,
 		"spacexboca":      closureTFRRegex,
 
-		"sheriffgarza": regexp.MustCompile(`(?:close|closure)`),
+		"sheriffgarza": regexp.MustCompile(`(?:close|closure|spacex)`),
 
 		"austinbarnard45": regexp.MustCompile("(?:day in Texas)"),
 
@@ -173,7 +173,7 @@ func StarshipText(text string, antiKeywords []string) bool {
 	}
 
 	// Raptor has more than one meaning, so we need to be more careful
-	if strings.Contains(text, "raptor") && containsAny(text, "starship", "vacuum", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "raptorvan", "launch site", "production site", "booster", "super heavy", "superheavy") {
+	if strings.Contains(text, "raptor") && containsAny(text, "starship", "vacuum", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "raptorvan", "launch site", "production site", "booster", "super heavy", "superheavy", "truck") {
 		return true
 	}
 
@@ -275,7 +275,7 @@ func startsWithAny(text string, words ...string) bool {
 	for {
 		iterations++
 
-		for currentIndex < len(text) && unicode.IsSpace(rune(text[currentIndex])) {
+		for currentIndex < len(text) && (unicode.IsSpace(rune(text[currentIndex])) || rune(text[currentIndex]) == '#') {
 			currentIndex++
 		}
 

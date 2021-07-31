@@ -180,6 +180,9 @@ func Test_startsWithAnyGeneric(t *testing.T) {
 		{"the test keyword can be at any point in the string", true},
 		{"we want to support more than one word", true},
 		{"we want to support less than one word", false},
+
+		{"the #test hashtag should still be recognized", true},
+		{"#test at the beginning", true},
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
