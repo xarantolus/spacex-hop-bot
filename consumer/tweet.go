@@ -131,10 +131,6 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 	p.seenTweets[tweet.ID] = true
 }
 
-func (p *Processor) mentionsTooMany(t *twitter.Tweet) bool {
-	return strings.Count(t.Text(), "@") > 3
-}
-
 // isReply returns if the given tweet is a reply to another user
 func (p *Processor) isReply(t *twitter.Tweet) bool {
 	if t.QuotedStatusID != 0 {
