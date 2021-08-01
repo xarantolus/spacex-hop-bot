@@ -95,6 +95,9 @@ var (
 
 		"no tfr",
 
+		// "super heavyweight" in olympics...
+		"super heavyweight",
+
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculati" /*ng/on*/, "simulated", "print", "vfx", "not real", "photoshop",
 		"artwork", "artist", "#art",
