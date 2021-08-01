@@ -220,16 +220,21 @@ func StarshipTweet(tweet TweetWrapper) bool {
 		}
 	}
 
-	// Check if the text matches
-	if StarshipText(text, antiKeywords) {
-		return true
-	}
-
 	var containsBadWords = containsAntikeyword(antiKeywords, text)
 
 	// If the tweet is tagged with Starbase as location, we just retweet it
 	// TODO: Maybe only if it has media, not sure
 	if tweet.Place != nil && !containsBadWords && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID) {
+		return true
+	}
+
+	// Now check if it mentions too many people
+	if strings.Count(text, "@") > 5 {
+		return false
+	}
+
+	// Check if the text matches
+	if StarshipText(text, antiKeywords) {
 		return true
 	}
 

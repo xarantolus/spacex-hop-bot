@@ -111,11 +111,6 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 			break
 		}
 
-		if p.mentionsTooMany(&tweet.Tweet) {
-			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because it mentions too many people")
-			break
-		}
-
 		if tweet.Tweet.PossiblySensitive {
 			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because it is possibly sensitive")
 			break
