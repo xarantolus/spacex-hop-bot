@@ -182,7 +182,9 @@ func Test_startsWithAnyGeneric(t *testing.T) {
 		{"we want to support less than one word", false},
 
 		{"the #test hashtag should still be recognized", true},
+		{"also @test should work", true},
 		{"#test at the beginning", true},
+		{"@test should work", true},
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {

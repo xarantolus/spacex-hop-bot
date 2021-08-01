@@ -278,7 +278,7 @@ func startsWithAny(text string, words ...string) bool {
 	for {
 		iterations++
 
-		for currentIndex < len(text) && (unicode.IsSpace(rune(text[currentIndex])) || rune(text[currentIndex]) == '#') {
+		for currentIndex < len(text) && (unicode.IsSpace(rune(text[currentIndex])) || rune(text[currentIndex]) == '#' || rune(text[currentIndex]) == '@') {
 			currentIndex++
 		}
 
