@@ -57,8 +57,6 @@ var (
 
 		"sheriffgarza": regexp.MustCompile(`(?:close|closure|spacex)`),
 
-		"austinbarnard45": regexp.MustCompile("(?:day in Texas)"),
-
 		// Watches temporary flight restrictions
 		"spacetfrs": regexp.MustCompile("(?:brownsville)"),
 

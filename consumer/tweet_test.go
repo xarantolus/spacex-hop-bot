@@ -7,13 +7,13 @@ import (
 )
 
 func TestProcessor_isQuestion(t *testing.T) {
-	var p = new(Processor)
 
 	tests := []struct {
 		input string
 		want  bool
 	}{
-		{"is this picture showing a lox tank?", false},
+		{"Here is a picture of the booster", false},
+		{"is this picture showing a lox tank?", true},
 		{"@elonmusk here is a speculative question about superhevay?", true},
 	}
 	for _, tt := range tests {
@@ -21,7 +21,7 @@ func TestProcessor_isQuestion(t *testing.T) {
 			var tw = twitter.Tweet{
 				FullText: tt.input,
 			}
-			if got := p.isQuestion(&tw); got != tt.want {
+			if got := isQuestion(&tw); got != tt.want {
 				t.Errorf("Processor.isQuestion(%q) = %v, want %v", tt.input, got, tt.want)
 			}
 		})

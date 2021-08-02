@@ -79,7 +79,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 	}
 
 	switch {
-	case tweet.User != nil && tweet.User.ScreenName == "elonmusk":
+	case isElonTweet(tweet):
 		// When elon drops starship info, we want to retweet it.
 		// We basically detect if the thread/tweet is about starship and
 		// retweet everything that is appropriate
@@ -91,7 +91,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		p.Tweet(match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.RetweetedStatus})
 	case tweet.QuotedStatusID != 0 && !p.hasMedia(&tweet.Tweet):
 		// Quoted tweets should be skipped, at least if they don't have media
-	case match.StarshipTweet(tweet) && !p.isReply(&tweet.Tweet) && !p.isQuestion(&tweet.Tweet) && !p.isReactionGIF(&tweet.Tweet):
+	case p.isStarshipTweet(tweet):
 		// If the tweet itself is about starship, we retweet it
 		// We already filtered out replies, which is important because we don't want to
 		// retweet every question someone posts under an elon post, only those that
@@ -105,12 +105,6 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 			break
 		}
 
-		// Ignore links if there aren't any images
-		if p.shouldIgnoreLink(&tweet.Tweet) && !p.hasMedia(&tweet.Tweet) {
-			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because of a link we ignore")
-			break
-		}
-
 		if tweet.Tweet.PossiblySensitive {
 			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because it is possibly sensitive")
 			break
@@ -121,7 +115,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 			if p.hasMedia(&tweet.Tweet) {
 				p.retweet(&tweet.Tweet, "normal + location media", tweet.TweetSource)
 			} else {
-				log.Println("[Twitter] Not retweeting", util.TweetURL(&tweet.Tweet), "because it's from the location stream and has no media")
+				log.Println("[Twitter] Ignoring", util.TweetURL(&tweet.Tweet), "because it's from the location stream and has no media")
 			}
 		} else {
 			p.retweet(&tweet.Tweet, "normal matcher", tweet.TweetSource)
@@ -129,6 +123,35 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 	}
 
 	p.seenTweets[tweet.ID] = true
+}
+
+func isElonTweet(t match.TweetWrapper) bool {
+	return t.User != nil && t.User.ScreenName == "elonmusk"
+}
+
+func (p *Processor) isStarshipTweet(t match.TweetWrapper) bool {
+	// At first, we of course need to match some keywords
+	if !match.StarshipTweet(t) {
+		return false
+	}
+
+	// However, we don't want reaction gifs
+	if p.isReactionGIF(&t.Tweet) {
+		return false
+	}
+
+	// Replies to other people should be filtered
+	if p.isReply(&t.Tweet) {
+		return false
+	}
+
+	// If it's a question, we ignore it
+	if isQuestion(&t.Tweet) {
+		return false
+	}
+
+	// Anything else should be OK
+	return true
 }
 
 // isReply returns if the given tweet is a reply to another user
@@ -156,12 +179,8 @@ func (p *Processor) isReply(t *twitter.Tweet) bool {
 	return p.isReply(t)
 }
 
-func (p *Processor) isQuestion(tweet *twitter.Tweet) bool {
-	var atIndex = strings.Index(strings.ToLower(tweet.Text()), "@")
-	if atIndex == -1 {
-		return false
-	}
-	return atIndex < strings.Index(tweet.Text(), "?")
+func isQuestion(tweet *twitter.Tweet) bool {
+	return strings.HasSuffix(tweet.Text(), "?")
 }
 
 func (p *Processor) isReactionGIF(tweet *twitter.Tweet) bool {
