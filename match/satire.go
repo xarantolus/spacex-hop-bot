@@ -32,7 +32,7 @@ func LoadIgnoredList(client *twitter.Client, ignoredListID int64) {
 	}
 }
 
-func isIgnoredAccount(tweet *twitter.Tweet) bool {
+func IsIgnoredAccount(tweet *twitter.Tweet) bool {
 	if tweet.User == nil {
 		return false
 	}

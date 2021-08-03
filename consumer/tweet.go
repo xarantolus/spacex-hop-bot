@@ -84,13 +84,43 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// We basically detect if the thread/tweet is about starship and
 		// retweet everything that is appropriate
 		p.thread(&tweet.Tweet)
-	case tweet.QuotedStatus != nil:
-		// If someone quotes a tweet, we only check the tweet that was quoted.
-		p.Tweet(match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.QuotedStatus})
 	case tweet.RetweetedStatus != nil:
 		p.Tweet(match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.RetweetedStatus})
-	case tweet.QuotedStatusID != 0 && !p.hasMedia(&tweet.Tweet):
-		// Quoted tweets should be skipped, at least if they don't have media
+	case tweet.QuotedStatus != nil:
+		// If someone quotes a tweet, we check some things.
+
+		// If we have a Starship-Tweet quoting a tweet that does not contain antikeywords,
+		// we assume that the quoted tweet also contains relevant information
+
+		if tweet.QuotedStatus.Retweeted {
+			break
+		}
+
+		// If the quoted tweet already is about starship, we only look at that one
+		quotedWrap := match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.QuotedStatus}
+		if p.isStarshipTweet(quotedWrap) {
+			p.Tweet(quotedWrap)
+			return
+		}
+
+		// The quoting tweet should be about starship
+		if !match.StarshipTweet(tweet) {
+			break
+		}
+
+		// Make sure the quoted user is not ignored
+		if match.IsIgnoredAccount(tweet.QuotedStatus) {
+			break
+		}
+
+		// Anti-keywords?
+		if match.ContainsStarshipAntiKeyword(tweet.QuotedStatus.Text()) {
+			break
+		}
+
+		// Now we have a tweet about starship, that we haven't seen/retweeted before,
+		// that quotes another tweet
+		p.retweet(&tweet.Tweet, "quoted", tweet.TweetSource)
 	case p.isStarshipTweet(tweet):
 		// If the tweet itself is about starship, we retweet it
 		// We already filtered out replies, which is important because we don't want to

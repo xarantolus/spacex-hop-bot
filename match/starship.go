@@ -202,7 +202,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 	}
 
 	// We ignore certain satire accounts
-	if isIgnoredAccount(&tweet.Tweet) {
+	if IsIgnoredAccount(&tweet.Tweet) {
 		return false
 	}
 
@@ -256,6 +256,10 @@ func StarshipTweet(tweet TweetWrapper) bool {
 
 func hasMedia(tweet *twitter.Tweet) bool {
 	return tweet.Entities != nil && len(tweet.Entities.Media) > 0 || tweet.ExtendedEntities != nil && len(tweet.ExtendedEntities.Media) > 0
+}
+
+func ContainsStarshipAntiKeyword(text string) bool {
+	return containsAntikeyword(antiStarshipKeywords, strings.ToLower(text))
 }
 
 func containsAntikeyword(words []string, text string) bool {
