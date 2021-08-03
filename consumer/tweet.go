@@ -92,7 +92,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// If we have a Starship-Tweet quoting a tweet that does not contain antikeywords,
 		// we assume that the quoted tweet also contains relevant information
 
-		if tweet.QuotedStatus.Retweeted {
+		if p.seenTweets[tweet.QuotedStatusID] || tweet.QuotedStatus.Retweeted {
 			break
 		}
 
@@ -121,6 +121,8 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// Now we have a tweet about starship, that we haven't seen/retweeted before,
 		// that quotes another tweet
 		p.retweet(&tweet.Tweet, "quoted", tweet.TweetSource)
+
+		p.seenTweets[tweet.QuotedStatusID] = true
 	case p.isStarshipTweet(tweet):
 		// If the tweet itself is about starship, we retweet it
 		// We already filtered out replies, which is important because we don't want to
