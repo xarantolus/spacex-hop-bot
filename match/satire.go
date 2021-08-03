@@ -36,14 +36,15 @@ func isIgnoredAccount(tweet *twitter.Tweet) bool {
 	if tweet.User == nil {
 		return false
 	}
+
+	username := strings.ToLower(tweet.User.ScreenName)
+
 	// If we know the user, they can't be ignored
-	_, known1 := specificUserMatchers[tweet.User.ScreenName]
-	_, known2 := userAntikeywordsOverwrite[tweet.User.ScreenName]
+	_, known1 := specificUserMatchers[username]
+	_, known2 := userAntikeywordsOverwrite[username]
 	if known1 || known2 {
 		return false
 	}
-
-	username := strings.ToLower(tweet.User.ScreenName)
 
 	for _, k := range ignoredNames {
 		if username == k {

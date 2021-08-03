@@ -49,6 +49,27 @@ func main() {
 		spacePeopleListID = 1375480259840212997
 	)
 
+	// We have different account lists that define ignored accounts.
+	// That way I don't have to mute them.
+	var ignoredLists = map[int64]bool{
+		// Satire
+		1377136100574064647: true,
+
+		// Unrelated to SpaceX
+		1411299241050488835: true,
+
+		// Animation, renders etc.
+		1396191591686184967: true,
+
+		// Other/Muted
+		1410664386943930368: true,
+	}
+
+	// Load all ignored accounts to make sure we don't retweet them
+	for lid := range ignoredLists {
+		match.LoadIgnoredList(client, lid)
+	}
+
 	// The bot should check all tweets that are sent on this channel
 	var tweetChan = make(chan match.TweetWrapper, 250)
 
@@ -56,21 +77,7 @@ func main() {
 		log.Println("[Info] Running in debug mode, no background jobs are started")
 	} else {
 		// Register all background jobs, most of them send tweets on tweetChan
-
-		// We have different account lists that define ignored accounts.
-		// That way I don't have to mute them.
-		var ignoredLists = map[int64]bool{
-			1377136100574064647: true,
-			1396191591686184967: true,
-			1410664386943930368: true,
-		}
-
 		jobs.Register(client, selfUser, tweetChan, ignoredLists)
-
-		// Load all ignored accounts to make sure we don't retweet them
-		for lid := range ignoredLists {
-			match.LoadIgnoredList(client, lid)
-		}
 	}
 
 	// handler handles tweets by filtering & retweeting the interesting ones
