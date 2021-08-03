@@ -119,7 +119,7 @@ var (
 		"brasilsat", "star one",
 
 		// Someone *really* named their delivery robot business "Starship"... why?
-		"delivery", "startup", "groceries", "robots", "starship robot",
+		"startup", "groceries", "robots", "starship robot",
 
 		"ocisly", "jrti", "canaveral",
 
@@ -174,7 +174,7 @@ func StarshipText(text string, antiKeywords []string) bool {
 	}
 
 	// Raptor has more than one meaning, so we need to be more careful
-	if strings.Contains(text, "raptor") && containsAny(text, "starship", "vacuum", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "raptorvan", "launch site", "production site", "booster", "super heavy", "superheavy", "truck") {
+	if strings.Contains(text, "raptor") && containsAny(text, "starship", "vacuum", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "raptorvan", "launch site", "production site", "booster", "super heavy", "superheavy", "truck", "deliver") {
 		return true
 	}
 
