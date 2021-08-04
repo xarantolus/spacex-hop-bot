@@ -221,7 +221,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 	var containsBadWords = containsAntikeyword(antiKeywords, text)
 
 	// If the tweet is tagged with Starbase as location, we just retweet it
-	if tweet.Place != nil && !containsBadWords && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID) && hasMedia(&tweet.Tweet) {
+	if tweet.Place != nil && !containsBadWords && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID) {
 		return true
 	}
 
