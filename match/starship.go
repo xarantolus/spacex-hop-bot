@@ -151,6 +151,9 @@ const (
 	// https://twitter.com/places/1380f3b60f972001
 	StarbasePlaceID = "1380f3b60f972001"
 
+	// https://twitter.com/places/1d1f665883989434
+	SouthPadreIslandID = "1d1f665883989434"
+
 	// Other places around the area:
 	// "Isla Blanca Park": https://twitter.com/places/11dca9a728950001
 )
@@ -257,7 +260,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 }
 
 func IsAtSpaceXSite(tweet *twitter.Tweet) bool {
-	return tweet.Place != nil && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID)
+	return tweet.Place != nil && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID || tweet.Place.ID == SouthPadreIslandID)
 }
 
 func hasMedia(tweet *twitter.Tweet) bool {
