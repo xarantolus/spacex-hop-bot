@@ -128,7 +128,7 @@ var (
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
-		"follow", "pre-order", "merch", "vote", "podcast", "trending", "hater",
+		"pre-order", "merch", "vote", "podcast", "trending", "hater",
 
 		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot",
 
@@ -224,7 +224,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 	var containsBadWords = containsAntikeyword(antiKeywords, text)
 
 	// If the tweet is tagged with Starbase as location, we just retweet it
-	if tweet.Place != nil && !containsBadWords && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID) {
+	if !containsBadWords && IsAtSpaceXSite(&tweet.Tweet) {
 		return true
 	}
 
@@ -254,6 +254,10 @@ func StarshipTweet(tweet TweetWrapper) bool {
 	}
 
 	return false
+}
+
+func IsAtSpaceXSite(tweet *twitter.Tweet) bool {
+	return tweet.Place != nil && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID)
 }
 
 func hasMedia(tweet *twitter.Tweet) bool {
