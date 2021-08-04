@@ -212,7 +212,7 @@ func (p *Processor) isReply(t *twitter.Tweet) bool {
 }
 
 func isQuestion(tweet *twitter.Tweet) bool {
-	return strings.HasSuffix(tweet.Text(), "?")
+	return strings.Contains(tweet.Text(), "?")
 }
 
 func (p *Processor) isReactionGIF(tweet *twitter.Tweet) bool {
