@@ -136,7 +136,7 @@ var (
 		"starshipent", "monstax", "eshygazit", "wonho",
 
 		// Account follows a sheriff
-		"assault", "rape", "deadly", "weapon", "victim", "murder", "crime", "investigat", "body", "memorial",
+		"assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "memorial", "dead", "death",
 	}
 )
 
