@@ -13,7 +13,7 @@ func TestShipRegex(t *testing.T) {
 		"starship number 15", "starship 15",
 		"starship sn15s engines", "starship sn15's engines",
 		"starship sn20?",
-		"s300", "ship 20",
+		"s300", "ship 20", "ship 20's nose", "ship 20’s nosecone section",
 	}
 
 	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!",
