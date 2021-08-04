@@ -100,7 +100,7 @@ var (
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculati" /*ng/on*/, "simulated", "print", "vfx", "not real", "photoshop",
 		"artwork", "artist", "#art",
 
-		"not starship", "non starship", "not about starship", "discord",
+		"not starship", "non starship", "not about starship", "discord", "wonder if", "was wondering",
 
 		// kerbal space program, games, star wars != "official" news
 		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky", "kerbals", "pocket rocket", "pocketrocket",
@@ -150,6 +150,9 @@ const (
 	SpaceXLaunchSiteID = "124cb6de55957000"
 	// https://twitter.com/places/1380f3b60f972001
 	StarbasePlaceID = "1380f3b60f972001"
+
+	// Other places around the area:
+	// "Isla Blanca Park": https://twitter.com/places/11dca9a728950001
 )
 
 // StarshipText returns whether the given text mentions starship
