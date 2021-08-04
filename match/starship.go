@@ -98,7 +98,7 @@ var (
 
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculati" /*ng/on*/, "simulated", "print", "vfx", "not real", "photoshop",
-		"artwork", "artist", "#art",
+		"artwork", "artist", "#art", "mission patch",
 
 		"not starship", "non starship", "not about starship", "discord", "wonder if", "was wondering",
 
@@ -151,11 +151,9 @@ const (
 	// https://twitter.com/places/1380f3b60f972001
 	StarbasePlaceID = "1380f3b60f972001"
 
-	// https://twitter.com/places/1d1f665883989434
-	SouthPadreIslandID = "1d1f665883989434"
-
 	// Other places around the area:
 	// "Isla Blanca Park": https://twitter.com/places/11dca9a728950001
+	// "South Padre Island, TX": https://twitter.com/places/1d1f665883989434
 )
 
 // StarshipText returns whether the given text mentions starship
@@ -260,7 +258,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 }
 
 func IsAtSpaceXSite(tweet *twitter.Tweet) bool {
-	return tweet.Place != nil && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID || tweet.Place.ID == SouthPadreIslandID)
+	return tweet.Place != nil && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID)
 }
 
 func hasMedia(tweet *twitter.Tweet) bool {
