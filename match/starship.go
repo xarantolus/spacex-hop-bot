@@ -93,6 +93,8 @@ var (
 
 		"no tfr",
 
+		"volvo",
+
 		// "super heavyweight" in olympics...
 		"super heavyweight",
 
