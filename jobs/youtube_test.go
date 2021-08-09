@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/xarantolus/spacex-hop-bot/match"
 	"github.com/xarantolus/spacex-hop-bot/scrapers"
 )
 
@@ -37,6 +38,23 @@ Given the dynamic schedule of development testing, stay tuned to our social medi
 				t.Errorf("extractKeywords() = %v, want %v", gotKeywords, tt.wantKeywords)
 			}
 		})
+	}
+}
+
+func Test_matcherMatchesStreamTitle(t *testing.T) {
+	// Make sure these would trigger the youtube live stream link tweet
+	var titles = []string{
+		"Starship Orbital Test flight",
+		"S20 & B4 Test flight",
+		"Booster 4 Hop",
+		"Starship 20 Suborbital Test flight",
+	}
+
+	for _, title := range titles {
+		matched := match.StarshipText(title, nil)
+		if !matched {
+			t.Errorf("expected video title %q to match, but didn't", title)
+		}
 	}
 }
 
