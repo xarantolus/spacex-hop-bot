@@ -28,11 +28,11 @@ type LiveVideo struct {
 	ShortDescription string `json:"shortDescription"`
 	IsUpcoming       bool   `json:"isUpcoming"`
 
-	upcomingInfo liveBroadcastDetails
+	UpcomingInfo LiveBroadcastDetails
 	unixInfo     liveBroadcastUnixInfo
 }
 
-type liveBroadcastDetails struct {
+type LiveBroadcastDetails struct {
 	StartTimestamp time.Time `json:"startTimestamp"`
 }
 
@@ -61,7 +61,7 @@ func (t *UnixTime) UnmarshalJSON(b []byte) (err error) {
 
 func (l *LiveVideo) TimeUntil() (t time.Time, d time.Duration, ok bool) {
 	// Check if we got any time info
-	t = l.upcomingInfo.StartTimestamp
+	t = l.UpcomingInfo.StartTimestamp
 	if t.IsZero() {
 		t = time.Time(l.unixInfo.ScheduledStartTime)
 
@@ -131,8 +131,8 @@ func YouTubeLive(channelLiveURL string) (lv LiveVideo, err error) {
 		// There are two ways of getting the Upcoming time of a livestream, so we need to handle both
 		{
 			Keys: []string{"startTimestamp"},
-			Callback: jsonextract.Unmarshal(&lv.upcomingInfo, func() bool {
-				return !lv.upcomingInfo.StartTimestamp.IsZero()
+			Callback: jsonextract.Unmarshal(&lv.UpcomingInfo, func() bool {
+				return !lv.UpcomingInfo.StartTimestamp.IsZero()
 			}),
 		},
 		{

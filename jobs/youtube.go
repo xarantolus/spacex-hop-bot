@@ -1,11 +1,13 @@
 package jobs
 
 import (
+	"bytes"
 	"errors"
-	"fmt"
 	"log"
 	"math/rand"
+	"regexp"
 	"strings"
+	"text/template"
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
@@ -66,46 +68,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 				lastLiveStart = liveStartTime
 			}
 
-			// See if we can get the starship name, but we tweet without it anyway
-			var shipName = scrapers.ShipNameRegex.FindString(strings.ToUpper(liveVideo.Title))
-
-			// Depending on what flies, we tweet different text
-			var tweetText string
-
-			switch {
-			// Upcoming video
-			case strings.HasPrefix(shipName, "B") && liveVideo.IsUpcoming:
-				if haveStartTime {
-					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship Booster #SuperHeavy #%s stream posted to YouTube, likely starting in %s\n#WenHop\n%s", shipName, strings.ToLower(units.HumanDuration(d)), liveURL)
-				} else {
-					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship Booster #SuperHeavy #%s stream posted to YouTube, likely starting soon\n#WenHop\n%s", shipName, liveURL)
-				}
-			case strings.HasPrefix(shipName, "S") && liveVideo.IsUpcoming:
-				if haveStartTime {
-					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship #%s stream posted to YouTube, likely starting in %s\n#WenHop\n%s", shipName, strings.ToLower(units.HumanDuration(d)), liveURL)
-				} else {
-					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship #%s stream posted to YouTube, likely starting soon\n#WenHop\n%s", shipName, liveURL)
-				}
-
-				// If it's not upcoming, it's likely live
-			case strings.HasPrefix(shipName, "B"):
-				tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship Booster #SuperHeavy #%s stream is live\n%s", shipName, liveURL)
-			case strings.HasPrefix(shipName, "S"):
-				tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship #%s stream is live\n%s", shipName, liveURL)
-
-				// If we don't have a S/B prefix, we ignore that and tweet anyways
-			case liveVideo.IsUpcoming:
-				if haveStartTime {
-					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship stream was posted to YouTube, likely starting in %s\n#WenHop\n%s", liveURL, strings.ToLower(units.HumanDuration(d)))
-				} else {
-					tweetText = fmt.Sprintf("Upcoming SpaceX #Starship stream was posted to YouTube, likely starting soon\n#WenHop\n%s", liveURL)
-				}
-			case liveVideo.IsLive:
-				tweetText = fmt.Sprintf("It's hoppening! SpaceX #Starship stream is live\n%s", liveURL)
-			default:
-				log.Printf("Got stream with title %q and link %s (isUpcoming=%v, isLive=%v), but cannot generate a nice tweet text\n", liveVideo.Title, liveURL, liveVideo.IsUpcoming, liveVideo.IsLive)
-				goto sleep
-			}
+			tweetText := describeLiveStream(&liveVideo)
 
 			// Now tweet the text we generated
 			tweet, _, err := client.Statuses.Update(tweetText, nil)
@@ -140,4 +103,81 @@ func tweetInterval(streamStartsIn time.Duration) time.Duration {
 	default:
 		return 2 * time.Hour
 	}
+}
+
+var expectedRegexes = []*regexp.Regexp{
+	regexp.MustCompile(`\b(Star[sS]hip)\b`),
+	regexp.MustCompile(`\b(Super\s*[Hh]eavy)\b`),
+	regexp.MustCompile(`\b(SN?\d+)\b`),
+	regexp.MustCompile(`\b(BN?\d+)\b`),
+}
+
+func extractKeywords(title string, description string) (keywords []string) {
+	extr := title + "\n " + description
+
+	for _, matcher := range expectedRegexes {
+		res := matcher.FindAllString(extr, 1)
+		if len(res) == 0 {
+			continue
+		}
+
+		if !containsIgnoreCase(keywords, res[0]) {
+			keywords = append(keywords, res[0])
+		}
+	}
+
+	return
+}
+
+func containsIgnoreCase(s []string, e string) bool {
+	for _, a := range s {
+		if strings.EqualFold(a, e) {
+			return true
+		}
+	}
+	return false
+}
+
+const streamTweetTemplate = `{{if .IsUpcoming}}SpaceX live stream starts {{if .HaveStartTime}}in {{.TimeUntil | duration}}{{else}}soon{{end}}:{{else}}SpaceX is now live on YouTube:{{end}}
+
+{{.Title}}
+{{$keywords := (keywords .Title .ShortDescription)}}{{with $keywords}}
+{{hashtags $keywords}}{{end}}
+
+{{.URL}}`
+
+var (
+	tmplFuncs = map[string]interface{}{
+		"hashtags": util.HashTagText,
+		"keywords": extractKeywords,
+		"duration": func(d time.Duration) string {
+			return strings.ToLower(units.HumanDuration(d))
+		},
+	}
+	streamTweetTmpl = template.Must(template.New("streamTweetTemplate").Funcs(tmplFuncs).Parse(streamTweetTemplate))
+)
+
+func describeLiveStream(v *scrapers.LiveVideo) string {
+	var b bytes.Buffer
+
+	t, dur, haveStartTime := v.TimeUntil()
+
+	var data = struct {
+		HaveStartTime bool
+		TimeUntil     time.Duration
+		StartTime     time.Time
+		*scrapers.LiveVideo
+	}{
+		HaveStartTime: haveStartTime,
+		TimeUntil:     dur,
+		StartTime:     t,
+		LiveVideo:     v,
+	}
+
+	err := streamTweetTmpl.Execute(&b, data)
+	if err != nil {
+		panic("executing Tweet template: " + err.Error())
+	}
+
+	return strings.TrimSpace(b.String())
 }
