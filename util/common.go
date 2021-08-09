@@ -2,6 +2,7 @@ package util
 
 import (
 	"log"
+	"strings"
 
 	"github.com/dghubble/go-twitter/twitter"
 )
@@ -18,4 +19,8 @@ func TweetURL(tweet *twitter.Tweet) string {
 		return "https://twitter.com/i/status/" + tweet.IDStr
 	}
 	return "https://twitter.com/" + tweet.User.ScreenName + "/status/" + tweet.IDStr
+}
+
+func HashTagText(words []string) string {
+	return "#" + strings.Join(words, " #")
 }

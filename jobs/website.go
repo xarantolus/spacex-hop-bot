@@ -53,6 +53,7 @@ func StarshipWebsiteChanges(client *twitter.Client, linkChan chan<- string) {
 
 		// OK, now we have an interesting and new change
 		{
+			// TODO: Maybe support something like "orbital flight test", "orbital test flight"? and booster numbers
 			var tweetText = fmt.Sprintf("The SpaceX #Starship website now mentions %s for #%s #WenHop\n%s",
 				info.NextFlightDate.Format("January 2"), info.ShipName, scrapers.StarshipURL)
 
