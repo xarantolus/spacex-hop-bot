@@ -48,6 +48,15 @@ func Test_matcherMatchesStreamTitle(t *testing.T) {
 		"S20 & B4 Test flight",
 		"Booster 4 Hop",
 		"Starship 20 Suborbital Test flight",
+		"Starship | SN15 | High-Altitude Flight Test",
+		"First Private Passenger on Lunar Starship Mission",
+		"Starship Update",
+		"Starship | SN5 | 150m Flight Test",
+		"Starship | SN6 | 150m Flight Test",
+		"Starship | SN8 | High-Altitude Flight Test",
+		"Starship | SN9 | High-Altitude Flight Test",
+		"Starship | SN10 | High-Altitude Flight Test",
+		"Starship | SN11 | High-Altitude Flight Test",
 	}
 
 	for _, title := range titles {
