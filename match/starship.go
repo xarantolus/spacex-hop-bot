@@ -100,7 +100,7 @@ var (
 
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculati" /*ng/on*/, "simulated", "print", "vfx", "not real", "photoshop",
-		"artwork", "artist", "#art", "mission patch", "drawing",
+		"artwork", "artist", "#art", "mission patch", "drawing", "board game",
 
 		"not starship", "non starship", "not about starship", "discord", "wonder if", "was wondering",
 
