@@ -76,12 +76,12 @@ var (
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "f9", "starlink",
 		"tesla", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "nasa_sls", "ula", "vulcan", "artemis",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "orion",
-		"resilience", "shuttle", "new glenn", "china", "chinese", "russia", "new shepard", "tsla", "dynetics", "hls",
+		"resilience", "shuttle", "new glenn", "china", "india", "chinese", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "vss imagine", "samsung", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "rookisaacman", "cygnus",
 
-		"amazon", "kuiper", "nasaartemis",
+		"amazon", "kuiper", "nasaartemis", "isro",
 
 		// e.g. crew-1, crew-2...
 		"crew-", "crew dragon", "dragon", "crs",
