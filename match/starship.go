@@ -136,6 +136,9 @@ var (
 
 		"trump", "antifa", "biden", "riot",
 
+		// Things that are typical questions for polls. We cannot get polls using the Twitter v1 API, so this is kind of bad
+		"feel about", "vs.",
+
 		// stuff that seems like starship, but isn't
 		"starshipent", "monstax", "eshygazit", "wonho",
 
