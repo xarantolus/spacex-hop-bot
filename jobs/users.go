@@ -20,6 +20,9 @@ func CheckUserTimeline(client *twitter.Client, name string, tweetChan chan<- mat
 	var (
 		// lastSeenID is the ID of the last tweet we saw
 		lastSeenID int64
+
+		// The first batch of tweets we receive should not acted upon
+		isFirstRequest = true
 	)
 
 	for {
@@ -46,11 +49,18 @@ func CheckUserTimeline(client *twitter.Client, name string, tweetChan chan<- mat
 		for _, tweet := range tweets {
 			lastSeenID = tweet.ID
 
+			if isFirstRequest {
+				continue
+			}
+
 			// OK, process this tweet
 			tweetChan <- match.TweetWrapper{
 				TweetSource: match.TweetSourceTrustedUser,
 				Tweet:       tweet,
 			}
+		}
+		if isFirstRequest {
+			isFirstRequest = false
 		}
 
 	sleep:
