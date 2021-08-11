@@ -79,7 +79,7 @@ var (
 		"resilience", "shuttle", "new glenn", "china", "chinese", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "vss imagine", "samsung", "bezos", "jeff who", "branson", "tory", "bruno",
-		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "rookisaacman",
+		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "rookisaacman", "cygnus",
 
 		"amazon", "kuiper", "nasaartemis",
 
@@ -125,7 +125,7 @@ var (
 
 		"ocisly", "jrti", "canaveral",
 
-		"meme", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrants",
+		"meme", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
 
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
@@ -133,6 +133,8 @@ var (
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow my list",
 
 		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot",
+
+		"trump", "antifa", "biden", "riot",
 
 		// stuff that seems like starship, but isn't
 		"starshipent", "monstax", "eshygazit", "wonho",
