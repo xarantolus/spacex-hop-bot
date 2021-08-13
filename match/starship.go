@@ -65,7 +65,7 @@ var (
 	}
 
 	userAntikeywordsOverwrite = map[string][]string{
-		"elonmusk": {"tesla", "model s", "model 3", "model x", "model y", "car", "giga", "falcon", "boring company", "tunnel", "loop", "doge", "ula", "tonybruno", "jeff", "fsd"},
+		"elonmusk": {"tesla", "model s", "model 3", "model x", "model y", "car", "giga", "falcon", "boring company", "tunnel", "loop", "doge", "ula", "tonybruno", "jeff", "fsd", "giga berlin", "giga factory", "gigafactory"},
 	}
 
 	hqMediaAccounts = map[string]bool{
@@ -100,7 +100,7 @@ var (
 
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculati" /*ng/on*/, "simulated", "print", "vfx", "not real", "photoshop",
-		"artwork", "artist", "#art", "mission patch", "drawing", "board game", "starship design",
+		"artwork", "artist", "#art", "mission patch", "drawing", "board game", "starship design", "daily_hopper", "daily hopper",
 
 		"not starship", "non starship", "not about starship", "discord", "wonder if", "was wondering",
 
@@ -137,7 +137,7 @@ var (
 		"trump", "antifa", "biden", "riot",
 
 		// Things that are typical questions for polls. We cannot get polls using the Twitter v1 API, so this is kind of bad
-		"feel about", "vs.",
+		"feel about", "vs",
 
 		// stuff that seems like starship, but isn't
 		"starshipent", "monstax", "eshygazit", "wonho",
