@@ -103,6 +103,7 @@ The Falcon 9 first stage rocket booster supporting this mission previously suppo
 		{"Deimos in the Ocean", false},
 		{"SpaceX's Phobos launch platform", true},
 		{"Phobos in the port", false},
+		{"Samsung S22 Ultra", false},
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {

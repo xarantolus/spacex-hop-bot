@@ -79,7 +79,7 @@ var (
 		"resilience", "shuttle", "new glenn", "china", "india", "chinese", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "vss imagine", "samsung", "bezos", "jeff who", "branson", "tory", "bruno",
-		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "rookisaacman", "cygnus",
+		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "rookisaacman", "cygnus", "samsung",
 
 		"amazon", "kuiper", "nasaartemis", "isro",
 
@@ -100,7 +100,7 @@ var (
 
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculati" /*ng/on*/, "simulated", "print", "vfx", "not real", "photoshop",
-		"artwork", "artist", "#art", "mission patch", "drawing", "board game",
+		"artwork", "artist", "#art", "mission patch", "drawing", "board game", "starship design",
 
 		"not starship", "non starship", "not about starship", "discord", "wonder if", "was wondering",
 
