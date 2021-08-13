@@ -16,9 +16,16 @@ func CheckLocationStream(client *twitter.Client, tweetChan chan<- match.TweetWra
 	var backoff int = 1
 	for {
 		s, err := client.Streams.Filter(&twitter.StreamFilterParams{
-			// This is a large area around boca chica. We want to catch many tweets from there and then filter them
-			// You can see this area on a map here: https://mapper.acme.com/?ll=26.46074,-97.21252&z=9&t=M&marker0=26.90982%2C-96.59729%2Cunnamed&marker1=25.68237%2C-97.80029%2C1.7%20km%20NE%20of%20Valle%20Hermoso%20MX
-			Locations:   []string{"-97.80029,25.68237,-96.59729,26.90982"},
+			Locations: []string{
+				// This is a large area around boca chica (aka Starbase).
+				// We want to catch many tweets from there and then filter them
+				// You can see this area on a map here: https://mapper.acme.com/?ll=26.46074,-97.21252&z=9&t=M&marker0=26.90982%2C-96.59729%2Cunnamed&marker1=25.68237%2C-97.80029%2C1.7%20km%20NE%20of%20Valle%20Hermoso%20MX
+				"-97.80029,25.68237,-96.59729,26.90982",
+
+				// McGregor test site (they also test raptor engines there, so maybe someone tweets from there)
+				// Map: https://mapper.acme.com/?ll=31.39966,-97.46246&z=12&t=M&marker0=31.39930%2C-97.46250%2C31.399308%20-97.462496&marker1=31.34836%2C-97.51740%2Cunnamed&marker2=31.48314%2C-97.36530%2C6.0%20km%20NE%20of%20McGregor%20TX
+				"-97.51740,31.34836,-97.36530,31.48314",
+			},
 			FilterLevel: "none",
 			Language:    []string{"en"},
 		})
