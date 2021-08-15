@@ -23,6 +23,7 @@ var (
 		"orbital launch table", "orbital table",
 		"orbital launch pad", "orbital launch mount",
 		"olp service tower",
+		"launch tower arm", "mechazilla",
 	}
 
 	starshipMatchers = []*regexp.Regexp{
