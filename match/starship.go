@@ -79,7 +79,7 @@ var (
 		"resilience", "shuttle", "new glenn", "china", "india", "chinese", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "vss imagine", "samsung", "bezos", "jeff who", "branson", "tory", "bruno",
-		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "rookisaacman", "cygnus", "samsung",
+		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "rookisaacman", "cygnus", "samsung", "angara",
 
 		"amazon", "kuiper", "nasaartemis", "isro",
 
@@ -132,7 +132,7 @@ var (
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow my list",
 
-		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot",
+		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot",
 
 		"trump", "antifa", "biden", "riot",
 
