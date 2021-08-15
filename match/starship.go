@@ -71,6 +71,7 @@ var (
 
 	hqMediaAccounts = map[string]bool{
 		"starshipgazer": true,
+		"bottinphilip":  true,
 	}
 
 	antiStarshipKeywords = []string{
