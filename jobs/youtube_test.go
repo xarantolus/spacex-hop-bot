@@ -139,7 +139,7 @@ SuperHeavy Booster number 4 (B4)
 Given the dynamic schedule of development testing, stay tuned to our social media channels for updates as we move toward SpaceX’s fifth high-altitude flight test of Starship!`,
 				IsUpcoming: true,
 				UpcomingInfo: scrapers.LiveBroadcastDetails{
-					StartTimestamp: time.Now().Add(2 * time.Minute),
+					StartTimestamp: time.Now().Add(1*time.Minute + 10*time.Second),
 				},
 			},
 			`SpaceX live stream starts in about a minute:
@@ -167,7 +167,7 @@ SuperHeavy Booster number 4 (B4)
 Given the dynamic schedule of development testing, stay tuned to our social media channels for updates as we move toward SpaceX’s fifth high-altitude flight test of Starship!`,
 				IsUpcoming: true,
 				UpcomingInfo: scrapers.LiveBroadcastDetails{
-					StartTimestamp: time.Now().Add(3 * time.Hour),
+					StartTimestamp: time.Now().Add(3*time.Hour + 10*time.Minute),
 				},
 			},
 			`SpaceX live stream starts in 3 hours:
