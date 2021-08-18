@@ -62,7 +62,7 @@ var (
 		"spacetfrs": regexp.MustCompile("(?:brownsville)"),
 
 		// For Elon, we try to match anything that could be insider info
-		"elonmusk": regexp.MustCompile("(?:booster|heavy|cryo|static fire|tower|ship|rud|faa|starbase|boca chica|lox|liquid oxygen|methane|ch4|relight|fts|flip|cargo|lunar|tfr|fts|scrub|mach)"),
+		"elonmusk": regexp.MustCompile("(?:booster|heavy|cryo|static fire|tower|ship|rud|faa|starbase|boca chica|lox|liquid oxygen|methane|ch4|relight|fts|flip|cargo|lunar|tfr|fts|scrub|flap)"),
 	}
 
 	userAntikeywordsOverwrite = map[string][]string{
