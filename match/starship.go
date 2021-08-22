@@ -78,9 +78,9 @@ var (
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "f9", "starlink",
 		"tesla", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "nasa_sls", "ula", "vulcan", "artemis",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "orion",
-		"resilience", "shuttle", "new glenn", "china", "india", "chinese", "russia", "new shepard", "tsla", "dynetics", "hls",
+		"resilience", "shuttle", "new glenn", "china", "india", "chinese", "space plane", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
-		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "vss imagine", "samsung", "bezos", "jeff who", "branson", "tory", "bruno",
+		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "vss imagine", "samsung", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "rookisaacman", "cygnus", "samsung", "angara", "firefly",
 
 		"amazon", "kuiper", "nasaartemis", "isro",
@@ -136,7 +136,7 @@ var (
 
 		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot",
 
-		"trump", "antifa", "biden", "riot",
+		"trump", "antifa", "biden", "riot", "taliban", "kill",
 
 		// Things that are typical questions for polls. We cannot get polls using the Twitter v1 API, so this is kind of bad
 		"feel about", "vs",
