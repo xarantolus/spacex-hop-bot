@@ -32,7 +32,17 @@ func LoadIgnoredList(client *twitter.Client, ignoredListID int64) {
 	}
 }
 
-func IsIgnoredAccount(tweet *twitter.Tweet) bool {
+func isIgnoredName(username string) bool {
+
+	for _, k := range ignoredNames {
+		if username == k {
+			return true
+		}
+	}
+	return false
+}
+
+func IsOrMentionsIgnoredAccount(tweet *twitter.Tweet) bool {
 	if tweet.User == nil {
 		return false
 	}
@@ -46,16 +56,23 @@ func IsIgnoredAccount(tweet *twitter.Tweet) bool {
 		return false
 	}
 
-	for _, k := range ignoredNames {
-		if username == k {
-			return true
-		}
+	if isIgnoredName(username) {
+		return true
 	}
 
 	desc := strings.ToLower(tweet.User.Description)
 	for _, k := range ignoredKeywords {
 		if strings.Contains(desc, k) {
 			return true
+		}
+	}
+
+	// If someone *mentions* an ignored user, it's likely not important
+	if tweet.Entities != nil {
+		for _, um := range tweet.Entities.UserMentions {
+			if isIgnoredName(strings.ToLower(um.ScreenName)) {
+				return true
+			}
 		}
 	}
 

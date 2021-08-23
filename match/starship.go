@@ -74,6 +74,11 @@ var (
 		"bottinphilip":  true,
 	}
 
+	veryImportantAccounts = map[string]bool{
+		"elonmusk": true,
+		"spacex":   true,
+	}
+
 	antiStarshipKeywords = []string{
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "f9", "starlink",
 		"tesla", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "nasa_sls", "ula", "vulcan", "artemis",
@@ -214,9 +219,11 @@ func StarshipTweet(tweet TweetWrapper) bool {
 		return false
 	}
 
-	// We ignore certain satire accounts
-	if IsIgnoredAccount(&tweet.Tweet) {
-		return false
+	// We ignore certain (e.g. satire, artist) accounts
+	if tweet.User != nil {
+		if _, important := veryImportantAccounts[strings.ToLower(tweet.User.Name)]; !important && IsOrMentionsIgnoredAccount(&tweet.Tweet) {
+			return false
+		}
 	}
 
 	// Now check if the text of the tweet matches what we're looking for.

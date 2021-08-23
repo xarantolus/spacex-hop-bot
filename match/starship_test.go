@@ -167,6 +167,12 @@ func TestVariables(t *testing.T) {
 			t.Errorf("Account name %q should be lowercase in hqMediaAccounts map", k)
 		}
 	}
+
+	for k := range veryImportantAccounts {
+		if strings.ToLower(k) != k {
+			t.Errorf("Account name %q should be lowercase in veryImportantAccounts map", k)
+		}
+	}
 }
 
 func Test_startsWithAnyGeneric(t *testing.T) {

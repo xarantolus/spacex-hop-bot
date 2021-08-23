@@ -109,7 +109,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		}
 
 		// Make sure the quoted user is not ignored
-		if match.IsIgnoredAccount(tweet.QuotedStatus) {
+		if match.IsOrMentionsIgnoredAccount(tweet.QuotedStatus) {
 			break
 		}
 
