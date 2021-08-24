@@ -96,10 +96,19 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 			break
 		}
 
-		// If the quoted tweet already is about starship, we only look at that one
+		// If the quoted tweet already is about starship, we maybe only look at that one
 		quotedWrap := match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.QuotedStatus}
 		if p.isStarshipTweet(quotedWrap) {
-			p.Tweet(quotedWrap)
+
+			// If it's from the *same* user, then we just assume they added additional info.
+			// We only retweet if it's media though
+			if tweet.QuotedStatus.User != nil && tweet.User != nil && tweet.QuotedStatus.User.ID == tweet.User.ID {
+				if p.hasMedia(tweet.QuotedStatus) {
+					p.retweet(tweet.QuotedStatus, "quoted media", tweet.TweetSource)
+				}
+			} else {
+				p.Tweet(quotedWrap)
+			}
 			return
 		}
 
