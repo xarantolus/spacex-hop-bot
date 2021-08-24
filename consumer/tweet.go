@@ -69,7 +69,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 	// 3. We find a quoted tweet
 	// 4. We find a tweet that is about starship
 
-	if p.seenTweets[tweet.ID] || tweet.Retweeted {
+	if (p.seenTweets[tweet.ID] || tweet.Retweeted) && !p.debug {
 		return
 	}
 
