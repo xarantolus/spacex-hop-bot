@@ -204,6 +204,11 @@ func StarshipText(text string, antiKeywords []string) bool {
 	return false
 }
 
+// The faceRatio of a tweet is the number of faces in all images (or video thumbnails) divided by the number of images in the tweet
+const maxFaceRatio = 0.5
+
+var faceDetector = NewFaceDetector()
+
 // StarshipTweet returns whether the given tweet mentions starship. It also includes custom matchers for certain users
 func StarshipTweet(tweet TweetWrapper) bool {
 	// Ignore OLD tweets
@@ -242,7 +247,9 @@ func StarshipTweet(tweet TweetWrapper) bool {
 
 	// If the tweet is tagged with Starbase as location, we just retweet it
 	if !containsBadWords && IsAtSpaceXSite(&tweet.Tweet) {
-		return true
+		fr := faceDetector.FaceRatio(&tweet.Tweet)
+
+		return fr <= maxFaceRatio
 	}
 
 	// Now check if it mentions too many people
@@ -252,7 +259,8 @@ func StarshipTweet(tweet TweetWrapper) bool {
 
 	// Check if the text matches
 	if StarshipText(text, antiKeywords) {
-		return true
+		fr := faceDetector.FaceRatio(&tweet.Tweet)
+		return fr <= maxFaceRatio
 	}
 
 	// Now check if we have a matcher for this specific user.

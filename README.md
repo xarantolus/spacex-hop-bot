@@ -12,7 +12,9 @@ These tweets are retweeted, if:
 * They are by Elon Musk and contain anything related to Starship
 * They are tagged with *exactly* the location of either the [build site](https://twitter.com/places/124bed061054f000), [launch site](https://twitter.com/places/124cb6de55957000) or [Starbase](https://twitter.com/places/1380f3b60f972001)
 
-Some keywords and (mostly satire) accounts are filtered out to prevent spam. It also tries to only retweet *real* information, which is why animations and similar are also filtered.
+Some keywords and (mostly satire) accounts are filtered out to prevent spam. Tweets with too many selfies are also filtered out.
+
+The bot tries to only retweet *real* information, which is why animations and similar are also filtered.
 
 It also does some background tasks: 
 - Watching the [SpaceX YouTube channel](https://www.youtube.com/spacex/) for livestreams. As soon as a stream about Starship goes live (or has a countdown), the bot will tweet a link.
