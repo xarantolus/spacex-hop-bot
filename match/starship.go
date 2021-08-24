@@ -88,6 +88,9 @@ var (
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "vss imagine", "samsung", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "rookisaacman", "cygnus", "samsung", "angara", "firefly",
 
+		// Blue Origins' Starship... kind of clone i guess?
+		"jarvis", "glenn",
+
 		"amazon", "kuiper", "nasaartemis", "isro",
 
 		// e.g. crew-1, crew-2...
@@ -140,6 +143,8 @@ var (
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow my list",
 
 		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot",
+
+		"red bull",
 
 		"trump", "antifa", "biden", "riot", "taliban", "kill",
 
