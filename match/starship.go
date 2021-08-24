@@ -89,7 +89,7 @@ var (
 		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "rookisaacman", "cygnus", "samsung", "angara", "firefly",
 
 		// Blue Origins' Starship... kind of clone i guess?
-		"jarvis", "glenn",
+		"jarvis", "glenn", "bob smith",
 
 		"amazon", "kuiper", "nasaartemis", "isro",
 
