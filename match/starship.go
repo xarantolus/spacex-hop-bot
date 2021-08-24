@@ -83,7 +83,7 @@ var (
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "f9", "starlink",
 		"tesla", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "nasa_sls", "ula", "vulcan", "artemis",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "orion",
-		"resilience", "shuttle", "new glenn", "china", "india", "chinese", "space plane", "russia", "new shepard", "tsla", "dynetics", "hls",
+		"resilience", "shuttle", "new glenn", "china", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "vss imagine", "samsung", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "rookisaacman", "cygnus", "samsung", "angara", "firefly",
@@ -192,7 +192,7 @@ func StarshipText(text string, antiKeywords []string) bool {
 	}
 
 	// Raptor has more than one meaning, so we need to be more careful
-	if strings.Contains(text, "raptor") && containsAny(text, "starship", "vacuum", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "raptorvan", "launch site", "production site", "booster", "super heavy", "superheavy", "truck", "deliver", "sea level") {
+	if strings.Contains(text, "raptor") && containsAny(text, "starship", "vacuum", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "launch site", "production site", "booster", "super heavy", "superheavy", "truck", "van", "deliver", "sea level", "high bay") {
 		return true
 	}
 
