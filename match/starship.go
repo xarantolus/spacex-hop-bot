@@ -80,7 +80,7 @@ var (
 	}
 
 	antiStarshipKeywords = []string{
-		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "falcon", "f9", "starlink",
+		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "rklb", "falcon", "f9", "starlink",
 		"tesla", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "nasa_sls", "ula", "vulcan", "artemis",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "orion",
 		"resilience", "shuttle", "new glenn", "china", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics", "hls",
@@ -321,7 +321,7 @@ func startsWithAny(text string, words ...string) bool {
 	for {
 		iterations++
 
-		for currentIndex < len(text) && (unicode.IsSpace(rune(text[currentIndex])) || rune(text[currentIndex]) == '#' || rune(text[currentIndex]) == '@') {
+		for currentIndex < len(text) && (unicode.IsSpace(rune(text[currentIndex])) || rune(text[currentIndex]) == '#' || rune(text[currentIndex]) == '@' || rune(text[currentIndex]) == '$') {
 			currentIndex++
 		}
 
