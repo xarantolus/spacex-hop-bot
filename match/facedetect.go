@@ -89,9 +89,10 @@ func (f *FaceDetector) DetectFaces(url string) (count int, err error) {
 	cols, rows := src.Bounds().Max.X, src.Bounds().Max.Y
 
 	cParams := pigo.CascadeParams{
-		MinSize:     cols / 16,
-		MaxSize:     1000,
-		ShiftFactor: 0.25,
+		MinSize: cols / 16,
+		MaxSize: 1000,
+
+		ShiftFactor: 0.15,
 		ScaleFactor: 1.1,
 
 		ImageParams: pigo.ImageParams{
@@ -102,13 +103,13 @@ func (f *FaceDetector) DetectFaces(url string) (count int, err error) {
 		},
 	}
 
-	dets := f.faceClassifier.RunCascade(cParams, 0.0)
+	dets := f.faceClassifier.RunCascade(cParams, 0.2)
 
-	dets = f.faceClassifier.ClusterDetections(dets, 0.2)
+	dets = f.faceClassifier.ClusterDetections(dets, 0.1)
 
 	// Now count those with a certain score
 	for _, d := range dets {
-		if d.Q > 5.0 {
+		if d.Q > 1.0 {
 			count++
 		}
 	}
