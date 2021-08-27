@@ -71,7 +71,7 @@ var (
 
 	hqMediaAccounts = map[string]bool{
 		"starshipgazer": true,
-		"bottinphilip":  true,
+		// "bottinphilip":  true,
 	}
 
 	veryImportantAccounts = map[string]bool{
@@ -140,7 +140,7 @@ var (
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
-		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow my list",
+		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow my list", "top friends",
 
 		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit",
 
