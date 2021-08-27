@@ -12,6 +12,7 @@ import (
 
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/xarantolus/spacex-hop-bot/match"
+	"github.com/xarantolus/spacex-hop-bot/scrapers"
 	"github.com/xarantolus/spacex-hop-bot/util"
 	"mvdan.cc/xurls/v2"
 )
@@ -123,7 +124,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		}
 
 		// Anti-keywords?
-		if match.ContainsStarshipAntiKeyword(tweet.QuotedStatus.Text()) {
+		if match.ContainsStarshipAntiKeyword(tweet.QuotedStatus.Text()) || p.isReactionGIF(tweet.QuotedStatus) || isQuestion(tweet.QuotedStatus) {
 			break
 		}
 
@@ -143,6 +144,11 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// Filter out non-english tweets
 		if tweet.Lang != "" && tweet.Lang != "en" && tweet.Lang != "und" {
 			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because of language ", tweet.Lang)
+			break
+		}
+
+		if p.shouldIgnoreLink(&tweet.Tweet) {
+			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because we have seen it recently")
 			break
 		}
 
@@ -281,7 +287,16 @@ var (
 		"instagram.com":        true,
 		"soundcloud.com":       true,
 		"blueorigin.com":       true,
+		"affinitweet.com":      true,
 	}
+
+	highQualityYouTubeStreams = map[string]bool{
+		// Do not ignore NASASpaceflight, people often tweet updates with a link to their 24/7 stream
+		"UCSUu1lih2RifWkKtDOJdsBA": true,
+		// Same for LabPadre
+		"UCFwMITSkc1Fms6PoJoh1OUQ": true,
+	}
+
 	urlRegex *regexp.Regexp
 )
 
@@ -319,6 +334,18 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 		host := strings.ToLower(strings.TrimPrefix("www.", parsed.Hostname()))
 		if ignoredHosts[host] {
 			return true
+		}
+
+		if host == "youtube.com" || host == "youtu.be" {
+			stream, err := scrapers.YouTubeLive(u)
+			if err == nil {
+				// If we know the channel is good, then we don't ignore their live streams
+				if (stream.IsLive || stream.IsUpcoming) && highQualityYouTubeStreams[stream.ChannelID] {
+					continue
+				}
+
+				// Else, we should of course check if we've seen it before
+			}
 		}
 
 		// If we retweeted this link in the last 12 hours, we should

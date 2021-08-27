@@ -22,9 +22,12 @@ var (
 
 // This struct only contains minimal info, there is more but I don't care about other info we can get
 type LiveVideo struct {
-	VideoID          string `json:"videoId"`
-	Title            string `json:"title"`
-	IsLive           bool   `json:"isLive"`
+	VideoID string `json:"videoId"`
+	Title   string `json:"title"`
+	IsLive  bool   `json:"isLive"`
+
+	ChannelID string `json:"channelId"`
+
 	ShortDescription string `json:"shortDescription"`
 	IsUpcoming       bool   `json:"isUpcoming"`
 
