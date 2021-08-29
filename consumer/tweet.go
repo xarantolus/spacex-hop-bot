@@ -295,6 +295,8 @@ var (
 		"UCSUu1lih2RifWkKtDOJdsBA": true,
 		// Same for LabPadre
 		"UCFwMITSkc1Fms6PoJoh1OUQ": true,
+		// SpaceX official channel
+		"UCtI0Hodo5o5dUb67FeUjDeA": true,
 	}
 
 	urlRegex *regexp.Regexp

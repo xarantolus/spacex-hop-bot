@@ -108,6 +108,8 @@ var (
 		// "super heavyweight" in olympics...
 		"super heavyweight",
 
+		"god", "the lord",
+
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculati" /*ng/on*/, "simulated", "print", "vfx", "not real", "photoshop",
 		"artwork", "artist", "#art", "mission patch", "drawing", "board game", "starship design", "daily_hopper", "daily hopper",
@@ -136,7 +138,7 @@ var (
 
 		"ocisly", "jrti", "canaveral",
 
-		"meme", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
+		"meme", "petition to", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
 
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
 
@@ -178,6 +180,11 @@ const (
 
 // StarshipText returns whether the given text mentions starship
 func StarshipText(text string, antiKeywords []string) bool {
+	// The lowercase b4 stands for "before" and is usually used by low-quality spam accounts
+	if strings.Contains(text, "b4") {
+		return false
+	}
+
 	text = strings.ToLower(text)
 
 	// If we find ignored words, we ignore the tweet
