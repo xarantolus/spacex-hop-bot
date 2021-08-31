@@ -117,7 +117,7 @@ var (
 		"not starship", "non starship", "not about starship", "discord", "wonder if", "was wondering",
 
 		// kerbal space program, games, star wars != "official" news
-		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky", "kerbals", "pocket rocket", "pocketrocket",
+		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky", "kerbals", "pocket rocket", "pocketrocket", "simplerockets",
 		"star trek", "startrek", "starcitizen", "star citizen", "battle droid", "b1-series", "civil war", "jabba the hutt", "sfs", "space flight simulator",
 		"rocket explorer",
 
@@ -261,7 +261,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 	// If the tweet is tagged with Starbase as location, we just retweet it
 	if !containsBadWords && IsAtSpaceXSite(&tweet.Tweet) {
 		fr := faceDetector.FaceRatio(&tweet.Tweet)
-
+		log.Printf("[FaceRatio] %s: %f\n", util.TweetURL(&tweet.Tweet), fr)
 		return fr <= maxFaceRatio
 	}
 
@@ -273,6 +273,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 	// Check if the text matches
 	if StarshipText(text, antiKeywords) {
 		fr := faceDetector.FaceRatio(&tweet.Tweet)
+		log.Printf("[FaceRatio] %s: %f\n", util.TweetURL(&tweet.Tweet), fr)
 		return fr <= maxFaceRatio
 	}
 
