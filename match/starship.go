@@ -138,6 +138,9 @@ var (
 
 		"ocisly", "jrti", "canaveral",
 
+		// I do not care about opinions on starship
+		"agree", "disagree",
+
 		"meme", "petition to", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
 
 		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
