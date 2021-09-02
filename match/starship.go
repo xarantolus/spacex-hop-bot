@@ -112,7 +112,8 @@ var (
 
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculati" /*ng/on*/, "simulated", "print", "vfx", "not real", "photoshop",
-		"artwork", "artist", "#art", "mission patch", "drawing", "board game", "starship design", "daily_hopper", "daily hopper",
+		"artwork", "artist", "#art", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle",
+		"card game", "starship design", "daily_hopper", "daily hopper",
 
 		"not starship", "non starship", "not about starship", "discord", "wonder if", "was wondering",
 
