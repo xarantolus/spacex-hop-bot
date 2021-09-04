@@ -288,6 +288,7 @@ var (
 		"soundcloud.com":       true,
 		"blueorigin.com":       true,
 		"affinitweet.com":      true,
+		"boards.greenhouse.io": true,
 	}
 
 	highQualityYouTubeStreams = map[string]bool{
