@@ -126,6 +126,9 @@ var (
 		"moho", "gilly", "kerbin", "mun", "minmus", "duna", "jool", "laythe", "vall",
 		"tylo", "bop", "pol", "dres", "eeloo", "kerbol",
 
+		// movies
+		"the martian",
+
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
 
