@@ -166,6 +166,8 @@ var (
 
 		// Account follows a sheriff
 		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "memorial", "dead", "death",
+
+		"covid", "corona",
 	}
 )
 

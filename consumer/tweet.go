@@ -124,7 +124,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		}
 
 		// Anti-keywords?
-		if match.ContainsStarshipAntiKeyword(tweet.QuotedStatus.Text()) || p.isReactionGIF(tweet.QuotedStatus) || isQuestion(tweet.QuotedStatus) {
+		if match.ContainsStarshipAntiKeyword(tweet.QuotedStatus.Text()) || p.isReactionGIF(tweet.QuotedStatus) || isQuestion(tweet.QuotedStatus) || isQuestion(&tweet.Tweet) {
 			break
 		}
 
