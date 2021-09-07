@@ -334,7 +334,7 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 		}
 
 		// Check if the host is ignored
-		host := strings.ToLower(strings.TrimPrefix("www.", parsed.Hostname()))
+		host := strings.ToLower(strings.TrimPrefix(parsed.Hostname(), "www."))
 		if ignoredHosts[host] {
 			return true
 		}
