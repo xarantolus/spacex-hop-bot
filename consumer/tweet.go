@@ -325,7 +325,7 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 
 	// Now check if any of these URLs is ignored
 	for _, u := range urls {
-		u = util.FindCanonicalURL(u)
+		u = util.FindCanonicalURL(u, false)
 
 		parsed, err := url.ParseRequestURI(u)
 		if err != nil {

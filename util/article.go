@@ -23,7 +23,7 @@ var (
 
 // FindCanonicalURL returns the canonical URL of an article if possible,
 // else the original input is returned
-func FindCanonicalURL(url string) (out string) {
+func FindCanonicalURL(url string, secondTry bool) (out string) {
 	out = url
 
 	client := http.Client{
@@ -73,8 +73,8 @@ func FindCanonicalURL(url string) (out string) {
 	equiv := doc.Find("[http-equiv]").First()
 	if equiv.Length() != 0 {
 		u := urlRegex.FindString(equiv.AttrOr("content", ""))
-		if u != "" {
-			return u
+		if u != "" && u != url && !secondTry {
+			return FindCanonicalURL(u, true)
 		}
 	}
 
