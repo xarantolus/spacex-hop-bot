@@ -99,7 +99,7 @@ var (
 		"f22", "f-22", "jet",
 
 		// Not interested in other stuff
-		"doge", "coin", "btc", "fsd", "spce", "dogecoin",
+		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto",
 
 		"no tfr",
 
@@ -143,7 +143,7 @@ var (
 		"ocisly", "jrti", "canaveral",
 
 		// I do not care about opinions on starship
-		"agree", "disagree",
+		"agree", "disagree", "throwback to",
 
 		"meme", "petition to", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
 
