@@ -109,7 +109,7 @@ func (f *FaceDetector) DetectFaces(url string) (count int, err error) {
 
 	// Now count those with a certain score
 	for _, d := range dets {
-		if d.Q > 1.0 {
+		if d.Q > 2.5 {
 			count++
 		}
 	}
@@ -118,7 +118,7 @@ func (f *FaceDetector) DetectFaces(url string) (count int, err error) {
 }
 
 // FaceRatio calculates the face ratio of a tweet. It is
-// "Equation": (number of faces in all images) / (number of images)
+// "Equation": (number of images with faces) / (number of images)
 func (f *FaceDetector) FaceRatio(tweet *twitter.Tweet) float32 {
 	var imageUrls []string
 
@@ -136,7 +136,7 @@ func (f *FaceDetector) FaceRatio(tweet *twitter.Tweet) float32 {
 		return 0
 	}
 
-	var faceCount int
+	var imagesWithFacesCount int
 
 	for _, iurl := range imageUrls {
 		count, err := f.DetectFaces(iurl)
@@ -145,8 +145,10 @@ func (f *FaceDetector) FaceRatio(tweet *twitter.Tweet) float32 {
 			continue
 		}
 
-		faceCount += count
+		if count > 0 {
+			imagesWithFacesCount += 1
+		}
 	}
 
-	return float32(faceCount) / float32(len(imageUrls))
+	return float32(imagesWithFacesCount) / float32(len(imageUrls))
 }

@@ -32,7 +32,6 @@ func TestFaceDetector_DetectFaces(t *testing.T) {
 	}{
 		{"a.txt", false, true},
 
-		{"1.jpg", true, false},
 		{"2.jpg", true, false},
 
 		{"3.jpg", false, false},
