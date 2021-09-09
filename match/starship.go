@@ -168,6 +168,9 @@ var (
 		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "memorial", "dead", "death",
 
 		"covid", "corona",
+
+		// Make sure we don't retweet anything related to horrible tragedies
+		"9/11", "911", "twin tower", "wtc", "trade center", "die", "death", "falling",
 	}
 )
 
