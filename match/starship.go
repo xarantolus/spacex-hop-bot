@@ -88,6 +88,8 @@ var (
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "vss imagine", "samsung", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "rookisaacman", "cygnus", "samsung", "angara", "firefly",
 
+		"roscosmos", "yenisey",
+
 		// Blue Origins' Starship... kind of clone i guess?
 		"jarvis", "glenn", "bob smith",
 
