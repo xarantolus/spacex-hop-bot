@@ -30,7 +30,7 @@ var (
 		// Starship SNx
 		regexp.MustCompile(`\b((s\d{2,}\b)|(ship\s?\d{2,}\b)|(sn|starship|starship number)\s?\d+['’]?s?)`),
 		// Booster BNx
-		regexp.MustCompile(`\b((b\d{1,2}\b)|(bn|booster|booster number)\s?\d+['’]?s?)`),
+		regexp.MustCompile(`\b((b\d{1,2}\b)|(bn|booster|booster number)\s?\d{1,3}['’]?s?\b)`),
 		// Yes. I like watching tanks
 		regexp.MustCompile(`\b(gse)\s?(?:tank|-)?\s?\d*\b`),
 	}

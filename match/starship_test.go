@@ -40,7 +40,7 @@ func TestBoosterRegex(t *testing.T) {
 		"booster number 15s engines", "booster 20’s", "booster 20's",
 		"booster 3?"}
 
-	var invalid = []string{"starship 10", "b3496", "sn10", "wordbn 10", "company's 20 cars", "company's 2021 report"}
+	var invalid = []string{"starship 10", "b3496", "sn10", "wordbn 10", "company's 20 cars", "company's 2021 report", "booster 1049-11 arrives at the spacex dock"}
 
 	for _, v := range valid {
 		if boostMatch.FindString(v) == "" {
