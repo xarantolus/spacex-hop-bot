@@ -149,7 +149,7 @@ var (
 
 		"meme", "petition to", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
 
-		"dearmoon", "dear moon", "inspiration4", "rover", "alien",
+		"dearmoon", "dear moon", "inspiration4", "inspiration 4", "inspiration four", "rover", "alien",
 
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow my list", "top friends",
