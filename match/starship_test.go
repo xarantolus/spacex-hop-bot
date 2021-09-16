@@ -36,11 +36,16 @@ func TestBoosterRegex(t *testing.T) {
 	var boostMatch = starshipMatchers[1]
 
 	var valid = []string{"bn10", "bn1", "#b4", "bn 15", "booster b4",
-		"booster number 15", "booster 15", "booster 15's engines",
+		"booster number 15", "booster 15", "#bn4", "booster 15's engines",
 		"booster number 15s engines", "booster 20’s", "booster 20's",
 		"booster 3?"}
 
-	var invalid = []string{"starship 10", "b3496", "sn10", "wordbn 10", "company's 20 cars", "company's 2021 report", "booster 1049-11 arrives at the spacex dock"}
+	var invalid = []string{
+		"starship 10", "b3496", "sn10", "wordbn 10",
+		"company's 20 cars", "company's 2021 report",
+		"booster 1049-11 arrives at the spacex dock",
+		"eurocopter as.350-b2, is circling over cameron county",
+	}
 
 	for _, v := range valid {
 		if boostMatch.FindString(v) == "" {
