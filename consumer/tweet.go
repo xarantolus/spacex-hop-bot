@@ -289,6 +289,8 @@ var (
 		"blueorigin.com":       true,
 		"affinitweet.com":      true,
 		"boards.greenhouse.io": true,
+		// Most of their articles are paywalled, no additional benefit for retweeting them
+		"spaceq.ca": true,
 	}
 
 	highQualityYouTubeStreams = map[string]bool{
