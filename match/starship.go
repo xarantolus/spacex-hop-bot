@@ -186,6 +186,8 @@ const (
 	SpaceXLaunchSiteID = "124cb6de55957000"
 	// https://twitter.com/places/1380f3b60f972001
 	StarbasePlaceID = "1380f3b60f972001"
+	// https://twitter.com/places/07d9f642af482000
+	SpaceXMcGregorPlaceID = "07d9f642af482000"
 
 	// Other places around the area:
 	// "Isla Blanca Park": https://twitter.com/places/11dca9a728950001
@@ -219,7 +221,7 @@ func StarshipText(text string, antiKeywords []string) bool {
 	}
 
 	// Raptor has more than one meaning, so we need to be more careful
-	if strings.Contains(text, "raptor") && containsAny(text, "starship", "vacuum", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "launch site", "production site", "booster", "super heavy", "superheavy", "truck", "van", "deliver", "sea level", "high bay") {
+	if strings.Contains(text, "raptor") && (containsAny(text, "starship", "vacuum", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "launch site", "production site", "booster", "super heavy", "superheavy", "truck", "van", "deliver", "sea level", "high bay")) {
 		return true
 	}
 
@@ -279,6 +281,16 @@ func StarshipTweet(tweet TweetWrapper) bool {
 		return fr <= maxFaceRatio
 	}
 
+	// If the tweet mentions raptor without images, we still retweet it.
+	// This is mostly for tweets from SpaceX McGregor
+	if !containsBadWords && strings.Contains(text, "raptor") && IsAtSpaceXSite(&tweet.Tweet) {
+		fr := faceDetector.FaceRatio(&tweet.Tweet)
+		log.Printf("[FaceRatio] %s: %f\n", util.TweetURL(&tweet.Tweet), fr)
+		return fr <= maxFaceRatio
+	}
+
+	// if !containsBadWords
+
 	// Now check if it mentions too many people
 	if strings.Count(text, "@") > 5 {
 		return false
@@ -310,7 +322,9 @@ func StarshipTweet(tweet TweetWrapper) bool {
 }
 
 func IsAtSpaceXSite(tweet *twitter.Tweet) bool {
-	return tweet.Place != nil && (tweet.Place.ID == StarbasePlaceID || tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID)
+	return tweet.Place != nil && (tweet.Place.ID == StarbasePlaceID ||
+		tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID ||
+		tweet.Place.ID == SpaceXMcGregorPlaceID)
 }
 
 func hasMedia(tweet *twitter.Tweet) bool {
