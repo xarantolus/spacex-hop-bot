@@ -142,6 +142,9 @@ var (
 		// Someone *really* named their delivery robot business "Starship"... why?
 		"startup", "groceries", "robots", "starship robot",
 
+		// And there's of course a wide range of products named S(numbers), which is annoying
+		"tern", "gsd", "cargo bike",
+
 		"ocisly", "jrti", "canaveral",
 
 		// I do not care about opinions on starship
