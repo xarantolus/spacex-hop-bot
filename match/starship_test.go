@@ -89,6 +89,7 @@ func TestStarshipAntiKeywords(t *testing.T) {
 		text string
 		want bool
 	}{
+		{"Bald Eagle in Canada flying over the water at the Canadian Raptor Conservancy by Fred Johns", false},
 		{"No TFR posted for today", false},
 		{"SN10", true},
 		{"BN10", true},
