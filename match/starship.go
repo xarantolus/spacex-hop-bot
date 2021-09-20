@@ -83,7 +83,7 @@ var (
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "rklb", "falcon", "f9", "starlink",
 		"tesla", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "nasa_sls", "ula", "vulcan", "artemis", "rogozin",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "orion",
-		"resilience", "shuttle", "new glenn", "china", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics", "hls",
+		"resilience", "shuttle", "challenger", "sts-51l", "sts-33", "new glenn", "china", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "vss imagine", "samsung", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "rookisaacman", "cygnus", "samsung", "angara", "firefly",
@@ -147,17 +147,19 @@ var (
 
 		"ocisly", "jrti", "canaveral",
 
+		"obetraveller", "ocean cam", "oceancam", "oceanscam", "paul",
+
 		// I do not care about opinions on starship
 		"agree", "disagree", "throwback to",
 
-		"meme", "petition to", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
+		"meme", "ratio", "apology", "drama", "petition to", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
 
 		"dearmoon", "dear moon", "inspiration4", "inspiration 4", "inspiration four", "rover", "alien",
 
 		"sale", "buy", "shop", "store", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow my list", "top friends",
 
-		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit",
+		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 
 		"red bull",
 
@@ -170,7 +172,9 @@ var (
 		"starshipent", "monstax", "eshygazit", "wonho",
 
 		// Account follows a sheriff
-		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "memorial", "dead", "death",
+		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "memorial", "dead", "death", "cancer",
+
+		"nonce", "pedo",
 
 		"covid", "corona",
 
