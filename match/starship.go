@@ -242,7 +242,7 @@ func StarshipText(text string, antiKeywords []string) bool {
 }
 
 // The faceRatio of a tweet is the number of faces in all images (or video thumbnails) divided by the number of images in the tweet
-const maxFaceRatio = 0.5
+const maxFaceRatio = 1.1
 
 var faceDetector = NewFaceDetector()
 
