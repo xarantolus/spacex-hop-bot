@@ -33,6 +33,8 @@ var (
 		regexp.MustCompile(`(((?:#|\s|^)b-?\d{1,2}\b)|\b(bn|booster|booster number)-?\s?\d{1,3}['’]?s?\b)`),
 		// Yes. I like watching tanks
 		regexp.MustCompile(`\b(gse)\s?(?:tank|-)?\s?\d*\b`),
+		// Raptor with a number
+		regexp.MustCompile(`\b((?:raptor|raptor\s+engine|rvac|rb|rc)\s*\d+)\b`),
 	}
 
 	closureTFRRegex = regexp.MustCompile("\b(?:closure|tfr|cryo|fts|scrub)")
@@ -204,11 +206,6 @@ const (
 
 // StarshipText returns whether the given text mentions starship
 func StarshipText(text string, antiKeywords []string) bool {
-	// The lowercase b4 stands for "before" and is usually used by low-quality spam accounts
-	if strings.Contains(text, "b4") {
-		return false
-	}
-
 	text = strings.ToLower(text)
 
 	// If we find ignored words, we ignore the tweet
@@ -229,7 +226,7 @@ func StarshipText(text string, antiKeywords []string) bool {
 	}
 
 	// Raptor has more than one meaning, so we need to be more careful
-	if strings.Contains(text, "raptor") && (startsWithAny(text, "starship", "vacuum", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "launch site", "production site", "booster", "super heavy", "superheavy", "truck", "van", "raptorvan", "deliver", "sea level", "high bay")) {
+	if strings.Contains(text, "raptor") && (startsWithAny(text, "starship", "vacuum", "sea-level", "sea level", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "launch site", "production site", "booster", "super heavy", "superheavy", "truck", "van", "raptorvan", "deliver", "sea level", "high bay")) {
 		return true
 	}
 

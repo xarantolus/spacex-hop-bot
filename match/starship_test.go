@@ -84,16 +84,48 @@ func TestGSERegex(t *testing.T) {
 	}
 }
 
-func TestStarshipAntiKeywords(t *testing.T) {
+func TestRaptorRegex(t *testing.T) {
+	var gseMatch = starshipMatchers[3]
+
+	var valid = []string{"rvac 2", "rc 59", "raptor 2", "rb17", "rb9", "rc62"}
+
+	var invalid = []string{"bn10", "bn1", "#b4", "bn 15", "booster b4",
+		"booster number 15", "booster 15", "booster 15's engines",
+		"booster number 15s engines", "booster 20’s", "booster 20's",
+		"booster 3?", "starship 10", "b3496", "sn10", "wordbn 10",
+		"company's 20 cars", "company's 2021 report",
+		"sn10", "#sn10", "sn15", "sn 15", "starship s20",
+		"starship number 15", "starship 15",
+		"starship sn15s engines", "starship sn15's engines",
+		"starship sn20?",
+		"s300", "ship 20", "ship 20's nose", "ship 20’s nosecone section",
+		"sn-11", "s-11"}
+
+	for _, v := range valid {
+		if gseMatch.FindString(v) == "" {
+			t.Errorf("starshipMatchers[3] should have matched %q, but didn't", v)
+		}
+	}
+
+	for _, i := range invalid {
+		if gseMatch.FindString(i) != "" {
+			t.Errorf("starshipMatchers[3] matched %q, but shouldn't have done that", i)
+		}
+	}
+}
+
+func TestStarshipTextMatch(t *testing.T) {
 	tests := []struct {
 		text string
 		want bool
 	}{
+		{"Raptor 63 being lifted up to the booster", true},
 		{"Bald Eagle in Canada flying over the water at the Canadian Raptor Conservancy by Fred Johns", false},
 		{"No TFR posted for today", false},
 		{"SN10", true},
 		{"BN10", true},
 		{"Starship SN10", true},
+		{"SuperHeavy Booster", true},
 		{"Unrelated doge coin tweet that also contains the keyword Starship", false},
 		{"Unrelated tesla tweet", false},
 		{"this tweet is not starship related", false},
