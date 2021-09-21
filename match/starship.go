@@ -71,7 +71,7 @@ var (
 
 	hqMediaAccounts = map[string]bool{
 		"starshipgazer": true,
-		// "bottinphilip":  true,
+		"cnunezimages":  true,
 	}
 
 	veryImportantAccounts = map[string]bool{
@@ -296,8 +296,6 @@ func StarshipTweet(tweet TweetWrapper) bool {
 		log.Printf("[FaceRatio] %s: %f\n", util.TweetURL(&tweet.Tweet), fr)
 		return fr <= maxFaceRatio
 	}
-
-	// if !containsBadWords
 
 	// Now check if it mentions too many people
 	if strings.Count(text, "@") > 5 {
