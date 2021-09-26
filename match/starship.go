@@ -87,7 +87,7 @@ var (
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "orion",
 		"resilience", "shuttle", "challenger", "sts-51l", "sts-33", "new glenn", "china", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
-		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "vss imagine", "samsung", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
+		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine", "samsung", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "northropgrumman", "bomber",
 		"rookisaacman", "cygnus", "samsung", "angara", "firefly",
 
@@ -231,7 +231,7 @@ func StarshipText(text string, antiKeywords []string) bool {
 	}
 
 	// The phobos and deimos oil rigs that will be used as sea-spaceports
-	if containsAny(text, "deimos", "phobos") && containsAny(text, "spacex", "starship", "super heavy", "superheavy", "sea launch", "oil") {
+	if containsAny(text, "deimos", "phobos") && containsAny(text, "spacex", "starship", "super heavy", "superheavy", "sea launch", "oil", "elonmusk") {
 		return true
 	}
 
