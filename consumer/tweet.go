@@ -36,6 +36,8 @@ type Processor struct {
 
 const (
 	articlesFilename = "articles.json"
+	// How long after we've seen a link will we allow it to be retweeted again?
+	seenLinkDelay = 12 * time.Hour
 )
 
 // NewProcessor returns a new processor with the given options
@@ -56,7 +58,25 @@ func NewProcessor(debug bool, client *twitter.Client, selfUser *twitter.User, sp
 
 	util.LogError(util.LoadJSON(articlesFilename, &p.seenLinks), "loading links")
 
+	p.cleanup()
+
 	return p
+}
+
+func (p *Processor) cleanup() {
+	var changedLinks = false
+
+	for k, d := range p.seenLinks {
+		if time.Since(d) > seenLinkDelay {
+			// No point in keeping this info
+			delete(p.seenLinks, k)
+			changedLinks = true
+		}
+	}
+
+	if changedLinks {
+		util.LogError(util.SaveJSON(articlesFilename, p.seenLinks), "saving links after cleanup")
+	}
 }
 
 // Tweet processes the given tweet and checks whether it should be retweeted.
@@ -356,7 +376,7 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 		// If we retweeted this link in the last 12 hours, we should
 		// definitely ignore it
 		lastRetweetTime, ok := p.seenLinks[u]
-		if ok && time.Since(lastRetweetTime) < 12*time.Hour {
+		if ok && time.Since(lastRetweetTime) < seenLinkDelay {
 			return true
 		}
 
