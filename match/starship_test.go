@@ -119,6 +119,7 @@ func TestStarshipTextMatch(t *testing.T) {
 		text string
 		want bool
 	}{
+		{"Rolls-Royce chosen by U.S. for new B-52 engines in contract worth up to $2.6 bln", false},
 		{"Raptor 63 being lifted up to the booster", true},
 		{"Bald Eagle in Canada flying over the water at the Canadian Raptor Conservancy by Fred Johns", false},
 		{"No TFR posted for today", false},

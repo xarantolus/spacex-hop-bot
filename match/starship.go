@@ -89,7 +89,7 @@ var (
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine", "samsung", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "relativity", "northrop grumman", "northropgrumman", "bomber",
-		"rookisaacman", "cygnus", "samsung", "angara", "firefly",
+		"rookisaacman", "cygnus", "samsung", "angara", "firefly", "rolls-royce",
 
 		"roscosmos", "yenisey",
 
