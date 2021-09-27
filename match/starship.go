@@ -182,7 +182,7 @@ var (
 		"covid", "corona",
 
 		// Make sure we don't retweet anything related to horrible tragedies
-		"9/11", "911", "twin tower", "wtc", "trade center", "die", "death", "falling",
+		"9/11", "911", "twin tower", "wtc", "trade center", "die", "falling",
 	}
 )
 

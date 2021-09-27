@@ -178,7 +178,22 @@ func TestStreamTitles(t *testing.T) {
 		})
 	}
 }
-func TestVariables(t *testing.T) {
+
+func TestVariablesDuplicateKeywords(t *testing.T) {
+	var words = make(map[string]bool)
+
+	for _, k := range antiStarshipKeywords {
+		_, ok := words[k]
+
+		if ok {
+			t.Errorf("Keyword %q is duplicated in antiStarshipKeywords slice", k)
+		}
+
+		words[k] = true
+	}
+}
+
+func TestVariablesStringCase(t *testing.T) {
 	for _, k := range starshipKeywords {
 		if strings.ToLower(k) != k {
 			t.Errorf("Keyword %q should be lowercase in starshipKeywords slice", k)
