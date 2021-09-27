@@ -147,6 +147,7 @@ The Falcon 9 first stage rocket booster supporting this mission previously suppo
 		{"I mention Starship. $RKLB", false},
 		{"Last week saw extensive work on Ship 20's TPS tiles, Booster 4 grew some engines, a GSE tank was tested, and some jets made an impressive flyover! Beyond Starbase, BO, China, and Astra all made launches, & Firefly Aerospace prepares their first flight!", false},
 		{"Starship 20 and #Shenzhou12 ", false},
+		{"Galaxy S22 Ultra", false},
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
