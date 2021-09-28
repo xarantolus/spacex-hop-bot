@@ -193,7 +193,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 }
 
 func isElonTweet(t match.TweetWrapper) bool {
-	return t.User != nil && t.User.ScreenName == "elonmusk"
+	return t.User != nil && strings.EqualFold(t.User.ScreenName, "elonmusk")
 }
 
 func (p *Processor) isStarshipTweet(t match.TweetWrapper) bool {
