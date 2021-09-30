@@ -120,7 +120,7 @@ var (
 		"artwork", "artist", "#art", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle",
 		"card game", "starship design", "daily_hopper", "daily hopper",
 
-		"not starship", "non starship", "not about starship", "discord", "wonder if", "was wondering",
+		"not starship", "non starship", "not about starship", "discord", "wonder if", "was wondering", "years ago", "year ago",
 
 		// kerbal space program, games, star wars != "official" news
 		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky", "kerbals", "pocket rocket", "pocketrocket", "simplerockets",
