@@ -34,7 +34,7 @@ var (
 		// Yes. I like watching tanks
 		regexp.MustCompile(`\b(gse)\s?(?:tank|-)?\s?\d*\b`),
 		// Raptor with a number
-		regexp.MustCompile(`\b((?:raptor|raptor\s+engine|rvac|rb|rc)\s*\d+)\b`),
+		regexp.MustCompile(`\b((?:raptor|raptor\s+engine|rvac|rb|rc)(?:\s+(?:center|centre|boost|vacuum))?(?:\s+engine)?\s*\d+)\b`),
 	}
 
 	closureTFRRegex = regexp.MustCompile("\b(?:closure|tfr|cryo|fts|scrub)")

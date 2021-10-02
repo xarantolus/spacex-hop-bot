@@ -87,7 +87,12 @@ func TestGSERegex(t *testing.T) {
 func TestRaptorRegex(t *testing.T) {
 	var gseMatch = starshipMatchers[3]
 
-	var valid = []string{"rvac 2", "rc 59", "raptor 2", "rb17", "rb9", "rc62"}
+	var valid = []string{"rvac 2", "rc 59", "raptor 2", "rb17", "rb9", "rc62",
+		"raptor center 35", "raptor boost 35", "raptor vacuum 5", "raptor centre 35",
+		"raptor engine boost 35", "raptor boost engine 35",
+		"raptor engine vacuum 5", "raptor centre 35",
+		"raptor vacuum 5", "raptor centre 35",
+	}
 
 	var invalid = []string{"bn10", "bn1", "#b4", "bn 15", "booster b4",
 		"booster number 15", "booster 15", "booster 15's engines",
@@ -98,6 +103,7 @@ func TestRaptorRegex(t *testing.T) {
 		"starship number 15", "starship 15",
 		"starship sn15s engines", "starship sn15's engines",
 		"starship sn20?",
+		"raptor anyword 25",
 		"s300", "ship 20", "ship 20's nose", "ship 20’s nosecone section",
 		"sn-11", "s-11"}
 
