@@ -58,12 +58,12 @@ func NewProcessor(debug bool, client *twitter.Client, selfUser *twitter.User, sp
 
 	util.LogError(util.LoadJSON(articlesFilename, &p.seenLinks), "loading links")
 
-	p.cleanup()
+	p.cleanup(true)
 
 	return p
 }
 
-func (p *Processor) cleanup() {
+func (p *Processor) cleanup(save bool) {
 	var changedLinks = false
 
 	for k, d := range p.seenLinks {
@@ -74,7 +74,7 @@ func (p *Processor) cleanup() {
 		}
 	}
 
-	if changedLinks {
+	if save && changedLinks {
 		util.LogError(util.SaveJSON(articlesFilename, p.seenLinks), "saving links after cleanup")
 	}
 }
@@ -382,6 +382,8 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 
 		// Mark this link as seen, but allow a retweet
 		p.seenLinks[u] = time.Now()
+
+		p.cleanup(false)
 
 		// Now save it to make sure we still know after a restart
 		util.LogError(util.SaveJSON(articlesFilename, p.seenLinks), "saving links")
