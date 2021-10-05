@@ -23,6 +23,7 @@ var (
 		"orbital launch table", "orbital table",
 		"orbital launch pad", "orbital launch mount",
 		"olp service tower",
+		"orbital launch site",
 		"launch tower arm", "mechazilla",
 	}
 
@@ -178,6 +179,8 @@ var (
 		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "memorial", "dead", "death", "cancer",
 
 		"nonce", "pedo",
+
+		"offend", "offensive", "fanboy", "fangirl",
 
 		"covid", "corona",
 
