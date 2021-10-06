@@ -46,6 +46,7 @@ func TestBoosterRegex(t *testing.T) {
 		"company's 20 cars", "company's 2021 report",
 		"booster 1049-11 arrives at the spacex dock",
 		"eurocopter as.350-b2, is circling over cameron county",
+		"f-35a completes final inert drop test of new b61-12 nuclear bomb",
 	}
 
 	for _, v := range valid {
