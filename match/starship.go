@@ -84,7 +84,7 @@ var (
 
 	antiStarshipKeywords = []string{
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "rklb", "falcon", "f9", "starlink",
-		"tesla", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "nasa_sls", "ula", "vulcan", "artemis", "rogozin",
+		"tesla", "rivian", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "nasa_sls", "ula", "vulcan", "artemis", "rogozin",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "orion",
 		"resilience", "shuttle", "challenger", "sts-51l", "sts-33", "new glenn", "china", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics", "hls",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra",
@@ -299,6 +299,11 @@ func StarshipTweet(tweet TweetWrapper) bool {
 
 	// Now check if it mentions too many people
 	if strings.Count(text, "@") > 5 {
+		return false
+	}
+
+	// ignore b4 when lowercase, as it's an abbreviation of "before"
+	if strings.Contains(tweet.Text(), "b4") {
 		return false
 	}
 
