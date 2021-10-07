@@ -45,8 +45,10 @@ func TestBoosterRegex(t *testing.T) {
 		"starship 10", "b3496", "sn10", "wordbn 10",
 		"company's 20 cars", "company's 2021 report",
 		"booster 1049-11 arrives at the spacex dock",
+		"somethingb3", "sb8",
 		"eurocopter as.350-b2, is circling over cameron county",
 		"f-35a completes final inert drop test of new b61-12 nuclear bomb",
+		"https://example.com/somelinkthatincludesb3asboostername",
 	}
 
 	for _, v := range valid {
