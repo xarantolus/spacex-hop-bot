@@ -25,6 +25,7 @@ var (
 		"olp service tower",
 		"orbital launch site",
 		"launch tower arm", "mechazilla",
+		"catch arms",
 	}
 
 	// If the tweet mentions raptor and at least one of the following, it also matches
@@ -152,6 +153,8 @@ var (
 
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
+
+		"suprem", "aryan",
 
 		"aircraft", "aerial refueling", "firepower",
 
