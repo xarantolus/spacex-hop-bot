@@ -39,7 +39,7 @@ func TestBoosterRegex(t *testing.T) {
 	var valid = []string{"bn10", "bn1", "#b4", "bn 15", "booster b4",
 		"booster number 15", "booster 15", "#bn4", "booster 15's engines",
 		"booster number 15s engines", "booster 20’s", "booster 20's",
-		"booster 3?", "bn-4", "b-4"}
+		"booster 3?", "bn-4", "b-4", "booster's 4 and 5", "boosters 4 and 5"}
 
 	var invalid = []string{
 		"starship 10", "b3496", "sn10", "wordbn 10",
