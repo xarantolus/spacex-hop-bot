@@ -27,6 +27,18 @@ var (
 		"launch tower arm", "mechazilla",
 	}
 
+	// If the tweet mentions raptor and at least one of the following, it also matches
+
+	// TODO: add "raptor" as its own keyword, then replace the raptor check with a check
+	// that just makes sure that at least 2 of these words are mentioned
+	raptorKeywords = []string{
+		"starship", "vacuum", "sea-level", "sea level",
+		"spacex", "mcgregor", "engine", "rb", "rc", "rvac",
+		"launch site", "production site", "booster", "super heavy",
+		"superheavy", "truck", "van", "raptorvan", "deliver", "sea level",
+		"high bay", "nozzle",
+	}
+
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx
 		regexp.MustCompile(`\b((s-?\d{2,}\b)|(ship\s?\d{2,}\b)|(sn|starship|starship number)-?\s?\d+['’]?s?)`),
@@ -230,7 +242,7 @@ func StarshipText(text string, antiKeywords []string) bool {
 	}
 
 	// Raptor has more than one meaning, so we need to be more careful
-	if strings.Contains(text, "raptor") && (startsWithAny(text, "starship", "vacuum", "sea-level", "sea level", "spacex", "mcgregor", "engine", "rb", "rc", "rvac", "launch site", "production site", "booster", "super heavy", "superheavy", "truck", "van", "raptorvan", "deliver", "sea level", "high bay")) {
+	if strings.Contains(text, "raptor") && startsWithAny(text, raptorKeywords...) {
 		return true
 	}
 
@@ -328,6 +340,11 @@ func StarshipTweet(tweet TweetWrapper) bool {
 		// For them we retweet *everything* that has media
 		if hqMediaAccounts[strings.ToLower(tweet.User.ScreenName)] {
 			return hasMedia(&tweet.Tweet)
+		}
+
+		// If the user mentions a raptor engine keyword (however not all from raptorKeywords)
+		if ok && startsWithAny(text, "raptor", "rb", "rc", "rvac") {
+			return true
 		}
 	}
 

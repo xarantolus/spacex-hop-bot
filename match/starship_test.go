@@ -209,6 +209,11 @@ func TestVariablesStringCase(t *testing.T) {
 			t.Errorf("Keyword %q should be lowercase in starshipKeywords slice", k)
 		}
 	}
+	for _, k := range raptorKeywords {
+		if strings.ToLower(k) != k {
+			t.Errorf("Keyword %q should be lowercase in raptorKeywords slice", k)
+		}
+	}
 	for _, k := range antiStarshipKeywords {
 		if strings.ToLower(k) != k {
 			t.Errorf("Keyword %q should be lowercase in antiStarshipKeywords slice", k)
