@@ -134,6 +134,8 @@ var (
 		"artwork", "artist", "#art", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle",
 		"card game", "starship design", "daily_hopper", "daily hopper",
 
+		"your guess",
+
 		"not starship", "non starship", "not about starship", "discord", "wonder if", "was wondering", "years ago", "year ago",
 
 		// kerbal space program, games, star wars != "official" news
