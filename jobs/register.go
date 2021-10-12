@@ -43,7 +43,8 @@ func Register(client *twitter.Client, selfUser *twitter.User, tweetChan chan mat
 	var watchedLists int
 	var listNames []string
 	for _, l := range lists {
-		if skipLists[l.ID] {
+		// We cannot request tweets from a list created by a protected user
+		if skipLists[l.ID] || l.User != nil && l.User.Protected {
 			continue
 		}
 		go CheckListTimeline(client, l, tweetChan)
