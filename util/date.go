@@ -13,7 +13,7 @@ var NorthAmericaTZ = time.FixedZone("CDT", -5*60*60)
 // ExtractDate extracts human-readable dates from text
 func ExtractDate(text string) (date time.Time, ok bool) {
 	d, _, err := fuzzytime.ExtractDate(text)
-	if err != nil || d.Empty() || !d.HasDay() || !d.HasMonth() {
+	if err != nil || d.Empty() {
 		return
 	}
 
