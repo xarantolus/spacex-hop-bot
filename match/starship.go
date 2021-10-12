@@ -37,7 +37,7 @@ var (
 		"spacex", "mcgregor", "engine", "rb", "rc", "rvac",
 		"launch site", "production site", "booster", "super heavy",
 		"superheavy", "truck", "van", "raptorvan", "deliver", "sea level",
-		"high bay", "nozzle",
+		"high bay", "nozzle", "tripod",
 	}
 
 	starshipMatchers = []*regexp.Regexp{
