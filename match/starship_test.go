@@ -266,6 +266,8 @@ func Test_startsWithAnyGeneric(t *testing.T) {
 		{"also @test should work", true},
 		{"#test at the beginning", true},
 		{"@test should work", true},
+		{"this \"test\" seems ok", true},
+		{"this \"tes\"t seems ok", false},
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
