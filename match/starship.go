@@ -51,7 +51,7 @@ var (
 		regexp.MustCompile(`\b((?:raptor|raptor\s+engine|rvac|rb|rc)(?:\s+(?:center|centre|boost|vacuum))?(?:\s+engine)?\s*\d+)\b`),
 	}
 
-	closureTFRRegex = regexp.MustCompile("\b(?:closure|tfr|cryo|fts|scrub)")
+	closureTFRRegex = regexp.MustCompile("\b(?:closure|tfr|notmar|cryo|fts|scrub)")
 	alertRegex      = regexp.MustCompile("\b(?:alert|static fire|closure|cryo|evac|scrub)")
 
 	// Users known to post better information that requires specific filtering
