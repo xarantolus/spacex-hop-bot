@@ -132,7 +132,7 @@ var (
 
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculati" /*ng/on*/, "simulated", "print", "vfx", "not real", "photoshop",
-		"artwork", "artist", "#art", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle",
+		"art", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle",
 		"card game", "starship design", "daily_hopper", "daily hopper",
 
 		"your guess",
@@ -395,7 +395,7 @@ func startsWithAny(text string, words ...string) bool {
 	for {
 		iterations++
 
-		for currentIndex < len(text) && (rune(text[currentIndex]) < 'a' || rune(text[currentIndex]) > 'z') {
+		for currentIndex < len(text) && !isAlphanumerical(rune(text[currentIndex])) {
 			currentIndex++
 		}
 
@@ -421,4 +421,10 @@ func startsWithAny(text string, words ...string) bool {
 	}
 
 	return false
+}
+
+func isAlphanumerical(r rune) bool {
+	return (r >= 'a' && r <= 'z') ||
+		(r >= 'A' && r <= 'Z') ||
+		(r >= '0' && r <= '9')
 }

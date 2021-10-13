@@ -204,6 +204,16 @@ func TestVariablesDuplicateKeywords(t *testing.T) {
 	}
 }
 
+func TestVariablesFirstIsAlphabet(t *testing.T) {
+	// the startsWithAny function assumes that every antiKeyword starts with a letter between a and z
+
+	for _, k := range antiStarshipKeywords {
+		if !isAlphanumerical(rune(k[0])) {
+			t.Errorf("Keyword %q in antiStarshipKeywords slice does not start with an alphanumerical character", k)
+		}
+	}
+}
+
 func TestVariablesStringCase(t *testing.T) {
 	for _, k := range starshipKeywords {
 		if strings.ToLower(k) != k {
