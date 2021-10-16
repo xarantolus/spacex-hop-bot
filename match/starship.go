@@ -22,6 +22,7 @@ var (
 		"gse tank",
 		"orbital launch table", "orbital table",
 		"orbital launch pad", "orbital launch mount",
+		"suborbital pad", "suborbital launch pad",
 		"olp service tower",
 		"orbital launch site",
 		"launch tower arm", "mechazilla",
