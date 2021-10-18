@@ -186,7 +186,8 @@ var (
 
 		"red bull",
 
-		"booth",
+		// Some conferences have a "stand B20", because why not trick this bot right?
+		"booth", "stand b",
 
 		"trump", "antifa", "biden", "riot", "taliban", "kill",
 
