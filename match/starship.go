@@ -75,6 +75,8 @@ var (
 
 		"sheriffgarza": regexp.MustCompile(`(?:close|closure|spacex)`),
 
+		"starbasepulse": regexp.MustCompile(`(?:timelapse|time lapse)`),
+
 		// Watches temporary flight restrictions
 		"spacetfrs": regexp.MustCompile("(?:brownsville)"),
 
