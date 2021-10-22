@@ -135,7 +135,7 @@ var (
 
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculati" /*ng/on*/, "simulated", "print", "vfx", "not real", "photoshop",
-		"art", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle",
+		"art", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle", "lego",
 		"card game", "starship design", "daily_hopper", "daily hopper",
 
 		"your guess",
@@ -181,12 +181,12 @@ var (
 
 		"dearmoon", "dear moon", "inspiration4", "inspiration 4", "inspiration four", "rover", "alien",
 
-		"sale", "buy", "shop", "store", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
+		"sale", "buy", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow", "unfollow", "top friends",
 
 		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 
-		"red bull",
+		"red bull", "browns",
 
 		// Some conferences have a "stand B20", because why not trick this bot right?
 		"booth", "stand b",
