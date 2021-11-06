@@ -170,6 +170,9 @@ var (
 		// And there's of course a wide range of products named S(numbers), which is annoying
 		"tern", "gsd", "cargo bike",
 
+		// Vitamin B2
+		"vitamin",
+
 		"ocisly", "jrti", "canaveral",
 
 		"obetraveller", "ocean cam", "oceancam", "oceanscam", "paul",
