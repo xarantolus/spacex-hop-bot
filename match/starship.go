@@ -186,7 +186,7 @@ var (
 		"dearmoon", "dear moon", "inspiration4", "inspiration 4", "inspiration four", "rover", "alien",
 
 		"sale", "buy", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
-		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow", "unfollow", "top friends",
+		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow", "unfollow", "top friends", "plush",
 
 		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 
