@@ -120,7 +120,7 @@ var (
 		// e.g. crew-1, crew-2...
 		"crew-", "crew dragon", "dragon", "crs", "dm-",
 
-		"f22", "f-22", "jet", "b-52",
+		"f22", "f-22", "jet", "b-52", "s-300",
 
 		// Not interested in other stuff
 		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto",
