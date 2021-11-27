@@ -39,7 +39,7 @@ var (
 		"spacex", "mcgregor", "engine", "rb", "rc", "rvac",
 		"launch site", "production site", "booster", "super heavy",
 		"superheavy", "truck", "van", "raptorvan", "deliver", "sea level",
-		"high bay", "nozzle", "tripod",
+		"high bay", "nozzle", "tripod", "starbase",
 	}
 
 	starshipMatchers = []*regexp.Regexp{
@@ -137,7 +137,7 @@ var (
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animation", "3d", "model", "speculati" /*ng/on*/, "simulated", "print", "vfx", "not real", "photoshop",
 		"art", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle", "lego",
-		"card game", "starship design", "daily_hopper", "daily hopper",
+		"card game", "starship design", "daily_hopper", "daily hopper", "paper model", "papermodel",
 
 		"your guess",
 
