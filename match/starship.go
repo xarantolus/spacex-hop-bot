@@ -229,6 +229,8 @@ const (
 	StarbasePlaceID = "1380f3b60f972001"
 	// https://twitter.com/places/07d9f642af482000
 	SpaceXMcGregorPlaceID = "07d9f642af482000"
+	// https://twitter.com/places/07d9f0b85ac83003
+	BocaChicaPlaceID = "07d9f0b85ac83003"
 
 	// Other places around the area:
 	// "Isla Blanca Park": https://twitter.com/places/11dca9a728950001
@@ -369,7 +371,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 func IsAtSpaceXSite(tweet *twitter.Tweet) bool {
 	return tweet.Place != nil && (tweet.Place.ID == StarbasePlaceID ||
 		tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID ||
-		tweet.Place.ID == SpaceXMcGregorPlaceID)
+		tweet.Place.ID == SpaceXMcGregorPlaceID || tweet.Place.ID == BocaChicaPlaceID)
 }
 
 func hasMedia(tweet *twitter.Tweet) bool {

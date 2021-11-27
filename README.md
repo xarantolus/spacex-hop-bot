@@ -10,7 +10,7 @@ These tweets are retweeted, if:
 * They contain generic keywords about Starship such as "SN11", "BN1", "Starship", "Superheavy", "raptor"
 * They are from selected "trusted" users and contain info about road closures, cryogenic tests, temporary flight restrictions etc.
 * They are by Elon Musk and contain anything related to Starship
-* They are tagged with *exactly* the location of either the [build site](https://twitter.com/places/124bed061054f000), [launch site](https://twitter.com/places/124cb6de55957000) or [Starbase](https://twitter.com/places/1380f3b60f972001)
+* They are tagged with *exactly* the location of either the [build site](https://twitter.com/places/124bed061054f000), [launch site](https://twitter.com/places/124cb6de55957000), [Starbase](https://twitter.com/places/1380f3b60f972001) or [Boca Chica Village](https://twitter.com/places/07d9f0b85ac83003)
 
 Some keywords and (mostly satire) accounts are filtered out to prevent spam. Tweets with too many selfies are also filtered out.
 
