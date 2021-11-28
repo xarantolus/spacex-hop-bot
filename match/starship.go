@@ -190,6 +190,8 @@ var (
 
 		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 
+		"patrons", "babylon",
+
 		"red bull", "browns",
 
 		// Some conferences have a "stand B20", because why not trick this bot right?
