@@ -186,7 +186,7 @@ var (
 		"dearmoon", "dear moon", "inspiration4", "inspiration 4", "inspiration four", "rover", "alien",
 
 		"sale", "buy", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
-		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow", "unfollow", "top friends", "plush",
+		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow", "unfollow", "top friends", "plush", "black friday", "blackfriday",
 
 		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 
@@ -213,6 +213,8 @@ var (
 		"offend", "offensive", "fanboy", "fangirl",
 
 		"covid", "corona",
+
+		"shit", "anime", "manga", "bronco", "bae",
 
 		// Make sure we don't retweet anything related to horrible tragedies
 		"9/11", "911", "twin tower", "wtc", "trade center", "die", "falling",

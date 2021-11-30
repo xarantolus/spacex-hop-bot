@@ -309,6 +309,7 @@ var (
 		"blueorigin.com":       true,
 		"affinitweet.com":      true,
 		"boards.greenhouse.io": true,
+		"etsy.com":             true,
 		// Most of their articles are paywalled, no additional benefit for retweeting them
 		"spaceq.ca": true,
 	}
