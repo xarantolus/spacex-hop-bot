@@ -188,7 +188,7 @@ var (
 		"sale", "buy", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow", "unfollow", "top friends", "plush", "black friday", "blackfriday",
 
-		"child", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
+		"child", "kid", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 
 		"patrons", "babylon",
 
@@ -215,6 +215,8 @@ var (
 		"covid", "corona",
 
 		"shit", "anime", "manga", "bronco", "bae",
+
+		"abortion", "roe v. wade", "roe v wade", "roe vs. wade", "roe vs wade",
 
 		// Make sure we don't retweet anything related to horrible tragedies
 		"9/11", "911", "twin tower", "wtc", "trade center", "die", "falling",
