@@ -140,6 +140,7 @@ func TestStarshipTextMatch(t *testing.T) {
 		{"No TFR posted for today", false},
 		{"SN10", true},
 		{"BN10", true},
+		{"A great animated video of a @SpaceX #Starship launch, orbit & landing using the new 'chopsticks' system", false},
 		{"Starship SN10", true},
 		{"SuperHeavy Booster", true},
 		{"Unrelated doge coin tweet that also contains the keyword Starship", false},
