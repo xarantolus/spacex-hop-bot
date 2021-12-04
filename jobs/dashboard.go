@@ -16,6 +16,8 @@ func CheckDashboard(twitterClient *twitter.Client) {
 
 	var client = review.NewReviewClient()
 
+	log.Println("[Review] Start watching Environmental Review dashboard")
+
 	for {
 		diffs, err := client.ReportProjectDiff(review.StarshipBocaProjectID)
 		if err != nil {
