@@ -15,6 +15,7 @@ import (
 var (
 	// we also match Raptor, but only if either "SpaceX", "Engine" or "McGregor" is mentioned
 	// TODO: Make sure that starship and booster numbers are above/below certain number
+	// TODO: Evaluate keywords like "LC-39A" etc.
 	starshipKeywords = []string{
 		"starship",
 		"superheavy", "super heavy",
@@ -179,7 +180,7 @@ var (
 		"obetraveller", "ocean cam", "oceancam", "oceanscam", "paul",
 
 		// I do not care about opinions on starship
-		"agree", "disagree", "throwback to",
+		"agree", "disagree", "throwback to", "opinion",
 
 		"meme", "ratio", "apology", "drama", "petition to", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
 
@@ -188,7 +189,7 @@ var (
 		"sale", "buy", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow", "unfollow", "top friends", "plush", "black friday", "blackfriday",
 
-		"child", "kid", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
+		"child", "kid", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini", "booty", "cudd",
 
 		"patrons", "babylon",
 

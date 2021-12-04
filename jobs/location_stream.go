@@ -26,7 +26,8 @@ func CheckLocationStream(client *twitter.Client, tweetChan chan<- match.TweetWra
 				// Map: https://mapper.acme.com/?ll=31.39966,-97.46246&z=12&t=M&marker0=31.39930%2C-97.46250%2C31.399308%20-97.462496&marker1=31.34836%2C-97.51740%2Cunnamed&marker2=31.48314%2C-97.36530%2C6.0%20km%20NE%20of%20McGregor%20TX
 				"-97.51740,31.34836,-97.36530,31.48314",
 
-				// Port Canaveral (the oil rigs that could be used for starship landings are stationed there)
+				// Port/Cape Canaveral (the oil rigs that could be used for starship landings are stationed there)
+				// Also includes SpaceX's LC-39A, where a new starship orbital launch pad is being constructed
 				// Map: https://mapper.acme.com/?ll=28.40952,-80.60944&z=10&t=M&marker0=28.21910%2C-80.79552%2Cunnamed&marker1=28.88617%2C-79.96262%2C79.2%20km%20ExNE%20of%20Merritt%20Island%20FL
 				"-80.79552,28.21910,-79.96262,28.88617",
 			},
