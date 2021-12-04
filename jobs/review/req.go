@@ -10,7 +10,7 @@ import (
 	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
-type FAAClient struct {
+type ReviewClient struct {
 	client *http.Client
 
 	lastReportsLock sync.Mutex
@@ -19,8 +19,8 @@ type FAAClient struct {
 	fn string
 }
 
-func NewFAAClient() *FAAClient {
-	var client = &FAAClient{
+func NewReviewClient() *ReviewClient {
+	var client = &ReviewClient{
 		client: &http.Client{
 			Timeout: 15 * time.Second,
 		},
@@ -35,11 +35,11 @@ func NewFAAClient() *FAAClient {
 	return client
 }
 
-func (f *FAAClient) save() error {
+func (f *ReviewClient) save() error {
 	return util.SaveJSON(f.fn, &f.lastReports)
 }
 
-func (f *FAAClient) projectReport(projectId int) (r *DashboardResponse, err error) {
+func (f *ReviewClient) projectReport(projectId int) (r *DashboardResponse, err error) {
 	var url = fmt.Sprintf("https://www.permits.performance.gov/api/v1/project?nid=%d", projectId)
 
 	resp, err := f.client.Get(url)
@@ -69,7 +69,7 @@ func (f *FAAClient) projectReport(projectId int) (r *DashboardResponse, err erro
 	return r, nil
 }
 
-func (f *FAAClient) ReportProjectDiff(projectId int) (diff []string, err error) {
+func (f *ReviewClient) ReportProjectDiff(projectId int) (diff []string, err error) {
 	f.lastReportsLock.Lock()
 	last, haveLast := f.lastReports[projectId]
 	f.lastReportsLock.Unlock()

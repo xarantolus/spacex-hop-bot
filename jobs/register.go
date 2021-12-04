@@ -16,6 +16,9 @@ func Register(client *twitter.Client, selfUser *twitter.User, tweetChan chan mat
 	// it will tweet if it discovers that SpaceX is online with a Starship stream
 	go CheckYouTubeLive(client, selfUser, linkChan)
 
+	// When the gov dashboard changes, we want to tweet about it
+	go CheckDashboard(client)
+
 	// When the webpage mentions a new date/starship, we tweet about that
 	go StarshipWebsiteChanges(client, linkChan)
 

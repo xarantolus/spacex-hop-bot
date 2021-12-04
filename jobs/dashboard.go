@@ -1,0 +1,49 @@
+package jobs
+
+import (
+	"fmt"
+	"log"
+	"math/rand"
+	"time"
+
+	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/jobs/review"
+	"github.com/xarantolus/spacex-hop-bot/util"
+)
+
+func CheckDashboard(twitterClient *twitter.Client) {
+	defer panic("for some reason, the gov dashboard checker stopped running even though it never should")
+
+	var client = review.NewReviewClient()
+
+	for {
+		diffs, err := client.ReportProjectDiff(review.StarshipBocaProjectID)
+		if err != nil {
+			log.Printf("[Review] Requesting project diff: %s\n", err.Error())
+
+			goto sleep
+		}
+
+		// If there were any changes to the dashboard, we of course tweet about them
+		if len(diffs) > 0 {
+			for _, diffText := range diffs {
+				var tweetText = generateReviewTweetText(diffText)
+
+				tweet, _, err := twitterClient.Statuses.Update(tweetText, nil)
+				if err != nil {
+					log.Printf("[Review] Error while sending tweet with text %q: %s", tweetText, err.Error())
+					continue
+				}
+
+				log.Println("[Twitter] Tweeted", util.TweetURL(tweet))
+			}
+		}
+
+	sleep:
+		time.Sleep(time.Minute + time.Duration(rand.Intn(90))*time.Second)
+	}
+}
+
+func generateReviewTweetText(description string) string {
+	return fmt.Sprintf("Review update: %s\n\n%s\n", description, review.StarshipBocaDashboardURL)
+}

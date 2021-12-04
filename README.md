@@ -19,6 +19,7 @@ The bot tries to only retweet *real* information, which is why animations and si
 It also does some background tasks: 
 - Watching the [SpaceX YouTube channel](https://www.youtube.com/spacex/) for livestreams. As soon as a stream about Starship goes live (or has a countdown), the bot will tweet a link.
 - Checking the [Starship website](https://www.spacex.com/vehicles/starship/) from time to time to tweet if the mentioned date or Starship changed
+- Checking the [Environmental Review dashboard](https://www.permits.performance.gov/permitting-project/spacex-starshipsuper-heavy-launch-vehicle-program-spacex-boca-chica-launch-site) for changes and tweeting about them
 
 If you have any suggestions for additional sources or anything else please open an issue. 
 If you have suggestions for accounts or lists to follow, you can write the bot a DM on Twitter or open an issue here.
