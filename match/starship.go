@@ -189,9 +189,9 @@ var (
 		"sale", "buy", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow", "unfollow", "top friends", "plush", "black friday", "blackfriday",
 
-		"child", "kid", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini", "booty", "cudd",
+		"child", "kid", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini", "booty", "cudd", "bathroom",
 
-		"patrons", "babylon",
+		"patrons", "babylon", "boltup", "champion",
 
 		"red bull", "browns",
 
