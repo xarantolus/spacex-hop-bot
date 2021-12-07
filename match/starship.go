@@ -180,7 +180,7 @@ var (
 		"obetraveller", "ocean cam", "oceancam", "oceanscam", "paul",
 
 		// I do not care about opinions on starship
-		"agree", "disagree", "throwback to", "opinion",
+		"agree", "disagree", "throwback to", "opinion", "imo", "imho",
 
 		"meme", "ratio", "apology", "drama", "petition to", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
 
