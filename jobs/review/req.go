@@ -25,10 +25,9 @@ func NewReviewClient() *ReviewClient {
 			Timeout: 15 * time.Second,
 		},
 
-		fn: "faa-dashboard.json",
+		lastReports: make(map[int]*DashboardResponse),
+		fn:          "faa-dashboard.json",
 	}
-
-	client.lastReports = make(map[int]*DashboardResponse)
 
 	_ = util.LoadJSON(client.fn, &client.lastReports)
 
