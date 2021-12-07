@@ -21,24 +21,21 @@ func CheckDashboard(twitterClient *twitter.Client) {
 	for {
 		diffs, err := client.ReportProjectDiff(review.StarshipBocaProjectID)
 		if err != nil {
-			log.Printf("[Review] Requesting project diff: %s\n", err.Error())
-
+			util.LogError(err, "Review dashboard")
 			goto sleep
 		}
 
 		// If there were any changes to the dashboard, we of course tweet about them
-		if len(diffs) > 0 {
-			for _, diffText := range diffs {
-				var tweetText = generateReviewTweetText(diffText)
+		for _, diffText := range diffs {
+			var tweetText = generateReviewTweetText(diffText)
 
-				tweet, _, err := twitterClient.Statuses.Update(tweetText, nil)
-				if err != nil {
-					log.Printf("[Review] Error while sending tweet with text %q: %s", tweetText, err.Error())
-					continue
-				}
-
-				log.Println("[Twitter] Tweeted", util.TweetURL(tweet))
+			tweet, _, err := twitterClient.Statuses.Update(tweetText, nil)
+			if err != nil {
+				log.Printf("[Review] Error while sending tweet with text %q: %s", tweetText, err.Error())
+				continue
 			}
+
+			log.Println("[Twitter] Tweeted", util.TweetURL(tweet))
 		}
 
 	sleep:
@@ -47,5 +44,5 @@ func CheckDashboard(twitterClient *twitter.Client) {
 }
 
 func generateReviewTweetText(description string) string {
-	return fmt.Sprintf("Review update: %s\n\n%s\n", description, review.StarshipBocaDashboardURL)
+	return fmt.Sprintf("Review update: %s\n\n@elonmusk\n%s", description, review.StarshipBocaDashboardURL)
 }
