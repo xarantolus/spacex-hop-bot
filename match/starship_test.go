@@ -132,6 +132,8 @@ func TestStarshipTextMatch(t *testing.T) {
 		text string
 		want bool
 	}{
+		{"I finally got to see for myself Ship 21’s nosecone", true},
+		{"Peekaboo I see u #B5 #SpaceX", true},
 		{"There’s more time to submit your comments on the Draft Programmatic Environmental Assessment for the proposed @SpaceX Starship/Super Heavy project in Boca Chica, Texas. Comment by Nov. 1. The new public meeting dates are Oct. 18th and 20th. Learn more at http://bit.ly/2YcScDe.", true},
 		{"Rolls-Royce chosen by U.S. for new B-52 engines in contract worth up to $2.6 bln", false},
 		{"B-52", false},
