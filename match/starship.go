@@ -140,6 +140,8 @@ var (
 		"art", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle", "lego",
 		"card game", "starship design", "daily_hopper", "daily hopper", "paper model", "papermodel",
 
+		"8bitdo", "sn30",
+
 		"your guess",
 
 		"not starship", "non starship", "not about starship", "discord", "wonder if", "was wondering", "years ago", "year ago",
@@ -189,7 +191,8 @@ var (
 		"sale", "buy", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow", "unfollow", "top friends", "plush", "black friday", "blackfriday",
 
-		"child", "kid", "illegal", "nfl", "tiktok", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini", "booty", "cudd", "bathroom",
+		"child", "kid", "illegal", "nfl", "tiktok", "vax", "vacc", "shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
+		"booty", "cudd", "bathroom", "penis", "vagi",
 
 		"patrons", "babylon", "boltup", "champion",
 
