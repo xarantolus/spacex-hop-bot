@@ -50,6 +50,7 @@ func Test_matcherMatchesStreamTitle(t *testing.T) {
 		"Starship | SN15 | High-Altitude Flight Test",
 		"First Private Passenger on Lunar Starship Mission",
 		"Starship Update",
+		"Starship Orbital Flight Test",
 		"Starship | SN5 | 150m Flight Test",
 		"Starship | SN6 | 150m Flight Test",
 		"Starship | SN8 | High-Altitude Flight Test",
