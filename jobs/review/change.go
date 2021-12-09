@@ -12,12 +12,12 @@ func Diff(old, new *DashboardResponse) (changeDescriptions []string) {
 	}
 
 	// Has the project status changed?
-	if old.ProjectStatus != new.ProjectStatus {
+	if old.ProjectStatus != new.ProjectStatus && new.ProjectStatus != "" {
 		changeDescriptions = append(changeDescriptions, fmt.Sprintf("The project status for the review of %q has changed from %q to %q", new.Title, old.ProjectStatus, new.ProjectStatus))
 	}
 
 	// Check for end date changes
-	if old.TotalDuration.EndDate != new.TotalDuration.EndDate {
+	if old.TotalDuration.EndDate != new.TotalDuration.EndDate && new.TotalDuration.EndDate != "" {
 		changeDescriptions = append(changeDescriptions, fmt.Sprintf("The estimated completion date of the environmental review has changed from %s to %s", old.TotalDuration.EndDate, new.TotalDuration.EndDate))
 	}
 
@@ -35,7 +35,7 @@ func Diff(old, new *DashboardResponse) (changeDescriptions []string) {
 		}
 
 		// Also check for status changes
-		if oldProject.Status != newProject.Status {
+		if oldProject.Status != newProject.Status && newProject.Status != "" {
 			changeDescriptions = append(changeDescriptions, fmt.Sprintf("The status of the %q has changed from %q to %q", newProject.Action, oldProject.Status, newProject.Status))
 		}
 
@@ -56,7 +56,7 @@ func Diff(old, new *DashboardResponse) (changeDescriptions []string) {
 				changeDescriptions = append(changeDescriptions, fmt.Sprintf("The milestone %q of the %q has been completed", newMilestone.Name, newProject.Action))
 			}
 
-			if oldMilestone.CurrentTargetDate != newMilestone.CurrentTargetDate {
+			if oldMilestone.CurrentTargetDate != newMilestone.CurrentTargetDate && newMilestone.CurrentTargetDate != "" {
 				changeDescriptions = append(changeDescriptions, fmt.Sprintf("The target date of milestone %q of the %q has changed from %q to %q", newMilestone.Name, newProject.Action, oldMilestone.CurrentTargetDate, newMilestone.CurrentTargetDate))
 			}
 		}

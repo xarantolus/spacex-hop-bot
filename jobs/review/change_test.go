@@ -220,11 +220,15 @@ func TestDiff(t *testing.T) {
 		},
 		{
 			arg: copyDefaultWith(func(dr *DashboardResponse) {
-				dr.TotalDuration.EndDate = "06/11/2022"
+				dr.ProjectStatus = ""
 			}),
-			wantChangeDescriptions: []string{
-				"The estimated completion date of the environmental review has changed from 12/31/2021 to 06/11/2022",
-			},
+			wantChangeDescriptions: nil,
+		},
+		{
+			arg: copyDefaultWith(func(dr *DashboardResponse) {
+				dr.TotalDuration.EndDate = ""
+			}),
+			wantChangeDescriptions: nil,
 		},
 		{
 			arg: copyDefaultWith(func(dr *DashboardResponse) {
@@ -241,6 +245,16 @@ func TestDiff(t *testing.T) {
 		{
 			arg: copyDefaultWith(func(dr *DashboardResponse) {
 				op := dr.Data
+				op2 := op[0]
+				op2.Status = ""
+				op[0] = op2
+				(*dr).Data = op
+			}),
+			wantChangeDescriptions: nil,
+		},
+		{
+			arg: copyDefaultWith(func(dr *DashboardResponse) {
+				op := dr.Data
 				op2 := op[3]
 				op2.Status = "Completed"
 				op[3] = op2
@@ -250,6 +264,17 @@ func TestDiff(t *testing.T) {
 				`The status of the "Endangered Species Act Consultation (NOAA-NMFS)" has changed from "In Progress" to "Completed"`,
 			},
 		},
+		{
+			arg: copyDefaultWith(func(dr *DashboardResponse) {
+				op := dr.Data
+				op2 := op[3]
+				op2.Status = ""
+				op[3] = op2
+				(*dr).Data = op
+			}),
+			wantChangeDescriptions: nil,
+		},
+
 		{
 			arg: copyDefaultWith(func(dr *DashboardResponse) {
 				op := dr.Data
@@ -281,6 +306,20 @@ func TestDiff(t *testing.T) {
 			wantChangeDescriptions: []string{
 				`The target date of milestone "Conclusion of ESA Consultation" of the "Endangered Species Act Consultation (DOI-FWS)" has changed from "2021-12-31" to "2021-11-06"`,
 			},
+		},
+		{
+			arg: copyDefaultWith(func(dr *DashboardResponse) {
+				op := dr.Data
+				op2 := op[0]
+				op3 := op2.MilestoneData
+				op4 := op3[2]
+				op4.CurrentTargetDate = ""
+				op3[2] = op4
+				op2.MilestoneData = op3
+				op[0] = op2
+				(*dr).Data = op
+			}),
+			wantChangeDescriptions: nil,
 		},
 	}
 	for _, tt := range tests {
