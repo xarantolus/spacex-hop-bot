@@ -22,5 +22,12 @@ func TweetURL(tweet *twitter.Tweet) string {
 }
 
 func HashTagText(words []string) string {
-	return "#" + strings.Join(words, " #")
+	var joinedWords []string
+
+	// Replace spaces in words with nothing
+	for _, w := range words {
+		joinedWords = append(joinedWords, strings.Join(strings.Fields(w), ""))
+	}
+
+	return "#" + strings.Join(joinedWords, " #")
 }

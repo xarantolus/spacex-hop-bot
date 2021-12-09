@@ -74,6 +74,25 @@ func Test_describeLiveStream(t *testing.T) {
 	}{
 		{
 			scrapers.LiveVideo{
+				VideoID: "ykdajlsdkf",
+				Title:   "Starship Update",
+				ShortDescription: `
+SpaceX's Starship and Super Heavy launch vehicle is a fully, rapidly reusable transportation system designed to carry both crew and cargo to Earth orbit, the Moon, Mars, and anywhere else in the solar system. On Saturday, September 28 at our launch facility in Cameron County, Texas, SpaceX Chief Engineer and CEO Elon Musk will provide an update on the design and development of Starship.
+
+You can watch the event live at approximately 8:00 p.m. CDT.
+`,
+				IsLive: true,
+			},
+			`SpaceX is now live on YouTube:
+
+Starship Update
+
+#Starship #SuperHeavy
+
+https://www.youtube.com/watch?v=ykdajlsdkf`,
+		},
+		{
+			scrapers.LiveVideo{
 				VideoID: "9135813491",
 				Title:   "Starship | S20 & B4 | Orbital Flight Test",
 				ShortDescription: `As early as Wednesday, May 5, the SpaceX team will attempt an orbital flight test of Starship serial number 20 (S20) – our fifth high-altitude flight test of a Starship prototype from Starbase in Texas. S20 has vehicle improvements across structures, avionics and software, and the engines that will allow more speed and efficiency throughout production and flight: specifically, a new enhanced avionics suite, updated propellant architecture in the aft skirt, and a new Raptor engine design and configuration. 
