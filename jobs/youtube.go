@@ -52,7 +52,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 		}
 
 		// If we have interesting video info
-		if match.StarshipText(liveVideo.Title, nil) || match.StarshipText(liveVideo.ShortDescription, nil) {
+		if isStarshipStream(&liveVideo) {
 			// Get the video URL
 			liveURL := liveVideo.URL()
 
@@ -92,6 +92,10 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 		case linkOverwrite = <-linkChan:
 		}
 	}
+}
+
+func isStarshipStream(liveVideo *scrapers.LiveVideo) bool {
+	return match.StarshipText(liveVideo.Title, nil) || match.StarshipText(liveVideo.ShortDescription, nil)
 }
 
 func tweetInterval(streamStartsIn time.Duration) time.Duration {

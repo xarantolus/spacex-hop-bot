@@ -5,7 +5,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/xarantolus/spacex-hop-bot/match"
 	"github.com/xarantolus/spacex-hop-bot/scrapers"
 )
 
@@ -60,7 +59,9 @@ func Test_matcherMatchesStreamTitle(t *testing.T) {
 	}
 
 	for _, title := range titles {
-		matched := match.StarshipText(title, nil)
+		matched := isStarshipStream(&scrapers.LiveVideo{
+			Title: title,
+		})
 		if !matched {
 			t.Errorf("expected video title %q to match, but didn't", title)
 		}
@@ -230,6 +231,11 @@ https://www.youtube.com/watch?v=9135813491`,
 		t.Run(t.Name(), func(t *testing.T) {
 			if got := describeLiveStream(&tt.args); got != tt.want {
 				t.Errorf("describeLiveStream() = \n%v, want \n%v", got, tt.want)
+			}
+
+			matched := isStarshipStream(&tt.args)
+			if !matched {
+				t.Errorf("describeLiveStream(): expected video with title %q and description %q to match, but didn't", tt.args.Title, tt.args.ShortDescription)
 			}
 		})
 	}
