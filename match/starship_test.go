@@ -167,6 +167,7 @@ The Falcon 9 first stage rocket booster supporting this mission previously suppo
 		{"Starship 20 and #Shenzhou12 ", false},
 		{"Galaxy S22 Ultra", false},
 		{"a known S-300 deployment", false},
+		{"#NewProfilePic #SN15", false},
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
