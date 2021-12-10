@@ -124,7 +124,7 @@ var (
 		"f22", "f-22", "jet", "b-52", "s-300",
 
 		// Not interested in other stuff
-		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto",
+		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "safemoon",
 
 		"no tfr",
 
