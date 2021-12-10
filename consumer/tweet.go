@@ -348,9 +348,9 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 
 	// Now check if any of these URLs is ignored
 	for _, u := range urls {
-		u = util.FindCanonicalURL(u, false)
+		var canonical = util.FindCanonicalURL(u, false)
 
-		parsed, err := url.ParseRequestURI(u)
+		parsed, err := url.ParseRequestURI(canonical)
 		if err != nil {
 			log.Println("Cannot parse URL:", err.Error())
 			continue
@@ -380,9 +380,14 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 		if ok && time.Since(lastRetweetTime) < seenLinkDelay {
 			return true
 		}
+		lastRetweetTime, ok = p.seenLinks[canonical]
+		if ok && time.Since(lastRetweetTime) < seenLinkDelay {
+			return true
+		}
 
 		// Mark this link as seen, but allow a retweet
 		p.seenLinks[u] = time.Now()
+		p.seenLinks[canonical] = time.Now()
 
 		p.cleanup(false)
 
