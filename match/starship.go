@@ -192,7 +192,7 @@ var (
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",
 
 		"child", "kid", "illegal", "nfl", "tiktok", "vax", "vacc", "shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
-		"booty", "cudd", "bathroom", "penis", "vagi",
+		"booty", "cudd", "bathroom", "penis", "vagi", "furry",
 
 		"patrons", "babylon", "boltup", "champion",
 
@@ -221,6 +221,8 @@ var (
 		"shit", "anime", "manga", "bronco", "bae",
 
 		"abortion", "roe v. wade", "roe v wade", "roe vs. wade", "roe vs wade",
+
+		"starshipcongrss", "starshipcongress", "congress", "starflight academy",
 
 		// Make sure we don't retweet anything related to horrible tragedies
 		"9/11", "911", "twin tower", "wtc", "trade center", "die", "falling",
