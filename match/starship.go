@@ -109,7 +109,7 @@ var (
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine", "galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "atlasv", "relativity", "northrop grumman", "northropgrumman", "bomber",
 		"rookisaacman", "cygnus", "samsung", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
-		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket",
+		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri",
 
 		"roscosmos", "yenisey",
 
@@ -182,7 +182,7 @@ var (
 		"obetraveller", "ocean cam", "oceancam", "oceanscam", "paul",
 
 		// I do not care about opinions on starship
-		"agree", "disagree", "throwback to", "opinion", "imo", "imho",
+		"agree", "disagree", "throwback to", "opinion", "imo", "imho", "i think",
 
 		"meme", "ratio", "apology", "drama", "petition to", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
 
