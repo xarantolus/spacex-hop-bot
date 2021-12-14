@@ -214,7 +214,7 @@ var (
 
 		"nonce", "pedo",
 
-		"offend", "offensive", "fanboy", "fangirl",
+		"offend", "offensive", "fanboy", "fan boy", "fangirl", "fan girl",
 
 		"covid", "corona",
 
