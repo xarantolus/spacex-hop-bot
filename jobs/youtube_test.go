@@ -60,12 +60,39 @@ func Test_matcherMatchesStreamTitle(t *testing.T) {
 	}
 
 	for _, title := range titles {
-		matched := isStarshipStream(&scrapers.LiveVideo{
-			Title: title,
+		t.Run(t.Name(), func(t *testing.T) {
+			matched := isStarshipStream(&scrapers.LiveVideo{
+				Title: title,
+			})
+			if !matched {
+				t.Errorf("expected video title %q to match, but didn't", title)
+			}
 		})
-		if !matched {
-			t.Errorf("expected video title %q to match, but didn't", title)
-		}
+	}
+}
+
+func TestStreamTitles(t *testing.T) {
+	tests := []struct {
+		text string
+		want bool
+	}{
+		{"Starlink Mission", false},
+		{"Starship | SN11 | High-Altitude Flight Test", true},
+		{"Starship | SN10 | High-Altitude Flight Recap", true},
+		{"Starship | SN9 | High-Altitude Flight Test", true},
+		{"Starship | SN8 | High-Altitude Flight Test", true},
+		{"Starship SN20 & BN3: Orbital Flight Test", true},
+		{"Starship | Starlink Mission", true},
+	}
+	for _, tt := range tests {
+		t.Run(t.Name(), func(t *testing.T) {
+			matched := isStarshipStream(&scrapers.LiveVideo{
+				Title: tt.text,
+			})
+			if matched != tt.want {
+				t.Errorf("expected video title %q match result in %v, but got %v", tt.text, tt.want, matched)
+			}
+		})
 	}
 }
 
