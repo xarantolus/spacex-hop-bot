@@ -20,8 +20,7 @@ var (
 		"suborbital pad", "suborbital launch pad",
 		"olp service tower",
 		"orbital launch site",
-		"launch tower arm", "mechazilla",
-		"catch arms",
+		"launch tower arm",
 	}
 
 	// moreSpecificKeywords are keywords that must be accompanied by at least one of the keywords mentioned in their slice.
@@ -60,7 +59,7 @@ var (
 
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
 		{
-			from: []string{"launch tower"},
+			from: []string{"launch tower", "launch pad", "launch mount", "chopsticks", "catch arms", "mechazilla"},
 			to:   starshipKeywords,
 		},
 	}
