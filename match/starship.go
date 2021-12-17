@@ -13,9 +13,6 @@ import (
 
 // Note that all text here must be lowercase because the text is lowercased in the matching function
 var (
-	// we also match Raptor, but only if either "SpaceX", "Engine" or "McGregor" is mentioned
-	// TODO: Make sure that starship and booster numbers are above/below certain number
-	// TODO: Evaluate keywords like "LC-39A" etc.
 	starshipKeywords = []string{
 		"starship",
 		"superheavy", "super heavy",
@@ -31,17 +28,31 @@ var (
 		"catch arms",
 	}
 
-	// If the tweet mentions raptor and at least one of the following, it also matches
+	// moreSpecificKeywords are keywords that must be accompanied by at least one of the keywords mentioned in their slice.
+	// This is useful for "raptor" (to make sure we only get engines) and some launch sites
+	moreSpecificKeywords = map[string][]string{
+		// Engines
+		"raptor": {
+			"starship", "vacuum", "sea-level", "sea level",
+			"spacex", "mcgregor", "engine", "rb", "rc", "rvac",
+			"launch site", "production site", "booster", "super heavy",
+			"superheavy", "truck", "van", "raptorvan", "deliver", "sea level",
+			"high bay", "nozzle", "tripod", "starbase",
+		},
+		// Seaports/Oil rigs that might be used for launches/landings?
+		"deimos": compose(seaportKeywords, generalSpaceXKeywords, []string{"phobos"}),
+		"phobos": compose(seaportKeywords, generalSpaceXKeywords, []string{"deimos"}),
 
-	// TODO: add "raptor" as its own keyword, then replace the raptor check with a check
-	// that just makes sure that at least 2 of these words are mentioned
-	raptorKeywords = []string{
-		"starship", "vacuum", "sea-level", "sea level",
-		"spacex", "mcgregor", "engine", "rb", "rc", "rvac",
-		"launch site", "production site", "booster", "super heavy",
-		"superheavy", "truck", "van", "raptorvan", "deliver", "sea level",
-		"high bay", "nozzle", "tripod", "starbase",
+		// New launch pads at different locations
+		"lc-49":  compose(starshipKeywords, generalSpaceXKeywords, []string{"ksc", "environmental assessment", "kennedy space center", "tower"}),
+		"lc-39a": compose(starshipKeywords, generalSpaceXKeywords, []string{"ksc", "environmental assessment", "kennedy space center", "tower"}),
+
+		// Some words that are usually ambigious, but if combined with starship keywords they are fine
+		"launch tower": starshipKeywords,
 	}
+	// Helper slices that can be used for composing new keywords
+	seaportKeywords       = []string{"sea launch", "oil", "rig"}
+	generalSpaceXKeywords = []string{"spacex"}
 
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx
@@ -124,7 +135,7 @@ var (
 		"f22", "f-22", "jet", "b-52", "s-300",
 
 		// Not interested in other stuff
-		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "safemoon", "stock", "wall street", "wallstreet",
+		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "safemoon", "stock", "wall street", "wallstreet", "buffett",
 
 		"no tfr",
 
@@ -270,14 +281,12 @@ func StarshipText(text string, antiKeywords []string) bool {
 		}
 	}
 
-	// Raptor has more than one meaning, so we need to be more careful
-	if strings.Contains(text, "raptor") && startsWithAny(text, raptorKeywords...) {
-		return true
-	}
-
-	// The phobos and deimos oil rigs that will be used as sea-spaceports
-	if containsAny(text, "deimos", "phobos") && containsAny(text, "spacex", "starship", "super heavy", "superheavy", "sea launch", "oil", "elonmusk") {
-		return true
+	// Now we check for keywords that need additional keywords to be matched,
+	// e.g. "raptor", "deimos" etc.
+	for kw, specificKws := range moreSpecificKeywords {
+		if startsWithAny(text, kw) && startsWithAny(text, specificKws...) {
+			return true
+		}
 	}
 
 	return false
@@ -449,4 +458,17 @@ func isAlphanumerical(r rune) bool {
 	return (r >= 'a' && r <= 'z') ||
 		(r >= 'A' && r <= 'Z') ||
 		(r >= '0' && r <= '9')
+}
+
+func compose(s ...[]string) (res []string) {
+	var dedup = map[string]bool{}
+	for _, v := range s {
+		for _, k := range v {
+			if !dedup[k] {
+				res = append(res, k)
+				dedup[k] = true
+			}
+		}
+	}
+	return res
 }
