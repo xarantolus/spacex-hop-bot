@@ -52,8 +52,8 @@ var (
 		// New launch pads at different locations
 		{
 			from: compose(
-				[]string{"lc-49", "lc 49", "lauch complex 49", "lauch complex-49"},
-				[]string{"lc-39a", "lc 39a", "lauch complex 39a", "lauch complex-39a"},
+				[]string{"lc-49", "lc 49", "launch complex 49", "launch complex-49"},
+				[]string{"lc-39a", "lc 39a", "launch complex 39a", "launch complex-39a"},
 			),
 			to: compose(starshipKeywords, generalSpaceXKeywords, []string{"ksc", "environmental assessment", "kennedy space center", "tower"}),
 		},
