@@ -3,6 +3,9 @@ package match
 
 import "regexp"
 
+// keywordMapping basically defines two sets of keywords.
+// if at least one keyword from `from` and one from `to` is matched,
+// then the match is positive
 type keywordMapping struct {
 	from, to []string
 }
@@ -12,19 +15,25 @@ var (
 	starshipKeywords = []string{
 		"starship",
 		"superheavy", "super heavy",
-		"orbital launch tower", "orbital tower", "olt segment", "launch tower segment", "olp service tower", "olp tower",
-		"orbital launch integration tower",
-		"gse tank",
+
+		"orbital launch tower", "orbital tower", "olt segment",
+		"launch tower segment", "olp service tower", "olp tower",
+		"orbital launch integration tower", "launch tower arm",
+
+		"orbital tank farm",
+
 		"orbital launch table", "orbital table",
 		"orbital launch pad", "orbital launch mount",
 		"suborbital pad", "suborbital launch pad",
 		"olp service tower",
 		"orbital launch site",
-		"launch tower arm",
 	}
 
 	// moreSpecificKeywords are keywords that must be accompanied by at least one of the keywords mentioned in their slice.
 	// This is useful for "raptor" (to make sure we only get engines) and some launch sites
+	// The compose() function can be used to combine multiple slices.
+	// It does NOT make sense to put starshipKeywords into any of these slices, because if
+	// we reach the point where we look for more specific keywords, none of the starshipKeywords has matched
 	moreSpecificKeywords = []keywordMapping{
 		// Engines
 		{
@@ -36,6 +45,22 @@ var (
 				"superheavy", "truck", "van", "raptorvan", "deliver", "sea level",
 				"high bay", "nozzle", "tripod", "starbase",
 			},
+		},
+
+		// Ground infrastructure
+		{
+			from: []string{"gse tank"},
+			to:   compose(nonSpecificKeywords, generalSpaceXKeywords),
+		},
+
+		// Testing activity
+		{
+			from: []string{"cryogenic proof", "cryo proof"},
+			to:   compose(nonSpecificKeywords, generalSpaceXKeywords),
+		},
+		{
+			from: []string{"road closure", "temporary flight restriction", "tfr "},
+			to:   compose(nonSpecificKeywords, generalSpaceXKeywords),
 		},
 
 		// Seaports/Oil rigs that might be used for launches/landings?
@@ -54,17 +79,18 @@ var (
 				[]string{"lc-49", "lc 49", "launch complex 49", "launch complex-49"},
 				[]string{"lc-39a", "lc 39a", "launch complex 39a", "launch complex-39a"},
 			),
-			to: compose(starshipKeywords, generalSpaceXKeywords, []string{"ksc", "environmental assessment", "kennedy space center", "tower"}),
+			to: compose(nonSpecificKeywords, generalSpaceXKeywords, []string{"ksc", "environmental assessment", "kennedy space center", "tower"}),
 		},
 
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
 		{
 			from: []string{"launch tower", "launch pad", "launch mount", "chopsticks", "catch arms", "mechazilla"},
-			to:   starshipKeywords,
+			to:   compose(seaportKeywords),
 		},
 	}
 	// Helper slices that can be used for composing new keywords
 	seaportKeywords       = []string{"sea launch", "oil", "rig"}
+	nonSpecificKeywords   = []string{"ship", "booster", "starbase", "boca chica", "spacex"}
 	generalSpaceXKeywords = []string{"spacex"}
 
 	starshipMatchers = []*regexp.Regexp{
@@ -73,7 +99,7 @@ var (
 		// Booster BNx
 		regexp.MustCompile(`(((?:#|\s|^)b\d{1,2}\b([^-]|$))|\b(bn|booster|booster number)(['’]|s)*\s?\d{1,3}['’]?s?\b)`),
 		// Yes. I like watching tanks
-		regexp.MustCompile(`\b(gse)\s?(?:tank|-)?\s?\d*\b`),
+		regexp.MustCompile(`\b(gse)\s?(?:tank|-)?\s?\d+\b`),
 		// Raptor with a number
 		regexp.MustCompile(`\b((?:raptor|raptor\s+engine|rvac|rb|rc)(?:\s+(?:center|centre|boost|vacuum))?(?:\s+engine)?\s*\d+)\b`),
 	}
@@ -215,7 +241,7 @@ var (
 		"sale", "buy", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "download", "click", "tag", "discount",
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",
 
-		"child", "kid", "illegal", "nfl", "tiktok", "vax", "vacc", "shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
+		"child", "kid", "illegal", "nfl", "tiktok", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 		"booty", "cudd", "bathroom", "penis", "vagi", "furry",
 
 		"patrons", "babylon", "boltup", "champion",
@@ -234,7 +260,7 @@ var (
 		"starshipent", "monstax", "eshygazit", "wonho",
 
 		// Account follows a sheriff
-		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "memorial", "dead", "death", "cancer", "piss",
+		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "nig", "memorial", "dead", "death", "cancer", "piss",
 
 		"nonce", "pedo",
 

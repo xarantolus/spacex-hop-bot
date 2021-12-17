@@ -82,6 +82,14 @@ func TestMoreSpecificLength(t *testing.T) {
 	}
 }
 
+func TestMoreSpecificMistakes(t *testing.T) {
+	for i, mapping := range moreSpecificKeywords {
+		if containsAll(mapping.to, starshipKeywords) {
+			t.Errorf("moreSpecificKeywords[%d].to is composed with starshipKeywords, but that doesn't work and should be removed", i)
+		}
+	}
+}
+
 func TestVariablesDuplicateKeywords(t *testing.T) {
 	var words = make(map[string]bool)
 
@@ -164,12 +172,13 @@ func TestBoosterRegex(t *testing.T) {
 func TestGSERegex(t *testing.T) {
 	var gseMatch = starshipMatchers[2]
 
-	var valid = []string{"gse-5", "gse 5", "gse tank 5", "gse 5 tank", "gse tank"}
+	var valid = []string{"gse-5", "gse 5", "gse 3", "gse tank 5", "gse 5 tank"}
 
 	var invalid = []string{"bn10", "bn1", "#b4", "bn 15", "booster b4",
 		"booster number 15", "booster 15", "booster 15's engines",
 		"booster number 15s engines", "booster 20’s", "booster 20's",
-		"booster 3?", "starship 10", "b3496", "sn10", "wordbn 10", "company's 20 cars", "company's 2021 report"}
+		"booster 3?", "starship 10", "b3496", "sn10", "wordbn 10", "company's 20 cars", "company's 2021 report",
+		"gse tank"}
 
 	for _, v := range valid {
 		if gseMatch.FindString(v) == "" {
@@ -218,4 +227,20 @@ func TestRaptorRegex(t *testing.T) {
 			t.Errorf("starshipMatchers[3] matched %q, but shouldn't have done that", i)
 		}
 	}
+}
+
+// containsAll returns if subset is a subset of set
+func containsAll(subset, set []string) bool {
+	var asmap = map[string]bool{}
+	for _, s := range subset {
+		asmap[s] = true
+	}
+
+	for _, s := range set {
+		if asmap[s] == false {
+			return false
+		}
+	}
+
+	return true
 }
