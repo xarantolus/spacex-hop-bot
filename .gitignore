@@ -1,6 +1,12 @@
+.vscode
 deploy
-*.json
-concept.md
-.vscode/
 *.yaml
+*.yaml.temp
+*.yaml.tmp
+*.ndjson
+*.json
+*.gz
+*.zip
+concept.md
 match/face_testdata
+wenhop
