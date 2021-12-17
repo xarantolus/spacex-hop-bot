@@ -258,6 +258,8 @@ const (
 	// Other places around the area:
 	// "Isla Blanca Park": https://twitter.com/places/11dca9a728950001
 	// "South Padre Island, TX": https://twitter.com/places/1d1f665883989434
+
+	// "Cape Canaveral, FL": https://twitter.com/places/1739d72c18edbb1e
 )
 
 // StarshipText returns whether the given text mentions starship
