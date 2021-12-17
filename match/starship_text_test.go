@@ -1,6 +1,7 @@
 package match
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -69,6 +70,35 @@ The Falcon 9 first stage rocket booster supporting this mission previously suppo
 		t.Run(t.Name(), func(t *testing.T) {
 			if got := StarshipText(tt.text, antiStarshipKeywords); got != tt.want {
 				t.Errorf("StarshipText(%q, antiStarshipKeywords) = %v, want %v", tt.text, got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_compose(t *testing.T) {
+	var all = []string{"test"}
+
+	tests := []struct {
+		arg  [][]string
+		want []string
+	}{
+		{
+			arg:  [][]string{all, {"another"}, {"3"}},
+			want: []string{"test", "another", "3"},
+		},
+		{
+			arg:  [][]string{all, {"another", "duplicate"}, {"duplicate"}, {"3"}},
+			want: []string{"test", "another", "duplicate", "3"},
+		},
+		{
+			arg:  [][]string{all, {"duplicate", "duplicate"}, {"duplicate"}, {"3"}},
+			want: []string{"test", "duplicate", "3"},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(t.Name(), func(t *testing.T) {
+			if got := compose(tt.arg...); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("compose(%v) = %v, want %v", tt.arg, got, tt.want)
 			}
 		})
 	}

@@ -55,7 +55,7 @@ var (
 
 		// Testing activity
 		{
-			from: []string{"cryogenic proof", "cryo proof"},
+			from: []string{"cryogenic proof", "cryo proof", "cryoproof"},
 			to:   compose(nonSpecificKeywords, generalSpaceXKeywords),
 		},
 		{
@@ -248,6 +248,8 @@ var (
 
 		"red bull", "browns",
 
+		"tier list",
+
 		// Some conferences have a "stand B20", because why not trick this bot right?
 		"booth", "stand b",
 
@@ -266,7 +268,7 @@ var (
 
 		"offend", "offensive", "fanboy", "fan boy", "fangirl", "fan girl",
 
-		"covid", "corona",
+		"covid", "corona", "omicron", "tests positive", "positive test",
 
 		"shit", "anime", "manga", "bronco", "bae",
 
