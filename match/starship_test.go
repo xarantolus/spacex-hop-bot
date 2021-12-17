@@ -227,20 +227,33 @@ func TestVariablesFirstIsAlphabet(t *testing.T) {
 	}
 }
 
+func TestMoreSpecificLength(t *testing.T) {
+	for i, mapping := range moreSpecificKeywords {
+		if len(mapping.from) == 0 {
+			t.Errorf("moreSpecificKeywords[%d].from has length 0", i)
+		}
+		if len(mapping.to) == 0 {
+			t.Errorf("moreSpecificKeywords[%d].to has length 0", i)
+		}
+	}
+}
+
 func TestVariablesStringCase(t *testing.T) {
 	for _, k := range starshipKeywords {
 		if strings.ToLower(k) != k {
 			t.Errorf("Keyword %q should be lowercase in starshipKeywords slice", k)
 		}
 	}
-	for kw, kws := range moreSpecificKeywords {
-		if kw != strings.ToLower(kw) {
-			t.Errorf("key %q should be lowercase in moreSpecificKeywords", kw)
+	for i, kws := range moreSpecificKeywords {
+		for _, k := range kws.from {
+			if strings.ToLower(k) != k {
+				t.Errorf("Keyword %q should be lowercase in moreSpecificKeywords[%d] 'from' mapping", k, i)
+			}
 		}
 
-		for _, k := range kws {
+		for _, k := range kws.to {
 			if strings.ToLower(k) != k {
-				t.Errorf("Keyword %q should be lowercase in raptorKeywords[%q] slice", k, kw)
+				t.Errorf("Keyword %q should be lowercase in moreSpecificKeywords[%d] 'to' mapping", k, i)
 			}
 		}
 	}

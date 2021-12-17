@@ -11,6 +11,10 @@ import (
 	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
+type keywordMapping struct {
+	from, to []string
+}
+
 // Note that all text here must be lowercase because the text is lowercased in the matching function
 var (
 	starshipKeywords = []string{
@@ -30,25 +34,43 @@ var (
 
 	// moreSpecificKeywords are keywords that must be accompanied by at least one of the keywords mentioned in their slice.
 	// This is useful for "raptor" (to make sure we only get engines) and some launch sites
-	moreSpecificKeywords = map[string][]string{
+	moreSpecificKeywords = []keywordMapping{
 		// Engines
-		"raptor": {
-			"starship", "vacuum", "sea-level", "sea level",
-			"spacex", "mcgregor", "engine", "rb", "rc", "rvac",
-			"launch site", "production site", "booster", "super heavy",
-			"superheavy", "truck", "van", "raptorvan", "deliver", "sea level",
-			"high bay", "nozzle", "tripod", "starbase",
+		{
+			from: []string{"raptor"},
+			to: []string{
+				"starship", "vacuum", "sea-level", "sea level",
+				"spacex", "mcgregor", "engine", "rb", "rc", "rvac",
+				"launch site", "production site", "booster", "super heavy",
+				"superheavy", "truck", "van", "raptorvan", "deliver", "sea level",
+				"high bay", "nozzle", "tripod", "starbase",
+			},
 		},
+
 		// Seaports/Oil rigs that might be used for launches/landings?
-		"deimos": compose(seaportKeywords, generalSpaceXKeywords, []string{"phobos"}),
-		"phobos": compose(seaportKeywords, generalSpaceXKeywords, []string{"deimos"}),
+		{
+			from: []string{"deimos"},
+			to:   compose(seaportKeywords, generalSpaceXKeywords, []string{"phobos"}),
+		},
+		{
+			from: []string{"phobos"},
+			to:   compose(seaportKeywords, generalSpaceXKeywords, []string{"deimos"}),
+		},
 
 		// New launch pads at different locations
-		"lc-49":  compose(starshipKeywords, generalSpaceXKeywords, []string{"ksc", "environmental assessment", "kennedy space center", "tower"}),
-		"lc-39a": compose(starshipKeywords, generalSpaceXKeywords, []string{"ksc", "environmental assessment", "kennedy space center", "tower"}),
+		{
+			from: compose(
+				[]string{"lc-49", "lc 49", "lauch complex 49", "lauch complex-49"},
+				[]string{"lc-39a", "lc 39a", "lauch complex 39a", "lauch complex-39a"},
+			),
+			to: compose(starshipKeywords, generalSpaceXKeywords, []string{"ksc", "environmental assessment", "kennedy space center", "tower"}),
+		},
 
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
-		"launch tower": starshipKeywords,
+		{
+			from: []string{"launch tower"},
+			to:   starshipKeywords,
+		},
 	}
 	// Helper slices that can be used for composing new keywords
 	seaportKeywords       = []string{"sea launch", "oil", "rig"}
@@ -285,8 +307,8 @@ func StarshipText(text string, antiKeywords []string) bool {
 
 	// Now we check for keywords that need additional keywords to be matched,
 	// e.g. "raptor", "deimos" etc.
-	for kw, specificKws := range moreSpecificKeywords {
-		if startsWithAny(text, kw) && startsWithAny(text, specificKws...) {
+	for _, mapping := range moreSpecificKeywords {
+		if startsWithAny(text, mapping.from...) && startsWithAny(text, mapping.to...) {
 			return true
 		}
 	}
