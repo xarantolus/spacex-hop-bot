@@ -148,6 +148,9 @@ func TestBoosterRegex(t *testing.T) {
 		// These would be nice, but there are many satellites and other stuff that is named B-somenumber, which makes it annoying
 		"bn-4", "b-4",
 
+		// Falcon 9 booster name
+		"B1051",
+
 		"company's 20 cars", "company's 2021 report",
 		"booster 1049-11 arrives at the spacex dock",
 		"somethingb3", "sb8",
