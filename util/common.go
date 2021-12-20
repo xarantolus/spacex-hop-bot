@@ -26,7 +26,14 @@ func HashTagText(words []string) string {
 
 	// Replace spaces in words with nothing
 	for _, w := range words {
+		if len(strings.TrimSpace(w)) == 0 {
+			continue
+		}
 		joinedWords = append(joinedWords, strings.Join(strings.Fields(w), ""))
+	}
+
+	if len(joinedWords) == 0 {
+		return ""
 	}
 
 	return "#" + strings.Join(joinedWords, " #")

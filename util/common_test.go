@@ -7,6 +7,8 @@ func TestHashTagText(t *testing.T) {
 		args []string
 		want string
 	}{
+		{[]string{}, ""},
+		{[]string{"single"}, "#single"},
 		{[]string{"SN20", "B4", "Starship"}, "#SN20 #B4 #Starship"},
 	}
 	for _, tt := range tests {
