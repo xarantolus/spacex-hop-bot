@@ -7,7 +7,7 @@ import "regexp"
 // if at least one keyword from `from` and one from `to` is matched,
 // then the match is positive
 type keywordMapping struct {
-	from, to []string
+	from, to, antiKeywords []string
 }
 
 // Note that all text here must be lowercase because the text is lowercased in the matching function
@@ -80,6 +80,8 @@ var (
 				[]string{"lc-39a", "lc 39a", "launch complex 39a", "launch complex-39a"},
 			),
 			to: compose(nonSpecificKeywords, generalSpaceXKeywords, []string{"ksc", "environmental assessment", "kennedy space center", "tower"}),
+
+			antiKeywords: []string{"cargo resupply mission"},
 		},
 
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine

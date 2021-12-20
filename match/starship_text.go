@@ -28,7 +28,7 @@ func StarshipText(text string, antiKeywords []string) bool {
 	// Now we check for keywords that need additional keywords to be matched,
 	// e.g. "raptor", "deimos" etc.
 	for _, mapping := range moreSpecificKeywords {
-		if startsWithAny(text, mapping.from...) && startsWithAny(text, mapping.to...) {
+		if startsWithAny(text, mapping.from...) && startsWithAny(text, mapping.to...) && !startsWithAny(text, mapping.antiKeywords...) {
 			return true
 		}
 	}

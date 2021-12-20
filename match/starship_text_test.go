@@ -12,6 +12,7 @@ func TestStarshipTextMatch(t *testing.T) {
 		text string
 		want bool
 	}{
+		{"Tomorrow at 5:06am ET, @SpaceX's 24th cargo resupply mission will lift off from Launch Complex 39A. Weather officials continue to predict a 30% chance of favorable weather conditions.\nTune in today at 12pm ET for our prelaunch news conference on @NASA TV: https://go.nasa.gov/3q9ByhW", false},
 		{"Took a quick shot of the raptor engines delivered today", true},
 		{"Took a quick shot of the raptor vacuum delivered today", true},
 		{"Cryo proof coming up. #SpaceX #Starbase #Texas", true},
