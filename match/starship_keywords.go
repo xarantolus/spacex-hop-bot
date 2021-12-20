@@ -77,11 +77,12 @@ var (
 		{
 			from: compose(
 				[]string{"lc-49", "lc 49", "launch complex 49", "launch complex-49"},
-				[]string{"lc-39a", "lc 39a", "launch complex 39a", "launch complex-39a"},
-			),
-			to: compose(nonSpecificKeywords, generalSpaceXKeywords, []string{"ksc", "environmental assessment", "kennedy space center", "tower"}),
 
-			antiKeywords: []string{"cargo resupply mission"},
+				// Don't match this one as it's currently in use and I have no idea how to differentiate starship tweets from falcon ones
+				// []string{"lc-39a", "lc 39a", "launch complex 39a", "launch complex-39a"},
+				generalSpaceXKeywords,
+			),
+			to: compose([]string{"environmental assessment", "tower"}),
 		},
 
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine

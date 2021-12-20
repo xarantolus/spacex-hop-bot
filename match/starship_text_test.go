@@ -23,6 +23,7 @@ func TestStarshipTextMatch(t *testing.T) {
 		{"There’s more time to submit your comments on the Draft Programmatic Environmental Assessment for the proposed @SpaceX Starship/Super Heavy project in Boca Chica, Texas. Comment by Nov. 1. The new public meeting dates are Oct. 18th and 20th. Learn more at http://bit.ly/2YcScDe.", true},
 		{"Raptor 63 being lifted up to the booster", true},
 		{"SN10", true},
+		{"Nasa moves forward with environmental assessment of LC-49", true},
 		{"Starbase gse tanks are venting", true},
 		{"BN10", true},
 		{"A great animated video of a @SpaceX #Starship launch, orbit & landing using the new 'chopsticks' system", false},
@@ -43,6 +44,7 @@ The Falcon 9 first stage rocket booster supporting this mission previously suppo
 		{"phobos & deimos in the port", true},
 		{"deimos & phobos in the port", true},
 
+		{"Lifting off next to the tower of Launch Complex 39A", false},
 		{"starbase", false},
 		{"Deimos in the Ocean", false},
 		{"Phobos in the port", false},

@@ -40,6 +40,28 @@ Given the dynamic schedule of development testing, stay tuned to our social medi
 	}
 }
 
+func Test_matcherMatchesStreamsNegative(t *testing.T) {
+	// Make sure these don't trigger the youtube live stream link tweet
+	var videos = []scrapers.LiveVideo{
+		{
+			Title:            "CRS-24",
+			ShortDescription: `SpaceX is targeting Tuesday, December 21 for Falcon 9’s launch of its 24th Commercial Resupply Services (CRS-24) mission to the International Space Station. Liftoff is targeted for 5:06 a.m. EST, or 10:06 UTC, from historic Launch Complex 39A (LC-39A) at Kennedy Space Center in Florida. A backup launch opportunity is available on Wednesday, December 22 at 4:43 a.m. EST, or 9:43 UTC.`,
+		},
+		{
+			Title:            "Starlink Mission",
+			ShortDescription: "On Thursday, December 2 at 6:12 p.m. EST, Falcon 9 launched 48 Starlink satellites and two BlackSky spacecraft to orbit from Space Launch Complex 40 (SLC-40) at Cape Canaveral Space Force Station in Florida. This was the ninth launch and landing of this Falcon 9 first stage booster, which previously launched GPS III-3, Turksat 5A, Transporter-2, and now six Starlink missions.",
+		},
+	}
+
+	for _, vid := range videos {
+		t.Run(t.Name(), func(t *testing.T) {
+			matched := isStarshipStream(&vid)
+			if matched {
+				t.Errorf("video %q %q should not match, but did", vid.Title, vid.ShortDescription)
+			}
+		})
+	}
+}
 func Test_matcherMatchesStreamTitle(t *testing.T) {
 	// Make sure these would trigger the youtube live stream link tweet
 	var titles = []string{
@@ -83,6 +105,7 @@ func TestStreamTitles(t *testing.T) {
 		{"Starship | SN8 | High-Altitude Flight Test", true},
 		{"Starship SN20 & BN3: Orbital Flight Test", true},
 		{"Starship | Starlink Mission", true},
+		{"CRS-24", false},
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
