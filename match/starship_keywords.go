@@ -204,6 +204,8 @@ var (
 		"star trek", "startrek", "starcitizen", "star citizen", "battle droid", "b1-series", "civil war", "jabba the hutt", "sfs", "space flight simulator",
 		"rocket explorer",
 
+		"tax",
+
 		// KSP planets, moons, stars etc.
 		"moho", "gilly", "kerbin", "mun", "minmus", "duna", "jool", "laythe", "vall",
 		"tylo", "bop", "pol", "dres", "eeloo", "kerbol",
