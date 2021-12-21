@@ -18,6 +18,10 @@ func containsAny(text string, words ...string) bool {
 
 // startsWithAny checks whether any of words is the start of a sequence of words in the text
 func startsWithAny(text string, words ...string) bool {
+	if len(words) == 0 {
+		return false
+	}
+
 	var iterations = 0
 
 	var currentIndex = 0
