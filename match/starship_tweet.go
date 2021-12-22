@@ -9,11 +9,6 @@ import (
 	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
-// The faceRatio of a tweet is the number of faces in all images (or video thumbnails) divided by the number of images in the tweet
-const maxFaceRatio = .75
-
-var faceDetector = NewFaceDetector()
-
 // StarshipTweet returns whether the given tweet mentions starship. It also includes custom matchers for certain users
 func StarshipTweet(tweet TweetWrapper) bool {
 	// Ignore OLD tweets
@@ -52,17 +47,13 @@ func StarshipTweet(tweet TweetWrapper) bool {
 
 	// If the tweet is tagged with Starbase as location, we just retweet it
 	if !containsBadWords && IsAtSpaceXSite(&tweet.Tweet) {
-		fr := faceDetector.FaceRatio(&tweet.Tweet)
-		log.Printf("[FaceRatio] %s: %f\n", util.TweetURL(&tweet.Tweet), fr)
-		return fr <= maxFaceRatio
+		return true
 	}
 
 	// If the tweet mentions raptor without images, we still retweet it.
 	// This is mostly for tweets from SpaceX McGregor
 	if !containsBadWords && strings.Contains(text, "raptor") && IsAtSpaceXSite(&tweet.Tweet) {
-		fr := faceDetector.FaceRatio(&tweet.Tweet)
-		log.Printf("[FaceRatio] %s: %f\n", util.TweetURL(&tweet.Tweet), fr)
-		return fr <= maxFaceRatio
+		return true
 	}
 
 	// Now check if it mentions too many people
@@ -78,9 +69,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 
 	// Check if the text matches
 	if StarshipText(text, antiKeywords) {
-		fr := faceDetector.FaceRatio(&tweet.Tweet)
-		log.Printf("[FaceRatio] %s: %f\n", util.TweetURL(&tweet.Tweet), fr)
-		return fr <= maxFaceRatio
+		return true
 	}
 
 	// Now check if we have a matcher for this specific user.
@@ -95,11 +84,6 @@ func StarshipTweet(tweet TweetWrapper) bool {
 		// For them we retweet *everything* that has media
 		if hqMediaAccounts[strings.ToLower(tweet.User.ScreenName)] {
 			return hasMedia(&tweet.Tweet)
-		}
-
-		// If the user mentions a raptor engine keyword (however not all from raptorKeywords)
-		if ok && startsWithAny(text, "raptor", "rb", "rc", "rvac") {
-			return true
 		}
 	}
 
