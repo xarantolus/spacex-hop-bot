@@ -47,6 +47,15 @@ var (
 			},
 		},
 
+		// Stuff noticed on live streams
+		{
+			from: liveStreams,
+			to: []string{
+				"methane", "tank", "lox", "ch4", "ln2", "frost", "fire", "vent",
+				"pad", "road", "highway", "close", "open",
+			},
+		},
+
 		// Ground infrastructure
 		{
 			from: []string{"gse tank"},
@@ -93,8 +102,13 @@ var (
 	}
 	// Helper slices that can be used for composing new keywords
 	seaportKeywords       = []string{"sea launch", "oil", "rig"}
-	nonSpecificKeywords   = []string{"ship", "booster", "starbase", "boca chica", "spacex"}
+	nonSpecificKeywords   = compose([]string{"ship", "booster", "starbase", "boca chica", "spacex"}, liveStreams)
 	generalSpaceXKeywords = []string{"spacex"}
+
+	// live camera views are often mentioned when something is shown on a screenshot
+	liveStreams = []string{
+		"labpadre", "nasaspaceflight",
+	}
 
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx

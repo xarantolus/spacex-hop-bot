@@ -12,6 +12,12 @@ func TestStarshipTextMatch(t *testing.T) {
 		text string
 		want bool
 	}{
+		{"Lots of frost on Booster 4, which now seems to be decreasing, potentially signifying we’re getting close to the conclusion of todays cryogenic proof test.\nCamera with flash @NASASpaceflight\nRed circle https://youtu.be/B1IbMBhococ\n\n#SpaceX @elonmusk", true},
+		{"On @nasaspaceflight stream it looks like the road is open again, so no Cryo Proof today it seems.", true},
+		{"Orbital launch table is venting! 📷 @NASASpaceflight", true},
+		{"The orbital tank farm is venting.\n\n📷 @NASASpaceflight", true},
+		{"LN2 loading has begun. Photos from @NASASpaceflight stream", true},
+		{"GSE tank rolling down the road. Photos from @labpadre stream", true},
 		{"Tomorrow at 5:06am ET, @SpaceX's 24th cargo resupply mission will lift off from Launch Complex 39A. Weather officials continue to predict a 30% chance of favorable weather conditions.\nTune in today at 12pm ET for our prelaunch news conference on @NASA TV: https://go.nasa.gov/3q9ByhW", false},
 		{"Took a quick shot of the raptor engines delivered today", true},
 		{"Took a quick shot of the raptor vacuum delivered today", true},
