@@ -107,8 +107,8 @@ var (
 		regexp.MustCompile(`\b((?:raptor|raptor\s+engine|rvac|rb|rc)(?:\s+(?:center|centre|boost|vacuum))?(?:\s+engine)?\s*\d+)\b`),
 	}
 
-	closureTFRRegex = regexp.MustCompile("\b(?:closure|tfr|notmar|cryo|fts|scrub)")
-	alertRegex      = regexp.MustCompile("\b(?:alert|static fire|closure|cryo|evac|scrub)")
+	closureTFRRegex = regexp.MustCompile(`\b(?:closure|tfr|notmar|cryo|fts|scrub)`)
+	alertRegex      = regexp.MustCompile(`\b(?:alert|static fire|closure|cryo|evac|scrub)`)
 
 	// Users known to post better information that requires specific filtering
 	specificUserMatchers = map[string]*regexp.Regexp{
@@ -120,7 +120,6 @@ var (
 		// These people likely tweet about test & launch stuff
 		"rgvaerialphotos": closureTFRRegex,
 		"bocaroad":        closureTFRRegex,
-		"infographictony": closureTFRRegex,
 		"spacex360":       closureTFRRegex,
 		"bluemoondance74": closureTFRRegex,
 		"nextspaceflight": closureTFRRegex,

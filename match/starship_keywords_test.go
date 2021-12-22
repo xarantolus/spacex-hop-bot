@@ -232,6 +232,56 @@ func TestRaptorRegex(t *testing.T) {
 	}
 }
 
+func TestAlertRegex(t *testing.T) {
+	var valid = []string{
+		"have received an alert notice",
+		"static fire will be attempted later today",
+		"cryo proof upcoming",
+	}
+
+	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!",
+		"u.s. to ship 4 mln covid-19 vaccine doses to nigeria, 5.66 mln to south africa", ""}
+
+	for _, v := range valid {
+		if alertRegex.FindString(v) == "" {
+			t.Errorf("alertRegex should have matched %q, but didn't", v)
+		}
+	}
+
+	for _, i := range invalid {
+		if alertRegex.FindString(i) != "" {
+			t.Errorf("alertRegex matched %q, but shouldn't have done that", i)
+		}
+	}
+}
+
+func TestClosureTFRRegex(t *testing.T) {
+	var valid = []string{
+		"fts is installed",
+		"scrubbed",
+		"new notmar posted",
+		"cryo proof upcoming",
+	}
+
+	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!",
+		"u.s. to ship 4 mln covid-19 vaccine doses to nigeria, 5.66 mln to south africa", "",
+		"have received an alert notice",
+		"static fire will be attempted later today",
+	}
+
+	for _, v := range valid {
+		if closureTFRRegex.FindString(v) == "" {
+			t.Errorf("closureTFRRegex should have matched %q, but didn't", v)
+		}
+	}
+
+	for _, i := range invalid {
+		if closureTFRRegex.FindString(i) != "" {
+			t.Errorf("closureTFRRegex matched %q, but shouldn't have done that", i)
+		}
+	}
+}
+
 // containsAll returns if subset is a subset of set
 func containsAll(subset, set []string) bool {
 	var asmap = map[string]bool{}

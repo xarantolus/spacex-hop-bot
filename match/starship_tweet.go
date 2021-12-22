@@ -75,9 +75,9 @@ func StarshipTweet(tweet TweetWrapper) bool {
 	// Now check if we have a matcher for this specific user.
 	// These users usually post high-quality information
 	if tweet.User != nil {
-		m, ok := specificUserMatchers[strings.ToLower(tweet.User.ScreenName)]
+		regex, ok := specificUserMatchers[strings.ToLower(tweet.User.ScreenName)]
 		if ok {
-			return m.MatchString(text)
+			return regex.MatchString(text)
 		}
 
 		// There are some accounts that always post high-quality pictures and videos.
