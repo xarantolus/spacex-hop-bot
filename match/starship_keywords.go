@@ -143,8 +143,13 @@ var (
 		"elonmusk": {"tesla", "model s", "model 3", "model x", "model y", "car", "giga", "falcon", "boring company", "tunnel", "loop", "doge", "ula", "tonybruno", "jeff", "fsd", "giga berlin", "giga factory", "gigafactory", "giga press"},
 
 		// NASA Accounts that sometimes tweet about Starship
+		"nasa":          {},
+		"nasajpl":       {},
 		"nasa_marshall": {},
+		"nasa_gateway":  {},
 		"nasaartemis":   {},
+		"nasakennedy":   {},
+		"nasagoddard":   {},
 	}
 
 	hqMediaAccounts = map[string]bool{
