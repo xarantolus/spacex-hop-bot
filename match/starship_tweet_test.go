@@ -186,3 +186,19 @@ func TestStarshipTweetSpecificMatchers(t *testing.T) {
 		},
 	)
 }
+
+func TestStarshipTweetSpecificHQMedia(t *testing.T) {
+	testStarshipTweets(t,
+		[]ttest{
+			{
+				acc:      "starshipgazer",
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				hasMedia: true,
+				want:     false,
+			},
+		},
+	)
+}
