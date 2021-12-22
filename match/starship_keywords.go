@@ -141,6 +141,10 @@ var (
 
 	userAntikeywordsOverwrite = map[string][]string{
 		"elonmusk": {"tesla", "model s", "model 3", "model x", "model y", "car", "giga", "falcon", "boring company", "tunnel", "loop", "doge", "ula", "tonybruno", "jeff", "fsd", "giga berlin", "giga factory", "gigafactory", "giga press"},
+
+		// NASA Accounts that sometimes tweet about Starship
+		"nasa_marshall": {},
+		"nasaartemis":   {},
 	}
 
 	hqMediaAccounts = map[string]bool{
@@ -247,7 +251,7 @@ var (
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follow", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",
 
 		"child", "kid", "illegal", "nfl", "tiktok", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
-		"booty", "cudd", "bathroom", "penis", "vagi", "furry",
+		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "stroke", "fap",
 
 		"patrons", "babylon", "boltup", "champion",
 

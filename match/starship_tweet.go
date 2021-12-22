@@ -31,7 +31,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 
 	// We ignore certain (e.g. satire, artist) accounts
 	if tweet.User != nil {
-		if _, important := veryImportantAccounts[strings.ToLower(tweet.User.Name)]; !important && IsOrMentionsIgnoredAccount(&tweet.Tweet) {
+		if _, important := veryImportantAccounts[strings.ToLower(tweet.User.ScreenName)]; !important && IsOrMentionsIgnoredAccount(&tweet.Tweet) {
 			return false
 		}
 	}
@@ -66,7 +66,7 @@ func StarshipTweet(tweet TweetWrapper) bool {
 	}
 
 	// Now check if it mentions too many people
-	if strings.Count(text, "@") > 5 {
+	if strings.Count(text, "@") > 10 {
 		return false
 	}
 
