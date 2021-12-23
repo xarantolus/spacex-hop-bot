@@ -4,17 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"net/url"
 	"os"
-	"regexp"
 	"strings"
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/xarantolus/spacex-hop-bot/match"
-	"github.com/xarantolus/spacex-hop-bot/scrapers"
 	"github.com/xarantolus/spacex-hop-bot/util"
-	"mvdan.cc/xurls/v2"
 )
 
 // Process handles and retweets
@@ -298,150 +294,6 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string, source match.Tw
 	tweet.Retweeted = true
 }
 
-var (
-	ignoredHosts = map[string]bool{
-		"patreon.com":          true,
-		"gofundme.com":         true,
-		"shop.spreadshirt.com": true,
-		"spreadshirt.com":      true,
-		"instagram.com":        true,
-		"soundcloud.com":       true,
-		"blueorigin.com":       true,
-		"affinitweet.com":      true,
-		"boards.greenhouse.io": true,
-		"etsy.com":             true,
-		// Most of their articles are paywalled, no additional benefit for retweeting them
-		"spaceq.ca": true,
-	}
-
-	highQualityYouTubeStreams = map[string]bool{
-		// Do not ignore NASASpaceflight, people often tweet updates with a link to their 24/7 stream
-		"UCSUu1lih2RifWkKtDOJdsBA": true,
-		// Same for LabPadre
-		"UCFwMITSkc1Fms6PoJoh1OUQ": true,
-		// SpaceX official channel
-		"UCtI0Hodo5o5dUb67FeUjDeA": true,
-	}
-
-	urlRegex *regexp.Regexp
-)
-
-func init() {
-	var err error
-	urlRegex, err = xurls.StrictMatchingScheme("https|http")
-	if err != nil {
-		panic("parsing URL regex: " + err.Error())
-	}
-}
-
-// shouldIgnoreLink returns whether this tweet should be ignored because of a linked article
-func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
-
-	// Get the text *with* URLs
-	var textWithURLs = tweet.SimpleText
-	if textWithURLs == "" {
-		textWithURLs = tweet.FullText
-	}
-
-	// Find all URLs
-	urls := urlRegex.FindAllString(textWithURLs, -1)
-
-	// Now check if any of these URLs is ignored
-	for _, u := range urls {
-		var canonical = util.FindCanonicalURL(u, false)
-
-		parsed, err := url.ParseRequestURI(canonical)
-		if err != nil {
-			log.Println("Cannot parse URL:", err.Error())
-			continue
-		}
-
-		// Check if the host is ignored
-		host := strings.ToLower(strings.TrimPrefix(parsed.Hostname(), "www."))
-		if ignoredHosts[host] {
-			return true
-		}
-
-		if host == "youtube.com" || host == "youtu.be" {
-			stream, err := scrapers.YouTubeLive(u)
-			if err == nil {
-				// If we know the channel is good, then we don't ignore their live streams
-				if (stream.IsLive || stream.IsUpcoming) && highQualityYouTubeStreams[stream.ChannelID] {
-					continue
-				}
-
-				// Else, we should of course check if we've seen it before
-			}
-		}
-
-		// If we retweeted this link in the last 12 hours, we should
-		// definitely ignore it
-		lastRetweetTime, ok := p.seenLinks[u]
-		if ok && time.Since(lastRetweetTime) < seenLinkDelay {
-			return true
-		}
-		lastRetweetTime, ok = p.seenLinks[canonical]
-		if ok && time.Since(lastRetweetTime) < seenLinkDelay {
-			return true
-		}
-
-		// Mark this link as seen, but allow a retweet
-		p.seenLinks[u] = time.Now()
-		p.seenLinks[canonical] = time.Now()
-
-		p.cleanup(false)
-
-		// Now save it to make sure we still know after a restart
-		util.LogError(util.SaveJSON(articlesFilename, p.seenLinks), "saving links")
-
-		return false
-	}
-
-	return false
-}
-
-// saveTweet appends the given tweet to a JSON file for later inspections, especially in case of wrong retweets
-func (p *Processor) saveTweet(tweet *twitter.Tweet) {
-	f, err := os.OpenFile("retweeted.ndjson", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
-	if err != nil {
-		util.LogError(err, "open tweet file")
-		return
-	}
-	defer f.Close()
-
-	err = json.NewEncoder(f).Encode(tweet)
-	if err != nil {
-		util.LogError(err, "encoding tweet json")
-	}
-}
-
-// addSpaceMember adds the user of the given tweet to the space people list
-func (p *Processor) addSpaceMember(tweet *twitter.Tweet) {
-	if tweet.User == nil || p.spacePeopleListMembers[tweet.User.ID] {
-		return
-	}
-
-	// Idea: We make the list private, add the member and then make it public again.
-	// That way they are not notified/annoyed
-	defer p.client.Lists.Update(&twitter.ListsUpdateParams{
-		ListID: p.spacePeopleListID,
-		Mode:   "public",
-	})
-	// Set the list to private before updating
-	p.client.Lists.Update(&twitter.ListsUpdateParams{
-		ListID: p.spacePeopleListID,
-		Mode:   "private",
-	})
-
-	p.spacePeopleListMembers[tweet.User.ID] = true
-
-	_, err := p.client.Lists.MembersCreate(&twitter.ListsMembersCreateParams{
-		ListID: p.spacePeopleListID,
-		UserID: tweet.User.ID,
-	})
-	util.LogError(err, fmt.Sprintf("adding %s to list", tweet.User.ScreenName))
-}
-
 // thread processes tweet threads and retweets everything on-topic.
 // This is useful because Elon Musk often replies to people that quote tweeted/asked a questions on his tweets
 // See this for example: https://twitter.com/elonmusk/status/1372826575293583366
@@ -497,4 +349,46 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 	}
 
 	return didRetweet
+}
+
+// saveTweet appends the given tweet to a JSON file for later inspections, especially in case of wrong retweets
+func (p *Processor) saveTweet(tweet *twitter.Tweet) {
+	f, err := os.OpenFile("retweeted.ndjson", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
+	if err != nil {
+		util.LogError(err, "open tweet file")
+		return
+	}
+	defer f.Close()
+
+	err = json.NewEncoder(f).Encode(tweet)
+	if err != nil {
+		util.LogError(err, "encoding tweet json")
+	}
+}
+
+// addSpaceMember adds the user of the given tweet to the space people list
+func (p *Processor) addSpaceMember(tweet *twitter.Tweet) {
+	if tweet.User == nil || p.spacePeopleListMembers[tweet.User.ID] {
+		return
+	}
+
+	// Idea: We make the list private, add the member and then make it public again.
+	// That way they are not notified/annoyed
+	defer p.client.Lists.Update(&twitter.ListsUpdateParams{
+		ListID: p.spacePeopleListID,
+		Mode:   "public",
+	})
+	// Set the list to private before updating
+	p.client.Lists.Update(&twitter.ListsUpdateParams{
+		ListID: p.spacePeopleListID,
+		Mode:   "private",
+	})
+
+	p.spacePeopleListMembers[tweet.User.ID] = true
+
+	_, err := p.client.Lists.MembersCreate(&twitter.ListsMembersCreateParams{
+		ListID: p.spacePeopleListID,
+		UserID: tweet.User.ID,
+	})
+	util.LogError(err, fmt.Sprintf("adding %s to list", tweet.User.ScreenName))
 }
