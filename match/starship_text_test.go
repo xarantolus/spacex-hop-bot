@@ -75,9 +75,10 @@ The Falcon 9 first stage rocket booster supporting this mission previously suppo
 		{"Starship and Dogecoin", false},
 	}
 
+	matcher := NewStarshipMatcherForTests()
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
-			if got := StarshipText(tt.text, antiStarshipKeywords); got != tt.want {
+			if got := matcher.StarshipText(tt.text, antiStarshipKeywords); got != tt.want {
 				t.Errorf("StarshipText(%q, antiStarshipKeywords) = %v, want %v", tt.text, got, tt.want)
 			}
 		})

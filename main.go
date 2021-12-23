@@ -66,9 +66,14 @@ func main() {
 	}
 
 	// Load all ignored accounts to make sure we don't retweet them
+	var ignoredListIDs = []int64{}
 	for lid := range ignoredLists {
-		match.LoadIgnoredList(client, lid)
+		ignoredListIDs = append(ignoredListIDs, lid)
 	}
+
+	ignoredUserMatcher := match.LoadIgnoredList(client, ignoredListIDs...)
+
+	var starshipMatcher = match.NewStarshipMatcher(ignoredUserMatcher)
 
 	// The bot should check all tweets that are sent on this channel
 	var tweetChan = make(chan match.TweetWrapper, 250)
@@ -77,11 +82,11 @@ func main() {
 		log.Println("[Info] Running in debug mode, no background jobs are started")
 	} else {
 		// Register all background jobs, most of them send tweets on tweetChan
-		jobs.Register(client, selfUser, tweetChan, ignoredLists)
+		jobs.Register(client, selfUser, starshipMatcher, tweetChan, ignoredLists)
 	}
 
 	// handler handles tweets by filtering & retweeting the interesting ones
-	var handler = consumer.NewProcessor(*flagDebug, client, selfUser, spacePeopleListID)
+	var handler = consumer.NewProcessor(*flagDebug, client, selfUser, starshipMatcher, spacePeopleListID)
 
 	// Now we just process every tweet we come across
 	for tweet := range tweetChan {

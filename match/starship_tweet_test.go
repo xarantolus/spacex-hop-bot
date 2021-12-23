@@ -5,17 +5,7 @@ import (
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
-	"github.com/xarantolus/spacex-hop-bot/bot"
 )
-
-func newEmptyStarshipMatcher() *StarshipMatcher {
-	return &StarshipMatcher{
-		Ignorer: &Ignorer{
-			list:     bot.ListMembers(nil, "test"),
-			keywords: nil,
-		},
-	}
-}
 
 type ttest struct {
 	acc  string
@@ -29,7 +19,7 @@ type ttest struct {
 }
 
 func testStarshipTweets(t *testing.T, tweets []ttest) {
-	var matcher = newEmptyStarshipMatcher()
+	var matcher = NewStarshipMatcherForTests()
 
 	var tweet = func(t ttest) TweetWrapper {
 		var tw = TweetWrapper{

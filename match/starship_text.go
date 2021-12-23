@@ -5,7 +5,7 @@ import (
 )
 
 // StarshipText returns whether the given text mentions starship
-func StarshipText(text string, antiKeywords []string) bool {
+func (m *StarshipMatcher) StarshipText(text string, antiKeywords []string) bool {
 	text = strings.ToLower(text)
 
 	// If we find ignored words, we ignore the tweet

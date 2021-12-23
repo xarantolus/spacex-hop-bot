@@ -70,7 +70,7 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 	}
 
 	// Check if the text matches
-	if StarshipText(text, antiKeywords) {
+	if m.StarshipText(text, antiKeywords) {
 		return true
 	}
 

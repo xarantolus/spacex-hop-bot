@@ -9,12 +9,12 @@ import (
 	"github.com/xarantolus/spacex-hop-bot/match"
 )
 
-func Register(client *twitter.Client, selfUser *twitter.User, tweetChan chan match.TweetWrapper, skipLists map[int64]bool) (err error) {
+func Register(client *twitter.Client, selfUser *twitter.User, matcher *match.StarshipMatcher, tweetChan chan match.TweetWrapper, skipLists map[int64]bool) (err error) {
 	var linkChan = make(chan string, 2)
 
 	// Run YouTube scraper in the background,
 	// it will tweet if it discovers that SpaceX is online with a Starship stream
-	go CheckYouTubeLive(client, selfUser, linkChan)
+	go CheckYouTubeLive(client, selfUser, matcher, linkChan)
 
 	// When the gov dashboard changes, we want to tweet about it
 	go CheckDashboard(client)

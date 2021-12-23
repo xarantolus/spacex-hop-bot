@@ -18,7 +18,7 @@ import (
 )
 
 // CheckYouTubeLive checks SpaceX's youtube live stream every 1-2 minutes and tweets if there is a starship launch stream
-func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-chan string) {
+func CheckYouTubeLive(client *twitter.Client, user *twitter.User, matcher *match.StarshipMatcher, linkChan <-chan string) {
 	defer panic("for some reason, the youtube live checker stopped running even though it never should")
 
 	log.Println("[YouTube] Watching SpaceX channel for live Starship streams")
@@ -52,7 +52,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 		}
 
 		// If we have interesting video info
-		if isStarshipStream(&liveVideo) {
+		if isStarshipStream(matcher, &liveVideo) {
 			// Get the video URL
 			liveURL := liveVideo.URL()
 
@@ -94,8 +94,8 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, linkChan <-cha
 	}
 }
 
-func isStarshipStream(liveVideo *scrapers.LiveVideo) bool {
-	return match.StarshipText(liveVideo.Title, nil) || match.StarshipText(liveVideo.ShortDescription, nil)
+func isStarshipStream(matcher *match.StarshipMatcher, liveVideo *scrapers.LiveVideo) bool {
+	return matcher.StarshipText(liveVideo.Title, nil) || matcher.StarshipText(liveVideo.ShortDescription, nil)
 }
 
 func tweetInterval(streamStartsIn time.Duration) time.Duration {

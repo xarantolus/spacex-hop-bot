@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/xarantolus/spacex-hop-bot/match"
 	"github.com/xarantolus/spacex-hop-bot/scrapers"
 )
 
@@ -53,9 +54,10 @@ func Test_matcherMatchesStreamsNegative(t *testing.T) {
 		},
 	}
 
+	matcher := match.NewStarshipMatcherForTests()
 	for _, vid := range videos {
 		t.Run(t.Name(), func(t *testing.T) {
-			matched := isStarshipStream(&vid)
+			matched := isStarshipStream(matcher, &vid)
 			if matched {
 				t.Errorf("video %q %q should not match, but did", vid.Title, vid.ShortDescription)
 			}
@@ -80,10 +82,10 @@ func Test_matcherMatchesStreamTitle(t *testing.T) {
 		"Starship | SN10 | High-Altitude Flight Test",
 		"Starship | SN11 | High-Altitude Flight Test",
 	}
-
+	matcher := match.NewStarshipMatcherForTests()
 	for _, title := range titles {
 		t.Run(t.Name(), func(t *testing.T) {
-			matched := isStarshipStream(&scrapers.LiveVideo{
+			matched := isStarshipStream(matcher, &scrapers.LiveVideo{
 				Title: title,
 			})
 			if !matched {
@@ -107,9 +109,10 @@ func TestStreamTitles(t *testing.T) {
 		{"Starship | Starlink Mission", true},
 		{"CRS-24", false},
 	}
+	matcher := match.NewStarshipMatcherForTests()
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
-			matched := isStarshipStream(&scrapers.LiveVideo{
+			matched := isStarshipStream(matcher, &scrapers.LiveVideo{
 				Title: tt.text,
 			})
 			if matched != tt.want {
@@ -278,13 +281,15 @@ Starship | S20 & B4 | Orbital Flight Test
 https://www.youtube.com/watch?v=9135813491`,
 		},
 	}
+
+	matcher := match.NewStarshipMatcherForTests()
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
 			if got := describeLiveStream(&tt.args); got != tt.want {
 				t.Errorf("describeLiveStream() = \n%v, want \n%v", got, tt.want)
 			}
 
-			matched := isStarshipStream(&tt.args)
+			matched := isStarshipStream(matcher, &tt.args)
 			if !matched {
 				t.Errorf("describeLiveStream(): expected video with title %q and description %q to match, but didn't", tt.args.Title, tt.args.ShortDescription)
 			}
