@@ -22,7 +22,7 @@ func Diff(old, new *DashboardResponse) (changeDescriptions []string) {
 	}
 
 	if len(old.Data) != len(new.Data) {
-		log.Println("[FAA] It seems like new data has been added")
+		log.Println("[Review] It seems like new data has been added")
 		return
 	}
 
@@ -30,7 +30,7 @@ func Diff(old, new *DashboardResponse) (changeDescriptions []string) {
 		var oldProject, newProject = old.Data[i], new.Data[i]
 
 		if oldProject.Nid != newProject.Nid {
-			log.Println("[FAA] It seems like old/new data doesn't have same order")
+			log.Println("[Review] It seems like old/new data doesn't have same order")
 			continue
 		}
 
@@ -40,7 +40,7 @@ func Diff(old, new *DashboardResponse) (changeDescriptions []string) {
 		}
 
 		if len(oldProject.MilestoneData) != len(newProject.MilestoneData) {
-			log.Printf("[FAA] It seems like new milestone data has been added to %q", newProject.Action)
+			log.Printf("[Review] It seems like new milestone data has been added to %q", newProject.Action)
 			continue
 		}
 
@@ -48,7 +48,7 @@ func Diff(old, new *DashboardResponse) (changeDescriptions []string) {
 			var oldMilestone, newMilestone = oldProject.MilestoneData[i], newProject.MilestoneData[i]
 
 			if oldMilestone.Name != newMilestone.Name {
-				log.Printf("[FAA] It seems like old/new milestone data for %q doesn't have same order", newProject.Action)
+				log.Printf("[Review] It seems like old/new milestone data for %q doesn't have same order", newProject.Action)
 				continue
 			}
 
