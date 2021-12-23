@@ -7,10 +7,14 @@ import (
 	"github.com/dghubble/go-twitter/twitter"
 )
 
-func LogError(err error, location string) {
+func LogError(err error, location string) bool {
 	if err != nil {
 		log.Printf("[Error (%s)]: %s\n", location, err.Error())
+
+		return true
 	}
+
+	return false
 }
 
 // TweetURL returns the URL for this tweet

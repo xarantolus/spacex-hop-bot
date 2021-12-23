@@ -5,7 +5,17 @@ import (
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/bot"
 )
+
+func newEmptyStarshipMatcher() *StarshipMatcher {
+	return &StarshipMatcher{
+		Ignorer: &Ignorer{
+			list:     bot.ListMembers(nil, "test"),
+			keywords: nil,
+		},
+	}
+}
 
 type ttest struct {
 	acc  string
@@ -19,6 +29,8 @@ type ttest struct {
 }
 
 func testStarshipTweets(t *testing.T, tweets []ttest) {
+	var matcher = newEmptyStarshipMatcher()
+
 	var tweet = func(t ttest) TweetWrapper {
 		var tw = TweetWrapper{
 			Tweet: twitter.Tweet{
@@ -60,7 +72,7 @@ func testStarshipTweets(t *testing.T, tweets []ttest) {
 
 	for _, tt := range tweets {
 		t.Run(t.Name(), func(t *testing.T) {
-			if got := StarshipTweet(tweet(tt)); got != tt.want {
+			if got := matcher.StarshipTweet(tweet(tt)); got != tt.want {
 				t.Errorf("StarshipTweet(%q) = %v, want %v", tt.text, got, tt.want)
 			}
 		})

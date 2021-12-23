@@ -10,7 +10,7 @@ import (
 )
 
 // StarshipTweet returns whether the given tweet mentions starship. It also includes custom matchers for certain users
-func StarshipTweet(tweet TweetWrapper) bool {
+func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 	// Ignore OLD tweets
 	if d, err := tweet.CreatedAtTime(); err == nil && time.Since(d) > 24*time.Hour {
 		return false
@@ -26,7 +26,9 @@ func StarshipTweet(tweet TweetWrapper) bool {
 
 	// We ignore certain (e.g. satire, artist) accounts
 	if tweet.User != nil {
-		if _, important := veryImportantAccounts[strings.ToLower(tweet.User.ScreenName)]; !important && IsOrMentionsIgnoredAccount(&tweet.Tweet) {
+		_, important := veryImportantAccounts[strings.ToLower(tweet.User.ScreenName)]
+
+		if !important && m.IsOrMentionsIgnoredAccount(&tweet.Tweet) {
 			return false
 		}
 	}

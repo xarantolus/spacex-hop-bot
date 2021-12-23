@@ -19,6 +19,8 @@ type Processor struct {
 
 	client *twitter.Client
 
+	matcher *match.StarshipMatcher
+
 	selfUser *twitter.User
 
 	// map[URL]last Retweet time
@@ -37,9 +39,11 @@ const (
 )
 
 // NewProcessor returns a new processor with the given options
-func NewProcessor(debug bool, client *twitter.Client, selfUser *twitter.User, spacePeopleListID int64) *Processor {
+func NewProcessor(debug bool, client *twitter.Client, selfUser *twitter.User, matcher *match.StarshipMatcher, spacePeopleListID int64) *Processor {
 	p := &Processor{
 		debug: debug,
+
+		matcher: matcher,
 
 		client:   client,
 		selfUser: selfUser,
@@ -130,12 +134,12 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		}
 
 		// The quoting tweet should be about starship
-		if !match.StarshipTweet(tweet) {
+		if !p.matcher.StarshipTweet(tweet) {
 			break
 		}
 
 		// Make sure the quoted user is not ignored
-		if match.IsOrMentionsIgnoredAccount(tweet.QuotedStatus) {
+		if p.matcher.IsOrMentionsIgnoredAccount(tweet.QuotedStatus) {
 			break
 		}
 
@@ -194,7 +198,7 @@ func isElonTweet(t match.TweetWrapper) bool {
 
 func (p *Processor) isStarshipTweet(t match.TweetWrapper) bool {
 	// At first, we of course need to match some keywords
-	if !match.StarshipTweet(t) {
+	if !p.matcher.StarshipTweet(t) {
 		return false
 	}
 
@@ -341,7 +345,7 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 	}
 
 	// Now actually match the tweet
-	if didRetweet || match.StarshipTweet(match.TweetWrapper{TweetSource: match.TweetSourceUnknown, Tweet: *realTweet}) {
+	if didRetweet || p.matcher.StarshipTweet(match.TweetWrapper{TweetSource: match.TweetSourceUnknown, Tweet: *realTweet}) {
 
 		p.retweet(tweet, "thread: matched", match.TweetSourceUnknown)
 
