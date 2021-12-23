@@ -13,7 +13,7 @@ import (
 	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
-// Process handles and retweets
+// Processor handles tweets by looking at them and deciding whether to retweet.
 type Processor struct {
 	debug bool
 
