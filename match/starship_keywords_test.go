@@ -153,7 +153,7 @@ func TestBoosterRegex(t *testing.T) {
 
 		"company's 20 cars", "company's 2021 report",
 		"booster 1049-11 arrives at the spacex dock",
-		"somethingb3", "sb8",
+		"somethingb3", "sb8", "web4",
 		"eurocopter as.350-b2, is circling over cameron county",
 		"f-35a completes final inert drop test of new b61-12 nuclear bomb",
 		"https://example.com/somelinkthatincludesb3asboostername",
