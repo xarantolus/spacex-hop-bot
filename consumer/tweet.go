@@ -19,6 +19,8 @@ type Processor struct {
 
 	client *twitter.Client
 
+	retweeter Retweeter
+
 	matcher *match.StarshipMatcher
 
 	selfUser *twitter.User
@@ -39,11 +41,13 @@ const (
 )
 
 // NewProcessor returns a new processor with the given options
-func NewProcessor(debug bool, client *twitter.Client, selfUser *twitter.User, matcher *match.StarshipMatcher, spacePeopleListID int64) *Processor {
+func NewProcessor(debug bool, client *twitter.Client, selfUser *twitter.User, matcher *match.StarshipMatcher, retweeter Retweeter, spacePeopleListID int64) *Processor {
 	p := &Processor{
 		debug: debug,
 
 		matcher: matcher,
+
+		retweeter: retweeter,
 
 		client:   client,
 		selfUser: selfUser,
@@ -265,18 +269,12 @@ func (p *Processor) hasMedia(tweet *twitter.Tweet) bool {
 
 // retweet retweets the given tweet, but if it fails it doesn't care
 func (p *Processor) retweet(tweet *twitter.Tweet, reason string, source match.TweetSource) {
-	// don't retweet anything in debug mode
-	if p.debug {
-		log.Printf("Not retweeting %s because we're in debug mode", util.TweetURL(tweet))
-		return
-	}
-
 	// If we have already retweeted a tweet, we don't try to do it again, that just leads to errors
 	if tweet.Retweeted || tweet.RetweetedStatus != nil && tweet.RetweetedStatus.Retweeted {
 		return
 	}
 
-	_, _, err := p.client.Statuses.Retweet(tweet.ID, nil)
+	err := p.retweeter.Retweet(tweet)
 	if err != nil {
 		util.LogError(err, "retweeting "+util.TweetURL(tweet))
 		return
