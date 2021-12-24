@@ -1,6 +1,8 @@
 package consumer
 
 import (
+	"log"
+
 	"github.com/dghubble/go-twitter/twitter"
 )
 
@@ -40,4 +42,16 @@ func (r *TestRetweeter) Contains(tweet *twitter.Tweet) bool {
 		return false
 	}
 	return r.tweetIDs[tweet.ID]
+}
+
+type DebugRetweeter struct {
+}
+
+func (r *DebugRetweeter) Retweet(tweet *twitter.Tweet) error {
+	if tweet.User == nil {
+		tweet.User = &twitter.User{}
+	}
+	log.Printf("Would have retweeted %q by %q, but we are in debug mode", tweet.Text(), tweet.User.Name)
+
+	return nil
 }
