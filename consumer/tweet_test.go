@@ -12,6 +12,8 @@ type ttest struct {
 	acc  string
 	text string
 
+	userID int64
+
 	location string
 
 	hasMedia bool
@@ -24,7 +26,7 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 	var processor = func() (p *Processor, t *TestRetweeter) {
 		t = &TestRetweeter{}
 
-		p = NewProcessor(false, true, nil, &twitter.User{}, match.NewStarshipMatcherForTests(), t, 0)
+		p = NewProcessor(false, true, nil, &twitter.User{ID: 5}, match.NewStarshipMatcherForTests(), t, 0)
 		return
 	}
 
@@ -34,6 +36,7 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 			Tweet: twitter.Tweet{
 				User: &twitter.User{
 					ScreenName: t.acc,
+					ID:         t.userID,
 				},
 				FullText: t.text,
 				ID:       tweetId,
@@ -45,9 +48,7 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 		tw.CreatedAt = time.Now().Add(-time.Minute).Format(time.RubyDate)
 
 		if tw.User.ScreenName == "" {
-			tw.User = &twitter.User{
-				ScreenName: "default_name",
-			}
+			tw.User.ScreenName = "default_name"
 		}
 
 		if t.location != "" {
@@ -88,12 +89,32 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 	}
 }
 
-func TestUnrelatedTweets(t *testing.T) {
+func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				// this is the test user ID; we don't want to retweet our own tweets
+				userID: 5,
+				text:   "S20 standing on the pad",
+				want:   false,
+			},
+			{
+				text: "S20 standing on the pad",
+				want: true,
+			},
+			{
 				text: "Unrelated",
 				want: false,
+			},
+			{
+				text: "Road closure with no information where it is",
+				want: false,
+			},
+
+			{
+				text: "Road closure with no information where it is, but trusted account",
+				acc:  "nextspaceflight",
+				want: true,
 			},
 		},
 	)
