@@ -16,6 +16,7 @@ import (
 // Processor handles tweets by looking at them and deciding whether to retweet.
 type Processor struct {
 	debug bool
+	test  bool
 
 	client *twitter.Client
 
@@ -41,10 +42,10 @@ const (
 )
 
 // NewProcessor returns a new processor with the given options
-func NewProcessor(debug bool, client *twitter.Client, selfUser *twitter.User, matcher *match.StarshipMatcher, retweeter Retweeter, spacePeopleListID int64) *Processor {
+func NewProcessor(debug bool, inTest bool, client *twitter.Client, selfUser *twitter.User, matcher *match.StarshipMatcher, retweeter Retweeter, spacePeopleListID int64) *Processor {
 	p := &Processor{
-		debug: debug,
-
+		debug:   debug,
+		test:    inTest,
 		matcher: matcher,
 
 		retweeter: retweeter,
@@ -60,14 +61,20 @@ func NewProcessor(debug bool, client *twitter.Client, selfUser *twitter.User, ma
 		spacePeopleListMembers: make(map[int64]bool),
 	}
 
-	util.LogError(util.LoadJSON(articlesFilename, &p.seenLinks), "loading links")
+	if !p.test {
+		util.LogError(util.LoadJSON(articlesFilename, &p.seenLinks), "loading links")
 
-	p.cleanup(true)
+		p.cleanup(true)
+	}
 
 	return p
 }
 
 func (p *Processor) cleanup(save bool) {
+	if p.test {
+		return
+	}
+
 	var changedLinks = false
 
 	for k, d := range p.seenLinks {
@@ -280,17 +287,19 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string, source match.Tw
 		return
 	}
 
-	// save tweet so we can reproduce why it was matched
-	p.saveTweet(tweet)
+	if !p.test {
+		// save tweet so we can reproduce why it was matched
+		p.saveTweet(tweet)
 
-	// Add the user to our space people list
-	// We ignore those from the location stream as they might not always tweet about starship
-	if source != match.TweetSourceLocationStream {
-		p.addSpaceMember(tweet)
+		// Add the user to our space people list
+		// We ignore those from the location stream as they might not always tweet about starship
+		if source != match.TweetSourceLocationStream {
+			p.addSpaceMember(tweet)
+		}
+
+		twurl := util.TweetURL(tweet)
+		log.Printf("[Twitter] Retweeted %s (%s - %s)", twurl, reason, source.String())
 	}
-
-	twurl := util.TweetURL(tweet)
-	log.Printf("[Twitter] Retweeted %s (%s - %s)", twurl, reason, source.String())
 
 	// Setting Retweeted can help thread to detect that it should stop
 	tweet.Retweeted = true
