@@ -21,5 +21,7 @@ It also does some background tasks:
 - Checking the [Starship website](https://www.spacex.com/vehicles/starship/) from time to time to tweet if the mentioned date or Starship changed
 - Checking the [Environmental Review dashboard](https://www.permits.performance.gov/permitting-project/spacex-starshipsuper-heavy-launch-vehicle-program-spacex-boca-chica-launch-site) for changes and tweeting about them
 
-If you have any suggestions for additional sources or anything else please open an issue. 
-If you have suggestions for accounts or lists to follow, you can write the bot a DM on Twitter or open an issue here.
+### Contributing
+If you have any suggestions for additional sources (like accounts or lists to follow) or anything else please open an issue (or write an e-mail to `x@010.one`).
+
+If you want to edit the code, my first suggestion would be checking out the [file that defines positive and negative keywords](match/starship_keywords.go) for the matcher. The tests (run `go test ./...`) will tell you if everything still works after your changes.

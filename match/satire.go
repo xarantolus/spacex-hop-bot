@@ -7,12 +7,6 @@ import (
 	"github.com/xarantolus/spacex-hop-bot/bot"
 )
 
-var (
-	ignoredKeywords = []string{
-		"parody", "joke", "blender", "3d", "render", "animat", /* e/ion */
-	}
-)
-
 type Ignorer struct {
 	list *bot.UserList
 
@@ -25,7 +19,7 @@ func LoadIgnoredList(client *twitter.Client, ignoredListIDs ...int64) *Ignorer {
 
 	return &Ignorer{
 		list:     list,
-		keywords: ignoredKeywords,
+		keywords: ignoredAccountDescriptionKeywords,
 	}
 }
 
@@ -47,7 +41,7 @@ func (i *Ignorer) IsOrMentionsIgnoredAccount(tweet *twitter.Tweet) bool {
 
 	// Now search the user description to see if any negative keywords stand out
 	desc := strings.ToLower(tweet.User.Description)
-	for _, k := range ignoredKeywords {
+	for _, k := range i.keywords {
 		if strings.Contains(desc, k) {
 			return true
 		}

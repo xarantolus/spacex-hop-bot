@@ -12,6 +12,8 @@ type keywordMapping struct {
 
 // Note that all text here must be lowercase because the text is lowercased in the matching function
 var (
+	// If at least one of these keywords is present in a tweet (and no antiKeywords are),
+	// we should retweet
 	starshipKeywords = []string{
 		"starship",
 		"superheavy", "super heavy",
@@ -27,6 +29,18 @@ var (
 		"suborbital pad", "suborbital launch pad",
 		"olp service tower",
 		"orbital launch site",
+	}
+
+	// starshipMatchers are more specific regexes that act like starshipKeywords
+	starshipMatchers = []*regexp.Regexp{
+		// Starship SNx
+		regexp.MustCompile(`\b((s-?\d{2,}\b)|(ship\s?\d{2,}\b)|(sn|starship|starship number)-?\s?\d+['’]?s?)`),
+		// Booster BNx
+		regexp.MustCompile(`(((?:#|\s|^)b\d{1,2}\b([^-]|$))|\b(bn|booster|booster number)(['’]|s)*\s?\d{1,3}['’]?s?\b)`),
+		// Yes. I like watching tanks
+		regexp.MustCompile(`\b(gse)\s?(?:tank|-)?\s?\d+\b`),
+		// Raptor with a number
+		regexp.MustCompile(`\b((?:raptor|raptor\s+engine|rvac|rb|rc)(?:\s+(?:center|centre|boost|vacuum))?(?:\s+engine)?\s*\d+)\b`),
 	}
 
 	// moreSpecificKeywords are keywords that must be accompanied by at least one of the keywords mentioned in their slice.
@@ -104,27 +118,15 @@ var (
 	seaportKeywords       = []string{"sea launch", "oil", "rig"}
 	nonSpecificKeywords   = compose([]string{"ship", "booster", "starbase", "boca chica", "spacex"}, liveStreams)
 	generalSpaceXKeywords = []string{"spacex"}
-
-	// live camera views are often mentioned when something is shown on a screenshot
-	liveStreams = []string{
+	liveStreams           = []string{
+		// live camera views are often mentioned when something is shown on a screenshot
 		"labpadre", "nasaspaceflight",
 	}
 
-	starshipMatchers = []*regexp.Regexp{
-		// Starship SNx
-		regexp.MustCompile(`\b((s-?\d{2,}\b)|(ship\s?\d{2,}\b)|(sn|starship|starship number)-?\s?\d+['’]?s?)`),
-		// Booster BNx
-		regexp.MustCompile(`(((?:#|\s|^)b\d{1,2}\b([^-]|$))|\b(bn|booster|booster number)(['’]|s)*\s?\d{1,3}['’]?s?\b)`),
-		// Yes. I like watching tanks
-		regexp.MustCompile(`\b(gse)\s?(?:tank|-)?\s?\d+\b`),
-		// Raptor with a number
-		regexp.MustCompile(`\b((?:raptor|raptor\s+engine|rvac|rb|rc)(?:\s+(?:center|centre|boost|vacuum))?(?:\s+engine)?\s*\d+)\b`),
-	}
-
+	// Regexes for road closures and testing activity
 	closureTFRRegex = regexp.MustCompile(`\b(?:closure|tfr|notmar|cryo|fts|scrub)`)
 	alertRegex      = regexp.MustCompile(`\b(?:alert|static fire|closure|cryo|evac|scrub)`)
-
-	// Users known to post better information that requires specific filtering
+	// Users that are known to post better information that requires less filtering
 	specificUserMatchers = map[string]*regexp.Regexp{
 		// One of the most important sources, gets alerted when the village has to evacuate for a flight
 		"bocachicagal":    alertRegex,
@@ -143,6 +145,7 @@ var (
 
 		"sheriffgarza": regexp.MustCompile(`(?:close|closure|spacex)`),
 
+		// Always retweet the timelapse by this bot
 		"starbasepulse": regexp.MustCompile(`(?:timelapse|time lapse)`),
 
 		// Watches temporary flight restrictions
@@ -155,7 +158,8 @@ var (
 	userAntikeywordsOverwrite = map[string][]string{
 		"elonmusk": {"tesla", "model s", "model 3", "model x", "model y", "car", "giga", "falcon", "boring company", "tunnel", "loop", "doge", "ula", "tonybruno", "jeff", "fsd", "giga berlin", "giga factory", "gigafactory", "giga press"},
 
-		// NASA Accounts that sometimes tweet about Starship
+		// NASA Accounts that sometimes tweet about Starship don't need any antiKeywords - they are "allowed"
+		// to mention Starship together with e.g. Orion (which would be ignored if not for these overrides).
 		"nasa":          {},
 		"nasajpl":       {},
 		"nasa_marshall": {},
@@ -165,16 +169,25 @@ var (
 		"nasagoddard":   {},
 	}
 
+	// Accounts that post only Starship photos - so if they post a picture, they
+	// are retweeted automatically
 	hqMediaAccounts = map[string]bool{
 		"starshipgazer": true,
 		"cnunezimages":  true,
 	}
 
+	// Accounts that are *never* considered satire accounts, even if they were on a list of these accounts
 	veryImportantAccounts = map[string]bool{
 		"elonmusk": true,
 		"spacex":   true,
 	}
 
+	// If an account has any of these words in its description, we don't retweet tweets from it
+	ignoredAccountDescriptionKeywords = []string{
+		"parody", "joke", "blender", "3d", "render", "animat", /* e/ion */
+	}
+
+	// If a tweet contains any of these keywords, it will not be retweeted. This is a way of filtering out *non-starship* stuff
 	antiStarshipKeywords = []string{
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "hungry hippo", "rklb", "falcon", "f9", "starlink",
 		"tesla", "rivian", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "nasa_sls", "ula", "vulcan", "artemis", "rogozin",
