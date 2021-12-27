@@ -79,6 +79,10 @@ func (m *UserList) update() {
 	m.mlock.Lock()
 	defer m.mlock.Unlock()
 
+	if len(m.listIDs) == 0 {
+		return
+	}
+
 	m.members = make(map[int64]bool)
 
 	for _, listID := range m.listIDs {
