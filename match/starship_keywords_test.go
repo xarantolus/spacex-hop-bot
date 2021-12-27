@@ -38,6 +38,11 @@ func TestVariablesStringCase(t *testing.T) {
 				t.Errorf("Keyword %q should be lowercase in moreSpecificKeywords[%d] 'to' mapping", k, i)
 			}
 		}
+		for _, k := range kws.antiKeywords {
+			if strings.ToLower(k) != k {
+				t.Errorf("Keyword %q should be lowercase in moreSpecificKeywords[%d].antiKeywords", k, i)
+			}
+		}
 	}
 
 	for _, k := range antiStarshipKeywords {
