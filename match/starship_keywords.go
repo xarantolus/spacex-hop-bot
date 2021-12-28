@@ -290,10 +290,13 @@ var (
 
 		"tier list",
 
+		// Annoying elon musk quotes
+		"consciousness",
+
 		// Some conferences have a "stand B20", because why not trick this bot right?
 		"booth", "stand b",
 
-		"trump", "antifa", "biden", "riot", "taliban", "kill",
+		"trump", "antifa", "biden", "riot", "taliban", "kill", "beat",
 
 		// Things that are typical questions for polls. We cannot get polls using the Twitter v1 API, so this is kind of bad
 		"feel about", "vs",
@@ -305,6 +308,8 @@ var (
 		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "nig", "memorial", "dead", "death", "cancer", "piss",
 
 		"nonce", "pedo",
+
+		"bomb",
 
 		"offend", "offensive", "fanboy", "fan boy", "fangirl", "fan girl",
 
