@@ -18,18 +18,21 @@ func CheckDashboard(twitterClient *twitter.Client) {
 
 	log.Println("[Review] Start watching Environmental Review dashboard")
 
-	for {
-		var previousTweetID int64
+	var previousTweetID int64
 
+	for {
 		diffs, err := client.ReportProjectDiff(review.StarshipBocaProjectID)
 		if err != nil {
 			util.LogError(err, "Review dashboard")
 			goto sleep
 		}
 
-		// If there were any changes to the dashboard, we of course tweet about them
+		// If there were any changes to the dashboard, we of course tweet about them.
+		// We basically create a first tweet with the first diff; that tweet links to
+		// the dashboard and tags @elonmusk
+		// The next tweets will then be only the diff description as an answer to the first tweet
 		for _, diffText := range diffs {
-			var tweetText = generateReviewTweetText(diffText)
+			var tweetText = generateReviewTweetText(diffText, previousTweetID == 0)
 
 			tweet, _, err := twitterClient.Statuses.Update(tweetText, &twitter.StatusUpdateParams{
 				InReplyToStatusID: previousTweetID,
@@ -51,6 +54,10 @@ func CheckDashboard(twitterClient *twitter.Client) {
 	}
 }
 
-func generateReviewTweetText(description string) string {
-	return fmt.Sprintf("Review update: %s\n\n@elonmusk\n%s", description, review.StarshipBocaDashboardURL)
+func generateReviewTweetText(description string, withTags bool) string {
+	if withTags {
+		return fmt.Sprintf("Review update: %s\n\n@elonmusk\n%s", description, review.StarshipBocaDashboardURL)
+	}
+
+	return description
 }
