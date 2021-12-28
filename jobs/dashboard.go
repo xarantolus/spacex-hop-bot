@@ -19,6 +19,8 @@ func CheckDashboard(twitterClient *twitter.Client) {
 	log.Println("[Review] Start watching Environmental Review dashboard")
 
 	for {
+		var previousTweetID int64
+
 		diffs, err := client.ReportProjectDiff(review.StarshipBocaProjectID)
 		if err != nil {
 			util.LogError(err, "Review dashboard")
@@ -29,14 +31,20 @@ func CheckDashboard(twitterClient *twitter.Client) {
 		for _, diffText := range diffs {
 			var tweetText = generateReviewTweetText(diffText)
 
-			tweet, _, err := twitterClient.Statuses.Update(tweetText, nil)
+			tweet, _, err := twitterClient.Statuses.Update(tweetText, &twitter.StatusUpdateParams{
+				InReplyToStatusID: previousTweetID,
+			})
 			if err != nil {
 				log.Printf("[Review] Error while sending tweet with text %q: %s", tweetText, err.Error())
 				continue
 			}
 
+			previousTweetID = tweet.ID
+
 			log.Println("[Twitter] Tweeted", util.TweetURL(tweet))
 		}
+
+		previousTweetID = 0
 
 	sleep:
 		time.Sleep(time.Minute + time.Duration(rand.Intn(90))*time.Second)
