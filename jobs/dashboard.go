@@ -56,7 +56,7 @@ func CheckDashboard(twitterClient *twitter.Client) {
 
 func generateReviewTweetText(description string, withTags bool) string {
 	if withTags {
-		return fmt.Sprintf("Review update: %s\n\n@elonmusk\n%s", description, review.StarshipBocaDashboardURL)
+		return fmt.Sprintf("#Starship review update: %s\n\n@elonmusk\n%s", description, review.StarshipBocaDashboardURL)
 	}
 
 	return description

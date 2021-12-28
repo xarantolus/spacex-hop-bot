@@ -11,7 +11,7 @@ func Test_generateReviewTweetText(t *testing.T) {
 		{
 			arg:      "The Environmental review is now complete.",
 			withTags: true,
-			want:     "Review update: The Environmental review is now complete.\n\n@elonmusk\nhttps://www.permits.performance.gov/permitting-project/spacex-starshipsuper-heavy-launch-vehicle-program-spacex-boca-chica-launch-site",
+			want:     "#Starship review update: The Environmental review is now complete.\n\n@elonmusk\nhttps://www.permits.performance.gov/permitting-project/spacex-starshipsuper-heavy-launch-vehicle-program-spacex-boca-chica-launch-site",
 		},
 		{
 			arg:      `The target date of milestone "Issuance of a Final EA" of the "Environmental Assessment (EA)" has changed from "2021-12-31" to "2022-02-28"`,
