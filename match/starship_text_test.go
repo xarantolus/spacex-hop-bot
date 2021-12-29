@@ -119,3 +119,12 @@ func Test_compose(t *testing.T) {
 		})
 	}
 }
+
+func TestContainsStarshipAntiKeyword(t *testing.T) {
+	t.Run("Single AntiKeyword", func(t *testing.T) {
+		contains := ContainsStarshipAntiKeyword("The SLS is making progress faster than Starship")
+		if !contains {
+			t.Errorf("Expected antiKeyword 'SLS' to be detected, but wasn't")
+		}
+	})
+}

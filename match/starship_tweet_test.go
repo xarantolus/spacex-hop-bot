@@ -8,7 +8,12 @@ import (
 )
 
 type ttest struct {
-	acc  string
+	acc             string
+	userID          int64
+	userDescription string
+
+	date string
+
 	text string
 
 	location string
@@ -24,19 +29,26 @@ func testStarshipTweets(t *testing.T, tweets []ttest) {
 	var tweet = func(t ttest) TweetWrapper {
 		var tw = TweetWrapper{
 			Tweet: twitter.Tweet{
+				CreatedAt: t.date,
 				User: &twitter.User{
-					ScreenName: t.acc,
+					ScreenName:  t.acc,
+					ID:          t.userID,
+					Description: t.userDescription,
 				},
 				FullText: t.text,
 			},
 		}
 
 		// Set a recent date, aka now (the bot usually sees very recent tweets)
-		tw.CreatedAt = time.Now().Add(-time.Minute).Format(time.RubyDate)
+		if tw.CreatedAt == "" {
+			tw.CreatedAt = time.Now().Add(-time.Minute).Format(time.RubyDate)
+		}
 
 		if tw.User.ScreenName == "" {
 			tw.User = &twitter.User{
-				ScreenName: "default_name",
+				ScreenName:  "default_name",
+				Description: t.userDescription,
+				ID:          t.userID,
 			}
 		}
 
@@ -128,6 +140,11 @@ func TestStarshipTweetPlace(t *testing.T) {
 	testStarshipTweets(t,
 		[]ttest{
 			{
+				text:     "Raptors roaring!",
+				location: SpaceXMcGregorPlaceID,
+				want:     true,
+			},
+			{
 				text:     "What a nice ship",
 				location: SpaceXBuildSiteID,
 				want:     true,
@@ -145,11 +162,6 @@ func TestStarshipTweetPlace(t *testing.T) {
 			{
 				text: "Raptors roaring!",
 				want: false,
-			},
-			{
-				text:     "Raptors roaring!",
-				location: SpaceXMcGregorPlaceID,
-				want:     true,
 			},
 		},
 	)
@@ -214,6 +226,48 @@ func TestStarshipTweetSpecificHQMedia(t *testing.T) {
 			{
 				hasMedia: true,
 				want:     false,
+			},
+		},
+	)
+}
+
+func TestOldTweets(t *testing.T) {
+	testStarshipTweets(t,
+		[]ttest{
+			{
+				date: "Wed Dec 11 17:52:17 +0000 2021",
+				text: "Starship S20 will light its raptor engines soon",
+				want: false,
+			},
+		},
+	)
+}
+
+func TestStarshipTweetIgnoredAccount(t *testing.T) {
+	testStarshipTweets(t,
+		[]ttest{
+			// Tweet of a render, but not marked as such. However the description contains that info
+			{
+				text:            "Starship 20 static fire",
+				userDescription: "3D artist",
+				want:            false,
+			},
+			{
+				text: "Starship 20 static fire",
+				want: true,
+			},
+
+			// Make sure we ignore ignored accounts
+			{
+				userID: testIgnoredUserID,
+				acc:    "ignored_user",
+				text:   "Starship 20 S.C.A.M (Starship Camera) now here",
+				want:   false,
+			},
+			{
+				// Same tweet, but by not ignored user
+				text: "Starship 20 S.C.A.M (Starship Camera) now here",
+				want: true,
 			},
 		},
 	)

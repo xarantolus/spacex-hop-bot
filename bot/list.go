@@ -116,3 +116,14 @@ func ListMembers(c *twitter.Client, purpose string, listIDs ...int64) (membersMa
 
 	return
 }
+
+func ListMembersForTests(userIDs ...int64) *UserList {
+	var membersMap = make(map[int64]bool)
+	for _, mid := range userIDs {
+		membersMap[mid] = true
+	}
+	return &UserList{
+		members: membersMap,
+		purpose: "test",
+	}
+}

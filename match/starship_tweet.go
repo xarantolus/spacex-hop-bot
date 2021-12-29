@@ -51,12 +51,6 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 		return true
 	}
 
-	// If the tweet mentions raptor without images, we still retweet it.
-	// This is mostly for tweets from SpaceX McGregor
-	if !containsBadWords && strings.Contains(text, "raptor") && IsAtSpaceXSite(&tweet.Tweet) {
-		return true
-	}
-
 	// Now check if it mentions too many people
 	if strings.Count(text, "@") > 10 {
 		return false
