@@ -119,8 +119,10 @@ var (
 	nonSpecificKeywords   = compose([]string{"ship", "booster", "starbase", "boca chica", "spacex"}, liveStreams)
 	generalSpaceXKeywords = []string{"spacex"}
 	liveStreams           = []string{
-		// live camera views are often mentioned when something is shown on a screenshot
+		// 24/7 live camera views are often mentioned when something is shown on a screenshot
 		"labpadre", "nasaspaceflight",
+		// Other streamers
+		"jessica_kirsh",
 	}
 
 	// Regexes for road closures and testing activity
@@ -233,6 +235,8 @@ var (
 		"card game", "starship design", "daily_hopper", "daily hopper", "paper model", "papermodel",
 
 		"8bitdo", "sn30",
+
+		"gaming",
 
 		"your guess",
 

@@ -1,7 +1,6 @@
 package match
 
 import (
-	"log"
 	"strings"
 	"time"
 
@@ -65,7 +64,6 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 
 	// ignore b4 when lowercase, as it's an abbreviation of "before"
 	if strings.Contains(tweet.Text(), "b4") {
-		log.Println("Ignored b4 tweet", util.TweetURL(&tweet.Tweet))
 		return false
 	}
 

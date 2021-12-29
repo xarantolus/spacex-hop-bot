@@ -196,7 +196,14 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 				log.Println("[Twitter] Ignoring", util.TweetURL(&tweet.Tweet), "because it's from the location stream and has no media")
 			}
 		} else {
-			p.retweet(&tweet.Tweet, "normal matcher", tweet.TweetSource)
+			// If a tweet contains *only hashtags*, we only retweet it if it has media
+			if isTagsOnly(tweet.Text()) {
+				if p.hasMedia(&tweet.Tweet) {
+					p.retweet(&tweet.Tweet, "normal matcher, only tags, but media", tweet.TweetSource)
+				}
+			} else {
+				p.retweet(&tweet.Tweet, "normal matcher", tweet.TweetSource)
+			}
 		}
 	}
 
@@ -402,4 +409,23 @@ func (p *Processor) addSpaceMember(tweet *twitter.Tweet) {
 		UserID: tweet.User.ID,
 	})
 	util.LogError(err, fmt.Sprintf("adding %s to list", tweet.User.ScreenName))
+}
+
+// isTagsOnly returns if the given text only contains words that start with a tag or hashtag
+func isTagsOnly(text string) bool {
+	var fields = strings.Fields(text)
+
+	if len(fields) == 0 {
+		return false
+	}
+
+	for _, f := range fields {
+		if len(fields) == 0 || f[0] == '#' || f[0] == '@' {
+			continue
+		}
+
+		return false
+	}
+
+	return true
 }

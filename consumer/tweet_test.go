@@ -116,6 +116,17 @@ func TestBasicTweets(t *testing.T) {
 				acc:  "nextspaceflight",
 				want: true,
 			},
+
+			// If we have a tweet that only contains (hash)tags, it should only retweeted if it has media
+			{
+				text:     "#Starbase #Starbase #SpaceX #Starship @elonmusk",
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				text: "#Starbase #Starbase #SpaceX #Starship @elonmusk",
+				want: false,
+			},
 		},
 	)
 }
