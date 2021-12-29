@@ -63,7 +63,7 @@ func testStarshipTweets(t *testing.T, tweets []ttest) {
 	for _, tt := range tweets {
 		t.Run(t.Name(), func(t *testing.T) {
 			if got := matcher.StarshipTweet(tweet(tt)); got != tt.want {
-				t.Errorf("StarshipTweet(%q) = %v, want %v", tt.text, got, tt.want)
+				t.Errorf("StarshipTweet(%q by %q) = %v, want %v", tt.text, tt.acc, got, tt.want)
 			}
 		})
 	}
@@ -179,6 +179,20 @@ func TestStarshipTweetSpecificMatchers(t *testing.T) {
 				text:     "I have received an alert notice",
 				hasMedia: true,
 				want:     true,
+			},
+			{
+				acc:  "AustinDeSisto",
+				text: "Pad clear in 1 hour announcement at pad!",
+				want: true,
+			},
+			{
+				acc:  "starshipgazer",
+				text: `Just announced "entire pad clear in 45 minutes" over the loud speakers at launch complex.`,
+				want: true,
+			},
+			{
+				text: "This pad will clear all your laundry!",
+				want: false,
 			},
 			{
 				acc:  "spacexboca",

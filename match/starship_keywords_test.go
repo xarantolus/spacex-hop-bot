@@ -247,6 +247,8 @@ func TestAlertRegex(t *testing.T) {
 		"have received an alert notice",
 		"static fire will be attempted later today",
 		"cryo proof upcoming",
+		"Spacex is clearing the pad",
+		"pad cleared",
 	}
 
 	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!",

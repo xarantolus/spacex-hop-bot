@@ -127,34 +127,40 @@ var (
 
 	// Regexes for road closures and testing activity
 	closureTFRRegex = regexp.MustCompile(`\b(?:closure|tfr|notmar|cryo|fts|scrub)`)
-	alertRegex      = regexp.MustCompile(`\b(?:alert|static fire|closure|cryo|evac|scrub)`)
-	// Users that are known to post better information that requires less filtering
-	specificUserMatchers = map[string]*regexp.Regexp{
+	alertRegex      = regexp.MustCompile(`\b(?:alert|static fire|closure|cryo|evac|scrub|pad.*clear|clear.*pad)`)
+
+	// Users that are known to post better information that requires less filtering.
+	// The regexes are combined as OR, which means that only one has to match for a successful match
+	specificUserMatchers = map[string][]*regexp.Regexp{
 		// One of the most important sources, gets alerted when the village has to evacuate for a flight
-		"bocachicagal":    alertRegex,
-		"starshipboca":    alertRegex,
-		"bocachicamaria1": alertRegex,
+		"bocachicagal":    {alertRegex},
+		"starshipboca":    {alertRegex},
+		"bocachicamaria1": {alertRegex},
+
+		// Photographers usually at the place
+		"austindesisto": {alertRegex},
+		"starshipgazer": {alertRegex},
 
 		// These people likely tweet about test & launch stuff
-		"rgvaerialphotos": closureTFRRegex,
-		"bocaroad":        closureTFRRegex,
-		"spacex360":       closureTFRRegex,
-		"bluemoondance74": closureTFRRegex,
-		"nextspaceflight": closureTFRRegex,
-		"tylerg1998":      closureTFRRegex,
-		"nasaspaceflight": closureTFRRegex,
-		"spacexboca":      closureTFRRegex,
+		"spacex360":       {closureTFRRegex, alertRegex},
+		"rgvaerialphotos": {closureTFRRegex},
+		"bocaroad":        {closureTFRRegex},
+		"bluemoondance74": {closureTFRRegex},
+		"nextspaceflight": {closureTFRRegex},
+		"tylerg1998":      {closureTFRRegex},
+		"nasaspaceflight": {closureTFRRegex},
+		"spacexboca":      {closureTFRRegex},
 
-		"sheriffgarza": regexp.MustCompile(`(?:close|closure|spacex)`),
+		"sheriffgarza": {regexp.MustCompile(`(?:close|closure|spacex)`)},
 
 		// Always retweet the timelapse by this bot
-		"starbasepulse": regexp.MustCompile(`(?:timelapse|time lapse)`),
+		"starbasepulse": {regexp.MustCompile(`(?:timelapse|time lapse)`)},
 
 		// Watches temporary flight restrictions
-		"spacetfrs": regexp.MustCompile("(?:brownsville)"),
+		"spacetfrs": {regexp.MustCompile("(?:brownsville)")},
 
 		// For Elon, we try to match anything that could be insider info
-		"elonmusk": regexp.MustCompile("(?:booster|heavy|cryo|static fire|tower|ship|rud|faa|starbase|boca chica|lox|liquid oxygen|methane|ch4|relight|fts|flip|cargo|lunar|tfr|fts|scrub|flap)"),
+		"elonmusk": {regexp.MustCompile("(?:booster|heavy|cryo|static fire|tower|ship|rud|faa|starbase|boca chica|lox|liquid oxygen|methane|ch4|relight|fts|flip|cargo|lunar|tfr|fts|scrub|flap)")},
 	}
 
 	userAntikeywordsOverwrite = map[string][]string{
