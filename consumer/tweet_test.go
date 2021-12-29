@@ -14,7 +14,8 @@ type ttest struct {
 
 	userID int64
 
-	location string
+	tweetSource match.TweetSource
+	location    string
 
 	hasMedia bool
 
@@ -41,6 +42,8 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 				FullText: t.text,
 				ID:       tweetId,
 			},
+
+			TweetSource: t.tweetSource,
 		}
 		tweetId++
 
@@ -126,6 +129,61 @@ func TestBasicTweets(t *testing.T) {
 			{
 				text: "#Starbase #Starbase #SpaceX #Starship @elonmusk",
 				want: false,
+			},
+		},
+	)
+}
+
+func TestLocationTweets(t *testing.T) {
+	testStarshipRetweets(t,
+		[]ttest{
+			// If it explicitly mentions a starship, then no need for location
+			{
+				text: "Pad announcement over the speakers: clearing pad for S20 static fire",
+				want: true,
+			},
+			// Here we have the same tweet, but one with a good location
+			{
+				text: "Pad announcement over the speakers: clearing pad for static fire",
+				want: false,
+			},
+			{
+				text:     "Pad announcement over the speakers: clearing pad for static fire",
+				location: "random place",
+				want:     false,
+			},
+			{
+				text:     "Pad announcement over the speakers: clearing pad for static fire",
+				location: match.StarbasePlaceID,
+				hasMedia: true,
+				want:     true,
+			},
+
+			{
+				text:        "Pad announcement over the speakers: clearing pad for static fire",
+				want:        false,
+				tweetSource: match.TweetSourceLocationStream,
+			},
+			{
+				text:        "Pad announcement over the speakers: clearing pad for static fire",
+				location:    "random place",
+				tweetSource: match.TweetSourceLocationStream,
+				want:        false,
+			},
+			{
+				text:        "Pad announcement over the speakers: clearing pad for static fire",
+				location:    match.StarbasePlaceID,
+				tweetSource: match.TweetSourceLocationStream,
+				hasMedia:    true,
+				want:        true,
+			},
+
+			// However, we don't want *any* tweet from starbase etc.
+			{
+				text:        "Drinking some coffee at the beach",
+				location:    match.StarbasePlaceID,
+				tweetSource: match.TweetSourceLocationStream,
+				want:        false,
 			},
 		},
 	)

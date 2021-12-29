@@ -36,12 +36,13 @@ func TestStarshipTextMatch(t *testing.T) {
 		{"Starship SN10", true},
 		{"SuperHeavy Booster", true},
 		{"#starship", true},
+		{"Already seeing some depress venting from Ship 20 here at the launch site!", true},
 		{"deimos oil rig", true},
 		{`
-SpaceX is targeting Wednesday, March 24 for launch of 60 Starlink satellites from Space Launch Complex 40 (SLC-40) at Cape Canaveral Space Force Station in Florida. The instantaneous window is at 4:28 a.m. EDT, or 8:28 UTC, and a backup opportunity is available on Thursday, March 25 at 4:06 a.m. EDT, or 8:06 UTC.
-
-The Falcon 9 first stage rocket booster supporting this mission previously supported launch of the GPS-III Space Vehicle 03 and Turksat 5A missions in addition to three Starlink missions. Following stage separation, SpaceX will land Falcon 9's first stage on the “Of Course I Still Love You” droneship, which will be located in the Atlantic Ocean. One half of Falcon 9's fairing supported the Sentinel-6A mission and the other supported a previous Starlink mission.
-`, false},
+		SpaceX is targeting Wednesday, March 24 for launch of 60 Starlink satellites from Space Launch Complex 40 (SLC-40) at Cape Canaveral Space Force Station in Florida. The instantaneous window is at 4:28 a.m. EDT, or 8:28 UTC, and a backup opportunity is available on Thursday, March 25 at 4:06 a.m. EDT, or 8:06 UTC.
+		
+		The Falcon 9 first stage rocket booster supporting this mission previously supported launch of the GPS-III Space Vehicle 03 and Turksat 5A missions in addition to three Starlink missions. Following stage separation, SpaceX will land Falcon 9's first stage on the “Of Course I Still Love You” droneship, which will be located in the Atlantic Ocean. One half of Falcon 9's fairing supported the Sentinel-6A mission and the other supported a previous Starlink mission.
+		`, false},
 		{"I have received an Alert notice for tomorrow, July 19. Possible static fire attempt between noon and 10 p.m. on Booster B3.", true},
 
 		// Oil platform names need at least a bit of context
@@ -50,6 +51,7 @@ The Falcon 9 first stage rocket booster supporting this mission previously suppo
 		{"phobos & deimos in the port", true},
 		{"deimos & phobos in the port", true},
 
+		{"Pad announcement over the speakers: clearing pad for static fire", false},
 		{"Lifting off next to the tower of Launch Complex 39A", false},
 		{"starbase", false},
 		{"Deimos in the Ocean", false},
