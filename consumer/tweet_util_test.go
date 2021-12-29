@@ -1,0 +1,158 @@
+package consumer
+
+import (
+	"fmt"
+	"testing"
+	"time"
+
+	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/match"
+)
+
+type ttest struct {
+	acc  string
+	text string
+
+	userID int64
+
+	tweetSource match.TweetSource
+	location    string
+
+	hasMedia bool
+
+	want bool
+
+	parent *ttest
+
+	id                  int64
+	internalParentTweet *twitter.Tweet
+}
+
+type TestTwitterClient struct {
+	retweetedTweetIDs map[int64]bool
+
+	tweets map[int64]*twitter.Tweet
+}
+
+func (r *TestTwitterClient) LoadStatus(tweetID int64) (*twitter.Tweet, error) {
+	t, ok := r.tweets[tweetID]
+	if ok {
+		return t, nil
+	}
+
+	return nil, fmt.Errorf("could not load status with id %d", tweetID)
+}
+
+func (n *TestTwitterClient) AddListMember(listID int64, userID int64) (err error) {
+	return nil
+}
+
+func (r *TestTwitterClient) Retweet(tweet *twitter.Tweet) error {
+	r.retweetedTweetIDs[tweet.ID] = true
+	return nil
+}
+
+func (r *TestTwitterClient) HasRetweeted(tweetID int64) bool {
+	return r.retweetedTweetIDs[tweetID]
+}
+
+func testStarshipRetweets(t *testing.T, tweets []ttest) {
+
+	var processor = func() (p *Processor, t *TestTwitterClient) {
+		t = &TestTwitterClient{
+			retweetedTweetIDs: make(map[int64]bool),
+			tweets:            make(map[int64]*twitter.Tweet),
+		}
+
+		p = NewProcessor(false, true, t, &twitter.User{ID: 5}, match.NewStarshipMatcherForTests(), 0)
+		return
+	}
+
+	var tweetId int64
+	var tweet = func(t ttest) match.TweetWrapper {
+		var tw = match.TweetWrapper{
+			Tweet: twitter.Tweet{
+				User: &twitter.User{
+					ScreenName: t.acc,
+					ID:         t.userID,
+				},
+				FullText: t.text,
+				ID:       tweetId,
+			},
+
+			TweetSource: t.tweetSource,
+		}
+		tweetId++
+
+		// Set a recent date, aka now (the bot usually sees very recent tweets)
+		tw.CreatedAt = time.Now().Add(-time.Minute).Format(time.RubyDate)
+
+		if tw.User.ScreenName == "" {
+			tw.User.ScreenName = "default_name"
+		}
+
+		if t.location != "" {
+			tw.Place = &twitter.Place{
+				ID: t.location,
+			}
+		}
+
+		if t.parent != nil {
+			tw.InReplyToStatusID = t.parent.id
+		}
+
+		// Just add a dummy photo
+		if t.hasMedia {
+			tw.Entities = &twitter.Entities{
+				Media: []twitter.MediaEntity{
+					{
+						ID: 1024,
+					},
+				},
+			}
+		}
+
+		return tw
+	}
+
+	for _, tt := range tweets {
+		t.Run(t.Name(), func(t *testing.T) {
+			proc, ret := processor()
+
+			// Populate & already show parent tweets to matcher
+			parent := tt.parent
+			for parent != nil {
+				var prevTweet = tweet(*parent)
+				parent.id = prevTweet.ID
+				ret.tweets[prevTweet.ID] = &prevTweet.Tweet
+
+				proc.Tweet(prevTweet)
+
+				parent = parent.parent
+			}
+
+			tweet := tweet(tt)
+
+			proc.Tweet(tweet)
+
+			if !tt.want && ret.HasRetweeted(tweet.Tweet.ID) {
+				t.Errorf("Tweet %q by %q was retweeted, but shouldn't have been", tt.text, tt.acc)
+			}
+			if tt.want && !ret.HasRetweeted(tweet.Tweet.ID) {
+				t.Errorf("Tweet %q by %q was NOT retweeted, but should have been", tt.text, tt.acc)
+			}
+
+			parent = tt.parent
+			for parent != nil {
+				if !parent.want && ret.HasRetweeted(parent.id) {
+					t.Errorf("Parent tweet %q by %q was retweeted, but shouldn't have been", tt.text, tt.acc)
+				}
+				if parent.want && !ret.HasRetweeted(parent.id) {
+					t.Errorf("Parent tweet %q by %q was NOT retweeted, but should have been", tt.text, tt.acc)
+				}
+
+				parent = parent.parent
+			}
+		})
+	}
+}
