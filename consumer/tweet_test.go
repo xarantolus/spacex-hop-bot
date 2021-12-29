@@ -130,10 +130,73 @@ func TestQuestionTweets(t *testing.T) {
 func TestElonTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			// Someone asking a question below an elon tweet and getting an answer
+			{
+				text: "True, although it will look clean with close out panels installed. \n\nRaptor 2 has significant improvements in every way, but a complete design overhaul is necessary for the engine that can actually make life multiplanetary. It won’t be called Raptor.",
+				acc:  "elonmusk",
+				want: true,
+
+				parent: &ttest{
+					text: "Can't wait for Raptor 2, it's still a rat's nest up there.",
+					want: true,
+					parent: &ttest{
+						text: "Random elon tweet",
+						acc:  "elonmusk",
+						want: false,
+					},
+				},
+			},
+			// Elon randomly answering tweets
 			{
 				acc:  "elonmusk",
-				text: "Wow, working on this problem has soaked up a lot of my time & brain cycles over the past ~7 years! This and Starship engines are currently the two hardest problems.",
+				text: "All Raptor 2 tests going forward",
 				want: true,
+				parent: &ttest{
+					text: "@SpaceX Raptor engine test last night in McGregor, Texas. The Raptor engine was tested on a horizontal test stand. #SpaceXtest \nFull Video: http://youtu.be/dCiEhBxTn7s",
+					acc:  "photographer",
+					want: true,
+				},
+			},
+			// Top-level tweet
+			{
+				acc:  "elonmusk",
+				text: "Tesla and Starship engines are currently the two hardest problems.",
+				want: true,
+			},
+
+			{
+				acc:  "elonmusk",
+				text: "Each Raptor 1 engine above produces 185 metric tons of force. Raptor 2 just started production & will do 230+ tons or over half a million pounds of force.",
+				want: true,
+				parent: &ttest{
+					acc:      "elonmusk",
+					text:     "Starship Super Heavy engine steering test",
+					hasMedia: true,
+					want:     true,
+				},
+			},
+
+			// Longer thread with questions
+			{
+				text: "Still aiming for booster 4 & Ship 20 for first orbital test flight (this is pure coincidence!)",
+				acc:  "elonmusk",
+				want: true,
+				parent: &ttest{
+					text: "Very interesting news about the upgrade to Ship's capability!\nWhich Booster+Ship combination are you aiming to fly the first orbital test with? Still Booster 4 and Ship 20, or use them only for ground testing?",
+					acc:  "NASASpaceflight",
+					want: true,
+					parent: &ttest{
+						acc:  "elonmusk",
+						text: "Yup. Next booster will have 33 Raptor 2 engines, with 13 steering. \n\nShip is being upgraded to 9 engines (3 sea-level gimbaling, 6 vacuum fixed) with increased propellant load.",
+						want: true,
+
+						parent: &ttest{
+							acc:  "NASASpaceflight",
+							text: "Some sweet TVC (Thrust Vector Control) gimbal action from the Center 9 Raptor gang on the Booster.\n\nAnd that, ladies and gentlemen, is how the Booster steers.",
+							want: true,
+						},
+					},
+				},
 			},
 		},
 	)

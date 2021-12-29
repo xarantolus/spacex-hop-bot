@@ -344,10 +344,8 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 
 	// Was that tweet interesting the last time we saw it?
 	// If yes, then we should probably retweet the next stuff.
-	// If not, we can stop here because it won't get any better
-	// (we already checked the last time if it's good)
-	if p.seenTweets[tweet.ID] || tweet.Retweeted {
-		return tweet.Retweeted
+	if tweet.Retweeted {
+		return true
 	}
 	p.seenTweets[tweet.ID] = true
 

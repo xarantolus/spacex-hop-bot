@@ -319,7 +319,7 @@ var (
 		"starshipent", "monstax", "eshygazit", "wonho",
 
 		// Account follows a sheriff
-		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "nig", "memorial", "dead", "death", "cancer", "piss",
+		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "nigg", "memorial", "dead", "death", "cancer", "piss",
 
 		"nonce", "pedo",
 
@@ -327,7 +327,7 @@ var (
 
 		"offend", "offensive", "fanboy", "fan boy", "fangirl", "fan girl",
 
-		"covid", "corona", "omicron", "tests positive", "positive test",
+		"covid", "corona", "omicron", "tests positive", "positive test", "cdc",
 
 		"shit", "anime", "manga", "bronco", "bae",
 
