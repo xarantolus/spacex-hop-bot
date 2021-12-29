@@ -188,3 +188,27 @@ func TestLocationTweets(t *testing.T) {
 		},
 	)
 }
+
+func TestQuestionTweets(t *testing.T) {
+	testStarshipRetweets(t,
+		[]ttest{
+			// Questions only if we have media or are at the spacex locations
+			{
+				acc:  "considercosmos",
+				text: "Super Heavy is now hooked up to @SpaceX crane...\nWill we see a booster 4 lift soon?",
+				want: false,
+			},
+			{
+				acc:      "considercosmos",
+				text:     "Super Heavy is now hooked up to @SpaceX crane...\nWill we see a booster 4 lift soon?",
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				text:     "Super Heavy is now hooked up to @SpaceX crane...\nWill we see a booster 4 lift soon?",
+				location: match.SpaceXBuildSiteID,
+				want:     true,
+			},
+		},
+	)
+}

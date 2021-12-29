@@ -230,8 +230,8 @@ func (p *Processor) isStarshipTweet(t match.TweetWrapper) bool {
 		return false
 	}
 
-	// If it's a question, we ignore it, except if at the launch site
-	if isQuestion(&t.Tweet) && !match.IsAtSpaceXSite(&t.Tweet) {
+	// If it's a question, we ignore it, except if at the launch site OR has media
+	if isQuestion(&t.Tweet) && !(match.IsAtSpaceXSite(&t.Tweet) || p.hasMedia(&t.Tweet)) {
 		return false
 	}
 
