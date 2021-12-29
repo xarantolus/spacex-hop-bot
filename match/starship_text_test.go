@@ -76,6 +76,7 @@ The Falcon 9 first stage rocket booster supporting this mission previously suppo
 		{"The raptors were the most impressive part of the movie", false},
 		{"Starship and Dogecoin", false},
 		{"You want to upgrade# your music IQ sub to http://YouTube.com/a1madethebeat you won’t be sorry.  Find #A1madethebeat on all social media.\nIf you want to learn:\n- to make #beats\n- to record\n- to #mix your record\n- to use #mpc #akaiforce #S2400 #Ableton #logicprox #luna\n-#collab on a record", false},
+		{"The nearest supernova since the one described by Kepler in 1604 is SN 1987A, around 168,000 LY distant. (Camera Hubble)", false},
 	}
 
 	matcher := NewStarshipMatcherForTests()

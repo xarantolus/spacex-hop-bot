@@ -223,6 +223,8 @@ var (
 
 		"parachute",
 
+		"supernova",
+
 		"god", "the lord",
 
 		// 3d models are nice, but we only care about "real info"
