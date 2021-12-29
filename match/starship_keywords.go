@@ -133,13 +133,13 @@ var (
 	// The regexes are combined as OR, which means that only one has to match for a successful match
 	specificUserMatchers = map[string][]*regexp.Regexp{
 		// One of the most important sources, gets alerted when the village has to evacuate for a flight
-		"bocachicagal":    {alertRegex},
-		"starshipboca":    {alertRegex},
-		"bocachicamaria1": {alertRegex},
+		"bocachicagal":    {alertRegex, closureTFRRegex},
+		"starshipboca":    {alertRegex, closureTFRRegex},
+		"bocachicamaria1": {alertRegex, closureTFRRegex},
 
 		// Photographers usually at the place
-		"austindesisto": {alertRegex},
-		"starshipgazer": {alertRegex},
+		"austindesisto": {alertRegex, closureTFRRegex},
+		"starshipgazer": {alertRegex, closureTFRRegex},
 
 		// These people likely tweet about test & launch stuff
 		"spacex360":       {closureTFRRegex, alertRegex},
