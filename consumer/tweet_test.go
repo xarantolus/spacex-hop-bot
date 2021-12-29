@@ -143,6 +143,28 @@ func TestTweetThreads(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				// Just a thread with one tweet with an description, then two images with non-matching description
+				acc:      "NASASpaceflight",
+				hasMedia: true,
+				want:     true,
+				text:     "From the beach",
+
+				parent: &ttest{
+					acc:      "NASASpaceflight",
+					text:     "From the road",
+					hasMedia: true,
+					want:     true,
+
+					parent: &ttest{
+						text:     "Ship 20's on the test stand",
+						acc:      "NASASpaceflight",
+						hasMedia: true,
+
+						want: true,
+					},
+				},
+			},
+			{
 				acc:      "NASASpaceflight",
 				text:     "Standing by for siren!",
 				hasMedia: true,

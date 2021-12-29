@@ -125,20 +125,27 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 		t.Run(t.Name(), func(t *testing.T) {
 			proc, ret := processor()
 
-			// Populate & already show parent tweets to matcher
-			parent := tt.parent
-			for parent != nil {
-				var prevTweet = tweet(parent)
-				parent.id = prevTweet.ID
+			// Populate & already show parent tweets to matcher.
+			// That way it already knows/retweets tweets before the one we have here, making
+			// it perfect for threads
+			var matchParents func(t *ttest)
+			matchParents = func(t *ttest) {
+				if t == nil {
+					return
+				}
+
+				matchParents(t.parent)
+
+				var prevTweet = tweet(t)
+				t.id = prevTweet.ID
 				ret.tweets[prevTweet.ID] = &prevTweet.Tweet
 
 				proc.Tweet(prevTweet)
-
-				parent = parent.parent
 			}
+			matchParents(tt.parent)
 
+			// Now we can generate & test the tweet we are actually interested in
 			tweet := tweet(&tt)
-
 			proc.Tweet(tweet)
 
 			if !tt.want && ret.HasRetweeted(tweet.Tweet.ID) {
@@ -148,7 +155,7 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 				t.Errorf("Tweet %q by %q was NOT retweeted, but should have been", tt.text, tt.acc)
 			}
 
-			parent = tt.parent
+			parent := tt.parent
 			for parent != nil {
 				if !parent.want && ret.HasRetweeted(parent.id) {
 					t.Errorf("Parent tweet %q by %q was retweeted, but shouldn't have been", parent.text, parent.acc)

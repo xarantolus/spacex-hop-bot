@@ -51,7 +51,7 @@ func (n *NormalTwitterClient) AddListMember(listID int64, userID int64) (err err
 
 func (r *NormalTwitterClient) Retweet(tweet *twitter.Tweet) error {
 	if r.Debug {
-		return fmt.Errorf("Not retweeting tweets in debug mode")
+		return fmt.Errorf("not retweeting tweets in debug mode")
 	}
 
 	_, _, err := r.Client.Statuses.Retweet(tweet.ID, nil)
