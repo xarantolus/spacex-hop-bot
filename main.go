@@ -85,16 +85,12 @@ func main() {
 		jobs.Register(client, selfUser, starshipMatcher, tweetChan, ignoredLists)
 	}
 
-	var retweeter consumer.Retweeter = &consumer.NormalRetweeter{
+	var twitterClient consumer.TwitterClient = &consumer.NormalTwitterClient{
 		Client: client,
 		Debug:  *flagDebug,
 	}
-	if *flagDebug {
-		retweeter = &consumer.DebugRetweeter{}
-	}
-
 	// handler handles tweets by filtering & retweeting the interesting ones
-	var handler = consumer.NewProcessor(*flagDebug, false, client, selfUser, starshipMatcher, retweeter, spacePeopleListID)
+	var handler = consumer.NewProcessor(*flagDebug, false, twitterClient, selfUser, starshipMatcher, spacePeopleListID)
 
 	// Now we just process every tweet we come across
 	for tweet := range tweetChan {

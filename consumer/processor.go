@@ -18,9 +18,7 @@ type Processor struct {
 	debug bool
 	test  bool
 
-	client *twitter.Client
-
-	retweeter Retweeter
+	client TwitterClient
 
 	matcher *match.StarshipMatcher
 
@@ -42,13 +40,11 @@ const (
 )
 
 // NewProcessor returns a new processor with the given options
-func NewProcessor(debug bool, inTest bool, client *twitter.Client, selfUser *twitter.User, matcher *match.StarshipMatcher, retweeter Retweeter, spacePeopleListID int64) *Processor {
+func NewProcessor(debug bool, inTest bool, client TwitterClient, selfUser *twitter.User, matcher *match.StarshipMatcher, spacePeopleListID int64) *Processor {
 	p := &Processor{
 		debug:   debug,
 		test:    inTest,
 		matcher: matcher,
-
-		retweeter: retweeter,
 
 		client:   client,
 		selfUser: selfUser,
@@ -253,9 +249,7 @@ func (p *Processor) isReply(t *twitter.Tweet) bool {
 		return true
 	}
 
-	t, _, err := p.client.Statuses.Show(t.InReplyToStatusID, &twitter.StatusShowParams{
-		TweetMode: "extended",
-	})
+	t, err := p.client.LoadStatus(t.InReplyToStatusID)
 	if err != nil {
 		// If something goes wrong, we just assume it is a reply
 		return true
@@ -288,7 +282,7 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string, source match.Tw
 		return
 	}
 
-	err := p.retweeter.Retweet(tweet)
+	err := p.client.Retweet(tweet)
 	if err != nil {
 		util.LogError(err, "retweeting "+util.TweetURL(tweet))
 		return
@@ -334,10 +328,7 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 	// First process the rest of the thread
 	if tweet.InReplyToStatusID != 0 {
 		// Ok, there was a reply. Check if we can do something with that
-		parent, _, err := p.client.Statuses.Show(tweet.InReplyToStatusID, &twitter.StatusShowParams{
-			IncludeEntities: twitter.Bool(true),
-			TweetMode:       "extended",
-		})
+		parent, err := p.client.LoadStatus(tweet.InReplyToStatusID)
 		util.LogError(err, "tweet reply status fetch (thread)")
 
 		// If we have a matching tweet thread
@@ -390,24 +381,9 @@ func (p *Processor) addSpaceMember(tweet *twitter.Tweet) {
 		return
 	}
 
-	// Idea: We make the list private, add the member and then make it public again.
-	// That way they are not notified/annoyed
-	defer p.client.Lists.Update(&twitter.ListsUpdateParams{
-		ListID: p.spacePeopleListID,
-		Mode:   "public",
-	})
-	// Set the list to private before updating
-	p.client.Lists.Update(&twitter.ListsUpdateParams{
-		ListID: p.spacePeopleListID,
-		Mode:   "private",
-	})
-
 	p.spacePeopleListMembers[tweet.User.ID] = true
 
-	_, err := p.client.Lists.MembersCreate(&twitter.ListsMembersCreateParams{
-		ListID: p.spacePeopleListID,
-		UserID: tweet.User.ID,
-	})
+	err := p.client.AddListMember(p.spacePeopleListID, tweet.User.ID)
 	util.LogError(err, fmt.Sprintf("adding %s to list", tweet.User.ScreenName))
 }
 
