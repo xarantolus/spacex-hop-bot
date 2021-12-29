@@ -1,6 +1,10 @@
 package consumer
 
-import "github.com/dghubble/go-twitter/twitter"
+import (
+	"log"
+
+	"github.com/dghubble/go-twitter/twitter"
+)
 
 type TwitterClient interface {
 	LoadStatus(tweetID int64) (*twitter.Tweet, error)
@@ -47,6 +51,7 @@ func (n *NormalTwitterClient) AddListMember(listID int64, userID int64) (err err
 
 func (r *NormalTwitterClient) Retweet(tweet *twitter.Tweet) error {
 	if r.Debug {
+		log.Printf("Not retweeting tweet with id %d in debug mode", tweet.ID)
 		return nil
 	}
 

@@ -169,10 +169,13 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 
 		// If
 		// - we retweeted the parent tweet (so must be starship related)
-		// - the current tweet doesn't contain antikeywords
+		// - the current tweet doesn't contain antiKeywords
+		// - it's from the same user who started the thread
 		// - and the tweet contains media
 		// then we want to go to the retweeting part below
-		if !(parentTweet.Retweeted && !match.ContainsStarshipAntiKeyword(tweet.Text()) && p.hasMedia(&tweet.Tweet)) {
+		if !(parentTweet.Retweeted && !match.ContainsStarshipAntiKeyword(tweet.Text()) &&
+			p.hasMedia(&tweet.Tweet) && !p.isReactionGIF(&tweet.Tweet) &&
+			sameUser(parentTweet, &tweet.Tweet)) {
 			break
 		}
 
@@ -225,6 +228,12 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 
 func isElonTweet(t match.TweetWrapper) bool {
 	return t.User != nil && strings.EqualFold(t.User.ScreenName, "elonmusk")
+}
+
+func sameUser(t1, t2 *twitter.Tweet) bool {
+	return t1.User != nil && t2.User != nil &&
+		(t1.User.ID == t2.User.ID ||
+			strings.EqualFold(t1.User.ScreenName, t2.User.ScreenName))
 }
 
 func (p *Processor) isStarshipTweet(t match.TweetWrapper) bool {
