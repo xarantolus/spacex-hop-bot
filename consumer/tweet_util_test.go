@@ -70,7 +70,12 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 	}
 
 	var tweetId int64 = 50
+	var userId int64 = 80
 	var tweet = func(t *ttest) match.TweetWrapper {
+		if t.userID == 0 {
+			t.userID = userId
+			userId++
+		}
 		t.id = tweetId
 		var tw = match.TweetWrapper{
 			Tweet: twitter.Tweet{

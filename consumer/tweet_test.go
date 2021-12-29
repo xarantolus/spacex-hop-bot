@@ -156,6 +156,20 @@ func TestTweetThreads(t *testing.T) {
 					want: true,
 				},
 			},
+			{
+				acc:      "Random_Stranger",
+				text:     "Here is an unrelated pic",
+				hasMedia: true,
+				want:     false,
+
+				parent: &ttest{
+					text:     "Great pace for Ship 20's test. Prop loading and a frost ring already. Great view from Mary (@BocaChicaGal)",
+					acc:      "NASASpaceflight",
+					hasMedia: true,
+
+					want: true,
+				},
+			},
 		},
 	)
 }
