@@ -221,6 +221,8 @@ var (
 		// "super heavyweight" in olympics...
 		"super heavyweight",
 
+		"parachute",
+
 		"god", "the lord",
 
 		// 3d models are nice, but we only care about "real info"

@@ -71,6 +71,8 @@ The Falcon 9 first stage rocket booster supporting this mission previously suppo
 		{"Unrelated tesla tweet", false},
 		{"this tweet is not starship related", false},
 		{"Starlink Mission", false},
+		{"With a few B61 parachute deployment photos too!", false},
+		{"B61 used ribbon parachute! Can see the ribbons clearly in this photo", false},
 		{"The raptors were the most impressive part of the movie", false},
 		{"Starship and Dogecoin", false},
 		{"You want to upgrade# your music IQ sub to http://YouTube.com/a1madethebeat you won’t be sorry.  Find #A1madethebeat on all social media.\nIf you want to learn:\n- to make #beats\n- to record\n- to #mix your record\n- to use #mpc #akaiforce #S2400 #Ableton #logicprox #luna\n-#collab on a record", false},
