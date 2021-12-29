@@ -24,8 +24,7 @@ type ttest struct {
 
 	parent *ttest
 
-	id                  int64
-	internalParentTweet *twitter.Tweet
+	id int64
 }
 
 type TestTwitterClient struct {
