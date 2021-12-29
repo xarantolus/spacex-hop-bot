@@ -37,6 +37,7 @@ type TestTwitterClient struct {
 func (r *TestTwitterClient) LoadStatus(tweetID int64) (*twitter.Tweet, error) {
 	t, ok := r.tweets[tweetID]
 	if ok {
+		t.Retweeted = r.HasRetweeted(t.ID)
 		return t, nil
 	}
 
@@ -68,8 +69,9 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 		return
 	}
 
-	var tweetId int64
-	var tweet = func(t ttest) match.TweetWrapper {
+	var tweetId int64 = 50
+	var tweet = func(t *ttest) match.TweetWrapper {
+		t.id = tweetId
 		var tw = match.TweetWrapper{
 			Tweet: twitter.Tweet{
 				User: &twitter.User{
@@ -122,7 +124,7 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 			// Populate & already show parent tweets to matcher
 			parent := tt.parent
 			for parent != nil {
-				var prevTweet = tweet(*parent)
+				var prevTweet = tweet(parent)
 				parent.id = prevTweet.ID
 				ret.tweets[prevTweet.ID] = &prevTweet.Tweet
 
@@ -131,7 +133,7 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 				parent = parent.parent
 			}
 
-			tweet := tweet(tt)
+			tweet := tweet(&tt)
 
 			proc.Tweet(tweet)
 
@@ -145,10 +147,10 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 			parent = tt.parent
 			for parent != nil {
 				if !parent.want && ret.HasRetweeted(parent.id) {
-					t.Errorf("Parent tweet %q by %q was retweeted, but shouldn't have been", tt.text, tt.acc)
+					t.Errorf("Parent tweet %q by %q was retweeted, but shouldn't have been", parent.text, parent.acc)
 				}
 				if parent.want && !ret.HasRetweeted(parent.id) {
-					t.Errorf("Parent tweet %q by %q was NOT retweeted, but should have been", tt.text, tt.acc)
+					t.Errorf("Parent tweet %q by %q was NOT retweeted, but should have been", parent.text, parent.acc)
 				}
 
 				parent = parent.parent

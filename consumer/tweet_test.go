@@ -149,8 +149,8 @@ func TestTweetThreads(t *testing.T) {
 				want:     true,
 
 				parent: &ttest{
-					acc:      "NASASpaceflight",
 					text:     "Great pace for Ship 20's test. Prop loading and a frost ring already. Great view from Mary (@BocaChicaGal)",
+					acc:      "NASASpaceflight",
 					hasMedia: true,
 
 					want: true,
@@ -159,5 +159,3 @@ func TestTweetThreads(t *testing.T) {
 		},
 	)
 }
-
-// TODO: Add parent/child tweet, e.g. https://twitter.com/NASASpaceflight/status/1476249730585968647 should be retweeted, and also test that it is

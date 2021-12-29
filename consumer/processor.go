@@ -160,6 +160,23 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		p.retweet(&tweet.Tweet, "quoted", tweet.TweetSource)
 
 		p.seenTweets[tweet.QuotedStatusID] = true
+	case tweet.InReplyToStatusID != 0:
+		parentTweet, err := p.client.LoadStatus(tweet.InReplyToStatusID)
+		if err != nil {
+			util.LogError(err, "loading parent of "+util.TweetURL(&tweet.Tweet))
+			break
+		}
+
+		// If
+		// - we retweeted the parent tweet (so must be starship related)
+		// - the current tweet doesn't contain antikeywords
+		// - and the tweet contains media
+		// then we want to go to the retweeting part below
+		if !(parentTweet.Retweeted && !match.ContainsStarshipAntiKeyword(tweet.Text()) && p.hasMedia(&tweet.Tweet)) {
+			break
+		}
+
+		fallthrough
 	case p.isStarshipTweet(tweet):
 		// If the tweet itself is about starship, we retweet it
 		// We already filtered out replies, which is important because we don't want to
