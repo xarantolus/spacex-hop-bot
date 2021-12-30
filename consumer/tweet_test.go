@@ -10,13 +10,6 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
-				acc:         "NASASpaceflight",
-				text:        "Prop loading for Ship 20 Static Fire Test 2! ➡️https://youtube.com/watch?v=GP18t7ivstY",
-				want:        true,
-				tweetSource: match.TweetSourceKnownList,
-			},
-
-			{
 				// this is the test user ID; we don't want to retweet our own tweets
 				userID: 5,
 				text:   "S20 standing on the pad",
@@ -213,6 +206,42 @@ func TestTweetThreads(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "The second static fire attempt of the day was aborted. Road has reopened. Another road closure is scheduled from 10 am to 6 pm central on Thursday if SpaceX wants to try again.",
+				acc:  "nextspaceflight",
+				want: true,
+				parent: &ttest{
+					acc:  "nextspaceflight",
+					text: "LIVE: It appears that Ship 20 is going to make another attempt at a static fire\n\nhttps://youtu.be/GP18t7ivstY",
+					want: true,
+				},
+			},
+
+			{
+				// Non-matching reply (due to no keywords)
+				text:     "This is a reaction reply to the above tweet",
+				hasMedia: true,
+				want:     false,
+				parent: &ttest{
+					acc:  "nextspaceflight",
+					text: "LIVE: It appears that Ship 20 is going to make another attempt at a static fire\n\nhttps://youtu.be/GP18t7ivstY",
+					want: true,
+				},
+			},
+
+			{
+				// Reply that might match if it was not a reply.
+				text:     "Ship 20 sure is beautiful today",
+				acc:      "random_user",
+				hasMedia: true,
+				want:     false,
+				parent: &ttest{
+					acc:  "other_user",
+					text: "Starship picture",
+					want: true,
+				},
+			},
+
+			{
 				// Just a thread with one tweet with an description, then two images with non-matching description
 				acc:      "NASASpaceflight",
 				hasMedia: true,
@@ -273,6 +302,18 @@ func TestTweetThreads(t *testing.T) {
 					acc:      "NASASpaceflight",
 					hasMedia: true,
 					want:     true,
+				},
+			},
+			{
+				text:     "Ship 20 just chilling:",
+				hasMedia: true,
+				acc:      "NASASpaceflight",
+				want:     true,
+				parent: &ttest{
+					acc:         "NASASpaceflight",
+					text:        "Prop loading for Ship 20 Static Fire Test 2! ➡️https://youtube.com/watch?v=GP18t7ivstY",
+					want:        true,
+					tweetSource: match.TweetSourceKnownList,
 				},
 			},
 		},

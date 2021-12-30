@@ -171,10 +171,11 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// - we retweeted the parent tweet (so must be starship related)
 		// - the current tweet doesn't contain antiKeywords
 		// - it's from the same user who started the thread
-		// - and the tweet contains media
+		// - and the tweet contains media OR is a starship tweet itself (-> Starship thread)
 		// then we want to go to the retweeting part below
 		if !(parentTweet.Retweeted && !match.ContainsStarshipAntiKeyword(tweet.Text()) &&
-			p.hasMedia(&tweet.Tweet) && !p.isReactionGIF(&tweet.Tweet) &&
+			(p.hasMedia(&tweet.Tweet) || p.matcher.StarshipTweet(tweet)) &&
+			!p.isReactionGIF(&tweet.Tweet) &&
 			sameUser(parentTweet, &tweet.Tweet)) {
 			break
 		}

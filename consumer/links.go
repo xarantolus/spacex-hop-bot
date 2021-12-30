@@ -51,7 +51,6 @@ func init() {
 
 // shouldIgnoreLink returns whether this tweet should be ignored because of a linked article
 func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
-
 	// Get the text *with* URLs
 	var textWithURLs = tweet.SimpleText
 	if textWithURLs == "" {
@@ -75,6 +74,10 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 		host := strings.ToLower(strings.TrimPrefix(parsed.Hostname(), "www."))
 		if ignoredHosts[host] {
 			return true
+		}
+
+		if p.test {
+			continue
 		}
 
 		if host == "youtube.com" || host == "youtu.be" {
