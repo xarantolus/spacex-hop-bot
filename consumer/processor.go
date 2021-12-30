@@ -165,7 +165,8 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		if err != nil {
 			// Most errors happen because we're not allowed to see protected accounts' tweets.
 			// We don't log these errors
-			if !strings.Contains(err.Error(), "179 Sorry, you are not authorized to see this status.") {
+			if !strings.Contains(err.Error(), "179 Sorry, you are not authorized to see this status.") &&
+				!strings.Contains(err.Error(), "144 No status found with that ID") {
 				util.LogError(err, "loading parent of "+util.TweetURL(&tweet.Tweet))
 			}
 			break
@@ -212,7 +213,11 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// Depending on the tweet source, we require media
 		if tweet.TweetSource == match.TweetSourceLocationStream {
 			if p.hasMedia(&tweet.Tweet) {
+				// If it's from the location stream, matches etc. and has media
 				p.retweet(&tweet.Tweet, "normal + location media", tweet.TweetSource)
+			} else if match.IsPadAnnouncement(tweet.Text()) {
+				// If we have a pad announcement - those are usually tweets without media
+				p.retweet(&tweet.Tweet, "location + pad announcement", tweet.TweetSource)
 			} else {
 				log.Println("[Twitter] Ignoring", util.TweetURL(&tweet.Tweet), "because it's from the location stream and has no media")
 			}
@@ -257,8 +262,11 @@ func (p *Processor) isStarshipTweet(t match.TweetWrapper) bool {
 		return false
 	}
 
-	// If it's a question, we ignore it, except if at the launch site OR has media
-	if isQuestion(&t.Tweet) && !(match.IsAtSpaceXSite(&t.Tweet) || p.hasMedia(&t.Tweet)) {
+	// If it's a question, we ignore it, except if at the launch site OR has media OR is a pad announcement
+	if isQuestion(&t.Tweet) &&
+		!(match.IsAtSpaceXSite(&t.Tweet) ||
+			p.hasMedia(&t.Tweet) ||
+			match.IsPadAnnouncement(t.Text())) {
 		return false
 	}
 

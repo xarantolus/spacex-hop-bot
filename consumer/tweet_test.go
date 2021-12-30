@@ -125,6 +125,17 @@ func TestLocationTweets(t *testing.T) {
 				want:        true,
 			},
 
+			// Pad announcements with questions are allowed (if at the place)
+			{
+				text: "Just heard a pad announcement. Very hard to hear, sounded like some sort of pad operations. Could be some sort of testing?",
+				want: false,
+			},
+			{
+				text:     "Just heard a pad announcement. Very hard to hear, sounded like some sort of pad operations. Could be some sort of testing?",
+				want:     true,
+				location: match.SpaceXLaunchSiteID,
+			},
+
 			// However, we don't want *any* tweet from starbase etc.
 			{
 				text:        "Drinking some coffee at the beach",
