@@ -63,7 +63,10 @@ var (
 
 		// Stuff noticed on live streams
 		{
-			from: liveStreams,
+			from: compose(liveStreams,
+				[]string{"orbital tank farm", "otf"},
+				[]string{"suborbital tank farm", "stf"},
+			),
 			to: []string{
 				"methane", "tank", "lox", "ch4", "ln2", "frost", "fire", "vent",
 				"pad", "road", "highway", "close", "open",
@@ -299,6 +302,8 @@ var (
 
 		"child", "kid", "illegal", "nfl", "tiktok", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "stroke", "fap",
+
+		"stfu",
 
 		"patrons", "babylon", "boltup", "champion",
 

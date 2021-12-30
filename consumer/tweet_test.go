@@ -344,6 +344,16 @@ func TestTweetThreads(t *testing.T) {
 					tweetSource: match.TweetSourceKnownList,
 				},
 			},
+			{
+				text: "The 2 LOX at the OTF 👇\n📈160th LOX delivery at the OTF\n(2/4) - Dec 29, 2021",
+				acc:  "sb_deliveries",
+				want: true,
+				parent: &ttest{
+					acc:  "sb_deliveries",
+					text: "⛽ A lot of deliveries despite today’s long closure surprisingly!\n- 2 LOX to the Orbital Tank Farm\n- 4 LN2 to the Orbital Tank Farm\n- 2 LN2 to the Suborbital Tank Farm(1/4) - Dec 29, 2021 ",
+					want: true,
+				},
+			},
 		},
 	)
 }
