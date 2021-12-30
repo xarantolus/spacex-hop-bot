@@ -113,6 +113,11 @@ func TestBasicTweets(t *testing.T) {
 				text: "This great image from @NASAHubble shows the rich and diverse collection of galaxies in the cluster Abell S0740. The cluster is more than 450 million light-years away.",
 				want: false,
 			},
+			{
+				// This is about cars
+				text: "*laughs in B5 S4 where everything maintenance or repair wise required the engine out or at least the entire front clip off*",
+				want: false,
+			},
 
 			{
 				text: "Humans for scale. \n\nOne human got to touch a Raptor nozzle #jealous \n\nhttp://nasaspaceflight.com/starbaselive",
