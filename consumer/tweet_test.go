@@ -10,6 +10,12 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Morning to Morning 24 hour timelapse (Dec 29 through Dec 30) of @NASASpaceflight's Starbase Live camera at https://nasaspaceflight.com/starbaselive (click to watch live)\n\nSN20 static fire day!\n\n#BocaChicaToMars #SpaceX #Starship",
+				acc:  "StarbasePulse",
+
+				want: true,
+			},
+			{
 				acc:  "TheFavoritist",
 				text: "Ship 20 static fired its Raptor engines again as SpaceX progresses toward the first orbital test flight. After one successful firing, Ship 20 aborted a second attempt.\nVideo from @BocaChicaGal and the NSF Robots. Edited by @Patrick_Colqu\n📺 https://youtu.be/_12ePNH0wTc",
 				want: true,
