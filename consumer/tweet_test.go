@@ -15,6 +15,11 @@ func TestBasicTweets(t *testing.T) {
 				want: false,
 			},
 			{
+				text: "Good results from the Static Fire test for Falcon 9 B1060-8 ahead of Friday's launch.",
+				acc:  "NASASpaceflight",
+				want: false,
+			},
+			{
 				text:     "Aborted Static Fire test, but no depress yet, so could be recycling.\n\n➡️https://youtube.com/watch?v=GP18t7ivstY",
 				acc:      "NASASpaceflight",
 				hasMedia: true,
