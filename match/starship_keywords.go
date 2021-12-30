@@ -22,6 +22,8 @@ var (
 		"launch tower segment", "olp service tower", "olp tower",
 		"orbital launch integration tower", "launch tower arm",
 
+		"wide bay", "high bay",
+
 		"orbital tank farm",
 
 		"orbital launch table", "orbital table",
@@ -222,6 +224,8 @@ var (
 		"be4", "be-4", "be 4 engine",
 
 		"amazon", "kuiper", "nasaartemis", "isro",
+
+		"7news", "bay light",
 
 		// e.g. crew-1, crew-2...
 		"crew-", "crew dragon", "dragon", "crs", "dm-",
