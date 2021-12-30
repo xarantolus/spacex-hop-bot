@@ -69,7 +69,7 @@ var (
 			),
 			to: []string{
 				"methane", "tank", "lox", "ch4", "ln2", "frost", "fire", "vent",
-				"pad", "road", "highway", "close", "open",
+				"pad", "road", "highway", "close", "open", "qd", "quick disconnect",
 			},
 		},
 
@@ -125,7 +125,7 @@ var (
 		// 24/7 live camera views are often mentioned when something is shown on a screenshot
 		"labpadre", "nasaspaceflight",
 		// Other streamers
-		"jessica_kirsh",
+		"jessica_kirsh", "bocachicagal",
 	}
 
 	// Regexes for road closures and testing activity

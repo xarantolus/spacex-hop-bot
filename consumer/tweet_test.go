@@ -2,6 +2,7 @@ package consumer
 
 import (
 	"testing"
+	"time"
 
 	"github.com/xarantolus/spacex-hop-bot/match"
 )
@@ -82,6 +83,30 @@ func TestBasicTweets(t *testing.T) {
 					text:     "- Image Taken: December 29, 2021 - @elonmusk @spacex #Starbase #BocaChicaToMars #iCANimagine http://cnunezimages.com @SpaceIntellige3",
 					want:     true,
 				},
+			},
+			{
+				text: "Primary Date: Road Closure Scheduled for " + time.Now().Format("Monday, January 02, 2006") + " from 10:00 a.m. to 8:00 p.m.",
+				acc:  "BocaRoad",
+				want: true,
+			},
+
+			// Road closures
+			{
+				text: "Secondary Date: Road Closure Scheduled Extended for " + time.Now().Format("Monday, January 02, 2006") + " from 10:00 a.m. to 8:00 p.m.",
+				acc:  "BocaRoad",
+				want: true,
+			},
+
+			{
+				text: "Booster 4 lifting soon. Can watch it LIVE on my YouTube stream from a unique angle filming with a professional camera:\nhttps://www.youtube.com/watch?v=yV48vHXNkNA",
+				acc:  "starshipgazer",
+				want: true,
+			},
+
+			{
+				text: "Booster QD (Quick Disconnect) detached, retracted, and hood closed.\n\nVery cool to watch that in action.\n\nA bit of a timelapse via Mary (@BocaChicaGal)'s view: http://nasaspaceflight.com/starbaselive",
+				acc:  "nasaspaceflight",
+				want: true,
 			},
 		},
 	)
