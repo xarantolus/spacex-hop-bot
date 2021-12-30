@@ -6,17 +6,17 @@ import (
 	"github.com/dghubble/go-twitter/twitter"
 )
 
-// TODO: Should have retweeted https://twitter.com/NASASpaceflight/status/1473717315371941902
-
 func TestProcessor_isQuestion(t *testing.T) {
-
 	tests := []struct {
 		input string
 		want  bool
 	}{
 		{"Here is a picture of the booster", false},
 		{"is this picture showing a lox tank?", true},
-		{"@elonmusk here is a speculative question about superhevay?", true},
+		{"@elonmusk here is a speculative question about superheavy?", true},
+		{"What is going on here?\nhttps://www.youtube.com/watch?v=GP18t7ivstY", true},
+		{"No questions here!\nhttps://www.youtube.com/watch?v=GP18t7ivstY", false},
+		{"https://www.youtube.com/watch?v=GP18t7ivstY", false},
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {

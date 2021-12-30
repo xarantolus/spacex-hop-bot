@@ -285,7 +285,10 @@ func (p *Processor) isReply(t *twitter.Tweet) bool {
 }
 
 func isQuestion(tweet *twitter.Tweet) bool {
-	return strings.Contains(tweet.Text(), "?")
+	txt := tweet.Text()
+	// Make sure we don't match "?" in an URL
+	txt = urlRegex.ReplaceAllString(txt, "")
+	return strings.Contains(txt, "?")
 }
 
 func (p *Processor) isReactionGIF(tweet *twitter.Tweet) bool {

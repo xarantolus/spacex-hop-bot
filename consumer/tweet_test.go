@@ -10,6 +10,13 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				acc:         "NASASpaceflight",
+				text:        "Prop loading for Ship 20 Static Fire Test 2! ➡️https://youtube.com/watch?v=GP18t7ivstY",
+				want:        true,
+				tweetSource: match.TweetSourceKnownList,
+			},
+
+			{
 				// this is the test user ID; we don't want to retweet our own tweets
 				userID: 5,
 				text:   "S20 standing on the pad",
@@ -253,6 +260,19 @@ func TestTweetThreads(t *testing.T) {
 					hasMedia: true,
 
 					want: true,
+				},
+			},
+			{
+				text:     "Methane Tank Fill Time!",
+				acc:      "NASASpaceflight",
+				hasMedia: true,
+				want:     true,
+
+				parent: &ttest{
+					text:     "Well, this is as frosty as Booster 4's ever been.\nWe've moved into commentary mode on SBL, as the questions in chat are flying in. \nhttp://nasaspaceflight.com/starbaselive",
+					acc:      "NASASpaceflight",
+					hasMedia: true,
+					want:     true,
 				},
 			},
 		},
