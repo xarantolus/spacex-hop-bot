@@ -66,6 +66,7 @@ var (
 			from: compose(liveStreams,
 				[]string{"orbital tank farm", "otf"},
 				[]string{"suborbital tank farm", "stf"},
+				[]string{"olm", "olt"},
 			),
 			to: []string{
 				"methane", "tank", "lox", "ch4", "ln2", "frost", "fire", "vent",
@@ -211,6 +212,8 @@ var (
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri",
 
 		"roscosmos", "yenisey",
+
+		"hubble", "nasahubble",
 
 		// Blue Origins' Starship... kind of clone i guess?
 		"jarvis", "glenn", "bob smith",
