@@ -38,6 +38,7 @@ func TestStarshipTextMatch(t *testing.T) {
 		{"#starship", true},
 		{"Already seeing some depress venting from Ship 20 here at the launch site!", true},
 		{"deimos oil rig", true},
+		{"S20 was transported to the suborbital pad b", true},
 		{`
 		SpaceX is targeting Wednesday, March 24 for launch of 60 Starlink satellites from Space Launch Complex 40 (SLC-40) at Cape Canaveral Space Force Station in Florida. The instantaneous window is at 4:28 a.m. EDT, or 8:28 UTC, and a backup opportunity is available on Thursday, March 25 at 4:06 a.m. EDT, or 8:06 UTC.
 		

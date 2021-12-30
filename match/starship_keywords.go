@@ -317,7 +317,7 @@ var (
 		// Some conferences have a "stand B20", because why not trick this bot right?
 		"booth", "stand b",
 
-		"trump", "antifa", "biden", "riot", "taliban", "kill", "beat",
+		"trump", "antifa", "biden", "riot", "taliban", "kill", "beat", "ideology", "gender",
 
 		// Things that are typical questions for polls. We cannot get polls using the Twitter v1 API, so this is kind of bad
 		"feel about", "vs",
@@ -327,6 +327,7 @@ var (
 
 		// Account follows a sheriff
 		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "nigg", "memorial", "dead", "death", "cancer", "piss",
+		"abus",
 
 		"nonce", "pedo",
 
