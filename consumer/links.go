@@ -29,6 +29,12 @@ var (
 		"spaceq.ca": true,
 	}
 
+	// This map contains very important URLs that should usually be retweeted
+	// map[host]path
+	importantURLs = map[string]string{
+		"nasaspaceflight.com": "/starbaselive",
+	}
+
 	highQualityYouTubeStreams = map[string]bool{
 		// Do not ignore NASASpaceflight, people often tweet updates with a link to their 24/7 stream
 		"UCSUu1lih2RifWkKtDOJdsBA": true,
@@ -49,6 +55,22 @@ func init() {
 	}
 }
 
+func isImportantURL(uri string) (important bool) {
+	parsed, err := url.ParseRequestURI(uri)
+	if err != nil {
+		return
+	}
+
+	host := strings.TrimPrefix(strings.ToLower(parsed.Hostname()), "www.")
+
+	imp, ok := importantURLs[host]
+	if !ok {
+		return false
+	}
+
+	return imp == parsed.Path
+}
+
 // shouldIgnoreLink returns whether this tweet should be ignored because of a linked article
 func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 	// Get the text *with* URLs
@@ -62,7 +84,15 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 
 	// Now check if any of these URLs is ignored
 	for _, u := range urls {
+		// Ignore important URLs
+		if isImportantURL(u) {
+			continue
+		}
+
 		var canonical = util.FindCanonicalURL(u, false)
+		if isImportantURL(canonical) {
+			continue
+		}
 
 		parsed, err := url.ParseRequestURI(canonical)
 		if err != nil {
