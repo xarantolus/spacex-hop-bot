@@ -10,6 +10,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				acc:  "TheFavoritist",
+				text: "Ship 20 static fired its Raptor engines again as SpaceX progresses toward the first orbital test flight. After one successful firing, Ship 20 aborted a second attempt.\nVideo from @BocaChicaGal and the NSF Robots. Edited by @Patrick_Colqu\n📺 https://youtu.be/_12ePNH0wTc",
+				want: true,
+			},
+			{
 				text: "Tory announcing that Vulcan is heading to SLC-41. Potentially for a WDR (Wet Dress Rehearsal), at the very least fit checks.\n\nRemember, this vehicle actually has BE-4s, but not flight engines, thus a good while until a Static Fire test milestone.",
 				acc:  "NASASpaceflight",
 				want: false,

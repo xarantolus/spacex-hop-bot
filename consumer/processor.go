@@ -163,7 +163,11 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 	case tweet.InReplyToStatusID != 0:
 		parentTweet, err := p.client.LoadStatus(tweet.InReplyToStatusID)
 		if err != nil {
-			util.LogError(err, "loading parent of "+util.TweetURL(&tweet.Tweet))
+			// Most errors happen because we're not allowed to see protected accounts' tweets.
+			// We don't log these errors
+			if !strings.Contains(err.Error(), "179 Sorry, you are not authorized to see this status.") {
+				util.LogError(err, "loading parent of "+util.TweetURL(&tweet.Tweet))
+			}
 			break
 		}
 

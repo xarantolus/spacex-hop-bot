@@ -278,7 +278,7 @@ var (
 		"brasilsat", "star one",
 
 		// Someone *really* named their delivery robot business "Starship"... why?
-		"startup", "groceries", "robots", "starship robot",
+		"startup", "groceries", "delivery robots", "starship robot",
 
 		// And there's of course a wide range of products named S(numbers), which is annoying
 		"tern", "gsd", "cargo bike",
