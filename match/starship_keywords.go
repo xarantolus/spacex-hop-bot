@@ -57,7 +57,7 @@ var (
 				"spacex", "mcgregor", "engine", "rb", "rc", "rvac",
 				"launch site", "production site", "booster", "super heavy",
 				"superheavy", "truck", "van", "raptorvan", "deliver", "sea level",
-				"high bay", "nozzle", "tripod", "starbase",
+				"high bay", "nozzle", "tripod", "starbase", "static fire",
 			},
 		},
 
@@ -142,13 +142,13 @@ var (
 		"starshipgazer": {alertRegex, closureTFRRegex},
 
 		// These people likely tweet about test & launch stuff
+		"nasaspaceflight": {closureTFRRegex, alertRegex},
 		"spacex360":       {closureTFRRegex, alertRegex},
 		"rgvaerialphotos": {closureTFRRegex},
 		"bocaroad":        {closureTFRRegex},
 		"bluemoondance74": {closureTFRRegex},
 		"nextspaceflight": {closureTFRRegex},
 		"tylerg1998":      {closureTFRRegex},
-		"nasaspaceflight": {closureTFRRegex},
 		"spacexboca":      {closureTFRRegex},
 
 		"sheriffgarza": {regexp.MustCompile(`(?:close|closure|spacex)`)},
@@ -211,6 +211,8 @@ var (
 
 		// Blue Origins' Starship... kind of clone i guess?
 		"jarvis", "glenn", "bob smith",
+
+		"be4", "be-4", "be 4 engine",
 
 		"amazon", "kuiper", "nasaartemis", "isro",
 

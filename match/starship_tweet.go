@@ -23,11 +23,11 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 		return false
 	}
 
+	_, isVeryImportant := veryImportantAccounts[strings.ToLower(tweet.User.ScreenName)]
 	// We ignore certain (e.g. satire, artist) accounts
 	if tweet.User != nil {
-		_, important := veryImportantAccounts[strings.ToLower(tweet.User.ScreenName)]
 
-		if !important && m.IsOrMentionsIgnoredAccount(&tweet.Tweet) {
+		if !isVeryImportant && m.IsOrMentionsIgnoredAccount(&tweet.Tweet) {
 			return false
 		}
 	}
@@ -45,6 +45,10 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 	}
 
 	var containsBadWords = containsAntikeyword(antiKeywords, text)
+	// If e.g. elon tweets about tesla, it should still go to the specificUserMatcher below
+	if containsBadWords && !isVeryImportant {
+		return false
+	}
 
 	// If the tweet is tagged with Starbase as location, we just retweet it
 	if !containsBadWords && IsAtSpaceXSite(&tweet.Tweet) {

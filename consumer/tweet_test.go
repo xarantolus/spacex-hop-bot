@@ -10,6 +10,17 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Tory announcing that Vulcan is heading to SLC-41. Potentially for a WDR (Wet Dress Rehearsal), at the very least fit checks.\n\nRemember, this vehicle actually has BE-4s, but not flight engines, thus a good while until a Static Fire test milestone.",
+				acc:  "NASASpaceflight",
+				want: false,
+			},
+			{
+				text:     "Aborted Static Fire test, but no depress yet, so could be recycling.\n\n➡️https://youtube.com/watch?v=GP18t7ivstY",
+				acc:      "NASASpaceflight",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				// this is the test user ID; we don't want to retweet our own tweets
 				userID: 5,
 				text:   "S20 standing on the pad",
@@ -43,6 +54,18 @@ func TestBasicTweets(t *testing.T) {
 			{
 				text: "#Starbase #Starbase #SpaceX #Starship @elonmusk",
 				want: false,
+			},
+
+			{
+				acc:  "cnunezimages",
+				text: "Hopper keeping watch 👀🔥🚀😎🤙",
+				want: false,
+				parent: &ttest{
+					acc:      "cnunezimages",
+					hasMedia: true,
+					text:     "- Image Taken: December 29, 2021 - @elonmusk @spacex #Starbase #BocaChicaToMars #iCANimagine http://cnunezimages.com @SpaceIntellige3",
+					want:     true,
+				},
 			},
 		},
 	)
