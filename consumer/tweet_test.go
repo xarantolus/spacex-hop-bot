@@ -11,6 +11,12 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Following yesterday's focus on Ship 20, attention has switched to Booster 4 on the Orbital Launch Mount.\n\nThe SpaceX LR11000 crawler crane has been hooked up to the booster.\n\nMary (@BocaChicaGal) is already out there, with the enhanced view:\n\nhttp://nasaspaceflight.com/starbaselive",
+				acc:  "nasaspaceflight",
+				want: true,
+			},
+
+			{
 				text: "Morning to Morning 24 hour timelapse (Dec 29 through Dec 30) of @NASASpaceflight's Starbase Live camera at https://nasaspaceflight.com/starbaselive (click to watch live)\n\nSN20 static fire day!\n\n#BocaChicaToMars #SpaceX #Starship",
 				acc:  "StarbasePulse",
 
