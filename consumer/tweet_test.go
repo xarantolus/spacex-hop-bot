@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Talking to every goth rocker chick in the solar meatspace until I find one with a starship guidance chip still containing the coordinates for a disused dive bar named Pair-a-Dice that shares its orbit with the 13th planet where my family's DNA backup chip is under a floor tile.",
+				acc:  "swiftonsecurity",
+				want: false,
+			},
+			{
 				text: "Following yesterday's focus on Ship 20, attention has switched to Booster 4 on the Orbital Launch Mount.\n\nThe SpaceX LR11000 crawler crane has been hooked up to the booster.\n\nMary (@BocaChicaGal) is already out there, with the enhanced view:\n\nhttp://nasaspaceflight.com/starbaselive",
 				acc:  "nasaspaceflight",
 				want: true,
