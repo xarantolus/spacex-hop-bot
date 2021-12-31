@@ -80,7 +80,7 @@ func TestBasicTweets(t *testing.T) {
 				parent: &ttest{
 					acc:      "cnunezimages",
 					hasMedia: true,
-					text:     "- Image Taken: December 29, 2021 - @elonmusk @spacex #Starbase #BocaChicaToMars #iCANimagine http://cnunezimages.com @SpaceIntellige3",
+					text:     "- Image Taken: " + time.Now().Format("Monday, January 02, 2006") + " - @elonmusk @spacex #Starbase #BocaChicaToMars #iCANimagine http://cnunezimages.com @SpaceIntellige3",
 					want:     true,
 				},
 			},
@@ -296,6 +296,47 @@ func TestTweetThreads(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Musk recently tweeted that only Raptor 2s are being delivered to McGregor and tested from now on :)",
+				want: false,
+				parent: &ttest{
+					text: "How did you guess that? ",
+					acc:  "other_user",
+					want: false,
+
+					parent: &ttest{
+						text: "If Elon is to be believed, this is a Raptor 2 static fire :D",
+						want: false,
+						quoted: &ttest{
+							text:     "Raptor engine roar 🔥🚀✨\n@NASASpaceflight #SpaceXTests",
+							acc:      "bluemoondance74",
+							hasMedia: true,
+							want:     true,
+
+							parent: &ttest{
+								text:     "#McGregorTX",
+								acc:      "bluemoondance74",
+								hasMedia: true,
+							},
+						},
+					},
+				},
+			},
+			{
+				text: "Actually elon confirmed the new engine configuration for Starship 29:",
+				acc:  "random_user",
+				want: false,
+				quoted: &ttest{
+					text: "Starship 29 will have more engines in the future",
+					acc:  "elonmusk",
+					want: true,
+				},
+				parent: &ttest{
+					text: "There isn't any information on how many engines Starship 29 will have",
+					acc:  "other_user",
+					want: true,
+				},
+			},
+			{
 				text: "The second static fire attempt of the day was aborted. Road has reopened. Another road closure is scheduled from 10 am to 6 pm central on Thursday if SpaceX wants to try again.",
 				acc:  "nextspaceflight",
 				want: true,
@@ -407,13 +448,51 @@ func TestTweetThreads(t *testing.T) {
 				},
 			},
 			{
-				text: "The 2 LOX at the OTF 👇\n📈160th LOX delivery at the OTF\n(2/4) - Dec 29, 2021",
+				text: "The 2 LOX at the OTF 👇\n📈160th LOX delivery at the OTF\n(2/4) - " + time.Now().Format("January 02, 2006"),
 				acc:  "sb_deliveries",
 				want: true,
 				parent: &ttest{
 					acc:  "sb_deliveries",
-					text: "⛽ A lot of deliveries despite today’s long closure surprisingly!\n- 2 LOX to the Orbital Tank Farm\n- 4 LN2 to the Orbital Tank Farm\n- 2 LN2 to the Suborbital Tank Farm(1/4) - Dec 29, 2021 ",
+					text: "⛽ A lot of deliveries despite today’s long closure surprisingly!\n- 2 LOX to the Orbital Tank Farm\n- 4 LN2 to the Orbital Tank Farm\n- 2 LN2 to the Suborbital Tank Farm(1/4) - " + time.Now().Format("January 02, 2006"),
 					want: true,
+				},
+			},
+			{
+				acc:      "RGVaerialphotos",
+				hasMedia: true,
+				want:     true,
+				parent: &ttest{
+					text:     "Ship 21 Nose Cone",
+					acc:      "RGVaerialphotos",
+					want:     true,
+					hasMedia: true,
+				},
+			},
+		},
+	)
+}
+
+func TestQuotedTweets(t *testing.T) {
+	testStarshipRetweets(t,
+		[]ttest{
+			{
+				text: "😂",
+				acc:  "random_user",
+				want: false,
+
+				quoted: &ttest{
+					text: "Starship S20 is looking interesting today",
+					want: true,
+				},
+			},
+			{
+				text: "Nice render!",
+				acc:  "random_user",
+				want: false,
+
+				quoted: &ttest{
+					acc:  "Starship 20 in orbit",
+					want: false,
 				},
 			},
 		},

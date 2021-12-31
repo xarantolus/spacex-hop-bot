@@ -141,17 +141,12 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		}
 
 		// The quoting tweet should be about starship
-		if !p.matcher.StarshipTweet(tweet) {
+		if !p.isStarshipTweet(tweet) {
 			break
 		}
 
 		// Make sure the quoted user is not ignored
 		if p.matcher.IsOrMentionsIgnoredAccount(tweet.QuotedStatus) {
-			break
-		}
-
-		// Anti-keywords?
-		if match.ContainsStarshipAntiKeyword(tweet.QuotedStatus.Text()) || p.isReactionGIF(tweet.QuotedStatus) || isQuestion(tweet.QuotedStatus) || isQuestion(&tweet.Tweet) {
 			break
 		}
 
