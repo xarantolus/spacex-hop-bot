@@ -107,6 +107,7 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 
 		if t.parent != nil {
 			tw.InReplyToStatusID = t.parent.id
+			tw.InReplyToScreenName = t.parent.acc
 		}
 
 		if t.quoted != nil {

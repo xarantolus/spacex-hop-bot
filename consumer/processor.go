@@ -169,14 +169,19 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 
 		// If
 		// - we retweeted the parent tweet (so must be starship related)
+		//      OR the current tweet is Starship-related
 		// - the current tweet doesn't contain antiKeywords
-		// - it's from the same user who started the thread
-		// - and the tweet contains media OR is a starship tweet itself (-> Starship thread)
+		// - it's from the same user who started the thread (looking through all tweets above parent tweet)
 		// then we want to go to the retweeting part below
-		if !(parentTweet.Retweeted && !match.ContainsStarshipAntiKeyword(tweet.Text()) &&
-			(p.hasMedia(&tweet.Tweet) || p.matcher.StarshipTweet(tweet)) &&
+		isStarshipTweet := p.matcher.StarshipTweet(tweet)
+		hasAntiKeywords := match.ContainsStarshipAntiKeyword(tweet.Text())
+
+		if !(((parentTweet.Retweeted && p.hasMedia(&tweet.Tweet)) ||
+			isStarshipTweet) &&
+			!hasAntiKeywords &&
 			!p.isReactionGIF(&tweet.Tweet) &&
-			sameUser(parentTweet, &tweet.Tweet)) {
+			sameUser(parentTweet, &tweet.Tweet) &&
+			!p.isReply(parentTweet)) {
 			break
 		}
 
@@ -271,7 +276,7 @@ func (p *Processor) isStarshipTweet(t match.TweetWrapper) bool {
 
 // isReply returns if the given tweet is a reply to another user
 func (p *Processor) isReply(t *twitter.Tweet) bool {
-	if t.QuotedStatusID != 0 {
+	if t.QuotedStatus != nil && !sameUser(t, t.QuotedStatus) {
 		return true
 	}
 
@@ -279,7 +284,7 @@ func (p *Processor) isReply(t *twitter.Tweet) bool {
 		return false
 	}
 
-	if t.User.ID != t.InReplyToUserID {
+	if !(t.User.ID == t.InReplyToUserID || strings.EqualFold(t.User.ScreenName, t.InReplyToScreenName)) {
 		return true
 	}
 

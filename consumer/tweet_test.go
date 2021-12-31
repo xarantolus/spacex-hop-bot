@@ -307,6 +307,28 @@ func TestTweetThreads(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "The flarestack for the ground-based Raptor engine stands (horizontal and vertical) was busy testing through numerous ignite-increase/decrease-extinguish-repeat sequences.",
+				acc:      "bluemoondance74",
+				hasMedia: true,
+
+				want: true,
+
+				parent: &ttest{
+					text: "An open Merlin Vacuum engine test bay, part of the Multi-Merlin stand/Small Site, is prepared for static fire testing (left); and a closed bay (right).",
+					acc:  "bluemoondance74",
+
+					want: false,
+
+					parent: &ttest{
+						text: "Even during the holiday, testing at @SpaceX’s McGregor facility has continued.\nOn my last visit, test preps were being made at the Merlin Vacuum engine bay, along with flarestack testing at the ground-based Raptor stands.\n(Roars have been heard daily- w/ 2 mega rumbles today!)",
+						acc:  "bluemoondance74",
+
+						want: false,
+					},
+				},
+			},
+
+			{
 				text: "Musk recently tweeted that only Raptor 2s are being delivered to McGregor and tested from now on :)",
 				want: false,
 				parent: &ttest{

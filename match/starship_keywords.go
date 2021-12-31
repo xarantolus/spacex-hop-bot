@@ -59,7 +59,7 @@ var (
 				"spacex", "mcgregor", "engine", "rb", "rc", "rvac",
 				"launch site", "production site", "booster", "super heavy",
 				"superheavy", "truck", "van", "raptorvan", "deliver", "sea level",
-				"high bay", "nozzle", "tripod", "starbase", "static fire",
+				"flare", "high bay", "nozzle", "tripod", "starbase", "static fire",
 			},
 		},
 
@@ -204,7 +204,7 @@ var (
 
 	// If a tweet contains any of these keywords, it will not be retweeted. This is a way of filtering out *non-starship* stuff
 	antiStarshipKeywords = []string{
-		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "hungry hippo", "rklb", "falcon", "f9", "starlink",
+		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "hungry hippo", "rklb", "falcon", "merlin", "f9", "starlink",
 		"tesla", "rivian", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "nasa_sls", "ula", "vulcan", "artemis", "rogozin",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "soviet", "orion",
 		"resilience", "shuttle", "challenger", "sts-51l", "sts-33", "new glenn", "china", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics", "hls",
