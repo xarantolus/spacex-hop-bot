@@ -2,6 +2,7 @@ package bot
 
 import (
 	"log"
+	"sort"
 	"strconv"
 	"sync"
 	"time"
@@ -19,6 +20,21 @@ type UserList struct {
 	mlock      sync.RWMutex
 	members    map[int64]bool
 	lastUpdate time.Time
+}
+
+func (l *UserList) ContainedIDs() (list []int64) {
+	l.mlock.RLock()
+	defer l.mlock.RUnlock()
+
+	for mid := range l.members {
+		list = append(list, mid)
+	}
+
+	sort.Slice(list, func(i, j int) bool {
+		return list[i] < list[j]
+	})
+
+	return list
 }
 
 func (l *UserList) ContainsByID(id int64) bool {

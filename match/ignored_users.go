@@ -49,3 +49,7 @@ func (i *Ignorer) IsOrMentionsIgnoredAccount(tweet *twitter.Tweet) bool {
 
 	return false
 }
+
+func (i Ignorer) UserIDs() []int64 {
+	return i.list.ContainedIDs()
+}

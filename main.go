@@ -11,6 +11,7 @@ import (
 	"github.com/xarantolus/spacex-hop-bot/consumer"
 	"github.com/xarantolus/spacex-hop-bot/jobs"
 	"github.com/xarantolus/spacex-hop-bot/match"
+	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
 var (
@@ -72,6 +73,10 @@ func main() {
 	}
 
 	ignoredUserMatcher := match.LoadIgnoredList(client, ignoredListIDs...)
+	iu := ignoredUserMatcher.UserIDs()
+	if len(iu) > 5 {
+		util.LogError(util.SaveJSON("ignored-users.json", iu), "startup: saving ignored users")
+	}
 
 	var starshipMatcher = match.NewStarshipMatcher(ignoredUserMatcher)
 
@@ -82,7 +87,10 @@ func main() {
 		log.Println("[Info] Running in debug mode, no background jobs are started")
 	} else {
 		// Register all background jobs, most of them send tweets on tweetChan
-		jobs.Register(client, selfUser, starshipMatcher, tweetChan, ignoredLists)
+		err = jobs.Register(client, selfUser, starshipMatcher, tweetChan, ignoredLists)
+		if err != nil {
+			panic("registering jobs: " + err.Error())
+		}
 	}
 
 	var twitterClient consumer.TwitterClient = &consumer.NormalTwitterClient{

@@ -18,15 +18,33 @@ func LoadJSON(filename string, target interface{}) (err error) {
 }
 
 func SaveJSON(filename string, source interface{}) (err error) {
-	// Yes, this is a very naive implementation (no atomic overwrites etc.),
-	// but for our purposes we don't care if a file gets corrupted
-	f, err := os.Create(filename)
+	tmpFn := filename + ".tmp"
+
+	f, err := os.Create(tmpFn)
 	if err != nil {
 		return
 	}
-	defer f.Close()
+	var closed bool
+	defer func() {
+		var cerr error
+		if !closed {
+			cerr = f.Close()
+		}
+
+		if err == nil {
+			err = cerr
+		} else {
+			_ = os.Remove(tmpFn)
+		}
+	}()
 
 	err = json.NewEncoder(f).Encode(source)
 
-	return
+	err = f.Close()
+	closed = true
+	if err != nil {
+		return
+	}
+
+	return os.Rename(tmpFn, filename)
 }
