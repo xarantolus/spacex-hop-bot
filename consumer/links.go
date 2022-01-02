@@ -89,6 +89,10 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 			continue
 		}
 
+		if p.test {
+			continue
+		}
+
 		var canonical = util.FindCanonicalURL(u, false)
 		if isImportantURL(canonical) {
 			continue
@@ -104,10 +108,6 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 		host := strings.ToLower(strings.TrimPrefix(parsed.Hostname(), "www."))
 		if ignoredHosts[host] {
 			return true
-		}
-
-		if p.test {
-			continue
 		}
 
 		if host == "youtube.com" || host == "youtu.be" {

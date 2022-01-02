@@ -183,6 +183,13 @@ func TestLocationTweets(t *testing.T) {
 				want:        false,
 			},
 			{
+				// Announcement without media
+				text:        "Pad announcement over the speakers: clearing pad for static fire",
+				location:    match.StarbasePlaceID,
+				tweetSource: match.TweetSourceLocationStream,
+				want:        true,
+			},
+			{
 				text:        "Pad announcement over the speakers: clearing pad for static fire",
 				location:    match.StarbasePlaceID,
 				tweetSource: match.TweetSourceLocationStream,
@@ -534,6 +541,17 @@ func TestQuotedTweets(t *testing.T) {
 				quoted: &ttest{
 					acc:  "Starship 20 in orbit",
 					want: false,
+				},
+			},
+			{
+				text: "Nice info here!",
+				acc:  "random_user",
+				want: false,
+
+				quoted: &ttest{
+					text:     "Starship SN20 being lifted on top of B4",
+					hasMedia: true,
+					want:     true,
 				},
 			},
 		},
