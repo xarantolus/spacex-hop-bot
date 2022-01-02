@@ -1,10 +1,8 @@
 package consumer
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
-	"os"
 	"strings"
 	"time"
 
@@ -66,26 +64,6 @@ func NewProcessor(debug bool, inTest bool, client TwitterClient, selfUser *twitt
 	return p
 }
 
-func (p *Processor) cleanup(save bool) {
-	if p.test {
-		return
-	}
-
-	var changedLinks = false
-
-	for k, d := range p.seenLinks {
-		if time.Since(d) > seenLinkDelay {
-			// No point in keeping this info
-			delete(p.seenLinks, k)
-			changedLinks = true
-		}
-	}
-
-	if save && changedLinks {
-		util.LogError(util.SaveJSON(articlesFilename, p.seenLinks), "saving links after cleanup")
-	}
-}
-
 // Tweet processes the given tweet and checks whether it should be retweeted.
 // Tweets that have already been seen are ignored. It is not safe for concurrent use.
 func (p *Processor) Tweet(tweet match.TweetWrapper) {
@@ -131,7 +109,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 			// If it's from the *same* user, then we just assume they added additional info.
 			// We only retweet if it's media though
 			if sameUser(&tweet.Tweet, tweet.QuotedStatus) {
-				if p.hasMedia(tweet.QuotedStatus) {
+				if hasMedia(tweet.QuotedStatus) {
 					p.retweet(tweet.QuotedStatus, "quoted media", tweet.TweetSource)
 				}
 			} else {
@@ -140,7 +118,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		}
 
 		// The quoting tweet should be about starship AND have media
-		if !(p.isStarshipTweet(tweet) && p.hasMedia(&tweet.Tweet)) {
+		if !(p.isStarshipTweet(tweet) && hasMedia(&tweet.Tweet)) {
 			break
 		}
 
@@ -175,10 +153,10 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		isStarshipTweet := p.matcher.StarshipTweet(tweet)
 		hasAntiKeywords := match.ContainsStarshipAntiKeyword(tweet.Text())
 
-		if !(((parentTweet.Retweeted && p.hasMedia(&tweet.Tweet)) ||
+		if !(((parentTweet.Retweeted && hasMedia(&tweet.Tweet)) ||
 			isStarshipTweet) &&
 			!hasAntiKeywords &&
-			!p.isReactionGIF(&tweet.Tweet) &&
+			!isReactionGIF(&tweet.Tweet) &&
 			sameUser(parentTweet, &tweet.Tweet) &&
 			!p.isReply(parentTweet)) {
 			break
@@ -211,7 +189,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 
 		// Depending on the tweet source, we require media
 		if tweet.TweetSource == match.TweetSourceLocationStream {
-			if p.hasMedia(&tweet.Tweet) {
+			if hasMedia(&tweet.Tweet) {
 				// If it's from the location stream, matches etc. and has media
 				p.retweet(&tweet.Tweet, "normal + location media", tweet.TweetSource)
 			} else if match.IsPadAnnouncement(tweet.Text()) {
@@ -223,7 +201,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		} else {
 			// If a tweet contains *only hashtags*, we only retweet it if it has media
 			if isTagsOnly(tweet.Text()) {
-				if p.hasMedia(&tweet.Tweet) {
+				if hasMedia(&tweet.Tweet) {
 					p.retweet(&tweet.Tweet, "normal matcher, only tags, but media", tweet.TweetSource)
 				}
 			} else {
@@ -233,87 +211,6 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 	}
 
 	p.seenTweets[tweet.ID] = true
-}
-
-func isElonTweet(t match.TweetWrapper) bool {
-	return t.User != nil && strings.EqualFold(t.User.ScreenName, "elonmusk")
-}
-
-func sameUser(t1, t2 *twitter.Tweet) bool {
-	return t1.User != nil && t2.User != nil &&
-		(t1.User.ID == t2.User.ID ||
-			strings.EqualFold(t1.User.ScreenName, t2.User.ScreenName))
-}
-
-func (p *Processor) isStarshipTweet(t match.TweetWrapper) bool {
-	// At first, we of course need to match some keywords
-	if !p.matcher.StarshipTweet(t) {
-		return false
-	}
-
-	// However, we don't want reaction gifs
-	if p.isReactionGIF(&t.Tweet) {
-		return false
-	}
-
-	// Replies to other people should be filtered
-	if p.isReply(&t.Tweet) {
-		return false
-	}
-
-	// If it's a question, we ignore it, except if at the launch site OR has media OR is a pad announcement
-	if isQuestion(&t.Tweet) &&
-		!(match.IsAtSpaceXSite(&t.Tweet) ||
-			p.hasMedia(&t.Tweet) ||
-			match.IsPadAnnouncement(t.Text())) {
-		return false
-	}
-
-	// Anything else should be OK
-	return true
-}
-
-// isReply returns if the given tweet is a reply to another user
-func (p *Processor) isReply(t *twitter.Tweet) bool {
-	if t.QuotedStatus != nil && !sameUser(t, t.QuotedStatus) {
-		return true
-	}
-
-	if t.User == nil || t.InReplyToStatusID == 0 {
-		return false
-	}
-
-	if !(t.User.ID == t.InReplyToUserID || strings.EqualFold(t.User.ScreenName, t.InReplyToScreenName)) {
-		return true
-	}
-
-	t, err := p.client.LoadStatus(t.InReplyToStatusID)
-	if err != nil {
-		// If something goes wrong, we just assume it is a reply
-		return true
-	}
-
-	return p.isReply(t)
-}
-
-func isQuestion(tweet *twitter.Tweet) bool {
-	txt := tweet.Text()
-	// Make sure we don't match "?" in an URL
-	txt = urlRegex.ReplaceAllString(txt, "")
-	return strings.Contains(txt, "?")
-}
-
-func (p *Processor) isReactionGIF(tweet *twitter.Tweet) bool {
-	if tweet.ExtendedEntities == nil || len(tweet.ExtendedEntities.Media) != 1 {
-		return false
-	}
-
-	// Type of a GIF is animated_gif
-	return strings.Contains(tweet.ExtendedEntities.Media[0].Type, "gif")
-}
-
-func (p *Processor) hasMedia(tweet *twitter.Tweet) bool {
-	return tweet.Entities != nil && len(tweet.Entities.Media) > 0 || tweet.ExtendedEntities != nil && len(tweet.ExtendedEntities.Media) > 0
 }
 
 // retweet retweets the given tweet, but if it fails it doesn't care
@@ -399,21 +296,6 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 	return didRetweet
 }
 
-// saveTweet appends the given tweet to a JSON file for later inspections, especially in case of wrong retweets
-func (p *Processor) saveTweet(tweet *twitter.Tweet) {
-	f, err := os.OpenFile("retweeted.ndjson", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
-	if err != nil {
-		util.LogError(err, "open tweet file")
-		return
-	}
-	defer f.Close()
-
-	err = json.NewEncoder(f).Encode(tweet)
-	if err != nil {
-		util.LogError(err, "encoding tweet json")
-	}
-}
-
 // addSpaceMember adds the user of the given tweet to the space people list
 func (p *Processor) addSpaceMember(tweet *twitter.Tweet) {
 	if tweet.User == nil || p.spacePeopleListMembers[tweet.User.ID] {
@@ -424,23 +306,4 @@ func (p *Processor) addSpaceMember(tweet *twitter.Tweet) {
 
 	err := p.client.AddListMember(p.spacePeopleListID, tweet.User.ID)
 	util.LogError(err, fmt.Sprintf("adding %s to list", tweet.User.ScreenName))
-}
-
-// isTagsOnly returns if the given text only contains words that start with a tag or hashtag
-func isTagsOnly(text string) bool {
-	var fields = strings.Fields(text)
-
-	if len(fields) == 0 {
-		return false
-	}
-
-	for _, f := range fields {
-		if len(fields) == 0 || f[0] == '#' || f[0] == '@' {
-			continue
-		}
-
-		return false
-	}
-
-	return true
 }

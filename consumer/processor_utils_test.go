@@ -52,3 +52,42 @@ func Test_isTagsOnly(t *testing.T) {
 		})
 	}
 }
+
+func Test_isReactionGIF(t *testing.T) {
+	tests := []struct {
+		tweet *twitter.Tweet
+		want  bool
+	}{
+		{
+			tweet: &twitter.Tweet{
+				ExtendedEntities: &twitter.ExtendedEntity{
+					Media: []twitter.MediaEntity{
+						{
+							Type: "video/gif",
+						},
+					},
+				},
+			},
+			want: true,
+		},
+		{
+			tweet: &twitter.Tweet{
+				ExtendedEntities: &twitter.ExtendedEntity{
+					Media: []twitter.MediaEntity{
+						{
+							Type: "image/jpeg",
+						},
+					},
+				},
+			},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(t.Name(), func(t *testing.T) {
+			if got := isReactionGIF(tt.tweet); got != tt.want {
+				t.Errorf("isReactionGIF() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
