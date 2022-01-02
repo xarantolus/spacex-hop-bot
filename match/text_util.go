@@ -3,7 +3,6 @@ package match
 import (
 	"log"
 	"strings"
-	"unicode"
 )
 
 // containsAny checks whether any of words is *anywhere* in the text
@@ -29,9 +28,11 @@ func startsWithAny(text string, words ...string) bool {
 	for {
 		iterations++
 
-		for currentIndex < len(text) && !isAlphanumerical(rune(text[currentIndex])) {
-			currentIndex++
+		var nextIndexOffset = strings.IndexFunc(text[currentIndex:], isAlphanumerical)
+		if nextIndexOffset < 0 {
+			break
 		}
+		currentIndex += nextIndexOffset
 
 		for _, w := range words {
 			if strings.HasPrefix(text[currentIndex:], w) {
@@ -39,14 +40,14 @@ func startsWithAny(text string, words ...string) bool {
 			}
 		}
 
-		// Now skip to the next space character
-		for currentIndex < len(text) && !unicode.IsSpace(rune(text[currentIndex])) {
-			currentIndex++
-		}
-
-		if currentIndex == len(text) {
+		// Now skip to the next non-alphanumerical character
+		nextIndexOffset = strings.IndexFunc(text[currentIndex:], func(r rune) bool {
+			return !isAlphanumerical(r)
+		})
+		if nextIndexOffset < 0 {
 			break
 		}
+		currentIndex += nextIndexOffset
 
 		if iterations > 1000 {
 			log.Printf("Input text %q causes containsAny to loop longer than expected", text)

@@ -11,6 +11,14 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Starship-Orion is a good idea",
+				want: false,
+			},
+			{
+				text: "In 2022, we are likely to see the debuts orbital flights of the two most powerful rockets ever: SpaceX’s Starship and Boeing/NASA’s SLS.\nEasily the most significant launch vehicles since the Saturn V of the Apollo era.\nHappy New Year! Many exciting days (& launches Rocket ) to come",
+				want: false,
+			},
+			{
 				text: "Talking to every goth rocker chick in the solar meatspace until I find one with a starship guidance chip still containing the coordinates for a disused dive bar named Pair-a-Dice that shares its orbit with the 13th planet where my family's DNA backup chip is under a floor tile.",
 				acc:  "swiftonsecurity",
 				want: false,

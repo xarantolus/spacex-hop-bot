@@ -34,12 +34,18 @@ func Test_startsWithAnyGeneric(t *testing.T) {
 	}
 }
 
-func Test_startsWithAnyStarship(t *testing.T) {
+func Test_startsWithAnyStarshipAntikeywords(t *testing.T) {
 	tests := []struct {
 		argText string
 		want    bool
 	}{
+		{"road closure with no information where it is", false},
+		{"", false},
+		{"Starship-Orion is a good idea", true},
 		{"KSP is my favourite game!", true},
+		{"What if I add many spaces before       KSP", true},
+		{"-   .  +  - . k . -  .  .. -   . . -.- .", false},
+		{"-   .  +  - . ksp . -  .  .. -   . . -.- .", true},
 		{"Project DogeCoin onto a Starship!", true},
 		{"Starship reentering Kerbin's atmosphere", true},
 		{"GSE Tank 6 rolling out", false},
