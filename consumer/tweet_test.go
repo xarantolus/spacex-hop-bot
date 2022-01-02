@@ -314,6 +314,83 @@ func TestElonTweets(t *testing.T) {
 					},
 				},
 			},
+
+			{
+				text: "The Starship fleet is designed to achieve over 1000 times more payload to orbit than all other rockets on Earth combined.\n\nAlmost no one understands this.",
+				acc:  "elonmusk",
+				want: true,
+
+				parent: &ttest{
+					text: "True",
+					acc:  "elonmusk",
+					want: true,
+
+					parent: &ttest{
+						text: "What’s perhaps most crazy is a single Starship / SuperHeavy launch could put everything launched in that quarter into orbit in a single launch… now that's impressive.",
+						acc:  "Erdayastronaut",
+						want: true,
+
+						parent: &ttest{
+							text: "Actually, 41 tons for SpaceX in Q3 & aiming for 80 tons in Q4. That said, China launch mass to orbit is extremely impressive.",
+							acc:  "elonmusk",
+
+							want: false,
+
+							parent: &ttest{
+								text: "China led Q3 in both the number and payload mass of orbital rocket launches, according to the latest @BryceSpaceTech report.\n\nKilograms of mass launched:\n\nCASC 45,010\nSpaceX 32,634\nArianespace 25,881\nRoscosmos 20,500\nNorthrop Grumman 5,358\nULA 2,888\n\nhttps://brycetech.com/briefing",
+								acc:  "thesheetztweetz",
+								want: false,
+							},
+						},
+					},
+				},
+			},
+
+			{
+				text: "Orbital flight test of the largest rocket ever soon!",
+				acc:  "elonmusk",
+				want: true,
+			},
+			{
+				text: "Orbital test flight of the most capable rocket ever!",
+				acc:  "elonmusk",
+				want: true,
+			},
+			{
+				text: "Launching the test flight from the cape should work.\n\nHope to reach orbit!",
+				acc:  "elonmusk",
+				want: true,
+			},
+
+			{
+				text:     "129 Orbital Flights",
+				acc:      "elonmusk",
+				hasMedia: true,
+				want:     false,
+			},
+			{
+				text: "Construction of Starship orbital launch pad at the Cape has begun",
+				acc:  "elonmusk",
+				want: true,
+			},
+
+			{
+				text: "Yes",
+				acc:  "elonmusk",
+				want: true,
+
+				parent: &ttest{
+					text: "Still at 39A?",
+					acc:  "NASASpaceflight",
+					want: true,
+
+					parent: &ttest{
+						text: "Construction of Starship orbital launch pad at the Cape has begun",
+						acc:  "elonmusk",
+						want: true,
+					},
+				},
+			},
 		},
 	)
 }
