@@ -524,6 +524,52 @@ func TestQuotedTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				// If someone quotes their own tweet with more media, we want to retweet it
+				text: "Even more pics of Starship S20",
+				acc:  "same_user",
+
+				hasMedia: true,
+				want:     true,
+
+				quoted: &ttest{
+					text: "Starship SN20 being lifted on top of B4",
+					acc:  "same_user",
+
+					hasMedia: true,
+					want:     true,
+				},
+			},
+			{
+				// But we don't want it if there's no media
+				text: "Seeing S20 was epic!",
+				acc:  "same_user",
+
+				want: false,
+
+				quoted: &ttest{
+					text: "Starship SN20 being lifted on top of B4",
+					acc:  "same_user",
+
+					hasMedia: true,
+					want:     true,
+				},
+			},
+			{
+				text:     "Another picture of S20",
+				acc:      "other_user",
+				hasMedia: true,
+				want:     false,
+
+				quoted: &ttest{
+					text: "Starship SN20 being lifted on top of B4",
+					acc:  "same_user",
+
+					hasMedia: true,
+					want:     true,
+				},
+			},
+
+			{
 				text: "😂",
 				acc:  "random_user",
 				want: false,

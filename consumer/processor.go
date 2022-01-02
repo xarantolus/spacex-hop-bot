@@ -130,18 +130,17 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 
 			// If it's from the *same* user, then we just assume they added additional info.
 			// We only retweet if it's media though
-			if tweet.QuotedStatus.User != nil && tweet.User != nil && tweet.QuotedStatus.User.ID == tweet.User.ID {
+			if sameUser(&tweet.Tweet, tweet.QuotedStatus) {
 				if p.hasMedia(tweet.QuotedStatus) {
 					p.retweet(tweet.QuotedStatus, "quoted media", tweet.TweetSource)
 				}
 			} else {
 				p.Tweet(quotedWrap)
 			}
-			return
 		}
 
-		// The quoting tweet should be about starship
-		if !p.isStarshipTweet(tweet) {
+		// The quoting tweet should be about starship AND have media
+		if !(p.isStarshipTweet(tweet) && p.hasMedia(&tweet.Tweet)) {
 			break
 		}
 
