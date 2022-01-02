@@ -347,7 +347,7 @@ var (
 
 		"offend", "offensive", "fanboy", "fan boy", "fangirl", "fan girl",
 
-		"covid", "corona", "omicron", "tests positive", "positive test", "cdc",
+		"covid", "corona", "rona", "omicron", "tests positive", "positive test", "cdc",
 
 		"shit", "anime", "manga", "bronco", "bae",
 
