@@ -203,7 +203,7 @@ var (
 
 	// If an account has any of these words in its description, we don't retweet tweets from it
 	ignoredAccountDescriptionKeywords = []string{
-		"parody", "joke", "blender", "3d", "render", "animat", /* e/ion */
+		"parody", "joke", "blender", "3d", "vfx", "render", "animat", /* e/ion */
 	}
 
 	// If a tweet contains any of these keywords, it will not be retweeted. This is a way of filtering out *non-starship* stuff
