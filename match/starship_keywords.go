@@ -71,7 +71,7 @@ var (
 				[]string{"olm", "olt"},
 			),
 			to: []string{
-				"methane", "tank", "lox", "ch4", "ln2", "frost", "fire", "vent",
+				"methane", "tank", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",
 				"pad", "road", "highway", "close", "open", "qd", "quick disconnect",
 				"raptor",
 			},
@@ -118,7 +118,7 @@ var (
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
 		{
 			from: []string{"launch tower", "launch pad", "launch mount", "chopsticks", "catch arms", "mechazilla"},
-			to:   compose(seaportKeywords),
+			to:   compose(seaportKeywords, []string{"qd"}),
 		},
 	}
 	// Helper slices that can be used for composing new keywords
