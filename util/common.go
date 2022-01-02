@@ -3,13 +3,35 @@ package util
 import (
 	"log"
 	"strings"
+	"sync"
+	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
 )
 
+var (
+	lastErrorLock    sync.Mutex
+	lastErrorText    string
+	lastErrorLogTime time.Time
+)
+
 func LogError(err error, location string) bool {
 	if err != nil {
+		errTxt := err.Error()
+
+		lastErrorLock.Lock()
+		defer lastErrorLock.Unlock()
+
+		if errTxt == lastErrorText && time.Since(lastErrorLogTime) < 10*time.Minute {
+			lastErrorLogTime = time.Now()
+
+			return true
+		}
+
 		log.Printf("[Error (%s)]: %s\n", location, err.Error())
+
+		lastErrorText = errTxt
+		lastErrorLogTime = time.Now()
 
 		return true
 	}
