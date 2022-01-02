@@ -74,10 +74,7 @@ func isImportantURL(uri string) (important bool) {
 // shouldIgnoreLink returns whether this tweet should be ignored because of a linked article
 func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 	// Get the text *with* URLs
-	var textWithURLs = tweet.SimpleText
-	if textWithURLs == "" {
-		textWithURLs = tweet.FullText
-	}
+	var textWithURLs = tweet.TextWithURLs()
 
 	// Find all URLs
 	urls := urlRegex.FindAllString(textWithURLs, -1)

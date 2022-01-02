@@ -74,6 +74,21 @@ func (t Tweet) Text() string {
 	return text
 }
 
+func (t Tweet) TextWithURLs() string {
+	var text = t.SimpleText
+	if t.FullText != "" {
+		text = t.FullText
+	}
+
+	if t.Entities != nil {
+		for _, m := range t.Entities.Media {
+			text = strings.ReplaceAll(text, m.URL, "")
+		}
+	}
+
+	return text
+}
+
 // ExtendedTweet represents fields embedded in extended Tweets when served in
 // compatibility mode (default).
 // https://dev.twitter.com/overview/api/upcoming-changes-to-tweets
