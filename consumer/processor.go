@@ -171,19 +171,19 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// Then we also filter out all tweets that tag elon musk, e.g. there could be someone
 		// just tweeting something like "Do you think xyz... @elonmusk"
 
-		// Filter out non-english tweets
-		if tweet.Lang != "" && tweet.Lang != "en" && tweet.Lang != "und" {
-			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because of language ", tweet.Lang)
+		// Filter out non-english tweets (except for location stream)
+		if tweet.TweetSource != match.TweetSourceLocationStream && tweet.Lang != "" && tweet.Lang != "en" && tweet.Lang != "und" {
+			log.Printf("[Processor] Ignoring %s because of language %s (%s)", util.TweetURL(&tweet.Tweet), tweet.Lang, tweet.TweetSource)
 			break
 		}
 
 		if p.shouldIgnoreLink(&tweet.Tweet) {
-			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because we have seen this link recently")
+			log.Printf("[Processor] Ignoring %s because we have seen this link recently (%s)", util.TweetURL(&tweet.Tweet), tweet.TweetSource)
 			break
 		}
 
 		if tweet.Tweet.PossiblySensitive {
-			log.Println("Ignoring", util.TweetURL(&tweet.Tweet), "because it is possibly sensitive")
+			log.Printf("[Processor] Ignoring %s because it is possibly sensitive (%s)", util.TweetURL(&tweet.Tweet), tweet.TweetSource)
 			break
 		}
 
@@ -196,7 +196,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 				// If we have a pad announcement - those are usually tweets without media
 				p.retweet(&tweet.Tweet, "location + pad announcement", tweet.TweetSource)
 			} else {
-				log.Println("[Twitter] Ignoring", util.TweetURL(&tweet.Tweet), "because it's from the location stream and has no media")
+				log.Printf("[Processor] Ignoring %s because it's from the location stream and has no media", util.TweetURL(&tweet.Tweet))
 			}
 		} else {
 			// If a tweet contains *only hashtags*, we only retweet it if it has media
