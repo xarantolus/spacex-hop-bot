@@ -1,10 +1,9 @@
 package bot
 
 import (
-	"github.com/xarantolus/spacex-hop-bot/config"
-
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/dghubble/oauth1"
+	"github.com/xarantolus/spacex-hop-bot/config"
 )
 
 func Login(cfg config.Config) (client *twitter.Client, user *twitter.User, err error) {
