@@ -118,12 +118,14 @@ var (
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
 		{
 			from: []string{"launch tower", "launch pad", "launch mount", "chopsticks", "catch arms", "mechazilla"},
-			to:   compose(seaportKeywords, []string{"qd"}),
+			to:   compose(seaportKeywords, placesKeywords, []string{"qd"}),
 		},
 	}
+
 	// Helper slices that can be used for composing new keywords
 	seaportKeywords       = []string{"sea launch", "oil", "rig"}
-	nonSpecificKeywords   = compose([]string{"ship", "booster", "starbase", "boca chica", "spacex"}, liveStreams)
+	placesKeywords        = []string{"starbase", "boca chica"}
+	nonSpecificKeywords   = compose([]string{"ship", "booster"}, liveStreams, placesKeywords)
 	generalSpaceXKeywords = []string{"spacex"}
 	liveStreams           = []string{
 		// 24/7 live camera views are often mentioned when something is shown on a screenshot
@@ -203,7 +205,14 @@ var (
 
 	// If an account has any of these words in its description, we don't retweet tweets from it
 	ignoredAccountDescriptionKeywords = []string{
-		"parody", "joke", "blender", "3d", "vfx", "render", "animat", /* e/ion */
+		// Parody accounts
+		"parody", "joke",
+
+		// 3D artists
+		"blender", "3d", "vfx", "render", "animat", /* e/ion */
+
+		// Sports stuff
+		"nhl",
 	}
 
 	// If a tweet contains any of these keywords, it will not be retweeted. This is a way of filtering out *non-starship* stuff
@@ -216,7 +225,7 @@ var (
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine", "galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "atlasv", "relativity", "northrop grumman", "northropgrumman", "bomber",
 		"rookisaacman", "cygnus", "samsung", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
-		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri",
+		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
 
 		"roscosmos", "yenisey",
 
@@ -307,7 +316,7 @@ var (
 
 		"meme", "ratio", "apology", "drama", "petition to", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
 
-		"dearmoon", "dear moon", "inspiration4", "inspiration 4", "inspiration four", "rover", "alien",
+		"dearmoon", "dear moon", "inspiration4", "inspiration 4", "inspiration four", "alien",
 
 		"sale", "buy", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "discount",
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follower", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",
