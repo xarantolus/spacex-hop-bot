@@ -115,10 +115,19 @@ var (
 			to: compose([]string{"environmental assessment", "tower"}),
 		},
 
+		// Launch tower
+		{
+			from: compose([]string{"mechazilla"}),
+			to: compose(
+				placesKeywords, nonSpecificKeywords,
+				[]string{"qd", "arm", "catch"},
+			),
+		},
+
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
 		{
-			from: []string{"launch tower", "launch pad", "launch mount", "chopsticks", "catch arms", "mechazilla"},
-			to:   compose(seaportKeywords, placesKeywords, []string{"qd"}),
+			from: []string{"launch tower", "launch pad", "launch mount", "chopsticks", "catch arms"},
+			to:   compose(seaportKeywords, placesKeywords),
 		},
 	}
 
@@ -131,7 +140,7 @@ var (
 		// 24/7 live camera views are often mentioned when something is shown on a screenshot
 		"labpadre", "nasaspaceflight",
 		// Other streamers
-		"jessica_kirsh", "bocachicagal",
+		"jessica_kirsh", "bocachicagal", "starship gazer", "starshipgazer",
 	}
 
 	// Regexes for road closures and testing activity

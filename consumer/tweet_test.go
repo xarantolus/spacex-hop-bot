@@ -412,6 +412,16 @@ func TestTweetThreads(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "It looks like they have also released all of the chains holding #Mechazilla back. Might see this monster flex its arms tonight if we get lucky @elonmusk #SpaceX",
+				want: true,
+				acc:  "same_user",
+				parent: &ttest{
+					text: "Meet the #LukeBeamWalkers of #Starbase, TX.  Here are a few of my favorite moments from @StarshipGazer's stream today. Removing this scaffolding is one of the last remaining items before #Mechazilla can start performing curls with #Booster4 and #Ship20\n\nhttps://youtube.com/watch?v=wAzC07",
+					acc:  "same_user",
+					want: true,
+				},
+			},
+			{
 				text:     "The flarestack for the ground-based Raptor engine stands (horizontal and vertical) was busy testing through numerous ignite-increase/decrease-extinguish-repeat sequences.",
 				acc:      "bluemoondance74",
 				hasMedia: true,
