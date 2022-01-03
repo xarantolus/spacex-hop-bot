@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Gorgeous gorgeous girls want a starship orbital test flight.",
+				want: false,
+			},
+			{
 				text: "Timelapse of the chopsticks slowly on the move in Starbase.\n\nhttp://nasaspaceflight.com/starbaselive",
 				acc:  "nextspaceflight",
 				want: true,

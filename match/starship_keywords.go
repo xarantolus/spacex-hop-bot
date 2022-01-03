@@ -314,6 +314,8 @@ var (
 		// I do not care about opinions on starship
 		"agree", "disagree", "throwback to", "opinion", "imo", "imho", "i think", "mfw", "vibe", "dream", "laughs in",
 
+		"gorgeous girl",
+
 		"meme", "ratio", "apology", "drama", "petition to", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
 
 		"dearmoon", "dear moon", "inspiration4", "inspiration 4", "inspiration four", "alien",
