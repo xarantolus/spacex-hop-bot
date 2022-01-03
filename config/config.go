@@ -18,6 +18,10 @@ type Config struct {
 		MainStarshipListID int64   `yaml:"main_starship_list"`
 		IgnoredListIDs     []int64 `yaml:"ignored_lists"`
 	} `yaml:"lists"`
+
+	Server struct {
+		Port uint16 `yaml:"port"`
+	} `yaml:"server"`
 }
 
 func (c Config) IgnoredListsMapping() (mapping map[int64]bool) {
