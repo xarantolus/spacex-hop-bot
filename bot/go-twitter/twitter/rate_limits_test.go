@@ -25,11 +25,11 @@ func TestRateLimitService_Status(t *testing.T) {
 		RateLimitContext: &RateLimitContext{AccessToken: "a_fake_access_token"},
 		Resources: &RateLimitResources{
 			Statuses: map[string]*RateLimitResource{
-				"/statuses/mentions_timeline": &RateLimitResource{
+				"/statuses/mentions_timeline": {
 					Limit:     75,
 					Remaining: 75,
 					Reset:     1403602426},
-				"/statuses/lookup": &RateLimitResource{
+				"/statuses/lookup": {
 					Limit:     900,
 					Remaining: 900,
 					Reset:     1403602426}}}}

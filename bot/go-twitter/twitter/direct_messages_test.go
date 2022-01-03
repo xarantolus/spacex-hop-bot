@@ -159,7 +159,7 @@ func TestDirectMessageService_EventsDestroyError(t *testing.T) {
 	})
 	expected := APIError{
 		Errors: []ErrorDetail{
-			ErrorDetail{Code: 34, Message: "Sorry, that page does not exist"},
+			{Code: 34, Message: "Sorry, that page does not exist"},
 		},
 	}
 
