@@ -614,6 +614,21 @@ func TestQuotedTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "The most used word in the Starbase World right now is \"Chopsticks\". \nThey moved a little last night (https://twitter.com/nextspaceflight/status/1477869030094479365…), so hopefully, we'll see some more action soon!\n\nMary (@BocaChicaGal) with the cool view:\nhttp://nasaspaceflight.com/starbaselive",
+				acc:      "nasaspaceflight",
+				hasMedia: true,
+
+				want: true,
+
+				quoted: &ttest{
+					acc:      "nextspaceflight",
+					text:     "Timelapse of the chopsticks slowly on the move in Starbase.",
+					hasMedia: true,
+
+					want: true,
+				},
+			},
+			{
 				// If someone quotes their own tweet with more media, we want to retweet it
 				text: "Even more pics of Starship S20",
 				acc:  "same_user",
@@ -648,7 +663,7 @@ func TestQuotedTweets(t *testing.T) {
 				text:     "Another picture of S20",
 				acc:      "other_user",
 				hasMedia: true,
-				want:     false,
+				want:     true,
 
 				quoted: &ttest{
 					text: "Starship SN20 being lifted on top of B4",

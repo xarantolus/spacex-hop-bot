@@ -71,10 +71,6 @@ func (p *Processor) isStarshipTweet(t match.TweetWrapper) bool {
 
 // isReply returns if the given tweet is a reply to another user
 func (p *Processor) isReply(t *twitter.Tweet) bool {
-	if t.QuotedStatus != nil && !sameUser(t, t.QuotedStatus) {
-		return true
-	}
-
 	if t.User == nil || t.InReplyToStatusID == 0 {
 		return false
 	}

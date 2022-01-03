@@ -98,7 +98,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// If we have a Starship-Tweet quoting a tweet that does not contain antikeywords,
 		// we assume that the quoted tweet also contains relevant information
 
-		if p.seenTweets[tweet.QuotedStatusID] || tweet.QuotedStatus.Retweeted {
+		if p.seenTweets[tweet.QuotedStatusID] {
 			break
 		}
 
