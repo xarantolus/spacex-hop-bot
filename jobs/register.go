@@ -6,21 +6,25 @@ import (
 	"strings"
 
 	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/consumer"
 	"github.com/xarantolus/spacex-hop-bot/match"
 )
 
-func Register(client *twitter.Client, selfUser *twitter.User, matcher *match.StarshipMatcher, tweetChan chan match.TweetWrapper, skipLists map[int64]bool) (err error) {
+func Register(
+	client *twitter.Client, wrappedTwitterClient consumer.TwitterClient, selfUser *twitter.User,
+	matcher *match.StarshipMatcher, tweetChan chan match.TweetWrapper,
+	skipLists map[int64]bool) (err error) {
 	var linkChan = make(chan string, 2)
 
 	// Run YouTube scraper in the background,
 	// it will tweet if it discovers that SpaceX is online with a Starship stream
-	go CheckYouTubeLive(client, selfUser, matcher, linkChan)
+	go CheckYouTubeLive(wrappedTwitterClient, selfUser, matcher, linkChan)
 
 	// When the gov dashboard changes, we want to tweet about it
-	go CheckDashboard(client)
+	go CheckDashboard(wrappedTwitterClient)
 
 	// When the webpage mentions a new date/starship, we tweet about that
-	go StarshipWebsiteChanges(client, linkChan)
+	go StarshipWebsiteChanges(wrappedTwitterClient, linkChan)
 
 	// Check out the home timeline of the bot user, it will contain all kinds of tweets from all kinds of people
 	go CheckHomeTimeline(client, tweetChan)

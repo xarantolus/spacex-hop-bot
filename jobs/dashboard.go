@@ -6,12 +6,12 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/consumer"
 	"github.com/xarantolus/spacex-hop-bot/jobs/review"
 	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
-func CheckDashboard(twitterClient *twitter.Client) {
+func CheckDashboard(twitterClient consumer.TwitterClient) {
 	defer panic("for some reason, the gov dashboard checker stopped running even though it never should")
 
 	var client = review.NewReviewClient()
@@ -34,9 +34,7 @@ func CheckDashboard(twitterClient *twitter.Client) {
 		for _, diffText := range diffs {
 			var tweetText = generateReviewTweetText(diffText, previousTweetID == 0)
 
-			tweet, _, err := twitterClient.Statuses.Update(tweetText, &twitter.StatusUpdateParams{
-				InReplyToStatusID: previousTweetID,
-			})
+			tweet, err := twitterClient.Tweet(tweetText, &previousTweetID)
 			if err != nil {
 				log.Printf("[Review] Error while sending tweet with text %q: %s", tweetText, err.Error())
 				continue

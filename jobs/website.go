@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/consumer"
 	"github.com/xarantolus/spacex-hop-bot/scrapers"
 	"github.com/xarantolus/spacex-hop-bot/util"
 )
@@ -16,7 +16,7 @@ const (
 )
 
 // StarshipWebsiteChanges watches the SpaceX starship page and tweets when the date or starship serial number change
-func StarshipWebsiteChanges(client *twitter.Client, linkChan chan<- string) {
+func StarshipWebsiteChanges(client consumer.TwitterClient, linkChan chan<- string) {
 	defer panic("website watcher stopped even though it never should")
 
 	log.Println("[SpaceX] Watching Starship page for updates")
@@ -57,7 +57,7 @@ func StarshipWebsiteChanges(client *twitter.Client, linkChan chan<- string) {
 			var tweetText = fmt.Sprintf("The SpaceX #Starship website now mentions %s for #%s #WenHop\n%s",
 				info.NextFlightDate.Format("January 2"), info.ShipName, scrapers.StarshipURL)
 
-			t, _, err := client.Statuses.Update(tweetText, nil)
+			t, err := client.Tweet(tweetText, nil)
 			if err != nil {
 				util.LogError(err, "tweeting starship update")
 				goto sleep

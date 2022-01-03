@@ -16,7 +16,7 @@ type Config struct {
 
 	Lists struct {
 		MainStarshipListID int64   `yaml:"main_starship_list"`
-		IgnoredListIDs       []int64 `yaml:"ignored_lists"`
+		IgnoredListIDs     []int64 `yaml:"ignored_lists"`
 	} `yaml:"lists"`
 }
 

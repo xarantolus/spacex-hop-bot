@@ -12,6 +12,8 @@ type TwitterClient interface {
 	AddListMember(listID int64, userID int64) (err error)
 
 	Retweet(*twitter.Tweet) error
+
+	Tweet(text string, inReplyToID *int64) (*twitter.Tweet, error)
 }
 
 type NormalTwitterClient struct {
@@ -57,4 +59,21 @@ func (r *NormalTwitterClient) Retweet(tweet *twitter.Tweet) error {
 	_, _, err := r.Client.Statuses.Retweet(tweet.ID, nil)
 
 	return err
+}
+
+func (n *NormalTwitterClient) Tweet(text string, inReplyToID *int64) (t *twitter.Tweet, err error) {
+	if n.Debug {
+		err = fmt.Errorf("not tweeting in debug mode")
+		return
+	}
+
+	var updateParams *twitter.StatusUpdateParams = nil
+	if inReplyToID != nil && *inReplyToID != 0 {
+		updateParams = &twitter.StatusUpdateParams{
+			InReplyToStatusID: *inReplyToID,
+		}
+	}
+
+	t, _, err = n.Client.Statuses.Update(text, updateParams)
+	return
 }

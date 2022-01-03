@@ -55,6 +55,11 @@ func main() {
 	// Now create a matcher instance that ignores those accounts
 	var starshipMatcher = match.NewStarshipMatcher(ignoredUserMatcher)
 
+	var twitterClient consumer.TwitterClient = &consumer.NormalTwitterClient{
+		Client: client,
+		Debug:  *flagDebug,
+	}
+
 	// This is the main channel tweets will be sent on. Basically many jobs *search* for tweets
 	// and send them on this channel, then the processor will handle each incoming tweet
 	var tweetChan = make(chan match.TweetWrapper, 250)
@@ -63,7 +68,7 @@ func main() {
 		log.Println("[Info] Running in debug mode, no background jobs are started")
 	} else {
 		// Register all background jobs, most of them send tweets on tweetChan
-		err = jobs.Register(client, selfUser, starshipMatcher, tweetChan, cfg.IgnoredListsMapping())
+		err = jobs.Register(client, twitterClient, selfUser, starshipMatcher, tweetChan, cfg.IgnoredListsMapping())
 		if err != nil {
 			panic("registering jobs: " + err.Error())
 		}

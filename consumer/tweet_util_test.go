@@ -57,6 +57,10 @@ func (r *TestTwitterClient) HasRetweeted(tweetID int64) bool {
 	return r.retweetedTweetIDs[tweetID]
 }
 
+func (r *TestTwitterClient) Tweet(text string, inReplyToID *int64) (t *twitter.Tweet, err error) {
+	panic("Tweet() called in test. Either implement it or this is a mistake")
+}
+
 func testStarshipRetweets(t *testing.T, tweets []ttest) {
 
 	var processor = func() (p *Processor, t *TestTwitterClient) {

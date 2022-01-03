@@ -12,13 +12,14 @@ import (
 
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/docker/go-units"
+	"github.com/xarantolus/spacex-hop-bot/consumer"
 	"github.com/xarantolus/spacex-hop-bot/match"
 	"github.com/xarantolus/spacex-hop-bot/scrapers"
 	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
 // CheckYouTubeLive checks SpaceX's youtube live stream every 1-2 minutes and tweets if there is a starship launch stream
-func CheckYouTubeLive(client *twitter.Client, user *twitter.User, matcher *match.StarshipMatcher, linkChan <-chan string) {
+func CheckYouTubeLive(client consumer.TwitterClient, user *twitter.User, matcher *match.StarshipMatcher, linkChan <-chan string) {
 	defer panic("for some reason, the youtube live checker stopped running even though it never should")
 
 	log.Println("[YouTube] Watching SpaceX channel for live Starship streams")
@@ -71,7 +72,7 @@ func CheckYouTubeLive(client *twitter.Client, user *twitter.User, matcher *match
 			tweetText := describeLiveStream(&liveVideo)
 
 			// Now tweet the text we generated
-			tweet, _, err := client.Statuses.Update(tweetText, nil)
+			tweet, err := client.Tweet(tweetText, nil)
 			if err != nil {
 				log.Println("[Twitter] Error while tweeting livestream update:", err.Error())
 				goto sleep
