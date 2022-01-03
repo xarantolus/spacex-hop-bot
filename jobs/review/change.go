@@ -2,7 +2,6 @@ package review
 
 import (
 	"fmt"
-	"log"
 )
 
 func Diff(oldResponse, newResponse *DashboardResponse) (changeDescriptions []string) {
@@ -21,16 +20,21 @@ func Diff(oldResponse, newResponse *DashboardResponse) (changeDescriptions []str
 		changeDescriptions = append(changeDescriptions, fmt.Sprintf("The estimated completion date of the environmental review has changed from %s to %s", oldResponse.TotalDuration.EndDate, newResponse.TotalDuration.EndDate))
 	}
 
-	if len(oldResponse.Data) != len(newResponse.Data) {
-		log.Println("[Review] It seems like new data has been added")
-		return
+	var oldProjectsByID = map[string]Data{}
+	for i := range oldResponse.Data {
+		v := oldResponse.Data[i]
+		oldProjectsByID[v.Nid] = v
 	}
 
-	for i := 0; i < len(oldResponse.Data); i++ {
-		var oldProject, newProject = oldResponse.Data[i], newResponse.Data[i]
+	for _, newProject := range newResponse.Data {
+		oldProject, ok := oldProjectsByID[newProject.Nid]
+		if !ok {
+			if newProject.Action != "" && newProject.TotalDuration.EndDate != "" {
+				newDesc := fmt.Sprintf("A new project %q with end date %s has been added", newProject.Action, newProject.TotalDuration.EndDate)
 
-		if oldProject.Nid != newProject.Nid {
-			log.Println("[Review] It seems like old/new data doesn't have same order")
+				changeDescriptions = append(changeDescriptions, newDesc)
+			}
+
 			continue
 		}
 
@@ -39,16 +43,20 @@ func Diff(oldResponse, newResponse *DashboardResponse) (changeDescriptions []str
 			changeDescriptions = append(changeDescriptions, fmt.Sprintf("The status of the %q has changed from %q to %q", newProject.Action, oldProject.Status, newProject.Status))
 		}
 
-		if len(oldProject.MilestoneData) != len(newProject.MilestoneData) {
-			log.Printf("[Review] It seems like new milestone data has been added to %q", newProject.Action)
-			continue
+		var milestoneDataByID = map[string]MilestoneData{}
+		for i := range oldProject.MilestoneData {
+			v := oldProject.MilestoneData[i]
+			milestoneDataByID[v.Tid] = v
 		}
 
-		for i := 0; i < len(oldProject.MilestoneData); i++ {
-			var oldMilestone, newMilestone = oldProject.MilestoneData[i], newProject.MilestoneData[i]
+		for _, newMilestone := range newProject.MilestoneData {
+			oldMilestone, ok := milestoneDataByID[newMilestone.Tid]
+			if !ok {
+				if newMilestone.Name != "" && newMilestone.CurrentTargetDate != "" {
+					newDesc := fmt.Sprintf("A new milestone %q with target date %q has been added to the %q", newMilestone.Name, newMilestone.CurrentTargetDate, newProject.Action)
 
-			if oldMilestone.Name != newMilestone.Name {
-				log.Printf("[Review] It seems like old/new milestone data for %q doesn't have same order", newProject.Action)
+					changeDescriptions = append(changeDescriptions, newDesc)
+				}
 				continue
 			}
 

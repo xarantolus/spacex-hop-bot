@@ -321,6 +321,39 @@ func TestDiff(t *testing.T) {
 			}),
 			wantChangeDescriptions: nil,
 		},
+		{
+			arg: copyDefaultWith(func(dr *DashboardResponse) {
+				dr.Data = append(dr.Data, Data{
+					Action: "Some new project",
+					TotalDuration: TotalDuration{
+						EndDate: "2022-06-01",
+					},
+				})
+			}),
+			wantChangeDescriptions: []string{
+				`A new project "Some new project" with end date 2022-06-01 has been added`,
+			},
+		},
+		{
+			arg: copyDefaultWith(func(dr *DashboardResponse) {
+				op := dr.Data
+				op2 := op[0]
+				op3 := op2.MilestoneData
+
+				op3 = append(op3, MilestoneData{
+					Tid:               "someid",
+					Name:              "New Milestone",
+					CurrentTargetDate: "2022-03-04",
+				})
+
+				op2.MilestoneData = op3
+				op[0] = op2
+				dr.Data = op
+			}),
+			wantChangeDescriptions: []string{
+				`A new milestone "New Milestone" with target date "2022-03-04" has been added to the "Endangered Species Act Consultation (DOI-FWS)"`,
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
