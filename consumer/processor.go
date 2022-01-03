@@ -222,7 +222,11 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string, source match.Tw
 
 	err := p.client.Retweet(tweet)
 	if err != nil {
-		util.LogError(err, "retweeting "+util.TweetURL(tweet))
+		// Twitter often doesn't send the info that we have already retweeted a tweet.
+		// So here we don't log the error if that's the case
+		if !strings.Contains(err.Error(), "327 You have already retweeted this Tweet.") {
+			util.LogError(err, "retweeting "+util.TweetURL(tweet))
+		}
 		return
 	}
 
