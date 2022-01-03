@@ -24,6 +24,8 @@ type ttest struct {
 }
 
 func testStarshipTweets(t *testing.T, tweets []ttest) {
+	t.Helper()
+
 	var matcher = NewStarshipMatcherForTests()
 
 	var tweet = func(t ttest) TweetWrapper {

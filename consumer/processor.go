@@ -105,7 +105,6 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// If the quoted tweet already is about starship, we maybe only look at that one
 		quotedWrap := match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.QuotedStatus}
 		if p.isStarshipTweet(quotedWrap) {
-
 			// If it's from the *same* user, then we just assume they added additional info.
 			// We only retweet if it's media though
 			if sameUser(&tweet.Tweet, tweet.QuotedStatus) {
@@ -189,13 +188,14 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 
 		// Depending on the tweet source, we require media
 		if tweet.TweetSource == match.TweetSourceLocationStream {
-			if hasMedia(&tweet.Tweet) {
+			switch {
+			case hasMedia(&tweet.Tweet):
 				// If it's from the location stream, matches etc. and has media
 				p.retweet(&tweet.Tweet, "normal + location media", tweet.TweetSource)
-			} else if match.IsPadAnnouncement(tweet.Text()) {
+			case match.IsPadAnnouncement(tweet.Text()):
 				// If we have a pad announcement - those are usually tweets without media
 				p.retweet(&tweet.Tweet, "location + pad announcement", tweet.TweetSource)
-			} else {
+			default:
 				log.Printf("[Processor] Ignoring %s because it's from the location stream and has no media", util.TweetURL(&tweet.Tweet))
 			}
 		} else {
@@ -291,9 +291,7 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 
 	// Now actually match the tweet
 	if didRetweet || p.matcher.StarshipTweet(match.TweetWrapper{TweetSource: match.TweetSourceUnknown, Tweet: *realTweet}) {
-
 		p.retweet(tweet, "thread: matched", match.TweetSourceUnknown)
-
 		return true
 	}
 

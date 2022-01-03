@@ -62,11 +62,11 @@ func (t *UnixTime) UnmarshalJSON(b []byte) (err error) {
 	return nil
 }
 
-func (l *LiveVideo) TimeUntil() (t time.Time, d time.Duration, ok bool) {
+func (lv *LiveVideo) TimeUntil() (t time.Time, d time.Duration, ok bool) {
 	// Check if we got any time info
-	t = l.UpcomingInfo.StartTimestamp
+	t = lv.UpcomingInfo.StartTimestamp
 	if t.IsZero() {
-		t = time.Time(l.unixInfo.ScheduledStartTime)
+		t = time.Time(lv.unixInfo.ScheduledStartTime)
 
 		if t.IsZero() {
 			return

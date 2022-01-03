@@ -236,7 +236,7 @@ func TestDiff(t *testing.T) {
 				op2 := op[0]
 				op2.Status = "Completed"
 				op[0] = op2
-				(*dr).Data = op
+				dr.Data = op
 			}),
 			wantChangeDescriptions: []string{
 				`The status of the "Endangered Species Act Consultation (DOI-FWS)" has changed from "In Progress" to "Completed"`,
@@ -248,7 +248,7 @@ func TestDiff(t *testing.T) {
 				op2 := op[0]
 				op2.Status = ""
 				op[0] = op2
-				(*dr).Data = op
+				dr.Data = op
 			}),
 			wantChangeDescriptions: nil,
 		},
@@ -258,7 +258,7 @@ func TestDiff(t *testing.T) {
 				op2 := op[3]
 				op2.Status = "Completed"
 				op[3] = op2
-				(*dr).Data = op
+				dr.Data = op
 			}),
 			wantChangeDescriptions: []string{
 				`The status of the "Endangered Species Act Consultation (NOAA-NMFS)" has changed from "In Progress" to "Completed"`,
@@ -270,7 +270,7 @@ func TestDiff(t *testing.T) {
 				op2 := op[3]
 				op2.Status = ""
 				op[3] = op2
-				(*dr).Data = op
+				dr.Data = op
 			}),
 			wantChangeDescriptions: nil,
 		},
@@ -285,7 +285,7 @@ func TestDiff(t *testing.T) {
 				op3[2] = op4
 				op2.MilestoneData = op3
 				op[0] = op2
-				(*dr).Data = op
+				dr.Data = op
 			}),
 			wantChangeDescriptions: []string{
 				`The milestone "Conclusion of ESA Consultation" of the "Endangered Species Act Consultation (DOI-FWS)" has been completed`,
@@ -301,7 +301,7 @@ func TestDiff(t *testing.T) {
 				op3[2] = op4
 				op2.MilestoneData = op3
 				op[0] = op2
-				(*dr).Data = op
+				dr.Data = op
 			}),
 			wantChangeDescriptions: []string{
 				`The target date of milestone "Conclusion of ESA Consultation" of the "Endangered Species Act Consultation (DOI-FWS)" has changed from "2021-12-31" to "2021-11-06"`,
@@ -317,7 +317,7 @@ func TestDiff(t *testing.T) {
 				op3[2] = op4
 				op2.MilestoneData = op3
 				op[0] = op2
-				(*dr).Data = op
+				dr.Data = op
 			}),
 			wantChangeDescriptions: nil,
 		},

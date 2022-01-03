@@ -13,7 +13,7 @@ import (
 func CheckLocationStream(client *twitter.Client, tweetChan chan<- match.TweetWrapper) {
 	defer panic("location stream ended even though it never should")
 
-	var backoff int = 1
+	var backoff = 1
 	for {
 		s, err := client.Streams.Filter(&twitter.StreamFilterParams{
 			Locations: []string{

@@ -5,29 +5,29 @@ import (
 	"log"
 )
 
-func Diff(old, new *DashboardResponse) (changeDescriptions []string) {
-	if old.Nid != new.Nid || old.Title != new.Title {
+func Diff(oldResponse, newResponse *DashboardResponse) (changeDescriptions []string) {
+	if oldResponse.Nid != newResponse.Nid || oldResponse.Title != newResponse.Title {
 		// Cannot diff different projects
 		return nil
 	}
 
 	// Has the project status changed?
-	if old.ProjectStatus != new.ProjectStatus && new.ProjectStatus != "" {
-		changeDescriptions = append(changeDescriptions, fmt.Sprintf("The project status for the review of %q has changed from %q to %q", new.Title, old.ProjectStatus, new.ProjectStatus))
+	if oldResponse.ProjectStatus != newResponse.ProjectStatus && newResponse.ProjectStatus != "" {
+		changeDescriptions = append(changeDescriptions, fmt.Sprintf("The project status for the review of %q has changed from %q to %q", newResponse.Title, oldResponse.ProjectStatus, newResponse.ProjectStatus))
 	}
 
 	// Check for end date changes
-	if old.TotalDuration.EndDate != new.TotalDuration.EndDate && new.TotalDuration.EndDate != "" {
-		changeDescriptions = append(changeDescriptions, fmt.Sprintf("The estimated completion date of the environmental review has changed from %s to %s", old.TotalDuration.EndDate, new.TotalDuration.EndDate))
+	if oldResponse.TotalDuration.EndDate != newResponse.TotalDuration.EndDate && newResponse.TotalDuration.EndDate != "" {
+		changeDescriptions = append(changeDescriptions, fmt.Sprintf("The estimated completion date of the environmental review has changed from %s to %s", oldResponse.TotalDuration.EndDate, newResponse.TotalDuration.EndDate))
 	}
 
-	if len(old.Data) != len(new.Data) {
+	if len(oldResponse.Data) != len(newResponse.Data) {
 		log.Println("[Review] It seems like new data has been added")
 		return
 	}
 
-	for i := 0; i < len(old.Data); i++ {
-		var oldProject, newProject = old.Data[i], new.Data[i]
+	for i := 0; i < len(oldResponse.Data); i++ {
+		var oldProject, newProject = oldResponse.Data[i], newResponse.Data[i]
 
 		if oldProject.Nid != newProject.Nid {
 			log.Println("[Review] It seems like old/new data doesn't have same order")

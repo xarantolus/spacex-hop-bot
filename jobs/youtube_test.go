@@ -55,8 +55,9 @@ func Test_matcherMatchesStreamsNegative(t *testing.T) {
 	}
 
 	matcher := match.NewStarshipMatcherForTests()
-	for _, vid := range videos {
+	for i := range videos {
 		t.Run(t.Name(), func(t *testing.T) {
+			vid := videos[i]
 			matched := isStarshipStream(matcher, &vid)
 			if matched {
 				t.Errorf("video %q %q should not match, but did", vid.Title, vid.ShortDescription)

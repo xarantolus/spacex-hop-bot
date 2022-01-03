@@ -83,26 +83,26 @@ func (l *UserList) TweetAssociatedWithAny(tweet *twitter.Tweet) bool {
 	return false
 }
 
-func (m *UserList) update() {
-	m.mlock.RLock()
-	shouldUpdate := time.Since(m.lastUpdate) > 90*time.Minute
-	m.mlock.RUnlock()
+func (l *UserList) update() {
+	l.mlock.RLock()
+	shouldUpdate := time.Since(l.lastUpdate) > 90*time.Minute
+	l.mlock.RUnlock()
 
 	if !shouldUpdate {
 		return
 	}
 
-	m.mlock.Lock()
-	defer m.mlock.Unlock()
+	l.mlock.Lock()
+	defer l.mlock.Unlock()
 
-	if len(m.listIDs) == 0 {
+	if len(l.listIDs) == 0 {
 		return
 	}
 
-	m.members = make(map[int64]bool)
+	l.members = make(map[int64]bool)
 
-	for _, listID := range m.listIDs {
-		list, _, err := m.c.Lists.Members(&twitter.ListsMembersParams{
+	for _, listID := range l.listIDs {
+		list, _, err := l.c.Lists.Members(&twitter.ListsMembersParams{
 			ListID: listID,
 			Count:  1000,
 		})
@@ -111,13 +111,13 @@ func (m *UserList) update() {
 		}
 
 		for _, user := range list.Users {
-			m.members[user.ID] = true
+			l.members[user.ID] = true
 		}
 	}
 
-	log.Printf("[List] Updated list and loaded %d %s users\n", len(m.members), m.purpose)
+	log.Printf("[List] Updated list and loaded %d %s users\n", len(l.members), l.purpose)
 
-	m.lastUpdate = time.Now()
+	l.lastUpdate = time.Now()
 }
 
 // ListMembers loads a list of all users from the lists with the given ID

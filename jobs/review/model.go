@@ -34,17 +34,20 @@ type MilestoneData struct {
 	NumberOfTargetDateChanges int         `json:"numberOfTargetDateChanges"`
 	Fast41MissedDates         interface{} `json:"fast41MissedDates"`
 }
+
 type InProgressData struct {
 	DaysInPause  int    `json:"daysInPause"`
 	StartDate    string `json:"startDate"`
 	EndDate      string `json:"endDate"`
 	DurationDays int    `json:"durationDays"`
 }
+
 type TotalDuration struct {
 	StartDate    string `json:"startDate"`
 	EndDate      string `json:"endDate"`
 	DurationDays int    `json:"durationDays"`
 }
+
 type Data struct {
 	Nid                  string          `json:"nid"`
 	D7Nid                interface{}     `json:"d7_nid"`

@@ -44,7 +44,7 @@ func (r *TestTwitterClient) LoadStatus(tweetID int64) (*twitter.Tweet, error) {
 	return nil, fmt.Errorf("could not load status with id %d", tweetID)
 }
 
-func (n *TestTwitterClient) AddListMember(listID int64, userID int64) (err error) {
+func (r *TestTwitterClient) AddListMember(listID int64, userID int64) (err error) {
 	return nil
 }
 
@@ -62,6 +62,7 @@ func (r *TestTwitterClient) Tweet(text string, inReplyToID *int64) (t *twitter.T
 }
 
 func testStarshipRetweets(t *testing.T, tweets []ttest) {
+	t.Helper()
 
 	var processor = func() (p *Processor, t *TestTwitterClient) {
 		t = &TestTwitterClient{
@@ -73,15 +74,15 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 		return
 	}
 
-	var tweetId int64 = 50
-	var userId int64 = 80
+	var tweetID int64 = 50
+	var userID int64 = 80
 	var tweet func(t *ttest) match.TweetWrapper
 	tweet = func(t *ttest) match.TweetWrapper {
 		if t.userID == 0 {
-			t.userID = userId
-			userId++
+			t.userID = userID
+			userID++
 		}
-		t.id = tweetId
+		t.id = tweetID
 		var tw = match.TweetWrapper{
 			Tweet: twitter.Tweet{
 				User: &twitter.User{
@@ -89,12 +90,12 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 					ID:         t.userID,
 				},
 				FullText: t.text,
-				ID:       tweetId,
+				ID:       tweetID,
 			},
 
 			TweetSource: t.tweetSource,
 		}
-		tweetId++
+		tweetID++
 
 		// Set a recent date, aka now (the bot usually sees very recent tweets)
 		tw.CreatedAt = time.Now().Add(-time.Minute).Format(time.RubyDate)
@@ -136,8 +137,10 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 		return tw
 	}
 
-	for _, tt := range tweets {
+	for ti := range tweets {
 		t.Run(t.Name(), func(t *testing.T) {
+			tt := tweets[ti]
+
 			proc, ret := processor()
 
 			// Populate & already show parent tweets to matcher.

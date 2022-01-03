@@ -51,12 +51,12 @@ func (n *NormalTwitterClient) AddListMember(listID int64, userID int64) (err err
 	return
 }
 
-func (r *NormalTwitterClient) Retweet(tweet *twitter.Tweet) error {
-	if r.Debug {
+func (n *NormalTwitterClient) Retweet(tweet *twitter.Tweet) error {
+	if n.Debug {
 		return fmt.Errorf("not retweeting tweets in debug mode")
 	}
 
-	_, _, err := r.Client.Statuses.Retweet(tweet.ID, nil)
+	_, _, err := n.Client.Statuses.Retweet(tweet.ID, nil)
 
 	return err
 }
@@ -67,7 +67,7 @@ func (n *NormalTwitterClient) Tweet(text string, inReplyToID *int64) (t *twitter
 		return
 	}
 
-	var updateParams *twitter.StatusUpdateParams = nil
+	var updateParams *twitter.StatusUpdateParams
 	if inReplyToID != nil && *inReplyToID != 0 {
 		updateParams = &twitter.StatusUpdateParams{
 			InReplyToStatusID: *inReplyToID,
