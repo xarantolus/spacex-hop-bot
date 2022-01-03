@@ -13,6 +13,21 @@ type Config struct {
 		APIKey            string `yaml:"api_key"`
 		APISecretKey      string `yaml:"api_secret"`
 	} `yaml:"twitter"`
+
+	Lists struct {
+		MainStarshipListID int64   `yaml:"main_starship_list"`
+		IgnoredListIDs       []int64 `yaml:"ignored_lists"`
+	} `yaml:"lists"`
+}
+
+func (c Config) IgnoredListsMapping() (mapping map[int64]bool) {
+	mapping = make(map[int64]bool)
+
+	for _, lid := range c.Lists.IgnoredListIDs {
+		mapping[lid] = true
+	}
+
+	return
 }
 
 func Parse(filename string) (c Config, err error) {

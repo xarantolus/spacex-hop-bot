@@ -29,7 +29,7 @@ func main() {
 
 	log.Printf("[Startup] Bot is starting%s\n", dbg)
 
-	// Some stuff depends on randomness
+	// Some stuff depends on randomness, so here we seed it
 	rand.Seed(time.Now().UnixNano())
 
 	// Let's parse our configuration file
@@ -45,49 +45,25 @@ func main() {
 	}
 	log.Printf("[Twitter] Logged in @%s\n", selfUser.ScreenName)
 
-	// Twitter list ids for lists we need
-	const (
-		spacePeopleListID = 1375480259840212997
-	)
-
-	// We have different account lists that define ignored accounts.
-	// That way I don't have to mute them.
-	var ignoredLists = map[int64]bool{
-		// Satire
-		1377136100574064647: true,
-
-		// Unrelated to SpaceX
-		1411299241050488835: true,
-
-		// Animation, renders etc.
-		1396191591686184967: true,
-
-		// Other/Muted
-		1410664386943930368: true,
-	}
-
 	// Load all ignored accounts to make sure we don't retweet them
-	var ignoredListIDs = []int64{}
-	for lid := range ignoredLists {
-		ignoredListIDs = append(ignoredListIDs, lid)
-	}
-
-	ignoredUserMatcher := match.LoadIgnoredList(client, ignoredListIDs...)
+	ignoredUserMatcher := match.LoadIgnoredList(client, cfg.Lists.IgnoredListIDs...)
 	iu := ignoredUserMatcher.UserIDs()
 	if len(iu) > 5 {
 		util.LogError(util.SaveJSON("ignored-users.json", iu), "startup: saving ignored users")
 	}
 
+	// Now create a matcher instance that ignores those accounts
 	var starshipMatcher = match.NewStarshipMatcher(ignoredUserMatcher)
 
-	// The bot should check all tweets that are sent on this channel
+	// This is the main channel tweets will be sent on. Basically many jobs *search* for tweets
+	// and send them on this channel, then the processor will handle each incoming tweet
 	var tweetChan = make(chan match.TweetWrapper, 250)
 
 	if *flagDebug {
 		log.Println("[Info] Running in debug mode, no background jobs are started")
 	} else {
 		// Register all background jobs, most of them send tweets on tweetChan
-		err = jobs.Register(client, selfUser, starshipMatcher, tweetChan, ignoredLists)
+		err = jobs.Register(client, selfUser, starshipMatcher, tweetChan, cfg.IgnoredListsMapping())
 		if err != nil {
 			panic("registering jobs: " + err.Error())
 		}
@@ -97,8 +73,9 @@ func main() {
 		Client: client,
 		Debug:  *flagDebug,
 	}
+
 	// handler handles tweets by filtering & retweeting the interesting ones
-	var handler = consumer.NewProcessor(*flagDebug, false, twitterClient, selfUser, starshipMatcher, spacePeopleListID)
+	var handler = consumer.NewProcessor(*flagDebug, false, twitterClient, selfUser, starshipMatcher, cfg.Lists.MainStarshipListID)
 
 	// Now we just process every tweet we come across
 	for tweet := range tweetChan {
