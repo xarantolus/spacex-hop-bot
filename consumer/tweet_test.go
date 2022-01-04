@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "CraneX lifting a Ship",
+				want: true,
+			},
+			{
 				text: "SpaceX crane went for a stroll to hook up with Booster 4.\n\nhttp://nasaspaceflight.com/starbaselive",
 				acc:  "nextspaceflight",
 				want: true,
@@ -167,6 +171,26 @@ func TestBasicTweets(t *testing.T) {
 func TestLocationTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text:     "Might we see Booster lift back off the OLM? CraneX is in place, load spreader attached, booster stand is on hand and ready. #Starbase #SpaceX",
+				location: match.SpaceXLaunchSiteID,
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				text:        "Might we see Booster lift back off the OLM? CraneX is in place, load spreader attached, booster stand is on hand and ready. #Starbase #SpaceX",
+				tweetSource: match.TweetSourceLocationStream,
+				hasMedia:    true,
+				want:        true,
+			},
+			{
+				text:        "Might we see Booster lift back off the OLM? CraneX is in place, load spreader attached, booster stand is on hand and ready. #Starbase #SpaceX",
+				location:    match.SpaceXLaunchSiteID,
+				tweetSource: match.TweetSourceLocationStream,
+				hasMedia:    true,
+				want:        true,
+			},
+
 			// If it explicitly mentions a starship, then no need for location
 			{
 				text: "Pad announcement over the speakers: clearing pad for S20 static fire",

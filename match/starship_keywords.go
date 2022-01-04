@@ -73,8 +73,14 @@ var (
 			to: []string{
 				"methane", "tank", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",
 				"argon", "pad", "road", "highway", "close", "open", "qd", "quick disconnect",
-				"raptor",
+				"raptor", "cranex",
 			},
+		},
+
+		// Cranes lifting stuff like boosters etc.
+		{
+			from: compose([]string{"cranex", "liebherr lr"}),
+			to:   compose(liveStreams, generalSpaceXKeywords, nonSpecificKeywords),
 		},
 
 		// Ground infrastructure
