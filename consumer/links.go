@@ -42,6 +42,12 @@ var (
 		"UCFwMITSkc1Fms6PoJoh1OUQ": true,
 		// SpaceX official channel
 		"UCtI0Hodo5o5dUb67FeUjDeA": true,
+
+		// Jessica Kirsh
+		"UCpThejfzN2EJiXa2mEwdEUw": true,
+
+		// Starship Gazer
+		"UCBVnapKtPTNYl4phaGXxYng": true,
 	}
 
 	urlRegex *regexp.Regexp
@@ -108,7 +114,7 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 		}
 
 		if host == "youtube.com" || host == "youtu.be" {
-			stream, err := scrapers.YouTubeLive(u)
+			stream, err := scrapers.YouTubeLive(canonical)
 			if err == nil {
 				// If we know the channel is good, then we don't ignore their live streams
 				if (stream.IsLive || stream.IsUpcoming) && highQualityYouTubeStreams[stream.ChannelID] {
