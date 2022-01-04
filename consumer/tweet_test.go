@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Chopsticks\n@LabPadre",
+				want: true,
+			},
+			{
 				text: "CraneX lifting a Ship",
 				want: true,
 			},

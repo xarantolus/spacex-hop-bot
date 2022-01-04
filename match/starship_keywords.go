@@ -132,8 +132,8 @@ var (
 
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
 		{
-			from: []string{"launch tower", "launch pad", "launch mount", "chopsticks", "catch arms"},
-			to:   compose(seaportKeywords, placesKeywords),
+			from: []string{"launch tower", "launch pad", "launch mount", "chopsticks", "chop stick", "catch arms"},
+			to:   compose(seaportKeywords, placesKeywords, liveStreams),
 		},
 	}
 
