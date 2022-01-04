@@ -357,6 +357,8 @@ var (
 
 		"trump", "antifa", "biden", "riot", "taliban", "kill", "beat", "ideology", "gender",
 
+		"surgery", "emergency",
+
 		// Things that are typical questions for polls. We cannot get polls using the Twitter v1 API, so this is kind of bad
 		"feel about", "vs",
 
