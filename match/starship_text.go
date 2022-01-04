@@ -43,16 +43,3 @@ func ContainsStarshipAntiKeyword(text string) bool {
 func containsAntikeyword(words []string, text string) bool {
 	return startsWithAny(text, words...)
 }
-
-func compose(s ...[]string) (res []string) {
-	var dedup = map[string]bool{}
-	for _, v := range s {
-		for _, k := range v {
-			if !dedup[k] {
-				res = append(res, k)
-				dedup[k] = true
-			}
-		}
-	}
-	return res
-}

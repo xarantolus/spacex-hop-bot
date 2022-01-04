@@ -1,6 +1,7 @@
 package match
 
 import (
+	"reflect"
 	"strings"
 	"testing"
 )
@@ -76,6 +77,35 @@ func Test_containsAnyGeneric(t *testing.T) {
 		t.Run(t.Name(), func(t *testing.T) {
 			if got := containsAny(tt.argText, searchedInfixes...); got != tt.want {
 				t.Errorf("containsAny(%q) = %v, want %v", tt.argText, got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_compose(t *testing.T) {
+	var all = []string{"test"}
+
+	tests := []struct {
+		arg  [][]string
+		want []string
+	}{
+		{
+			arg:  [][]string{all, {"another"}, {"3"}},
+			want: []string{"test", "another", "3"},
+		},
+		{
+			arg:  [][]string{all, {"another", "duplicate"}, {"duplicate"}, {"3"}},
+			want: []string{"test", "another", "duplicate", "3"},
+		},
+		{
+			arg:  [][]string{all, {"duplicate", "duplicate"}, {"duplicate"}, {"3"}},
+			want: []string{"test", "duplicate", "3"},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(t.Name(), func(t *testing.T) {
+			if got := compose(tt.arg...); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("compose(%v) = %v, want %v", tt.arg, got, tt.want)
 			}
 		})
 	}

@@ -199,6 +199,21 @@ func TestDiff(t *testing.T) {
 	}{
 		{
 			arg: copyDefaultWith(func(dr *DashboardResponse) {
+				dr.TotalDuration.EndDate = "NewEndDate"
+			}),
+			wantChangeDescriptions: []string{
+				"The estimated completion date of the environmental review has changed from 12/31/2021 to NewEndDate",
+			},
+		},
+		{
+			// A change to nothing is ignored
+			arg: copyDefaultWith(func(dr *DashboardResponse) {
+				dr.TotalDuration.EndDate = ""
+			}),
+			wantChangeDescriptions: nil,
+		},
+		{
+			arg: copyDefaultWith(func(dr *DashboardResponse) {
 				dr.Nid = "something else"
 			}),
 			wantChangeDescriptions: nil,

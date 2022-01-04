@@ -63,3 +63,16 @@ func isAlphanumerical(r rune) bool {
 		(r >= 'A' && r <= 'Z') ||
 		(r >= '0' && r <= '9')
 }
+
+func compose(s ...[]string) (res []string) {
+	var dedup = map[string]bool{}
+	for _, v := range s {
+		for _, k := range v {
+			if !dedup[k] {
+				res = append(res, k)
+				dedup[k] = true
+			}
+		}
+	}
+	return res
+}
