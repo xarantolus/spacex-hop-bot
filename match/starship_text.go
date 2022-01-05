@@ -5,7 +5,7 @@ import (
 )
 
 // StarshipText returns whether the given text mentions starship
-func (m *StarshipMatcher) StarshipText(text string, antiKeywords []string) bool {
+func (m *StarshipMatcher) StarshipText(text string, antiKeywords []string, skipMatchers bool) bool {
 	text = strings.ToLower(text)
 
 	// If we find ignored words, we ignore the tweet
@@ -19,9 +19,13 @@ func (m *StarshipMatcher) StarshipText(text string, antiKeywords []string) bool 
 	}
 
 	// Then we check for more "dynamic" words like "S20", "B4", etc.
-	for _, r := range starshipMatchers {
-		if r.MatchString(text) {
-			return true
+	// If we input text with URLs, we skip matchers. This is because URLs often
+	// contain random sequences of characters that can be picked up by these matchers
+	if !skipMatchers {
+		for _, r := range starshipMatchers {
+			if r.MatchString(text) {
+				return true
+			}
 		}
 	}
 

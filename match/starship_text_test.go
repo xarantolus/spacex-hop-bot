@@ -11,6 +11,11 @@ func TestStarshipTextMatch(t *testing.T) {
 		text string
 		want bool
 	}{
+		{"Chopsticks moving", false},
+		{"Chopsticks moving\n\nhttp://nasaspaceflight.com/starbaselive", true},
+		{"Chopsticks moving\n\nhttps://nasaspaceflight.com/starbaselive", true},
+		{"Timelapse of today's chopstick test thus far.", false},
+		{"Timelapse of today's chopstick test thus far.\nhttp://nasaspaceflight.com/starbaselive", true},
 		{"Lots of frost on Booster 4, which now seems to be decreasing, potentially signifying we’re getting close to the conclusion of todays cryogenic proof test.\nCamera with flash @NASASpaceflight\nRed circle https://youtu.be/B1IbMBhococ\n\n#SpaceX @elonmusk", true},
 		{"On @nasaspaceflight stream it looks like the road is open again, so no Cryo Proof today it seems.", true},
 		{"Orbital launch table is venting! 📷 @NASASpaceflight", true},
@@ -84,7 +89,7 @@ func TestStarshipTextMatch(t *testing.T) {
 	matcher := NewStarshipMatcherForTests()
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
-			if got := matcher.StarshipText(tt.text, antiStarshipKeywords); got != tt.want {
+			if got := matcher.StarshipText(tt.text, antiStarshipKeywords, false); got != tt.want {
 				t.Errorf("StarshipText(%q, antiStarshipKeywords) = %v, want %v", tt.text, got, tt.want)
 			}
 		})

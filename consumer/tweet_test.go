@@ -11,6 +11,16 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Timelapse of today's chopstick test thus far.\nhttp://nasaspaceflight.com/starbaselive",
+				acc:  "nextspaceflight",
+				want: true,
+			},
+			{
+				text: "Timelapse of the chopsticks slowly on the move in Starbase.\n\nhttp://nasaspaceflight.com/starbaselive",
+				acc:  "nextspaceflight",
+				want: true,
+			},
+			{
 				text: "Chopsticks\n@LabPadre",
 				want: true,
 			},

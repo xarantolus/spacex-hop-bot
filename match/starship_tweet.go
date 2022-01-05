@@ -65,7 +65,13 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 	}
 
 	// Check if the text matches
-	if m.StarshipText(text, antiKeywords) {
+	if m.StarshipText(text, antiKeywords, false) {
+		return true
+	}
+	// If the text didn't match, maybe it is matched when we don't remove URLs from it.
+	// We do want to be a bit more careful here, because URLs can contain tricky sequences
+	// of characters that could trick simple matchers (e.g. t.co/s20_513)
+	if m.StarshipText(tweet.TextWithURLs(), antiKeywords, true) {
 		return true
 	}
 

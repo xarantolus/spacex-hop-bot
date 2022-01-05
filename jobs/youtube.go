@@ -96,7 +96,7 @@ func CheckYouTubeLive(client consumer.TwitterClient, user *twitter.User, matcher
 }
 
 func isStarshipStream(matcher *match.StarshipMatcher, liveVideo *scrapers.LiveVideo) bool {
-	return matcher.StarshipText(liveVideo.Title, nil) || matcher.StarshipText(liveVideo.ShortDescription, nil)
+	return matcher.StarshipText(liveVideo.Title, nil, false) || matcher.StarshipText(liveVideo.ShortDescription, nil, false)
 }
 
 func tweetInterval(streamStartsIn time.Duration) time.Duration {
