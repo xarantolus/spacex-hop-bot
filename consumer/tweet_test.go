@@ -292,25 +292,54 @@ func TestQuestionTweets(t *testing.T) {
 func TestElonTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			// Starship tweet with a follow up of an unrelated question
+			{
+				text: "Will be ready in Q4.",
+				acc:  "elonmusk",
+				want: false,
+
+				parent: &ttest{
+					// Unrelated question about tesla
+					text: "When will FSD beta be available for all?",
+					want: false,
+
+					parent: &ttest{
+						text: "Starship tweet",
+						acc:  "elonmusk",
+						want: true,
+					},
+				},
+			},
 			// Elon answering to an ignored account (e.g. a 3d animation)
 			{
-				text: "And ship will be caught by Mechazilla too. As with booster, no landing legs. Those are only needed for moon & Mars until there is local infrastructure.",
+				text: "Yes on both counts. That would be a great outcome for civilization.",
 				acc:  "elonmusk",
 				want: true,
 
 				parent: &ttest{
-					text: "Pretty close. Booster & arms will move faster. QD arm will steady booster for ship mate.",
-					acc:  "elonmusk",
+					text: "So Mars will eventually get its own Mechazilla?\n\nWould there be any value in eventually building Super Heavy Boosters on Mars as a launch platform for outer solar system missions?",
 					want: true,
 
 					parent: &ttest{
-						text:     "Mechazilla <1 Hour Turnaround.\n#SpaceX #Starship @elonmusk",
-						acc:      "ErcXspace",
-						hasMedia: true,
-						userID:   match.TestIgnoredUserID,
+						text: "And ship will be caught by Mechazilla too. As with booster, no landing legs. Those are only needed for moon & Mars until there is local infrastructure.",
+						acc:  "elonmusk",
+						want: true,
 
-						// This *should* probably be true, but would require a bigger rewrite of the thread logic
-						want: false,
+						parent: &ttest{
+							text: "Pretty close. Booster & arms will move faster. QD arm will steady booster for ship mate.",
+							acc:  "elonmusk",
+							want: true,
+
+							parent: &ttest{
+								text:     "Mechazilla <1 Hour Turnaround.\n#SpaceX #Starship @elonmusk",
+								acc:      "ErcXspace",
+								hasMedia: true,
+								userID:   match.TestIgnoredUserID,
+
+								// This *should* probably be true, but would require a bigger rewrite of the thread logic
+								want: false,
+							},
+						},
 					},
 				},
 			},
