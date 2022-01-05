@@ -2,6 +2,7 @@ package consumer
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 	"time"
 
@@ -83,13 +84,30 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 			userID++
 		}
 		t.id = tweetID
+
+		var tweetText string = t.text
+		shortURLCounter := 0
+		var tweetURLs []twitter.URLEntity
+		for _, url := range urlRegex.FindAllString(t.text, -1) {
+			var fakeShortURL = fmt.Sprintf("https://t.co/%d", shortURLCounter)
+			shortURLCounter++
+
+			tweetText = strings.ReplaceAll(tweetText, url, fakeShortURL)
+
+			tweetURLs = append(tweetURLs, twitter.URLEntity{
+				DisplayURL:  url,
+				ExpandedURL: url,
+				URL:         fakeShortURL,
+			})
+		}
+
 		var tw = match.TweetWrapper{
 			Tweet: twitter.Tweet{
 				User: &twitter.User{
 					ScreenName: t.acc,
 					ID:         t.userID,
 				},
-				FullText: t.text,
+				FullText: tweetText,
 				ID:       tweetID,
 			},
 
@@ -131,6 +149,15 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 						ID: 1024,
 					},
 				},
+			}
+		}
+		if len(tweetURLs) > 0 {
+			if tw.Entities == nil {
+				tw.Entities = &twitter.Entities{
+					Urls: tweetURLs,
+				}
+			} else {
+				tw.Entities.Urls = tweetURLs
 			}
 		}
 
