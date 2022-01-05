@@ -1,6 +1,7 @@
 package match
 
 import (
+	"log"
 	"strings"
 	"time"
 
@@ -44,8 +45,10 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 	}
 
 	var containsBadWords = containsAntikeyword(antiKeywords, text)
-	// If e.g. elon tweets about tesla, it should still go to the specificUserMatcher below
+	// This next line is where the problem is.
+	// When containsBadWords is false and isVeryImportant is also false, the next if branch is entered. Why?
 	if containsBadWords && !isVeryImportant {
+		log.Printf("containsBadWords=%v, !isVeryImportant=%v\n", containsBadWords, !isVeryImportant)
 		return false
 	}
 

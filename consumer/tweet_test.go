@@ -7,6 +7,16 @@ import (
 	"github.com/xarantolus/spacex-hop-bot/match"
 )
 
+func TestCrazy(t *testing.T) {
+	testStarshipRetweets(t, []ttest{
+		{
+			text: "Timelapse of today's chopstick test thus far.\nhttp://nasaspaceflight.com/starbaselive",
+			acc:  "nextspaceflight",
+			want: true,
+		},
+	})
+}
+
 func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
