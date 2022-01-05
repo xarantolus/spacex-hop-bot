@@ -292,6 +292,42 @@ func TestQuestionTweets(t *testing.T) {
 func TestElonTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			// Elon answering to an ignored account (e.g. a 3d animation)
+			{
+				text: "And ship will be caught by Mechazilla too. As with booster, no landing legs. Those are only needed for moon & Mars until there is local infrastructure.",
+				acc:  "elonmusk",
+				want: true,
+
+				parent: &ttest{
+					text: "Pretty close. Booster & arms will move faster. QD arm will steady booster for ship mate.",
+					acc:  "elonmusk",
+					want: true,
+
+					parent: &ttest{
+						text:     "Mechazilla <1 Hour Turnaround.\n#SpaceX #Starship @elonmusk",
+						acc:      "ErcXspace",
+						hasMedia: true,
+						userID:   match.TestIgnoredUserID,
+
+						// This *should* probably be true, but would require a bigger rewrite of the thread logic
+						want: false,
+					},
+				},
+			},
+			{
+				text: "Pretty close. Booster & arms will move faster. QD arm will steady booster for ship mate.",
+				acc:  "elonmusk",
+				want: true,
+
+				parent: &ttest{
+					text:     "Mechazilla <1 Hour Turnaround.\n#SpaceX #Starship @elonmusk",
+					acc:      "ErcXspace",
+					hasMedia: true,
+					userID:   match.TestIgnoredUserID,
+
+					want: false,
+				},
+			},
 			// Someone asking a question below an elon tweet and getting an answer
 			{
 				text: "True, although it will look clean with close out panels installed. \n\nRaptor 2 has significant improvements in every way, but a complete design overhaul is necessary for the engine that can actually make life multiplanetary. It won’t be called Raptor.",

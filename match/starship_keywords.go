@@ -339,7 +339,7 @@ var (
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follower", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",
 
 		"child", "kid", "illegal", "nfl", "tiktok", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
-		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "stroke", "fap", "chick",
+		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "strok", "fap", "chick",
 
 		"stfu",
 

@@ -12,12 +12,12 @@ func NewStarshipMatcher(ignoredUsers *Ignorer) *StarshipMatcher {
 	}
 }
 
-var testIgnoredUserID int64 = 1983513
+var TestIgnoredUserID int64 = 1983513
 
 func NewStarshipMatcherForTests() *StarshipMatcher {
 	return &StarshipMatcher{
 		Ignorer: &Ignorer{
-			list:     bot.ListMembersForTests(testIgnoredUserID),
+			list:     bot.ListMembersForTests(TestIgnoredUserID),
 			keywords: ignoredAccountDescriptionKeywords,
 		},
 	}

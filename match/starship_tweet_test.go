@@ -261,7 +261,7 @@ func TestStarshipTweetIgnoredAccount(t *testing.T) {
 
 			// Make sure we ignore ignored accounts
 			{
-				userID: testIgnoredUserID,
+				userID: TestIgnoredUserID,
 				acc:    "ignored_user",
 				text:   "Starship 20 S.C.A.M (Starship Camera) now here",
 				want:   false,
