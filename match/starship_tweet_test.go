@@ -1,10 +1,13 @@
 package match
 
 import (
+	"fmt"
+	"strings"
 	"testing"
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
+	"mvdan.cc/xurls/v2"
 )
 
 type ttest struct {
@@ -28,7 +31,25 @@ func testStarshipTweets(t *testing.T, tweets []ttest) {
 
 	var matcher = NewStarshipMatcherForTests()
 
+	var urlRegex = xurls.Strict()
+
 	var tweet = func(t ttest) TweetWrapper {
+		var tweetText string = t.text
+		shortURLCounter := 0
+		var tweetURLs []twitter.URLEntity
+		for _, url := range urlRegex.FindAllString(t.text, -1) {
+			var fakeShortURL = fmt.Sprintf("https://t.co/%d", shortURLCounter)
+			shortURLCounter++
+
+			tweetText = strings.ReplaceAll(tweetText, url, fakeShortURL)
+
+			tweetURLs = append(tweetURLs, twitter.URLEntity{
+				DisplayURL:  url,
+				ExpandedURL: url,
+				URL:         fakeShortURL,
+			})
+		}
+
 		var tw = TweetWrapper{
 			Tweet: twitter.Tweet{
 				CreatedAt: t.date,
@@ -37,7 +58,7 @@ func testStarshipTweets(t *testing.T, tweets []ttest) {
 					ID:          t.userID,
 					Description: t.userDescription,
 				},
-				FullText: t.text,
+				FullText: tweetText,
 			},
 		}
 
@@ -68,6 +89,15 @@ func testStarshipTweets(t *testing.T, tweets []ttest) {
 						ID: 1024,
 					},
 				},
+			}
+		}
+		if len(tweetURLs) > 0 {
+			if tw.Entities == nil {
+				tw.Entities = &twitter.Entities{
+					Urls: tweetURLs,
+				}
+			} else {
+				tw.Entities.Urls = tweetURLs
 			}
 		}
 
@@ -270,6 +300,27 @@ func TestStarshipTweetIgnoredAccount(t *testing.T) {
 				// Same tweet, but by not ignored user
 				text: "Starship 20 S.C.A.M (Starship Camera) now here",
 				want: true,
+			},
+		},
+	)
+}
+
+func TestStarshipTweetWithLinks(t *testing.T) {
+	testStarshipTweets(t,
+		[]ttest{
+			{
+				text: "Chopsticks moving\n\nhttps://nasaspaceflight.com/starbaselive",
+
+				want: true,
+			},
+
+			{
+				text: "Unrelated tweet",
+				want: false,
+			},
+			{
+				text: "Unrelated tweet with link: https://youtube.com/watch?v=XcQ",
+				want: false,
 			},
 		},
 	)
