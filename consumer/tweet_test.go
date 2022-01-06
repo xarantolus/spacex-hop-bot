@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "A road closure for Starbase is now active",
+				want: true,
+			},
+			{
 				text:     "As the world turns here at Starbase, Texas @SpaceX continues to push engineering limits to the moon! Watch the full time lapse here: https://youtu.be/tiuLI8t5JWU #SpaceX #Starbase #Texas #Starship",
 				acc:      "LabPadre",
 				hasMedia: true,

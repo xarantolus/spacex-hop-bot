@@ -12,6 +12,26 @@ func TestVariablesFirstIsAlphabet(t *testing.T) {
 			t.Errorf("Keyword %q in antiStarshipKeywords slice does not start with an alphanumerical character", k)
 		}
 	}
+
+	for i, kws := range moreSpecificKeywords {
+		for _, k := range kws.from {
+			if !isAlphanumerical(rune(k[0])) {
+				t.Errorf("Keyword %q in moreSpecificKeywords[%d] 'from' mapping should start with an alphanumerical character", k, i)
+			}
+		}
+
+		for _, k := range kws.to {
+			if !isAlphanumerical(rune(k[0])) {
+				t.Errorf("Keyword %q in moreSpecificKeywords[%d] 'to' mapping should start with an alphanumerical character", k, i)
+			}
+		}
+		for _, k := range kws.antiKeywords {
+			if !isAlphanumerical(rune(k[0])) {
+				t.Errorf("Keyword %q in moreSpecificKeywords[%d] 'antiKeywords' mapping should start with an alphanumerical character", k, i)
+			}
+		}
+	}
+
 }
 
 // since text in the StarshipText function is lowercase, we must make sure that all keywords are lowercase too
@@ -84,10 +104,10 @@ func TestVariablesStringCase(t *testing.T) {
 func TestMoreSpecificLength(t *testing.T) {
 	for i, mapping := range moreSpecificKeywords {
 		if len(mapping.from) == 0 {
-			t.Errorf("moreSpecificKeywords[%d].from has length 0", i)
+			t.Errorf("moreSpecificKeywords[%d].from must not have length 0", i)
 		}
 		if len(mapping.to) == 0 {
-			t.Errorf("moreSpecificKeywords[%d].to has length 0", i)
+			t.Errorf("moreSpecificKeywords[%d].to must not have length 0", i)
 		}
 	}
 }
@@ -96,6 +116,9 @@ func TestMoreSpecificMistakes(t *testing.T) {
 	for i, mapping := range moreSpecificKeywords {
 		if containsAll(mapping.to, starshipKeywords) {
 			t.Errorf("moreSpecificKeywords[%d].to is composed with starshipKeywords, but that doesn't work and should be removed", i)
+		}
+		if containsAll(mapping.from, starshipKeywords) {
+			t.Errorf("moreSpecificKeywords[%d].from is composed with starshipKeywords, but that doesn't work and should be removed", i)
 		}
 	}
 }
