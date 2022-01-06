@@ -11,6 +11,10 @@ func Test_isImportantURL(t *testing.T) {
 		{"https://nasaspaceflight.com/starbaselive", true},
 		{"https://www.nasaspaceflight.com/starbaselive", true},
 
+		{"http://cnunezimages.com", true},
+		{"http://cnunezimages.com/", true},
+		{"http://cnunezimages.com/any-link-really", true},
+
 		{"Twitter dot com", false},
 		{"https://twitter.comcom", false},
 	}

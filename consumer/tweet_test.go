@@ -836,3 +836,27 @@ func TestQuotedTweets(t *testing.T) {
 		},
 	)
 }
+
+func TestHQMediaTweet(t *testing.T) {
+	testStarshipRetweets(t,
+		[]ttest{
+			{
+				acc:  "cnunezimages",
+				text: "Tweet without media",
+				want: false,
+			},
+			{
+				acc:      "cnunezimages",
+				text:     "Tweet with media",
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				acc:      "cnunezimages",
+				text:     "Glowing 20 - @elonmusk @spacex\n#Starbase  #BocaChicaToMars #iCANimagine http://cnunezimages.com @SpaceIntellige3\n_____________________________________\n- Image Taken: January 5, 2022 -",
+				hasMedia: true,
+				want:     true,
+			},
+		},
+	)
+}

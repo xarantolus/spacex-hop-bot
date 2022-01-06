@@ -33,6 +33,7 @@ var (
 	// map[host]path
 	importantURLs = map[string]string{
 		"nasaspaceflight.com": "/starbaselive",
+		"cnunezimages.com":    "*",
 	}
 
 	highQualityYouTubeStreams = map[string]bool{
@@ -69,12 +70,12 @@ func isImportantURL(uri string) (important bool) {
 
 	host := strings.TrimPrefix(strings.ToLower(parsed.Hostname()), "www.")
 
-	imp, ok := importantURLs[host]
+	requiredPath, ok := importantURLs[host]
 	if !ok {
 		return false
 	}
 
-	return imp == parsed.Path
+	return requiredPath == "*" || requiredPath == parsed.Path
 }
 
 // shouldIgnoreLink returns whether this tweet should be ignored because of a linked article
