@@ -32,8 +32,13 @@ var (
 	// This map contains very important URLs that should usually be retweeted
 	// map[host]path
 	importantURLs = map[string]string{
+		// NSF live stream
 		"nasaspaceflight.com": "/starbaselive",
-		"cnunezimages.com":    "*",
+		// Road closures
+		"cameroncountytx.gov": "/spacex/",
+
+		// HQ media site often linked with image tweets
+		"cnunezimages.com": "*",
 	}
 
 	highQualityYouTubeStreams = map[string]bool{
@@ -75,7 +80,8 @@ func isImportantURL(uri string) (important bool) {
 		return false
 	}
 
-	return requiredPath == "*" || requiredPath == parsed.Path
+	return requiredPath == "*" ||
+		strings.Trim(requiredPath, "/") == strings.Trim(parsed.Path, "/")
 }
 
 // shouldIgnoreLink returns whether this tweet should be ignored because of a linked article
