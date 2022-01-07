@@ -33,7 +33,7 @@ func CheckListTimeline(client *twitter.Client, list twitter.List, tweetChan chan
 		})
 
 		if err != nil {
-			util.LogError(err, "list "+list.FullName)
+			util.LogError(err, "list %q", list.FullName)
 			goto sleep
 		}
 

@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"log"
 	"strings"
 	"sync"
@@ -15,7 +16,7 @@ var (
 	lastErrorLogTime time.Time
 )
 
-func LogError(err error, location string) bool {
+func LogError(err error, format string, a ...interface{}) bool {
 	if err != nil {
 		errTxt := err.Error()
 
@@ -28,7 +29,7 @@ func LogError(err error, location string) bool {
 			return true
 		}
 
-		log.Printf("[Error (%s)]: %s\n", location, err.Error())
+		log.Printf("[Error (%s)]: %s\n", fmt.Sprintf(format, a...), err.Error())
 
 		lastErrorText = errTxt
 		lastErrorLogTime = time.Now()

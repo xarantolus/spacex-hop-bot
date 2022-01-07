@@ -1,7 +1,6 @@
 package consumer
 
 import (
-	"fmt"
 	"log"
 	"strings"
 	"time"
@@ -138,7 +137,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 			// We don't log these errors
 			if !strings.Contains(err.Error(), "179 Sorry, you are not authorized to see this status.") &&
 				!strings.Contains(err.Error(), "144 No status found with that ID") {
-				util.LogError(err, "loading parent of "+util.TweetURL(&tweet.Tweet))
+				util.LogError(err, "loading parent of %s", util.TweetURL(&tweet.Tweet))
 			}
 			break
 		}
@@ -225,7 +224,7 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string, source match.Tw
 		// Twitter often doesn't send the info that we have already retweeted a tweet.
 		// So here we don't log the error if that's the case
 		if !strings.Contains(err.Error(), "327 You have already retweeted this Tweet.") {
-			util.LogError(err, "retweeting "+util.TweetURL(tweet))
+			util.LogError(err, "retweeting %s", util.TweetURL(tweet))
 		}
 		return
 	}
@@ -269,7 +268,7 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 	if tweet.InReplyToStatusID != 0 {
 		// Ok, there was a reply. Check if we can do something with that
 		parent, err := p.client.LoadStatus(tweet.InReplyToStatusID)
-		util.LogError(err, "tweet reply status fetch (thread)")
+		util.LogError(err, "fetching tweet reply with id %d in thread", tweet.InReplyToStatusID)
 
 		// If we have a matching tweet thread
 		if parent != nil && !match.ContainsStarshipAntiKeyword(parent.Text()) && p.thread(parent) {
@@ -307,5 +306,5 @@ func (p *Processor) addSpaceMember(tweet *twitter.Tweet) {
 	p.spacePeopleListMembers[tweet.User.ID] = true
 
 	err := p.client.AddListMember(p.spacePeopleListID, tweet.User.ID)
-	util.LogError(err, fmt.Sprintf("adding %s to list", tweet.User.ScreenName))
+	util.LogError(err, "adding %s to list", tweet.User.ScreenName)
 }

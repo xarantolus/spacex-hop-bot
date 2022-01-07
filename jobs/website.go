@@ -25,7 +25,7 @@ func StarshipWebsiteChanges(client consumer.TwitterClient, linkChan chan<- strin
 
 	// Load our last state
 	err := util.LoadJSON(changesFile, &lastChange)
-	util.LogError(err, "loading changes file "+changesFile)
+	util.LogError(err, "loading changes file %q", changesFile)
 
 	if err == nil {
 		log.Printf("[Website] Waiting for new info, last was %s (NET %s)\n", lastChange.ShipName, lastChange.NextFlightDate.Format("2006-01-02"))

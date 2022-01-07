@@ -3,7 +3,6 @@ package bot
 import (
 	"log"
 	"sort"
-	"strconv"
 	"sync"
 	"time"
 
@@ -106,7 +105,7 @@ func (l *UserList) update() {
 			ListID: listID,
 			Count:  1000,
 		})
-		if util.LogError(err, "loading list members for list "+strconv.FormatInt(listID, 10)) || list == nil {
+		if util.LogError(err, "loading list members for list %d", listID) || list == nil {
 			continue
 		}
 

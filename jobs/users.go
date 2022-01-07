@@ -34,7 +34,7 @@ func CheckUserTimeline(client *twitter.Client, name string, tweetChan chan<- mat
 		})
 
 		if err != nil {
-			util.LogError(err, "user "+name)
+			util.LogError(err, "timeline of user %q", name)
 			goto sleep
 		}
 

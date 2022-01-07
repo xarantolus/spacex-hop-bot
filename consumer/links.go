@@ -1,7 +1,6 @@
 package consumer
 
 import (
-	"log"
 	"net/url"
 	"regexp"
 	"strings"
@@ -109,7 +108,7 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 
 		parsed, err := url.ParseRequestURI(canonical)
 		if err != nil {
-			log.Println("Cannot parse URL:", err.Error())
+			util.LogError(err, "parse canonical for %s", u)
 			continue
 		}
 
