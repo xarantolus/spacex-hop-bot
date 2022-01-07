@@ -126,7 +126,7 @@ var (
 			from: compose([]string{"mechazilla", "olit"}),
 			to: compose(
 				placesKeywords, nonSpecificKeywords,
-				[]string{"qd", "arm", "catch"},
+				[]string{"qd", "bqd", "arm", "catch"},
 			),
 		},
 
