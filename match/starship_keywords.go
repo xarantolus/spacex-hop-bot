@@ -68,7 +68,7 @@ var (
 			from: compose(liveStreams,
 				[]string{"orbital tank farm", "otf"},
 				[]string{"suborbital tank farm", "stf"},
-				[]string{"olm", "olt"},
+				[]string{"olm", "olt", "olit"},
 			),
 			to: []string{
 				"methane", "tank", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",
@@ -123,7 +123,7 @@ var (
 
 		// Launch tower
 		{
-			from: compose([]string{"mechazilla"}),
+			from: compose([]string{"mechazilla", "olit"}),
 			to: compose(
 				placesKeywords, nonSpecificKeywords,
 				[]string{"qd", "arm", "catch"},
@@ -322,7 +322,7 @@ var (
 		// Vitamin B2
 		"vitamin",
 
-		"ocisly", "jrti", "canaveral",
+		"ocisly", "jrti", "asog", "canaveral",
 
 		"obetraveller", "ocean cam", "oceancam", "oceanscam", "paul",
 
@@ -372,6 +372,8 @@ var (
 		"nonce", "pedo",
 
 		"bomb",
+
+		"hospital",
 
 		"offend", "offensive", "fanboy", "fan boy", "fangirl", "fan girl",
 

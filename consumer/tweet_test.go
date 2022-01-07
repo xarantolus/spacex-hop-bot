@@ -57,6 +57,14 @@ func TestBasicTweets(t *testing.T) {
 				want: true,
 			},
 			{
+				text: "Orbital Launch Integration Tower catching arms have begun their first vertical move visible on @LabPadre rover cam 1 & 2. @elonmusk @SpaceX",
+				want: true,
+			},
+			{
+				text: "OLIT catching arms have begun their first vertical move visible on @LabPadre rover cam 1 & 2. @elonmusk @SpaceX",
+				want: true,
+			},
+			{
 				text: "Starship-Orion is a good idea",
 				want: false,
 			},
@@ -853,7 +861,7 @@ func TestHQMediaTweet(t *testing.T) {
 			},
 			{
 				acc:      "cnunezimages",
-				text:     "Glowing 20 - @elonmusk @spacex\n#Starbase  #BocaChicaToMars #iCANimagine http://cnunezimages.com @SpaceIntellige3\n_____________________________________\n- Image Taken: January 5, 2022 -",
+				text:     "Glowing 20 - @elonmusk @spacex\n#Starbase  #BocaChicaToMars #iCANimagine http://cnunezimages.com @SpaceIntellige3\n_____________________________________\n- Image Taken: " + time.Now().Format("January 2, 2006") + " -",
 				hasMedia: true,
 				want:     true,
 			},
