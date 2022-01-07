@@ -868,3 +868,30 @@ func TestHQMediaTweet(t *testing.T) {
 		},
 	)
 }
+
+func TestAdTweets(t *testing.T) {
+	testStarshipRetweets(t,
+		[]ttest{
+			{
+				// If it's without an buy link, we retweet it
+				text: "New Starship S20 stuff!",
+				want: true,
+			},
+			{
+				// It's clearly trying to sell something
+				text: "New Starship S20 stuff!\n\nhttps://www.etsy.com/lang/listing/19835918395819385/whatever",
+				want: false,
+			},
+			{
+				text:     "Chopsticks Can Accomplish Anything!\nRight @elonmusk?\n\nhttps://etsy.com/ca/listing/1155335887",
+				hasMedia: true,
+				want:     false,
+			},
+			{
+				text:     "LAST CHANCE! 20% OFF ENDS TONIGHT at 11:59PT!\n\nhttp://etsy.com/shop/thelaunchpadshop\n\n#blackfriday #spacex #nasa #space #starship #starbase",
+				hasMedia: true,
+				want:     false,
+			},
+		},
+	)
+}

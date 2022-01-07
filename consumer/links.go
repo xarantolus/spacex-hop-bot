@@ -99,11 +99,10 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 			continue
 		}
 
-		if p.test {
-			continue
+		var canonical string = u
+		if !p.test {
+			canonical = util.FindCanonicalURL(u, false)
 		}
-
-		var canonical = util.FindCanonicalURL(u, false)
 		if isImportantURL(canonical) {
 			continue
 		}
@@ -115,9 +114,15 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 		}
 
 		// Check if the host is ignored
-		host := strings.ToLower(strings.TrimPrefix(parsed.Hostname(), "www."))
+		host := strings.TrimPrefix(strings.ToLower(parsed.Hostname()), "www.")
 		if ignoredHosts[host] {
 			return true
+		}
+
+		// Don't make requests when we're in a test, it makes no sense to have tests depend on behavior
+		// of external websites
+		if p.test {
+			continue
 		}
 
 		if host == "youtube.com" || host == "youtu.be" {
