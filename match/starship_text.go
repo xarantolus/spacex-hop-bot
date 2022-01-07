@@ -45,5 +45,11 @@ func ContainsStarshipAntiKeyword(text string) bool {
 }
 
 func containsAntikeyword(words []string, text string) bool {
+	for _, antiRegex := range antiKeywordRegexes {
+		if antiRegex.MatchString(text) {
+			return true
+		}
+	}
+
 	return startsWithAny(text, words...)
 }

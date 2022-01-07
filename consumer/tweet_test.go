@@ -11,6 +11,14 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "https://shop.blueorigin.com/collections/new/products/new-glenn-108th-scale",
+			},
+			{
+				text:        "@elonmusk Hey I've got a great idea about what you can use as a mass simulator for the first Starship Orbital Demo! This! https://shop.blueorigin.com/collections/new/products/new-glenn-108th-scale\n\nBlue Origin can finally say they went orbital with New Glenn then!",
+				tweetSource: match.TweetSourceLocationStream,
+				want:        false,
+			},
+			{
 				text: "A road closure for Starbase is now active",
 				want: true,
 			},
@@ -203,6 +211,20 @@ func TestBasicTweets(t *testing.T) {
 func TestLocationTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text:     "New booster standing tall in the setting sun tonight @SpaceX #McGregor Rocket  B1072 @elonmusk",
+				acc:      "jswartzphoto",
+				hasMedia: true,
+				location: match.SpaceXMcGregorPlaceID,
+				want:     false,
+			},
+			{
+				text:     "Alright SpaceXers.   This a FH center?   \n @SpeedyPatriot13 @BoosterSpX @NolanTrees\n\n#Falcon9 #FalconHeavy #McGregor #SpaceX",
+				acc:      "jswartzphoto",
+				hasMedia: true,
+				location: match.SpaceXMcGregorPlaceID,
+				want:     false,
+			},
 			{
 				text:     "Might we see Booster lift back off the OLM? CraneX is in place, load spreader attached, booster stand is on hand and ready. #Starbase #SpaceX",
 				location: match.SpaceXLaunchSiteID,

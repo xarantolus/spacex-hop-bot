@@ -176,7 +176,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		}
 
 		if p.shouldIgnoreLink(&tweet.Tweet) {
-			log.Printf("[Processor] Ignoring %s because we have seen this link recently (%s)", util.TweetURL(&tweet.Tweet), tweet.TweetSource)
+			log.Printf("[Processor] Ignoring %s because of link (%s)", util.TweetURL(&tweet.Tweet), tweet.TweetSource)
 			break
 		}
 

@@ -230,6 +230,11 @@ var (
 		"nhl",
 	}
 
+	antiKeywordRegexes = []*regexp.Regexp{
+		/* Falcon 9 booster numbers all start with 10 */
+		regexp.MustCompile(`\b((?:b|booster)\s*10\d{2})\b`),
+	}
+
 	// If a tweet contains any of these keywords, it will not be retweeted. This is a way of filtering out *non-starship* stuff
 	antiStarshipKeywords = []string{
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "hungry hippo", "rklb", "falcon", "merlin", "m1d", "f9", "starlink",
@@ -280,6 +285,8 @@ var (
 		"thanks", "thank you", "cheers", "render", "animat" /* ion/ed */, "3d", "model", "speculati" /*ng/on*/, "simulated", "print", "vfx", "not real", "photoshop",
 		"art", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle", "lego",
 		"card game", "starship design", "daily_hopper", "daily hopper", "paper model", "papermodel",
+
+		"fantasy 4 cards", "fantasy cards",
 
 		"8bitdo", "sn30",
 

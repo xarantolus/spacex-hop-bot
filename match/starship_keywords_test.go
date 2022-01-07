@@ -1,6 +1,7 @@
 package match
 
 import (
+	"regexp"
 	"strings"
 	"testing"
 )
@@ -139,9 +140,23 @@ func TestVariablesDuplicateKeywords(t *testing.T) {
 
 // Tests for regexes
 
-func TestShipRegex(t *testing.T) {
-	var shipMatch = starshipMatchers[0]
+func helpTestRegex(t *testing.T, regex *regexp.Regexp, regexName string, valid, invalid []string) {
+	t.Helper()
 
+	for _, v := range valid {
+		if regex.FindString(v) == "" {
+			t.Errorf("%s should have matched %q, but didn't", regexName, v)
+		}
+	}
+
+	for _, i := range invalid {
+		if regex.FindString(i) != "" {
+			t.Errorf("%s matched %q, but shouldn't have done that", regexName, i)
+		}
+	}
+}
+
+func TestShipRegex(t *testing.T) {
 	var valid = []string{
 		"sn10", "#sn10", "sn15", "sn 15", "starship s20",
 		"starship number 15", "starship 15",
@@ -154,22 +169,10 @@ func TestShipRegex(t *testing.T) {
 	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!",
 		"u.s. to ship 4 mln covid-19 vaccine doses to nigeria, 5.66 mln to south africa"}
 
-	for _, v := range valid {
-		if shipMatch.FindString(v) == "" {
-			t.Errorf("starshipMatchers[0] should have matched %q, but didn't", v)
-		}
-	}
-
-	for _, i := range invalid {
-		if shipMatch.FindString(i) != "" {
-			t.Errorf("starshipMatchers[0] matched %q, but shouldn't have done that", i)
-		}
-	}
+	helpTestRegex(t, starshipMatchers[0], "starshipMatchers[0]", valid, invalid)
 }
 
 func TestBoosterRegex(t *testing.T) {
-	var boostMatch = starshipMatchers[1]
-
 	var valid = []string{"bn10", "bn1", "#b4", "bn 15", "booster b4",
 		"booster number 15", "booster 15", "#bn4", "booster 15's engines",
 		"booster number 15s engines", "booster 20’s", "booster 20's",
@@ -182,7 +185,7 @@ func TestBoosterRegex(t *testing.T) {
 		"bn-4", "b-4",
 
 		// Falcon 9 booster name
-		"B1051",
+		"b1051", "b1072",
 
 		"company's 20 cars", "company's 2021 report",
 		"booster 1049-11 arrives at the spacex dock",
@@ -192,22 +195,10 @@ func TestBoosterRegex(t *testing.T) {
 		"https://example.com/somelinkthatincludesb3asboostername",
 	}
 
-	for _, v := range valid {
-		if boostMatch.FindString(v) == "" {
-			t.Errorf("starshipMatchers[1] should have matched %q, but didn't", v)
-		}
-	}
-
-	for _, i := range invalid {
-		if boostMatch.FindString(i) != "" {
-			t.Errorf("starshipMatchers[1] matched %q, but shouldn't have done that", i)
-		}
-	}
+	helpTestRegex(t, starshipMatchers[1], "starshipMatchers[1]", valid, invalid)
 }
 
 func TestGSERegex(t *testing.T) {
-	var gseMatch = starshipMatchers[2]
-
 	var valid = []string{"gse-5", "gse 5", "gse 3", "gse tank 5", "gse 5 tank"}
 
 	var invalid = []string{"bn10", "bn1", "#b4", "bn 15", "booster b4",
@@ -216,22 +207,10 @@ func TestGSERegex(t *testing.T) {
 		"booster 3?", "starship 10", "b3496", "sn10", "wordbn 10", "company's 20 cars", "company's 2021 report",
 		"gse tank"}
 
-	for _, v := range valid {
-		if gseMatch.FindString(v) == "" {
-			t.Errorf("starshipMatchers[2] should have matched %q, but didn't", v)
-		}
-	}
-
-	for _, i := range invalid {
-		if gseMatch.FindString(i) != "" {
-			t.Errorf("starshipMatchers[2] matched %q, but shouldn't have done that", i)
-		}
-	}
+	helpTestRegex(t, starshipMatchers[2], "starshipMatchers[2]", valid, invalid)
 }
 
 func TestRaptorRegex(t *testing.T) {
-	var gseMatch = starshipMatchers[3]
-
 	var valid = []string{"rvac 2", "rc 59", "raptor 2", "rb17", "rb9", "rc62",
 		"raptor center 35", "raptor boost 35", "raptor vacuum 5", "raptor centre 35",
 		"raptor engine boost 35", "raptor boost engine 35",
@@ -252,17 +231,7 @@ func TestRaptorRegex(t *testing.T) {
 		"s300", "ship 20", "ship 20's nose", "ship 20’s nosecone section",
 		"sn-11", "s-11"}
 
-	for _, v := range valid {
-		if gseMatch.FindString(v) == "" {
-			t.Errorf("starshipMatchers[3] should have matched %q, but didn't", v)
-		}
-	}
-
-	for _, i := range invalid {
-		if gseMatch.FindString(i) != "" {
-			t.Errorf("starshipMatchers[3] matched %q, but shouldn't have done that", i)
-		}
-	}
+	helpTestRegex(t, starshipMatchers[3], "starshipMatchers[3]", valid, invalid)
 }
 
 func TestAlertRegex(t *testing.T) {
@@ -277,17 +246,7 @@ func TestAlertRegex(t *testing.T) {
 	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!",
 		"u.s. to ship 4 mln covid-19 vaccine doses to nigeria, 5.66 mln to south africa", ""}
 
-	for _, v := range valid {
-		if alertRegex.FindString(v) == "" {
-			t.Errorf("alertRegex should have matched %q, but didn't", v)
-		}
-	}
-
-	for _, i := range invalid {
-		if alertRegex.FindString(i) != "" {
-			t.Errorf("alertRegex matched %q, but shouldn't have done that", i)
-		}
-	}
+	helpTestRegex(t, alertRegex, "alertRegex", valid, invalid)
 }
 
 func TestClosureTFRRegex(t *testing.T) {
@@ -304,17 +263,22 @@ func TestClosureTFRRegex(t *testing.T) {
 		"static fire will be attempted later today",
 	}
 
-	for _, v := range valid {
-		if closureTFRRegex.FindString(v) == "" {
-			t.Errorf("closureTFRRegex should have matched %q, but didn't", v)
-		}
+	helpTestRegex(t, closureTFRRegex, "closureTFRRegex", valid, invalid)
+}
+
+func TestFalcon9BoosterRegex(t *testing.T) {
+	var valid = []string{
+		"booster 1021",
+		"b1072",
+		"booster b1021",
+		"booster 1050",
 	}
 
-	for _, i := range invalid {
-		if closureTFRRegex.FindString(i) != "" {
-			t.Errorf("closureTFRRegex matched %q, but shouldn't have done that", i)
-		}
+	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!",
+		"", "b4", "notbooster 1050", "n1025",
 	}
+
+	helpTestRegex(t, antiKeywordRegexes[0], "antiKeywordRegexes[0]", valid, invalid)
 }
 
 // containsAll returns if subset is a subset of set
