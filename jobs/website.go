@@ -42,7 +42,7 @@ func StarshipWebsiteChanges(client consumer.TwitterClient, linkChan chan<- strin
 		}
 
 		if !reflect.DeepEqual(lastChange, info) {
-			util.LogError(util.SaveJSON(changesFile, lastChange), "saving changes file")
+			util.LogError(util.SaveJSON(changesFile, info), "saving changes file")
 
 			lastChange = info
 		}
@@ -54,9 +54,9 @@ func StarshipWebsiteChanges(client consumer.TwitterClient, linkChan chan<- strin
 }
 
 func runWebsiteScrape(client consumer.TwitterClient, linkChan chan<- string,
-	starshipPageURL string, lastChange scrapers.StarshipInfo, datenow time.Time) (newInfo scrapers.StarshipInfo, err error) {
+	starshipPageURL string, lastChange scrapers.StarshipInfo, datenow time.Time) (info scrapers.StarshipInfo, err error) {
 
-	info, err := scrapers.SpaceXStarship(starshipPageURL, datenow)
+	info, err = scrapers.SpaceXStarship(starshipPageURL, datenow)
 
 	if info.LiveStreamID != "" && linkChan != nil {
 		linkChan <- fmt.Sprintf("https://www.youtube.com/watch?v=%s", info.LiveStreamID)
