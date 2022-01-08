@@ -917,3 +917,22 @@ func TestAdTweets(t *testing.T) {
 		},
 	)
 }
+
+func TestIgnoredTweet(t *testing.T) {
+	testStarshipRetweets(t,
+		[]ttest{
+			{
+				text: "Starship SN15\n\nGet it on https://opensea.io/some/link",
+				want: false,
+			},
+			{
+				text: "Starship NFT dropping soon!",
+				want: false,
+			},
+			{
+				text: "Starship on OpenSea now available!!!",
+				want: false,
+			},
+		},
+	)
+}

@@ -266,7 +266,8 @@ var (
 		"f22", "f-22", "jet", "b-52", "s-300",
 
 		// Not interested in other stuff
-		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "safemoon", "stock", "wall street", "wallstreet", "buffett",
+		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "nft", "opensea",
+		"safemoon", "stock", "wall street", "wallstreet", "buffett",
 
 		"no tfr",
 
