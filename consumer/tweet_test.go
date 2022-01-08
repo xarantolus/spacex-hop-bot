@@ -11,6 +11,14 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Last month the FCC asked SpaceX a series of questions about their next generation Starlink constellation, Starlink v2.0, or \"Gen2\". SpaceX responded back and affirms they will definitely launch it using Starship and could be ready as soon as March 2022",
+				want: true,
+			},
+			{
+				text: "My starlink dish arrived",
+				want: false,
+			},
+			{
 				text: "https://shop.blueorigin.com/collections/new/products/new-glenn-108th-scale",
 			},
 			{
