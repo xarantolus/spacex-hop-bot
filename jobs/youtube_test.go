@@ -107,6 +107,7 @@ func TestStreamTitles(t *testing.T) {
 		{"Starship | SN9 | High-Altitude Flight Test", true},
 		{"Starship | SN8 | High-Altitude Flight Test", true},
 		{"Starship SN20 & BN3: Orbital Flight Test", true},
+		{"Starship Orbital Flight Test", true},
 		{"Starship | Starlink Mission", true},
 		{"CRS-24", false},
 	}
