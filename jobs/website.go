@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
+	"reflect"
 	"time"
 
 	"github.com/xarantolus/spacex-hop-bot/consumer"
@@ -34,43 +35,53 @@ func StarshipWebsiteChanges(client consumer.TwitterClient, linkChan chan<- strin
 	}
 
 	for {
-		info, err := scrapers.SpaceXStarship()
-
-		if info.LiveStreamID != "" {
-			linkChan <- fmt.Sprintf("https://www.youtube.com/watch?v=%s", info.LiveStreamID)
-		}
-
+		info, err := runWebsiteScrape(client, linkChan, scrapers.StarshipURL, lastChange, time.Now())
 		if err != nil {
 			util.LogError(err, "scraping SpaceX Starship website")
-
 			goto sleep
 		}
 
-		// If it's the same info again, we don't care
-		if lastChange.NextFlightDate.YearDay() >= info.NextFlightDate.YearDay() && lastChange.NextFlightDate.Year() == info.NextFlightDate.Year() {
-			goto sleep
+		if !reflect.DeepEqual(lastChange, info) {
+			util.LogError(util.SaveJSON(changesFile, lastChange), "saving changes file")
+
+			lastChange = info
 		}
-
-		// OK, now we have an interesting and new change
-		{
-			// TODO: Maybe support something like "orbital flight test", "orbital test flight"? and booster numbers
-			var tweetText = fmt.Sprintf("The SpaceX #Starship website now mentions %s for #%s #WenHop\n%s",
-				info.NextFlightDate.Format("January 2"), info.ShipName, scrapers.StarshipURL)
-
-			t, err := client.Tweet(tweetText, nil)
-			if err != nil {
-				util.LogError(err, "tweeting starship update")
-				goto sleep
-			}
-			log.Println("[Twitter] Tweeted", util.TweetURL(t))
-		}
-
-		// Save this one
-		lastChange = info
-		util.LogError(util.SaveJSON(changesFile, lastChange), "saving changes file")
 
 	sleep:
 		// Wait 2-4 minutes until checking again
 		time.Sleep(2*time.Minute + time.Duration(rand.Intn(120))*time.Second)
 	}
+}
+
+func runWebsiteScrape(client consumer.TwitterClient, linkChan chan<- string,
+	starshipPageURL string, lastChange scrapers.StarshipInfo, datenow time.Time) (newInfo scrapers.StarshipInfo, err error) {
+
+	info, err := scrapers.SpaceXStarship(starshipPageURL, datenow)
+
+	if info.LiveStreamID != "" && linkChan != nil {
+		linkChan <- fmt.Sprintf("https://www.youtube.com/watch?v=%s", info.LiveStreamID)
+	}
+
+	if err != nil {
+		return
+	}
+
+	// If it's the same info again, we don't care
+	if lastChange.NextFlightDate.YearDay() >= info.NextFlightDate.YearDay() && lastChange.NextFlightDate.Year() == info.NextFlightDate.Year() {
+		return
+	}
+
+	// OK, now we have an interesting and new change
+	// TODO: Maybe support something like "orbital flight test", "orbital test flight"? and booster numbers
+	var tweetText = fmt.Sprintf("The SpaceX #Starship website now mentions %s for #%s #WenHop\n%s",
+		info.NextFlightDate.Format("January 2"), info.ShipName, scrapers.StarshipURL)
+
+	t, err := client.Tweet(tweetText, nil)
+	if err != nil {
+		err = fmt.Errorf("tweeting about update: %w", err)
+		return
+	}
+	log.Println("[Twitter] Tweeted", util.TweetURL(t))
+
+	return info, nil
 }

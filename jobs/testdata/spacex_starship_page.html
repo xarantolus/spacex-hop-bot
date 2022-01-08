@@ -1,0 +1,659 @@
+<!doctype html>
+<!--
+-- Space Exploration Technologies Corp.
+-- @version 1.0
+-- @date 21.05.2020
+-- @url https://spacex.com
+-->
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="SpaceX" />
+	<meta name="keywords" content="space,spacex,aerospace,elon musk,mars,falcon 9,falcon heavy,dragon" />
+	<meta name="description" content="SpaceX designs, manufactures and launches advanced rockets and spacecraft. The company was founded in 2002 to revolutionize space technology, with the ultimate goal of enabling people to live on other planets." />
+	<meta property="og:locale" content="en_US"/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:title" content="SpaceX"/>
+	<meta property="og:description" content="SpaceX designs, manufactures and launches advanced rockets and spacecraft."/>
+	<meta property="og:site_name" content="SpaceX"/>
+	<meta property="og:image" content="https://www.spacex.com/static/images/share.jpg"/>
+	<meta itemprop="name" content="SpaceX" />
+	<meta itemprop="image" content="https://www.spacex.com/static/images/share.jpg" />
+	<meta property="og:url" content="http://www.spacex.com"/>
+	<meta name="twitter:card" content="summary_large_image"/>
+	<meta name="twitter:site" content="@spacex" />
+	<meta name="twitter:description" content="SpaceX designs, manufactures and launches advanced rockets and spacecraft."/>
+	<meta name="twitter:title" content="SpaceX"/>
+	<meta name="twitter:image" content="https://www.spacex.com/static/images/share.jpg"/>
+	<title>SpaceX - Starship</title>
+	<link rel="stylesheet" type="text/css" href="../../style.min.css" media="screen">
+	<link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico">
+	<link rel="Shortcut Icon" type="image/ico" href="../../static/images/favicon.ico">
+	<meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=1">
+	<script type="text/javascript" src="../../static/deps-min.js"></script>
+	<script type="text/javascript" async src="../../static/player-min.js"></script>
+</head>
+<body id="starship">
+	<div id="wrapper">
+		<div id="header" class="section" data-limit=".15">
+  <div class="header-bg"></div>
+  <div class="header-inner">
+    <a href="/" id="logo">
+      <svg version="1.1" x="0px" y="0px" viewbox="0 0 400 50">
+        <title>SpaceX Logo</title>
+        <g class="letter_s">
+          <path class="fill-white" d="M37.5,30.5H10.9v-6.6h34.3c-0.9-2.8-3.8-5.4-8.9-5.4H11.4c-5.7,0-9,2.1-9,6.7v4.9c0,4,3.4,6.3,8.4,6.3h26.9v7H1.5
+          c0.9,3.8,3.8,5.8,9,5.8h27.1c5.7,0,8.5-2.2,8.5-6.9v-4.9C46.1,33.1,42.8,30.8,37.5,30.5z"/>
+        </g>
+        <g class="letter_p">
+          <path class="fill-white" d="M91.8,18.6H59v30.7h9.3V37.5h24.2c6.7,0,10.4-2.3,10.4-7.7v-3.4C102.8,21.4,98.6,18.6,91.8,18.6z M94.8,28.4
+          c0,2.2-0.4,3.4-4,3.4H68.3l0.1-8h22c4,0,4.5,1.2,4.5,3.3V28.4z"/>
+        </g>
+        <g class="letter_a">
+          <polygon class="fill-white" points="129.9,17.3 124.3,24.2 133.8,37.3 114,37.3 109.1,42.5 137.7,42.5 142.6,49.3 153.6,49.3 	"/>
+        </g>
+        <g class="letter_c">
+          <path class="fill-white" d="M171.4,23.9h34.8c-0.9-3.6-4.4-5.4-9.4-5.4h-26c-4.5,0-8.8,1.8-8.8,6.7v17.2c0,4.9,4.3,6.7,8.8,6.7h26.3
+          c6,0,8.1-1.7,9.1-5.8h-34.8V23.9z"/>
+        </g>
+        <g class="letter_e">
+          <polygon class="fill-white" points="228.3,43.5 228.3,34.1 247,34.1 247,28.9 218.9,28.9 218.9,49.3 260.4,49.3 260.4,43.5 	"/>
+          <rect class="fill-white" x="219.9" y="18.6" width="41.9" height="5.4"/>
+        </g>
+        <g class="letter_x">
+          <path class="fill-white" d="M287.6,18.6H273l17.2,12.6c2.5-1.7,5.4-3.5,8-5L287.6,18.6z"/>
+          <path class="fill-white" d="M308.8,34.3c-2.5,1.7-5,3.6-7.4,5.4l13,9.5h14.7L308.8,34.3z"/>
+        </g>
+        <g class="letter_swoosh">
+          <path class="fill-white" d="M399,0.7c-80,4.6-117,38.8-125.3,46.9l-1.7,1.6h14.8C326.8,9.1,384.3,2,399,0.7L399,0.7z"/>
+        </g>
+      </svg>
+    </a>
+    <div id="navigation">
+      <ul class="nav-links">
+        <li class="nav-item"><a href="/vehicles/falcon-9/">Falcon 9</a></li>
+        <li class="nav-item"><a href="/vehicles/falcon-heavy/">Falcon Heavy</a></li>
+        <li class="nav-item"><a href="/vehicles/dragon/">Dragon</a></li>
+        <li class="nav-item"><a href="/vehicles/starship/">Starship</a></li>
+        <li class="nav-item"><a href="/human-spaceflight/">Human Spaceflight</a></li>
+        <li class="nav-item"><a href="/rideshare/">Rideshare</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="navigation-right">
+    <ul class="nav-links">
+      <li class="nav-item"><a href="https://shop.spacex.com/" rel="noopener" target="_blank">SHOP</a></li>
+    </ul>
+  </div>
+
+  <div id="menu-close"></div>
+  <div id="menu">
+    <div id="menu-background"></div>
+    <div id="menu-navigation">
+      <ul class="nav-links">
+        <li class="nav-item primary"><a href="/vehicles/falcon-9/">Falcon 9</a></li>
+        <li class="nav-item primary"><a href="/vehicles/falcon-heavy/">Falcon Heavy</a></li>
+        <li class="nav-item primary"><a href="/vehicles/dragon/">Dragon</a></li>
+        <li class="nav-item primary"><a href="/vehicles/starship/">Starship</a></li>
+        <li class="nav-item primary"><a href="/human-spaceflight/">Human Spaceflight</a></li>
+        <li class="nav-item primary"><a href="/rideshare/">Rideshare</a></li>
+        <li class="nav-item secondary"><a href="/mission/">Mission</a></li>
+        <li class="nav-item secondary"><a href="/launches/">Launches</a></li>
+        <li class="nav-item secondary"><a href="/careers/">Careers</a></li>
+        <li class="nav-item secondary"><a href="/updates/">Updates</a></li>
+        <li class="nav-item secondary"><a href="https://shop.spacex.com/" rel="noopener" target="_blank">Shop</a></li>
+      </ul>
+    </div>
+  </div>
+  <button id="hamburger" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+    <div id="bar1" class="bar"></div>
+    <div id="bar2" class="bar"></div>
+    <div id="bar3" class="bar"></div>
+  </button>
+</div>
+
+		<div id="scroller">
+			<div id="feature" class="section">
+				<div id="parallax" class="background" data-speed="0.0025" data-desktop="/static/images/backgrounds-2021/sn15/post-launch/STARSHIP_SN15_Desktop.jpg" data-mobile="/static/images/backgrounds-2021/sn15/post-launch/STARSHIP_SN15_Mobile.jpg"></div>
+				<div id="opacity" class="section-inner feature">
+					<div class="inner-left-bottom">
+						<h3 class="animate">FLIGHT TEST</h3>
+						<h2 class="animate">Starship SN15</h2>
+						<a class="btn animate" tabindex="0" href="https://youtu.be/z9eoubnO-pE" data-video="z9eoubnO-pE">
+							<div class="hover"></div>
+							<span class="text">Rewatch</span>
+						</a>
+					</div>
+					<div id="scrollme">
+						<svg width="30px" height="20px">
+							<path stroke="#ffffff" stroke-width="2px" d="M2.000,5.000 L15.000,18.000 L28.000,5.000 "/>
+						</svg>
+					</div>
+				</div>
+			</div>
+
+			<div class="section section-dc">
+				<div class="section-inner">
+					<div class="text-columns">
+					  <div class="text-column">
+                          {{.Text}}
+					  </div>
+					  <div class="text-column">
+
+                    </div>
+					</div>
+				</div>
+			</div>
+
+			<div id="reveal" class="section resize">
+				<div class="reveal-inner section-inner">
+					<div class="inner-left-middle">
+						<h4 class="animate">SpaceX’s Starship spacecraft and Super Heavy rocket (collectively referred to as Starship) represent a fully reusable transportation system designed to carry both crew and cargo to Earth orbit, the Moon, Mars and beyond. Starship will be the world’s most powerful launch vehicle ever developed, with the ability to carry in excess of 100 metric tonnes to Earth orbit.</h4>
+					</div>
+				</div>
+			</div>
+
+			<div id="slider" class="slider quickjump section swiper-container" data-vehicle>
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<div class="background gallery-background gallery-full overflow-visible">
+							<div class="reveal-bg" data-preload data-desktop="../../static/images/starship/desktop/WebsiteStarshipStack_Render_Desktop.jpg" data-mobile="../../static/images/starship/mobile/WebsiteStarshipStack_Render_Mobile.jpg"></div>
+							<div class="reveal-container">
+								<div class="reveal-overflow u-fullParent">
+									<div class="reveal-render u-fullParent" data-preload data-desktop="../../static/images/starship/desktop/WebsiteStarshipStack_Render_Desktop.jpg" data-mobile="../../static/images/starship/mobile/WebsiteStarshipStack_Render_Mobile.jpg">
+										<video id="reveal-video" autoplay loop muted width="100%" height="100%" preload="auto" autobuffer="true">
+											<source type="video/mp4" src="../../media/WebsiteStarshipStack_Anim_Render_Desktop.mp4">
+											<source type="video/webm" src="../../media/WebsiteStarshipStack_Anim_Render_Desktop.webm">
+										</video>
+									</div>
+									<div id="reveal-lines" class="reveal-lines u-fullParent" data-preload data-desktop="../../static/images/starship/desktop/WebsiteStarshipStack_Lines_Desktop.jpg" data-mobile="../../static/images/starship/mobile/WebsiteStarshipStack_Lines_Mobile.jpg"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="section-inner">
+							<div id="reveal-overview" class="inner-left-middle">
+								<h2 class="js-stagger">Overview</h2>
+								<table class="data additional-toggle" style="display: table;">
+									<tbody>
+										<tr class="js-stagger">
+											<td>HEIGHT</td>
+											<td>120 m <span>/ 394 ft</span></td>
+										</tr>
+										<tr class="js-stagger">
+											<td>DIAMETER</td>
+											<td>9 m <span>/ 30 ft</span></td>
+										</tr>
+										<tr class="js-stagger">
+											<td>PAYLOAD TO LEO</td>
+											<td>100+ t <span>/ 220+ klb</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="background gallery-background gallery-full" data-preload data-desktop="../../static/images/starship/desktop/WebsiteStarship_Render_Desktop.jpg" data-mobile="../../static/images/starship/mobile/WebsiteStarship_Render_Mobile.jpg"></div>
+						<div class="section-inner">
+							<div class="inner-left-middle">
+								<h2 class="animate js-bounding">STARSHIP</h2>
+								<p class="animate">Starship is the fully reusable spacecraft and second stage of the Starship system. It offers an integrated payload section and is capable of carrying passengers and cargo to Earth orbit, planetary destinations, and between destinations on Earth.</p>
+								<table class="data animate">
+									<tbody>
+										<tr>
+											<td>HEIGHT</td>
+											<td>50 m <span>/ 160 ft</span></td>
+										</tr>
+										<tr>
+											<td>DIAMETER</td>
+											<td>9 m <span>/ 30 ft</span></td>
+										</tr>
+										<tr>
+											<td>PROPELLANT CAPACITY</td>
+											<td>1200 t <span>/ 2.6 Mlb</span></td>
+										</tr>
+										<tr>
+											<td>PAYLOAD CAPACITY</td>
+											<td>100+ t <span>/ 220+ klb</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="background gallery-background gallery-full" data-preload data-desktop="../../static/images/starship/desktop/WebsiteSuperHeavy_Render_Desktop.jpg" data-mobile="../../static/images/starship/mobile/WebsiteSuperHeavy_Render_Mobile.jpg"></div>
+						<div class="section-inner">
+							<div class="inner-left-middle">
+								<h2 class="animate">SUPER HEAVY</h2>
+								<p class="animate">The first stage, or booster, of our next-generation launch system has a gross liftoff mass of over 3 million kg and uses sub-cooled liquid methane and liquid oxygen (CH4/LOX) propellants. The booster will return to land at the launch site on its 6 legs.</p>
+								<table class="data animate">
+									<tbody>
+										<tr>
+											<td>HEIGHT</td>
+											<td>70 m <span>/ 230 ft</span></td>
+										</tr>
+										<tr>
+											<td>DIAMETER</td>
+											<td>9 m <span>/ 30 ft</span></td>
+										</tr>
+										<tr>
+											<td>PROPELLANT CAPACITY</td>
+											<td>3400 t <span>/ 6.8 Mlb</span></td>
+										</tr>
+										<tr>
+											<td>THRUST</td>
+											<td>72 MN <span>/ 16 Mlbf</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="background gallery-background gallery-full">
+							<div class="background-tab"
+								data-tab-bg="crew"
+								data-preload data-desktop="../../static/images/starship/desktop/WebsiteStarshipShowcase_Render_Desktop.jpg" data-mobile="../../static/images/starship/mobile/WebsiteStarshipShowcase_Render_Mobile.jpg">
+							</div>
+							<div class="background-tab"
+								data-tab-bg="cargo" hidden
+								data-preload data-desktop="../../static/images/starship/desktop/WebsiteStarshipShowcaseCargo_Render_Desktop.jpg" data-mobile="../../static/images/starship/mobile/WebsiteStarshipShowcaseCargo_Render_Mobile.jpg">
+							</div>
+						</div>
+						<div class="section-inner">
+							<div class="inner-left-middle">
+								<h2 class="animate">PAYLOAD</h2>
+								<div class="content-tabs animate" role="tablist">
+									<button role="tab" data-tab-bg="crew" aria-selected="true" aria-controls="crew-tab-panel" id="crew-tab">Crew</button>|
+									<button role="tab" data-tab-bg="cargo" aria-selected="false" aria-controls="cargo-tab-panel" id="cargo-tab" tabindex="-1">Cargo</button>
+								</div>
+								<div class="content-tab-data animate" data-tab-bg="crew" tabindex="0" role="tabpanel" id="crew-tab-panel" aria-labelledby="crew-tab">
+									<p>The Starship payload fairing is 9 m in diameter and 18 m high, resulting in the largest usable payload volume of any current or in development launcher. This payload volume can be configured for both crew and cargo.</p>
+									<table class="data">
+										<tbody>
+											<tr>
+												<td>PAYLOAD VOLUME HEIGHT</td>
+												<td>18 m <span>/ 59 ft</span></td>
+											</tr>
+											<tr>
+												<td>PAYLOAD FAIRING DIAMETER</td>
+												<td>9 m <span>/ 30 ft</span></td>
+											</tr>
+											<tr>
+												<td>PAYLOAD VOLUME</td>
+												<td>1,100 m3 <span>/ 38,800 ft3</span></td>
+											</tr>
+											<tr>
+												<td>USEFUL MASS</td>
+												<td>100+ t <span>/ 220+ klb </span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="content-tab-data animate" data-tab-bg="cargo" tabindex="0" role="tabpanel" id="cargo-tab-panel" aria-labelledby="cargo-tab" hidden>
+									<p>The Starship payload fairing is 9 m in diameter and 18 m high, resulting in the largest usable payload volume of any current or in development launcher. This payload volume can be configured for both crew and cargo.</p>
+									<table class="data">
+										<tbody>
+											<tr>
+												<td>PAYLOAD VOLUME HEIGHT</td>
+												<td>18 m <span>/ 59 ft</span></td>
+											</tr>
+											<tr>
+												<td>PAYLOAD FAIRING DIAMETER</td>
+												<td>9 m <span>/ 30 ft</span></td>
+											</tr>
+											<tr>
+												<td>PAYLOAD VOLUME</td>
+												<td>1,100 m3 <span>/ 38,800 ft3</span></td>
+											</tr>
+											<tr>
+												<td>USEFUL MASS</td>
+												<td>100+ t <span>/ 220+ klb </span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="controls">
+					<div class="swiper-dots not-mobile"></div>
+					<div id="gallery-prev-s" class="gallery-prev swiper-button-prev">
+						<svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewbox="0 0 6 10">
+						  <path d="M5,6a.908.908,0,0,1-.7-.3l-4-4A.967.967,0,0,1,.3.3.967.967,0,0,1,1.7.3L5,3.6,8.3.3A.967.967,0,0,1,9.7.3a.967.967,0,0,1,0,1.4l-4,4A.908.908,0,0,1,5,6Z" transform="translate(6) rotate(90)" fill="#fff"/>
+						</svg>
+					</div>
+					<div id="gallery-next-s" class="gallery-next swiper-button-next">
+						<svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewbox="0 0 6 10">
+						  <path d="M5,6a.908.908,0,0,1-.7-.3l-4-4A.967.967,0,0,1,.3.3.967.967,0,0,1,1.7.3L5,3.6,8.3.3A.967.967,0,0,1,9.7.3a.967.967,0,0,1,0,1.4l-4,4A.908.908,0,0,1,5,6Z" transform="translate(0 10) rotate(-90)" fill="#fff"/>
+						</svg>
+					</div>
+				</div>
+			</div>
+
+			<div id="video" class="section" data-video="sOpMrVnjYeY" data-title="Starship Update">
+				<div class="background" data-preload data-mobile="../../static/images/backgrounds/starship_video-mobile.jpg" data-desktop="../../static/images/backgrounds/starship_video.jpg">
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64.025" height="81.486" viewbox="0 0 64.025 81.486" class="play-arrow">
+						<g>
+							<path d="M8,5V86.486L72.025,45.743Z" transform="translate(-8 -5)" fill="#fff"/>
+						</g>
+					</svg>
+				</div>
+				<div class="section-inner resize">
+					<div class="inner-left-bottom">
+						<h3 class="animate">EVENT</h3>
+						<h2 class="animate">Starship Update</h2>
+					</div>
+				</div>
+			</div>
+
+			<div id="uses" class="slider quickjump section swiper-container collapse">
+				<div class="swiper-wrapper resize">
+					<div class="swiper-slide">
+						<div class="gallery-background gallery-full resize_gallery" data-preload data-mobile="../../static/images/starship/CAPABILITIES__SATELLITE_mobile.gif" data-desktop="../../static/images/starship/CAPABILITIES__SATELLITE.gif" style="background-size: contain;"></div>
+						<div class="section-inner resize">
+							<div class="inner-left-middle">
+								<h3 class="animate js-bounding">STARSHIP USES</h3>
+								<h2 class="animate">SATELLITES </h2>
+								<p class="animate">Starship is designed to deliver satellites further and at a lower marginal cost per launch than our current Falcon vehicles. With a payload compartment larger than any fairing currently in operation or development, Starship creates possibilities for new missions, including space telescopes even larger than the James Webb.</p>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="gallery-background gallery-full resize_gallery" data-preload data-mobile="../../static/images/starship/CAPABILITIES__ISS_mobile.gif" data-desktop="../../static/images/starship/CAPABILITIES__ISS.gif" style="background-size: contain;"></div>
+						<div class="section-inner resize">
+							<div class="inner-left-middle">
+								<h3 class="animate">STARSHIP USES</h3>
+								<h2 class="animate">SPACE STATION</h2>
+								<p class="animate">Starship can deliver both cargo and people to and from the ISS. Starship’s fairing provides significant capacity for in-space activities. The aft cargo containers can also host a variety of payloads.</p>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="gallery-background gallery-full resize_gallery" data-preload data-mobile="../../static/images/starship/CAPABILITIES__MOON_mobile.gif" data-desktop="../../static/images/starship/CAPABILITIES__MOON.gif" style="background-size: contain;"></div>
+						<div class="section-inner resize">
+							<div class="inner-left-middle">
+								<h3 class="animate">STARSHIP USES</h3>
+								<h2 class="animate">MOON MISSIONS</h2>
+								<p class="animate">Developing bases to support future space exploration requires the transport of large amounts of cargo to the Moon for research and human spaceflight development. Starship is designed to carry these building blocks.</p>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="gallery-background gallery-full resize_gallery" data-preload data-mobile="../../static/images/starship/CAPABILITIES__INTERPLANETARY_mobile.gif" data-desktop="../../static/images/starship/CAPABILITIES__INTERPLANETARY.gif" style="background-size: contain;"></div>
+						<div class="section-inner resize">
+							<div class="inner-left-middle">
+								<h3 class="animate">STARSHIP USES</h3>
+								<h2 class="animate">INTERPLANETARY TRANSPORT</h2>
+								<p class="animate">Building cities on Mars will require affordable delivery of significant quantities of cargo and people. The fully reusable Starship system uses in-space propellant transfer to achieve this and carry people on long-duration, interplanetary flights.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="gallery-prev-use" class="gallery-prev swiper-button-prev">
+					<svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewbox="0 0 6 10">
+					  <path d="M5,6a.908.908,0,0,1-.7-.3l-4-4A.967.967,0,0,1,.3.3.967.967,0,0,1,1.7.3L5,3.6,8.3.3A.967.967,0,0,1,9.7.3a.967.967,0,0,1,0,1.4l-4,4A.908.908,0,0,1,5,6Z" transform="translate(6) rotate(90)" fill="#fff"/>
+					</svg>
+				</div>
+				<div id="gallery-next-use" class="gallery-next swiper-button-next">
+					<svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewbox="0 0 6 10">
+					  <path d="M5,6a.908.908,0,0,1-.7-.3l-4-4A.967.967,0,0,1,.3.3.967.967,0,0,1,1.7.3L5,3.6,8.3.3A.967.967,0,0,1,9.7.3a.967.967,0,0,1,0,1.4l-4,4A.908.908,0,0,1,5,6Z" transform="translate(0 10) rotate(-90)" fill="#fff"/>
+					</svg>
+				</div>
+			</div>
+			<script>
+				new Swiper ('#uses', {
+					direction: 'horizontal',
+					loop: true,
+					speed: 1500,
+					simulateTouch: false,
+					pagination: false,
+					navigation: {
+					  nextEl: '#gallery-next-use',
+					  prevEl: '#gallery-prev-use',
+					}
+				});
+			</script>
+
+			<div id="landing" class="section">
+				<div class="background" data-preload data-desktop="../../static/images/backgrounds/mars_landing.jpg" data-mobile="../../static/images/backgrounds/mars_landing-mobile.jpg"></div>
+				<div class="section-inner resize">
+					<div class="inner-right-top">
+						<h2 class="animate">LANDING ON MARS</h2>
+						<p class="animate">Starship will enter Mars’ atmosphere at 7.5 kilometers per second and decelerate aerodynamically. The vehicle’s heat shield is designed to withstand multiple entries, but given that the vehicle is coming into Mars' atmosphere so hot, we still expect to see some ablation of the heat shield (similar to wear and tear on a brake pad). The engineering video below simulates the physics of Mars entry for Starship.</p>
+						<a class="btn animate" tabindex="0" rel="noopener" href="https://www.youtube.com/watch?v=5seefpjMQJI" target="_blank" data-video="5seefpjMQJI" data-title="Starship Landing Simulation">
+							<div class="hover"></div>
+							<div class="text">Watch Simulation</div>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div id="engines" class="section collapse">
+				<div class="background gallery-background gallery-full" data-preload data-desktop="../../static/images/starship/desktop/Raptor.jpg" data-mobile="../../static/images/starship/mobile/Raptor.jpg"></div>
+				<div class="section-inner resize">
+					<div class="inner-left-middle">
+						<h3 class="animate">Engines</h3>
+						<h2 class="animate">Raptor</h2>
+						<p class="animate">The Raptor engine is a reusable methalox staged-combustion engine that powers the  Starship launch system. Raptor engines began flight testing on the Starship prototype rockets in July 2019, becoming the first full-flow staged combustion rocket engine ever flown.</p>
+						<table class="data animate">
+							<tbody>
+								<tr>
+									<td>DIAMETER</td>
+									<td>1.3 m <span>/ 4 ft</span></td>
+								</tr>
+								<tr>
+									<td>HEIGHT</td>
+									<td>3.1 m <span>/ 10.2 ft</span></td>
+								</tr>
+								<tr>
+									<td>THRUST</td>
+									<td>2 MN <span>/ 440 klbf</span></td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- <div class="content-tabs animate" role="tablist">
+							<button role="tab" data-tab-bg="sea-level" aria-selected="true" aria-controls="sea-level-tab-panel" id="sea-level-tab">SEA LEVEL</button>|
+							<button role="tab" data-tab-bg="vacuum" aria-selected="false" aria-controls="vacuum-tab-panel" id="vacuum-tab" tabindex="-1">VACUUM</button>
+						</div> -->
+						<!-- <div class="content-tab-data animate" data-tab-bg="sea-level" tabindex="0" role="tabpanel" id="sea-level-tab-panel" aria-labelledby="sea-level-tab">
+							<p>The Raptor engine is a reusable methalox staged-combustion engine that powers the  Starship launch system. Raptor engines began flight testing on the Starship prototype rockets in July 2019, becoming the first full-flow staged combustion rocket engine ever flown.</p>
+							<table class="data">
+								<tbody>
+									<tr>
+										<td>DIAMETER</td>
+										<td>1.3 m <span>/ 4 ft</span></td>
+									</tr>
+									<tr>
+										<td>HEIGHT</td>
+										<td>3.1 m <span>/ 10.2 ft</span></td>
+									</tr>
+									<tr>
+										<td>THRUST</td>
+										<td>2 MN <span>/ 440 klbf</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="content-tab-data animate" data-tab-bg="vacuum" tabindex="0" role="tabpanel" id="vacuum-tab-panel" aria-labelledby="vacuum-tab" hidden>
+							<p>The Raptor engine is a reusable methalox staged-combustion engine that powers the  Starship launch system. Raptor engines began flight testing on the Starship prototype rockets in July 2019, becoming the first full-flow staged combustion rocket engine ever flown.</p>
+							<table class="data">
+								<tbody>
+									<tr>
+										<td>DIAMETER</td>
+										<td>1.3 m <span>/ 4 ft</span></td>
+									</tr>
+									<tr>
+										<td>HEIGHT</td>
+										<td>3.1 m <span>/ 10.2 ft</span></td>
+									</tr>
+									<tr>
+										<td>THRUST</td>
+										<td>2 MN <span>/ 440 klbf</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div> -->
+					</div>
+				</div>
+			</div>
+
+			<div class="section collapse">
+				<div class="content-columns">
+					<div class="collapse left">
+						<div class="column-image animate">
+							<picture class="responsive-image">
+							  <source srcset="../../static/images/starship/private_lunar_mission.webp" type="image/webp">
+							  <source srcset="../../static/images/starship/private_lunar_mission.jpg" type="image/jpeg">
+							  <img src="../../static/images/starship/private_lunar_mission.jpg" alt="">
+							</picture>
+						</div>
+						<div class="inner-right-middle">
+							<h2 class="animate">FIRST PRIVATE LUNAR MISSION</h2>
+							<p class="animate">In 2023, Japanese entrepreneur Yusaku Maezawa and the crew of dearMoon will become the first civilian passengers on a lunar Starship mission, featuring a fly-by of the Moon during their week-long journey. This flight is an important step toward enabling access for people who dream of traveling to space.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="gallery" class="quickjump section swiper-container resize">
+				<div class="swiper-wrapper resize">
+					<div class="swiper-slide">
+						<div class="gallery-background resize-gallery" style="background-position: center top 30%" data-preload data-desktop="/static/images/starship/refresh/STARSHIP_CREW_3840x2160.jpg" data-mobile="/static/images/starship/refresh/STARSHIP_CREW_800x1200_Mobile.jpg"></div>
+						<div class="caption">
+							<div class="description">Starships ready for flight tests.</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="gallery-background resize-gallery" data-preload data-desktop="/static/images/starship/refresh/STARSHIP_SN10_3840x2160.jpg" data-mobile="/static/images/starship/refresh/STARSHIP_SN10_800x1200_Mobile.jpg"></div>
+						<div class="caption">
+							<div class="description">Starship in flight</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="gallery-background resize-gallery" style="background-position: center top" data-preload data-desktop="/static/images/starship/refresh/STARSHIP_SN15_LANDING_3840x2326.jpg" data-mobile="/static/images/starship/refresh/STARSHIP_SN15_LANDING_800x1200_Mobile.jpg"></div>
+						<div class="caption">
+							<div class="description">Starship successfully lands</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="gallery-background resize-gallery" style="background-position-y: bottom" data-preload data-desktop="/static/images/starship/refresh/STARSHIP_SN9_Vertical_3840x2560.jpeg" data-mobile="/static/images/starship/refresh/STARSHIP_SN9_Vertical_800x1200.jpg"></div>
+						<div class="caption">
+							<div class="description">Three raptor engines at the base of Starship</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="gallery-background resize-gallery" data-preload data-desktop="../../static/images/starship/STR_4.jpg" data-mobile="../../static/images/starship/STR_4_mobile.jpg"></div>
+						<div class="caption">
+							<div class="description">Artist's rendering of Starship taking off on Mars</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="gallery-background resize-gallery" data-preload data-desktop="../../static/images/starship/STR_5.jpg" data-mobile="../../static/images/starship/STR_5_mobile.jpg"></div>
+						<div class="caption">
+							<div class="description">Artist's rendering of Starship and Super Heavy in flight</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="gallery-background resize-gallery" data-preload data-desktop="../../static/images/starship/STR_6.jpg" data-mobile="../../static/images/starship/STR_6_mobile.jpg"></div>
+						<div class="caption">
+							<div class="description">Artist's rendering of a base on Mars with multiple Starships</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="gallery-background resize-gallery" data-preload data-desktop="../../static/images/starship/STR_7.jpg" data-mobile="../../static/images/starship/STR_7_mobile.jpg"></div>
+						<div class="caption">
+							<div class="description">Artist's rendering of Starship approaching Saturn and its moons</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="gallery-background resize-gallery" data-preload data-desktop="../../static/images/starship/STR_8.jpg" data-mobile="../../static/images/starship/STR_8_mobile.jpg"></div>
+						<div class="caption">
+							<div class="description">A musical concert on board Starship</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="gallery-background resize-gallery" data-preload data-desktop="../../static/images/starship/STR_10.jpg" data-mobile="../../static/images/starship/STR_10_mobile.jpg"></div>
+						<div class="caption">
+							<div class="description">Artist's rendering of Starship and Super Heavy in flight</div>
+						</div>
+					</div>
+				</div>
+				<div id="gallery-prev-g" class="gallery-prev swiper-button-prev">
+					<svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewbox="0 0 6 10">
+					  <path d="M5,6a.908.908,0,0,1-.7-.3l-4-4A.967.967,0,0,1,.3.3.967.967,0,0,1,1.7.3L5,3.6,8.3.3A.967.967,0,0,1,9.7.3a.967.967,0,0,1,0,1.4l-4,4A.908.908,0,0,1,5,6Z" transform="translate(6) rotate(90)" fill="#fff"/>
+					</svg>
+				</div>
+				<div id="gallery-next-g" class="gallery-next swiper-button-next">
+					<svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewbox="0 0 6 10">
+					  <path d="M5,6a.908.908,0,0,1-.7-.3l-4-4A.967.967,0,0,1,.3.3.967.967,0,0,1,1.7.3L5,3.6,8.3.3A.967.967,0,0,1,9.7.3a.967.967,0,0,1,0,1.4l-4,4A.908.908,0,0,1,5,6Z" transform="translate(0 10) rotate(-90)" fill="#fff"/>
+					</svg>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-content">
+					<div class="content-center">
+						<div class="line-tall animate"></div>
+						<a class="btn large animate" tabindex="0" href="../../media/starship_users_guide_v1.pdf" target="_blank">
+							<div class="hover"></div>
+							<div class="text">Download User's Guide</div>
+						</a>
+						<div class="select animate" style="margin-top: 30px;">
+							<div class="select-container">
+								<select class="select-css" onchange="if(this.selectedIndex){let v=this.options[this.selectedIndex].value;if(v){window.open(v,'_blank')}}">
+							    <option>PRESENTATIONS</option>
+							    <option value="../../media/making_life_multiplanetary_transcript_2017.pdf">2017 IAC TRANSCRIPT</option>
+							    <option value="../../media/making_life_multiplanetary-2017.pdf">2017 IAC PRESENTATION</option>
+							    <option value="../../media/making_life_multiplanetary_2016.pdf">2016 IAC PRESENTATION</option>
+								</select>
+								<svg xmlns="http://www.w3.org/2000/svg" width="8.468" height="5.229" viewbox="0 0 8.468 5.229">
+								  <path d="M9.585,6l-.995.995,3.232,3.239L8.59,13.473l.995.995,4.234-4.234Z" transform="translate(14.468 -8.59) rotate(90)" fill="#fff"/>
+								</svg>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="footer">
+  <p>
+    <span>SpaceX &copy; 2021</span>
+    <a href="https://twitter.com/spacex" rel="noopener" target="_blank" class="social">TWITTER</a>
+    <a href="https://www.youtube.com/spacex" rel="noopener" target="_blank" class="social">YOUTUBE</a>
+    <a href="https://www.instagram.com/spacex/" rel="noopener" target="_blank" class="social">INSTAGRAM</a>
+    <a href="https://www.flickr.com/photos/spacex" rel="noopener" target="_blank" class="social">FLICKR</a>
+    <a href="https://www.linkedin.com/company/spacex" rel="noopener" target="_blank" class="social">LINKEDIN</a>
+    <a href="/media/privacy_policy_spacex.pdf" target="_blank" class="social">PRIVACY POLICY</a>
+  </p>
+</div>
+
+    </div>
+  </div>
+
+	<div id="modal" class="modal" aria-modal>
+  	<div class="modal-transform">
+  		<div class="modal-bg"></div>
+			<div class="modal-inner">
+			 	<div class="youtube-wrapper"></div>
+				<span></span>
+			</div>
+			<a href="#" class="modal-close">
+				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
+					<line class="line1" fill="none" x1="13" y1="13" x2="33" y2="33" stroke-linecap="square"/>
+					<line class="line2" fill="none" x1="13" y1="33" x2="33" y2="13" stroke-linecap="square"/>
+				</svg>
+			</a>
+  	</div>
+	</div>
+
+	<script type="text/javascript" src="../../static/core-min.js"></script>
+	<script type="text/javascript" src="../../static/vehicles-min.js"></script>
+	<script type="text/javascript" async src="../../static/tabs-min.js"></script>
+</body>
+</html>

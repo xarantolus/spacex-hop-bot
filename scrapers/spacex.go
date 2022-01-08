@@ -32,8 +32,8 @@ func (s *StarshipInfo) Equals(b StarshipInfo) bool {
 var ErrNoInfo = errors.New("no info")
 
 // SpaceXStarship returns info about the starship page (ship name & first mentioned date)
-func SpaceXStarship() (s StarshipInfo, err error) {
-	resp, err := c.Get(StarshipURL)
+func SpaceXStarship(websiteURL string, now time.Time) (s StarshipInfo, err error) {
+	resp, err := c.Get(websiteURL)
 	if err != nil {
 		return
 	}
@@ -63,8 +63,8 @@ func SpaceXStarship() (s StarshipInfo, err error) {
 
 		if date.IsZero() {
 			// Try to extract a date
-			etime, ok := util.ExtractDate(content)
-			if ok && time.Now().In(util.NorthAmericaTZ).Sub(etime) > 0 {
+			etime, ok := util.ExtractDate(content, now)
+			if ok && now.In(util.NorthAmericaTZ).Sub(etime) > 0 {
 				date = etime
 			}
 		}
