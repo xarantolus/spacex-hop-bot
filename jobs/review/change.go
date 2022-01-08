@@ -10,14 +10,14 @@ func Diff(oldResponse, newResponse *DashboardResponse) (changeDescriptions []str
 		return nil
 	}
 
-	// Check for end date changes
-	if oldResponse.TotalDuration.EndDate != newResponse.TotalDuration.EndDate && newResponse.TotalDuration.EndDate != "" {
-		changeDescriptions = append(changeDescriptions, fmt.Sprintf("The estimated completion date of the environmental review has changed from %s to %s", oldResponse.TotalDuration.EndDate, newResponse.TotalDuration.EndDate))
-	}
-
 	// Has the project status changed?
 	if oldResponse.ProjectStatus != newResponse.ProjectStatus && newResponse.ProjectStatus != "" {
 		changeDescriptions = append(changeDescriptions, fmt.Sprintf("The project status for the review of %q has changed from %q to %q", newResponse.Title, oldResponse.ProjectStatus, newResponse.ProjectStatus))
+	}
+
+	// Check for end date changes
+	if oldResponse.TotalDuration.EndDate != newResponse.TotalDuration.EndDate && newResponse.TotalDuration.EndDate != "" {
+		changeDescriptions = append(changeDescriptions, fmt.Sprintf("The estimated completion date of the environmental review has changed from %s to %s", oldResponse.TotalDuration.EndDate, newResponse.TotalDuration.EndDate))
 	}
 
 	var oldProjectsByID = map[string]Data{}
