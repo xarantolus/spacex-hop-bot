@@ -67,14 +67,21 @@ func runWebsiteScrape(client consumer.TwitterClient, linkChan chan<- string,
 	}
 
 	// If it's the same info again, we don't care
-	if lastChange.NextFlightDate.YearDay() >= info.NextFlightDate.YearDay() && lastChange.NextFlightDate.Year() == info.NextFlightDate.Year() {
+	if lastChange.NextFlightDate.YearDay() >= info.NextFlightDate.YearDay() &&
+		lastChange.NextFlightDate.Year() == info.NextFlightDate.Year() &&
+		lastChange.Orbital == info.Orbital {
 		return
 	}
 
 	// OK, now we have an interesting and new change
-	// TODO: Maybe support something like "orbital flight test", "orbital test flight"? and booster numbers
-	var tweetText = fmt.Sprintf("The SpaceX #Starship website now mentions %s for #%s #WenHop\n%s",
-		info.NextFlightDate.Format("January 2"), info.ShipName, scrapers.StarshipURL)
+	var tweetText string
+	if info.Orbital {
+		tweetText = fmt.Sprintf("The SpaceX #Starship website now mentions %s for an orbital flight of #%s\n#WenHop\n%s",
+			info.NextFlightDate.Format("January 2"), info.ShipName, scrapers.StarshipURL)
+	} else {
+		tweetText = fmt.Sprintf("The SpaceX #Starship website now mentions %s for #%s\n#WenHop\n%s",
+			info.NextFlightDate.Format("January 2"), info.ShipName, scrapers.StarshipURL)
+	}
 
 	t, err := client.Tweet(tweetText, nil)
 	if err != nil {

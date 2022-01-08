@@ -16,11 +16,13 @@ const (
 	StarshipURL = "https://www.spacex.com/vehicles/starship/"
 )
 
-var ShipNameRegex = regexp.MustCompile(`\b((?:SN|BN|S|B|Booster|Star[Ss]hip)-?\s*\d+)\b`)
+var ShipNameRegex = regexp.MustCompile(`\b((?:SN|S|Star[Ss]hip)-?\s*\d+)\b`)
 
 type StarshipInfo struct {
 	ShipName       string
 	NextFlightDate time.Time
+
+	Orbital bool
 
 	LiveStreamID string
 }
@@ -48,23 +50,31 @@ func SpaceXStarship(websiteURL string, now time.Time) (s StarshipInfo, err error
 	var (
 		date     time.Time
 		shipName string
+		orbital  bool
 	)
 
 	// Let's check the text on the website.
 	// We first look for .text-column elements,
 	// but in case something is changed on the site, we also look at all divs
-	doc.Find(".text-column").Add("div").EachWithBreak(func(i int, s *goquery.Selection) bool {
+	doc.Find(".text-column").EachWithBreak(func(i int, s *goquery.Selection) bool {
 		content := s.Text()
 
 		// Find the first interesting text
-		if shipName == "" {
-			shipName = ShipNameRegex.FindString(content)
+		if ShipNameRegex.MatchString(content) {
+			if shipName == "" {
+				shipName = ShipNameRegex.FindString(content)
+			}
+
+			// We only want to check for orbital test flights in the same paragraph as a starship name
+			if strings.Contains(strings.ToLower(content), "orbit") {
+				orbital = true
+			}
 		}
 
 		if date.IsZero() {
 			// Try to extract a date
 			etime, ok := util.ExtractDate(content, now)
-			if ok && now.In(util.NorthAmericaTZ).Sub(etime) > 0 {
+			if ok && now.In(util.NorthAmericaTZ).Before(etime) {
 				date = etime
 			}
 		}
@@ -97,6 +107,7 @@ func SpaceXStarship(websiteURL string, now time.Time) (s StarshipInfo, err error
 	return StarshipInfo{
 		ShipName:       shipName,
 		NextFlightDate: date,
+		Orbital:        orbital,
 		LiveStreamID:   liveID,
 	}, nil
 }

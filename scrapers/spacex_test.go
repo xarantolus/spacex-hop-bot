@@ -10,17 +10,13 @@ func TestNameRegex(t *testing.T) {
 	}{
 		// Prototype naming convention
 		{"SN20", "SN20"},
-		{"BN2", "BN2"},
 
 		// New naming convention
-		{"B2", "B2"},
 		{"S20", "S20"},
 
 		// Full names
 		{"Starship 20", "Starship 20"},
 		{"StarShip 20", "StarShip 20"},
-
-		{"Booster 2", "Booster 2"},
 
 		// In a text
 		{"Starship S16 Orbital flight attempt", "S16"},
