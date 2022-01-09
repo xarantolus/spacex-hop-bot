@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Mechazilla's Chopsticks received extra attention on Sunday, with what looks like a lifting bar fit check.\n\nMeanwhile, Booster 3 slice and dice operations continue.\n\nMary (@BocaChicaGal) views:\nhttp://nasaspaceflight.com/starbaselive",
+				acc:  "nasaspaceflight",
+				want: true,
+			},
+			{
 				text: "Last month the FCC asked SpaceX a series of questions about their next generation Starlink constellation, Starlink v2.0, or \"Gen2\". SpaceX responded back and affirms they will definitely launch it using Starship and could be ready as soon as March 2022",
 				want: true,
 			},
