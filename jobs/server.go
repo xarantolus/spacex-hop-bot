@@ -75,8 +75,9 @@ func (h *httpServer) submitTweet(w http.ResponseWriter, r *http.Request) (err er
 
 	select {
 	case h.tweetChan <- match.TweetWrapper{
-		TweetSource: match.TweetSourceUnknown,
-		Tweet:       *status,
+		TweetSource:   match.TweetSourceUnknown,
+		Tweet:         *status,
+		EnableLogging: true,
 	}:
 		break
 	case <-time.After(1 * time.Second):

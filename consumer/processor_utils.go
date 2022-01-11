@@ -44,16 +44,19 @@ func sameUser(t1, t2 *twitter.Tweet) bool {
 func (p *Processor) isStarshipTweet(t match.TweetWrapper) bool {
 	// At first, we of course need to match some keywords
 	if !p.matcher.StarshipTweet(t) {
+		t.Log("tweet not considered a starship tweet by the matcher")
 		return false
 	}
 
 	// However, we don't want reaction gifs
 	if isReactionGIF(&t.Tweet) {
+		t.Log("tweet has a reaction gif")
 		return false
 	}
 
 	// Replies to other people should be filtered
 	if p.isReply(&t.Tweet) {
+		t.Log("tweet is a reply to other people")
 		return false
 	}
 
@@ -62,6 +65,7 @@ func (p *Processor) isStarshipTweet(t match.TweetWrapper) bool {
 		!(match.IsAtSpaceXSite(&t.Tweet) ||
 			hasMedia(&t.Tweet) ||
 			match.IsPadAnnouncement(t.Text())) {
+		t.Log("tweet is a question not (at a spacex site | has media | pad announcement)")
 		return false
 	}
 

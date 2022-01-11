@@ -75,11 +75,13 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 	// 4. We find a tweet that is about starship
 
 	if (p.seenTweets[tweet.ID] || tweet.Retweeted) && !p.debug {
+		tweet.Log("already saw this tweet")
 		return
 	}
 
 	// Skip our own tweets
 	if tweet.User != nil && tweet.User.ID == p.selfUser.ID {
+		tweet.Log("is our own tweet")
 		return
 	}
 
@@ -88,40 +90,50 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// When elon drops starship info, we want to retweet it.
 		// We basically detect if the thread/tweet is about starship and
 		// retweet everything that is appropriate
+		tweet.Log("is elon tweet")
 		p.thread(&tweet.Tweet)
 	case tweet.RetweetedStatus != nil:
-		p.Tweet(match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.RetweetedStatus})
+		tweet.Log("is retweet")
+		p.Tweet(match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.RetweetedStatus, EnableLogging: tweet.EnableLogging})
 	case tweet.QuotedStatus != nil:
+		tweet.Log("is quoting")
 		// If someone quotes a tweet, we check some things.
 
 		// If we have a Starship-Tweet quoting a tweet that does not contain antikeywords,
 		// we assume that the quoted tweet also contains relevant information
 
 		if p.seenTweets[tweet.QuotedStatusID] {
+			tweet.Log("already saw this quoted tweet")
 			break
 		}
 
 		// If the quoted tweet already is about starship, we maybe only look at that one
-		quotedWrap := match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.QuotedStatus}
+		quotedWrap := match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.QuotedStatus, EnableLogging: tweet.EnableLogging}
 		if p.isStarshipTweet(quotedWrap) {
+			tweet.Log("quoted is starship tweet")
 			// If it's from the *same* user, then we just assume they added additional info.
 			// We only retweet if it's media though
 			if sameUser(&tweet.Tweet, tweet.QuotedStatus) {
+				tweet.Log("quoted is starship tweet with same user")
 				if hasMedia(tweet.QuotedStatus) {
+					tweet.Log("quoted is starship tweet with same user and has media")
 					p.retweet(tweet.QuotedStatus, "quoted media", tweet.TweetSource)
 				}
 			} else {
+				tweet.Log("quoted is starship tweet with different user")
 				p.Tweet(quotedWrap)
 			}
 		}
 
 		// The quoting tweet should be about starship AND have media
 		if !(p.isStarshipTweet(tweet) && hasMedia(&tweet.Tweet)) {
+			tweet.Log("quoting tweet is not starship tweet with media")
 			break
 		}
 
 		// Make sure the quoted user is not ignored
 		if p.matcher.IsOrMentionsIgnoredAccount(tweet.QuotedStatus) {
+			tweet.Log("quoting tweet user ignored")
 			break
 		}
 
@@ -131,6 +143,8 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 
 		p.seenTweets[tweet.QuotedStatusID] = true
 	case tweet.InReplyToStatusID != 0:
+		tweet.Log("tweet is reply")
+
 		parentTweet, err := p.client.LoadStatus(tweet.InReplyToStatusID)
 		if err != nil {
 			// Most errors happen because we're not allowed to see protected accounts' tweets.
@@ -151,15 +165,19 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		isStarshipTweet := p.matcher.StarshipTweet(tweet)
 		hasAntiKeywords := match.ContainsStarshipAntiKeyword(tweet.Text())
 
+		tweet.Log("reply is isStarshipTweet=%v, hasAntiKeywords=%v", isStarshipTweet, hasAntiKeywords)
+
 		if !(((parentTweet.Retweeted && hasMedia(&tweet.Tweet)) ||
 			isStarshipTweet) &&
 			!hasAntiKeywords &&
 			!isReactionGIF(&tweet.Tweet) &&
 			sameUser(parentTweet, &tweet.Tweet) &&
 			!p.isReply(parentTweet)) {
+			tweet.Log("reply does not match complex criteria")
 			break
 		}
 
+		tweet.Log("reply did match complex criteria")
 		fallthrough
 	case p.isStarshipTweet(tweet):
 		// If the tweet itself is about starship, we retweet it
@@ -169,19 +187,21 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// Then we also filter out all tweets that tag elon musk, e.g. there could be someone
 		// just tweeting something like "Do you think xyz... @elonmusk"
 
+		tweet.Log("tweet is starship tweet")
+
 		// Filter out non-english tweets (except for location stream)
 		if tweet.TweetSource != match.TweetSourceLocationStream && tweet.Lang != "" && tweet.Lang != "en" && tweet.Lang != "und" {
-			log.Printf("[Processor] Ignoring %s because of language %s (%s)", util.TweetURL(&tweet.Tweet), tweet.Lang, tweet.TweetSource)
+			tweet.Log("ignored because tweet is starship tweet with language %s", tweet.Lang)
 			break
 		}
 
 		if p.shouldIgnoreLink(&tweet.Tweet) {
-			log.Printf("[Processor] Ignoring %s because of link (%s)", util.TweetURL(&tweet.Tweet), tweet.TweetSource)
+			tweet.Log("ignored because of link")
 			break
 		}
 
 		if tweet.Tweet.PossiblySensitive {
-			log.Printf("[Processor] Ignoring %s because it is possibly sensitive (%s)", util.TweetURL(&tweet.Tweet), tweet.TweetSource)
+			tweet.Log("ignored because it's possibly sensitive")
 			break
 		}
 
@@ -195,11 +215,13 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 				// If we have a pad announcement - those are usually tweets without media
 				p.retweet(&tweet.Tweet, "location + pad announcement", tweet.TweetSource)
 			default:
+				tweet.Log("location tweet ignored because it doesn't have media and is no pad announcement")
 				log.Printf("[Processor] Ignoring %s because it's from the location stream and has no media", util.TweetURL(&tweet.Tweet))
 			}
 		} else {
 			// If a tweet contains *only hashtags*, we only retweet it if it has media
 			if isTagsOnly(tweet.Text()) {
+				tweet.Log("tweet only has tags")
 				if hasMedia(&tweet.Tweet) {
 					p.retweet(&tweet.Tweet, "normal matcher, only tags, but media", tweet.TweetSource)
 				}

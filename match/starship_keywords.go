@@ -280,6 +280,8 @@ var (
 
 		"supernova",
 
+		"kawai", "anthem", "katy perry",
+
 		"god", "the lord",
 
 		// 3d models are nice, but we only care about "real info"
@@ -347,7 +349,7 @@ var (
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follower", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",
 
 		"child", "kid", "illegal", "nfl", "tiktok", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
-		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "strok", "fap", "chick",
+		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "strok", "fap", "chick", "doggy",
 
 		"stfu",
 

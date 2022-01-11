@@ -11,6 +11,12 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Chopsticks did several mini raises this afternoon. Can't wait for a complete raise/swing/open exercise soon.\n#Starbase  #Starship  #SpaceX\n 📸 Me for WAI Media @felixschlang",
+				acc:      "CosmicalChief",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text: "Mechazilla's Chopsticks received extra attention on Sunday, with what looks like a lifting bar fit check.\n\nMeanwhile, Booster 3 slice and dice operations continue.\n\nMary (@BocaChicaGal) views:\nhttp://nasaspaceflight.com/starbaselive",
 				acc:  "nasaspaceflight",
 				want: true,
