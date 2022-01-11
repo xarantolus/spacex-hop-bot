@@ -2,14 +2,13 @@ package jobs
 
 import (
 	"bytes"
+	_ "embed"
 	"html/template"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
 	"testing"
 	"time"
-
-	_ "embed"
 
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/xarantolus/spacex-hop-bot/scrapers"

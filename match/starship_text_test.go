@@ -14,6 +14,7 @@ func TestStarshipTextMatch(t *testing.T) {
 		{"Chopsticks moving", false},
 		{"Chopsticks moving\n\nhttp://nasaspaceflight.com/starbaselive", true},
 		{"Chopsticks moving\n\nhttps://nasaspaceflight.com/starbaselive", true},
+		{"Chopstix moving\n\nhttp://nasaspaceflight.com/starbaselive", true},
 		{"Timelapse of today's chopstick test thus far.", false},
 		{"Timelapse of today's chopstick test thus far.\nhttp://nasaspaceflight.com/starbaselive", true},
 		{"Lots of frost on Booster 4, which now seems to be decreasing, potentially signifying we’re getting close to the conclusion of todays cryogenic proof test.\nCamera with flash @NASASpaceflight\nRed circle https://youtu.be/B1IbMBhococ\n\n#SpaceX @elonmusk", true},
