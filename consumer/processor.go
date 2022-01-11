@@ -74,7 +74,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 	// 3. We find a quoted tweet
 	// 4. We find a tweet that is about starship
 
-	if (p.seenTweets[tweet.ID] || tweet.Retweeted) && !p.debug {
+	if (p.seenTweets[tweet.ID] || tweet.Retweeted) && !(p.debug || tweet.EnableLogging) {
 		tweet.Log("already saw this tweet")
 		return
 	}
