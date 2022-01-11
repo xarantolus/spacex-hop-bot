@@ -10,11 +10,9 @@ These tweets are retweeted, if:
 * They contain generic keywords about Starship such as "SN11", "BN1", "Starship", "Superheavy", "raptor"
 * They are from selected "trusted" users and contain info about road closures, cryogenic tests, temporary flight restrictions etc.
 * They are by Elon Musk and contain anything related to Starship
-* They are tagged with *exactly* the location of either the [build site](https://twitter.com/places/124bed061054f000), [launch site](https://twitter.com/places/124cb6de55957000), [Starbase](https://twitter.com/places/1380f3b60f972001) or [Boca Chica Village](https://twitter.com/places/07d9f0b85ac83003)
+* They are tagged with *exactly* the location of either [Starbase](https://twitter.com/places/1380f3b60f972001), the [Starship launch site](https://twitter.com/places/124cb6de55957000), [Starship build site](https://twitter.com/places/124bed061054f000), the [McGregor engine test site](https://twitter.com/places/07d9f642af482000) or [Boca Chica Village](https://twitter.com/places/07d9f0b85ac83003) (must have media under some criteria)
 
-Some keywords and (mostly satire) accounts are filtered out to prevent spam.
-
-The bot tries to only retweet *real* information, which is why animations and similar are also filtered.
+Some keywords and (mostly satire) accounts are filtered out to prevent spam. The bot tries to only retweet *real* information, which is why animations and similar are also filtered.
 
 It also does some background tasks: 
 - Watching the [SpaceX YouTube channel](https://www.youtube.com/spacex/) for livestreams. As soon as a stream about Starship goes live (or has a countdown), the bot will tweet a link.
