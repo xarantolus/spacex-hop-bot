@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "SpaceX is testing the lift arms strength with giant bags. So cool.",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text:     "Chopsticks did several mini raises this afternoon. Can't wait for a complete raise/swing/open exercise soon.\n#Starbase  #Starship  #SpaceX\n 📸 Me for WAI Media @felixschlang",
 				acc:      "CosmicalChief",
 				hasMedia: true,

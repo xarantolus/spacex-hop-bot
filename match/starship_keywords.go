@@ -126,8 +126,13 @@ var (
 			from: compose([]string{"mechazilla", "olit"}),
 			to: compose(
 				placesKeywords, nonSpecificKeywords,
-				[]string{"qd", "bqd", "arm", "catch"},
+				[]string{"qd", "bqd", "arm", "catch", "lift"},
 			),
+		},
+
+		{
+			from: compose([]string{"lift arms"}),
+			to:   compose(nonSpecificKeywords, generalSpaceXKeywords),
 		},
 
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
