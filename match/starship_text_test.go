@@ -14,6 +14,9 @@ func TestStarshipTextMatch(t *testing.T) {
 		{"The #OrbitalLaunchMount construction is now complete", true},
 		{"Olmos Park restaurant closed", false},
 		{"Chopsticks moving", false},
+		// One is a F9 booster, another is a potential starship booster
+		{"B1051 on its way to the port", false},
+		{"B10 on its way to the port", true},
 		{"Chopsticks moving\n\nhttp://nasaspaceflight.com/starbaselive", true},
 		{"Chopsticks moving\n\nhttps://nasaspaceflight.com/starbaselive", true},
 		{"Chopstix moving\n\nhttp://nasaspaceflight.com/starbaselive", true},

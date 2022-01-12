@@ -1,88 +1,105 @@
 package match
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 	"testing"
 )
 
+type slice struct {
+	name  string
+	slice []string
+}
+
+// getAllSlices returns a list of all keyword slices (with their names) defined in the keyword file
+func getAllSlices() (res []slice) {
+	res = append(res,
+		[]slice{
+			{
+				name:  "antiStarshipKeywords",
+				slice: antiStarshipKeywords,
+			},
+			{
+				name:  "starshipKeywords",
+				slice: starshipKeywords,
+			},
+			{
+				name:  "ignoredAccountDescriptionKeywords",
+				slice: ignoredAccountDescriptionKeywords,
+			},
+		}...,
+	)
+
+	for i, v := range moreSpecificKeywords {
+		res = append(res, slice{
+			name:  fmt.Sprintf("moreSpecificKeywords[%d].from", i),
+			slice: v.from,
+		})
+		res = append(res, slice{
+			name:  fmt.Sprintf("moreSpecificKeywords[%d].to", i),
+			slice: v.to,
+		})
+		res = append(res, slice{
+			name:  fmt.Sprintf("moreSpecificKeywords[%d].antiKeywords", i),
+			slice: v.antiKeywords,
+		})
+	}
+
+	for u, v := range userAntikeywordsOverwrite {
+		res = append(res, slice{
+			name:  fmt.Sprintf("userAntikeywordsOverwrite[%q]", u),
+			slice: v,
+		})
+	}
+
+	return
+}
+
+func TestVariablesDuplicateKeywords(t *testing.T) {
+	for _, v := range getAllSlices() {
+		var words = make(map[string]bool)
+
+		for _, k := range v.slice {
+			_, ok := words[k]
+
+			if ok {
+				t.Errorf("Keyword %q is duplicated in %s slice", k, v.name)
+			}
+
+			words[k] = true
+		}
+	}
+}
+
+// The first character of any keyword matched with startsWithAny *must* be alphanumerical, as
+// startsWithAny considers that the start of a word. So if they keyword was "#test" and the text is "#test",
+// startsWithAny would only check if "test" starts with "#test", which of course doesn't work
 func TestVariablesFirstIsAlphabet(t *testing.T) {
-	// the startsWithAny function assumes that every antiKeyword starts with a letter between a and z
-	for _, k := range antiStarshipKeywords {
-		if !isAlphanumerical(rune(k[0])) {
-			t.Errorf("Keyword %q in antiStarshipKeywords slice does not start with an alphanumerical character", k)
-		}
-	}
-
-	for i, kws := range moreSpecificKeywords {
-		for _, k := range kws.from {
+	for _, v := range getAllSlices() {
+		for _, k := range v.slice {
 			if !isAlphanumerical(rune(k[0])) {
-				t.Errorf("Keyword %q in moreSpecificKeywords[%d] 'from' mapping should start with an alphanumerical character", k, i)
-			}
-		}
-
-		for _, k := range kws.to {
-			if !isAlphanumerical(rune(k[0])) {
-				t.Errorf("Keyword %q in moreSpecificKeywords[%d] 'to' mapping should start with an alphanumerical character", k, i)
-			}
-		}
-		for _, k := range kws.antiKeywords {
-			if !isAlphanumerical(rune(k[0])) {
-				t.Errorf("Keyword %q in moreSpecificKeywords[%d] 'antiKeywords' mapping should start with an alphanumerical character", k, i)
+				t.Errorf("Keyword %q in %s slice does not start with an alphanumerical character", k, v.name)
 			}
 		}
 	}
-
 }
 
 // since text in the StarshipText function is lowercase, we must make sure that all keywords are lowercase too
 func TestVariablesStringCase(t *testing.T) {
-	for _, k := range starshipKeywords {
-		if strings.ToLower(k) != k {
-			t.Errorf("Keyword %q should be lowercase in starshipKeywords slice", k)
-		}
-	}
-	for _, k := range ignoredAccountDescriptionKeywords {
-		if strings.ToLower(k) != k {
-			t.Errorf("Keyword %q should be lowercase in ignoredAccountDescriptionKeywords slice", k)
-		}
-	}
-	for i, kws := range moreSpecificKeywords {
-		for _, k := range kws.from {
+	for _, v := range getAllSlices() {
+		for _, k := range v.slice {
 			if strings.ToLower(k) != k {
-				t.Errorf("Keyword %q should be lowercase in moreSpecificKeywords[%d] 'from' mapping", k, i)
-			}
-		}
-
-		for _, k := range kws.to {
-			if strings.ToLower(k) != k {
-				t.Errorf("Keyword %q should be lowercase in moreSpecificKeywords[%d] 'to' mapping", k, i)
-			}
-		}
-		for _, k := range kws.antiKeywords {
-			if strings.ToLower(k) != k {
-				t.Errorf("Keyword %q should be lowercase in moreSpecificKeywords[%d].antiKeywords", k, i)
+				t.Errorf("Keyword %q should be lowercase in %s slice", k, v.name)
 			}
 		}
 	}
 
-	for _, k := range antiStarshipKeywords {
-		if strings.ToLower(k) != k {
-			t.Errorf("Keyword %q should be lowercase in antiStarshipKeywords slice", k)
-		}
-	}
-	for k, v := range userAntikeywordsOverwrite {
+	for k := range userAntikeywordsOverwrite {
 		if strings.ToLower(k) != k {
 			t.Errorf("Account name %q should be lowercase in userAntikeywordsOverwrite map", k)
 		}
-
-		for _, s := range v {
-			if strings.ToLower(s) != s {
-				t.Errorf("Keyword %q should be lowercase in userAntikeywordsOverwrite slice for user %s", v, k)
-			}
-		}
 	}
-
 	for k := range specificUserMatchers {
 		if strings.ToLower(k) != k {
 			t.Errorf("Account name %q should be lowercase in specificUserMatchers map", k)
@@ -93,7 +110,6 @@ func TestVariablesStringCase(t *testing.T) {
 			t.Errorf("Account name %q should be lowercase in hqMediaAccounts map", k)
 		}
 	}
-
 	for k := range veryImportantAccounts {
 		if strings.ToLower(k) != k {
 			t.Errorf("Account name %q should be lowercase in veryImportantAccounts map", k)
@@ -121,20 +137,6 @@ func TestMoreSpecificMistakes(t *testing.T) {
 		if containsAll(mapping.from, starshipKeywords) {
 			t.Errorf("moreSpecificKeywords[%d].from is composed with starshipKeywords, but that doesn't work and should be removed", i)
 		}
-	}
-}
-
-func TestVariablesDuplicateKeywords(t *testing.T) {
-	var words = make(map[string]bool)
-
-	for _, k := range antiStarshipKeywords {
-		_, ok := words[k]
-
-		if ok {
-			t.Errorf("Keyword %q is duplicated in antiStarshipKeywords slice", k)
-		}
-
-		words[k] = true
 	}
 }
 
