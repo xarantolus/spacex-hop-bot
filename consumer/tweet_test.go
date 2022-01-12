@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Olmos Park restaurant Glass and Plate Restaurant closed ‘due to lack of employees’\nhttps://www.expressnews.com/food/restaurants/article/Olmos-Park-restaurant-Glass-and-Plate-Restaurant-16766960.php",
+				acc:  "ExpressNews",
+				want: false,
+			},
+			{
 				text:     "SpaceX is testing the lift arms strength with giant bags. So cool.",
 				hasMedia: true,
 				want:     true,

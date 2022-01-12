@@ -374,6 +374,9 @@ var (
 
 		"surgery", "emergency",
 
+		// Starts with "olm", which tricks the matcher
+		"olmos",
+
 		// Things that are typical questions for polls. We cannot get polls using the Twitter v1 API, so this is kind of bad
 		"feel about", "vs",
 

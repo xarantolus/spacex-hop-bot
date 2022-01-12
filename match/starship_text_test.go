@@ -11,6 +11,7 @@ func TestStarshipTextMatch(t *testing.T) {
 		text string
 		want bool
 	}{
+		{"Olmos Park restaurant closed", false},
 		{"Chopsticks moving", false},
 		{"Chopsticks moving\n\nhttp://nasaspaceflight.com/starbaselive", true},
 		{"Chopsticks moving\n\nhttps://nasaspaceflight.com/starbaselive", true},
