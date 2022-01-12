@@ -64,6 +64,7 @@ func isAlphanumerical(r rune) bool {
 		(r >= '0' && r <= '9')
 }
 
+// compose calculates the union of the given sets of strings, eliminating duplicates
 func compose(s ...[]string) (res []string) {
 	var dedup = map[string]bool{}
 	for _, v := range s {
@@ -75,4 +76,31 @@ func compose(s ...[]string) (res []string) {
 		}
 	}
 	return res
+}
+
+// ignoreSpaces returns an array with exactly the words in words,
+// but it also generates additional words by removing all spaces
+func ignoreSpaces(words []string) (result []string) {
+	var dedup = map[string]bool{}
+
+	for _, w := range words {
+		if !dedup[w] {
+			dedup[w] = true
+			result = append(result, w)
+		}
+
+		nw := strings.Join(strings.Fields(w), "")
+		if !dedup[nw] {
+			dedup[nw] = true
+			result = append(result, nw)
+		}
+
+		nw = strings.Join(strings.Fields(w), "-")
+		if !dedup[nw] {
+			dedup[nw] = true
+			result = append(result, nw)
+		}
+	}
+
+	return
 }

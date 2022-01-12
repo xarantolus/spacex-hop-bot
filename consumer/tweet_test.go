@@ -11,6 +11,32 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Booster cryo proof coming up!",
+				want: true,
+			},
+			{
+				text: "Booster cryoproof coming up!",
+				want: true,
+			},
+			{
+				text: "New LN2 tanker spotted at the #OTF",
+				want: true,
+			},
+			{
+				text: "New LN2 tanker spotted at the #OrbitalTankFarm",
+				want: true,
+			},
+			{
+				text:     "Sea-level raptors",
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				text:     "Sealevel raptors",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text: "Olmos Park restaurant Glass and Plate Restaurant closed ‘due to lack of employees’\nhttps://www.expressnews.com/food/restaurants/article/Olmos-Park-restaurant-Glass-and-Plate-Restaurant-16766960.php",
 				acc:  "ExpressNews",
 				want: false,

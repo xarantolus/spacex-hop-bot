@@ -14,7 +14,7 @@ type keywordMapping struct {
 var (
 	// If at least one of these keywords is present in a tweet (and no antiKeywords are),
 	// we should retweet
-	starshipKeywords = []string{
+	starshipKeywords = ignoreSpaces([]string{
 		"starship",
 		"superheavy", "super heavy",
 
@@ -31,7 +31,7 @@ var (
 		"suborbital pad", "suborbital launch pad",
 		"olp service tower",
 		"orbital launch site",
-	}
+	})
 
 	// starshipMatchers are more specific regexes that act like starshipKeywords
 	starshipMatchers = []*regexp.Regexp{
@@ -54,24 +54,24 @@ var (
 		// Engines
 		{
 			from: []string{"raptor"},
-			to: []string{
-				"starship", "vacuum", "sea-level", "sea level",
+			to: ignoreSpaces([]string{
+				"starship", "vacuum", "sea level",
 				"spacex", "mcgregor", "engine", "rb", "rc", "rvac",
 				"launch site", "production site", "booster", "super heavy",
-				"superheavy", "truck", "van", "raptorvan", "deliver", "sea level",
+				"superheavy", "truck", "van", "raptorvan", "deliver",
 				"flare", "high bay", "nozzle", "tripod", "starbase", "static fire",
-			},
+			}),
 		},
 
 		// Stuff noticed on live streams
 		{
-			from: compose(liveStreams,
+			from: ignoreSpaces(compose(liveStreams,
 				[]string{"orbital tank farm", "otf"},
 				[]string{"suborbital tank farm", "stf"},
 				[]string{"olm", "olt", "olit"},
-			),
+			)),
 			to: []string{
-				"methane", "tank", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",
+				"methane", "tanker", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",
 				"argon", "pad", "road", "highway", "close", "open", "qd", "quick disconnect",
 				"raptor", "cranex",
 			},
@@ -85,13 +85,13 @@ var (
 
 		// Ground infrastructure
 		{
-			from: []string{"gse tank"},
+			from: ignoreSpaces([]string{"gse tank"}),
 			to:   compose(nonSpecificKeywords, generalSpaceXKeywords),
 		},
 
 		// Testing activity
 		{
-			from: []string{"cryogenic proof", "cryo proof", "cryoproof"},
+			from: ignoreSpaces([]string{"cryogenic proof", "cryo proof"}),
 			to:   compose(nonSpecificKeywords, generalSpaceXKeywords),
 		},
 		{
@@ -112,7 +112,7 @@ var (
 		// New launch pads at different locations
 		{
 			from: compose(
-				[]string{"lc-49", "lc 49", "launch complex 49", "launch complex-49"},
+				ignoreSpaces([]string{"lc-49", "lc 49", "launch complex 49", "launch complex-49"}),
 
 				// Don't match this one as it's currently in use and I have no idea how to differentiate starship tweets from falcon ones
 				// []string{"lc-39a", "lc 39a", "launch complex 39a", "launch complex-39a"},
@@ -137,22 +137,22 @@ var (
 
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
 		{
-			from: []string{"launch tower", "launch pad", "launch mount", "chopstick", "chopstix", "chop stick", "chop stix", "catch arms"},
+			from: ignoreSpaces([]string{"launch tower", "launch pad", "launch mount", "chop stick", "chop stix", "catch arms"}),
 			to:   compose(seaportKeywords, placesKeywords, liveStreams),
 		},
 	}
 
 	// Helper slices that can be used for composing new keywords
 	seaportKeywords       = []string{"sea launch", "oil", "rig"}
-	placesKeywords        = []string{"starbase", "boca chica"}
+	placesKeywords        = ignoreSpaces([]string{"starbase", "boca chica"})
 	nonSpecificKeywords   = compose([]string{"ship", "booster"}, liveStreams, placesKeywords)
 	generalSpaceXKeywords = []string{"spacex"}
-	liveStreams           = []string{
+	liveStreams           = ignoreSpaces([]string{
 		// 24/7 live camera views are often mentioned when something is shown on a screenshot
 		"labpadre", "nasaspaceflight",
 		// Other streamers
-		"jessica_kirsh", "bocachicagal", "starship gazer", "starshipgazer",
-	}
+		"jessica_kirsh", "bocachicagal", "starship gazer",
+	})
 
 	// Regexes for road closures and testing activity
 	closureTFRRegex = regexp.MustCompile(`\b(?:closure|tfr|notmar|cryo|fts|scrub)`)

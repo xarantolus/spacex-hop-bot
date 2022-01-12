@@ -111,3 +111,41 @@ func Test_compose(t *testing.T) {
 		})
 	}
 }
+
+func Test_ignoreSpaces(t *testing.T) {
+	tests := []struct {
+		arg        []string
+		wantResult []string
+	}{
+		{
+			arg:        []string{"a", "b", "c"},
+			wantResult: []string{"a", "b", "c"},
+		},
+		{
+			arg:        []string{"a b", "c"},
+			wantResult: []string{"a b", "ab", "a-b", "c"},
+		},
+		{
+			arg:        []string{"starship", "superheavy", "super heavy"},
+			wantResult: []string{"starship", "superheavy", "super heavy", "super-heavy"},
+		},
+		{
+			arg: []string{"orbital launch tower", "orbital tower"},
+			wantResult: []string{
+				"orbital launch tower", "orbitallaunchtower", "orbital-launch-tower",
+				"orbital tower", "orbitaltower", "orbital-tower",
+			},
+		},
+		{
+			arg:        []string{"sea level"},
+			wantResult: []string{"sea level", "sealevel", "sea-level"},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(t.Name(), func(t *testing.T) {
+			if gotResult := ignoreSpaces(tt.arg); !reflect.DeepEqual(gotResult, tt.wantResult) {
+				t.Errorf("ignoreSpaces(%v) = %v, want %v", tt.arg, gotResult, tt.wantResult)
+			}
+		})
+	}
+}
