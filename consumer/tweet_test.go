@@ -988,6 +988,25 @@ func TestIgnoredTweet(t *testing.T) {
 				text: "Starship on OpenSea now available!!!",
 				want: false,
 			},
+			{
+				text: "This would be an 11-day turnaround for Pad 39A.",
+				acc:  "same_user",
+				want: false,
+
+				parent: &ttest{
+					text:     "Per @NASASpaceflight forum members analyzing FAA & NOTAM alerts, it looks like SpaceX's second Starlink launch of the year/month (Starlink 4-6) is probably scheduled NET ~9pm EST, January 17th!\n\nAnd my guess was only off by one day!\nhttps://forum.nasaspaceflight.com/index.php?topi",
+					hasMedia: true,
+					acc:      "same_user",
+
+					want: false,
+				},
+			},
+			{
+				text:     "Cutting B83 makes sense; it’s not practically useable (and probably not lawfully & feasibly against too many targets). Good legacy move too: Biden becomes the president to cut the last megaton-class weapon in the US arsenal.",
+				hasMedia: true,
+
+				want: false,
+			},
 		},
 	)
 }

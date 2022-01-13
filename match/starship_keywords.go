@@ -389,7 +389,7 @@ var (
 
 		"nonce", "pedo",
 
-		"bomb",
+		"bomb", "arsenal",
 
 		"hospital",
 
