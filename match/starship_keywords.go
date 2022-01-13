@@ -224,7 +224,7 @@ var (
 	}
 
 	// If an account has any of these words in its description, we don't retweet tweets from it
-	ignoredAccountDescriptionKeywords = []string{
+	ignoredAccountDescriptionKeywords = ignoreSpaces([]string{
 		// Parody accounts
 		"parody", "joke",
 
@@ -233,7 +233,9 @@ var (
 
 		// Sports stuff
 		"nhl",
-	}
+
+		"cum", "only fans",
+	})
 
 	antiKeywordRegexes = []*regexp.Regexp{
 		/* Falcon 9 booster numbers all start with 10 */
@@ -354,7 +356,7 @@ var (
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follower", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",
 
 		"child", "kid", "illegal", "nfl", "tiktok", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
-		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "strok", "fap", "chick", "doggy",
+		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "strok", "fap", "chick", "doggy", "only fans",
 
 		"stfu",
 

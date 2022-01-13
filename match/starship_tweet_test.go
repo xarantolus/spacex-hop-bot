@@ -285,6 +285,18 @@ func TestStarshipTweetIgnoredAccount(t *testing.T) {
 				want:            false,
 			},
 			{
+				text:     "Some text",
+				location: SpaceXLaunchSiteID,
+				want:     true,
+			},
+			{
+				text:            "Some text",
+				location:        SpaceXLaunchSiteID,
+				userDescription: "http://cumrocket.io/explore 💦🚀",
+
+				want: false,
+			},
+			{
 				text: "Starship 20 static fire",
 				want: true,
 			},
