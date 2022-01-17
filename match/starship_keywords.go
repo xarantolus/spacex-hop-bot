@@ -274,7 +274,7 @@ var (
 
 		// Not interested in other stuff
 		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "nft", "opensea",
-		"safemoon", "stock", "wall street", "wallstreet", "buffett",
+		"safemoon", "stock", "wall street", "wallstreet", "buffett", "metaverse",
 
 		"no tfr",
 
