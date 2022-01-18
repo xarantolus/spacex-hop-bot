@@ -358,6 +358,10 @@ var (
 		"child", "kid", "illegal", "nfl", "tiktok", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "strok", "fap", "chick", "doggy", "only fans",
 
+		"simp ", "simping",
+
+		"belarus", "battalion",
+
 		"stfu",
 
 		"patrons", "babylon", "boltup", "champion",

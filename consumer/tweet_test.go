@@ -11,6 +11,15 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Starship is simply beautiful",
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				text: "Stop simping for elon just because you like Starship",
+				want: false,
+			},
+			{
 				text: "Booster cryo proof coming up!",
 				want: true,
 			},
