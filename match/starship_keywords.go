@@ -275,8 +275,12 @@ var (
 		// Not interested in other stuff
 		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "nft", "opensea",
 		"safemoon", "stock", "wall street", "wallstreet", "buffett", "metaverse",
+		"scam", "shill",
 
 		"no tfr",
+
+		// Usually mentions something like "Just started binge watching S30 of show xyz"
+		"binge watch",
 
 		"volvo",
 
