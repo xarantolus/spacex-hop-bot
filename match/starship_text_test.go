@@ -11,6 +11,7 @@ func TestStarshipTextMatch(t *testing.T) {
 		text string
 		want bool
 	}{
+		{"Vehicles like LV0008 are better than Starship", false},
 		{"The #OrbitalLaunchMount construction is now complete", true},
 		{"Olmos Park restaurant closed", false},
 		{"Chopsticks moving", false},
