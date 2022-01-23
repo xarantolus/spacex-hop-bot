@@ -273,8 +273,8 @@ var (
 		"f22", "f-22", "jet", "b-52", "s-300",
 
 		// Not interested in other stuff
-		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "nft", "opensea",
-		"safemoon", "stock", "wall street", "wallstreet", "buffett", "metaverse",
+		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "nft", "mint", "opensea",
+		"safemoon", "stock", "wall street", "wallstreet", "buffett", "metaverse", "terra",
 		"scam", "shill",
 
 		"no tfr",
