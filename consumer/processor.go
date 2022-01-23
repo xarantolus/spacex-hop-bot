@@ -164,12 +164,13 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// then we want to go to the retweeting part below
 		isStarshipTweet := p.matcher.StarshipTweet(tweet)
 		hasAntiKeywords := match.ContainsStarshipAntiKeyword(tweet.Text())
-
+		hasMedia := hasMedia(&tweet.Tweet)
 		tweet.Log("reply is isStarshipTweet=%v, hasAntiKeywords=%v", isStarshipTweet, hasAntiKeywords)
 
-		if !(((parentTweet.Retweeted && hasMedia(&tweet.Tweet)) ||
+		if !(((parentTweet.Retweeted && hasMedia) ||
 			isStarshipTweet) &&
 			!hasAntiKeywords &&
+			!(isQuestion(&tweet.Tweet) && !hasMedia) &&
 			!isReactionGIF(&tweet.Tweet) &&
 			sameUser(parentTweet, &tweet.Tweet) &&
 			!p.isReply(parentTweet)) {

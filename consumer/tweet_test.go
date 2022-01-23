@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "It looks like Ship 22’s aft section was moved into the mid bay following speculation that it was set to be scrapped.\n\n📸: @LabPadre",
+				acc:  "spacex360",
+				want: true,
+			},
+			{
 				text:     "Starship is simply beautiful",
 				hasMedia: true,
 				want:     true,
@@ -382,6 +387,31 @@ func TestLocationTweets(t *testing.T) {
 func TestQuestionTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			// Tweet threads with questions
+			{
+				text: "How many S20 cryogenic pressure test(s)?",
+				acc:  "Starship_Sults",
+				want: false,
+
+				parent: &ttest{
+					text: "How many S20 static fires?",
+					acc:  "Starship_Sults",
+					want: false,
+				},
+			},
+			{
+				text:     "How many S20 cryogenic pressure test(s)?",
+				acc:      "Starship_Sults",
+				hasMedia: true,
+				want:     true,
+
+				parent: &ttest{
+					text:     "How many S20 static fires?",
+					acc:      "Starship_Sults",
+					hasMedia: true,
+					want:     true,
+				},
+			},
 			// Questions only if we have media or are at the spacex locations
 			{
 				acc:  "considercosmos",
