@@ -302,7 +302,7 @@ var (
 
 		"fantasy 4 cards", "fantasy cards",
 
-		"8bitdo", "sn30",
+		"8bitdo", "sn30", "ps-5", "ps5", "ssd",
 
 		"gaming",
 
