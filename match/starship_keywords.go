@@ -235,6 +235,8 @@ var (
 		"nhl",
 
 		"cum", "only fans",
+
+		"crypto",
 	})
 
 	antiKeywordRegexes = []*regexp.Regexp{
@@ -302,7 +304,7 @@ var (
 
 		"fantasy 4 cards", "fantasy cards",
 
-		"8bitdo", "sn30", "ps-5", "ps5", "ssd",
+		"8bitdo", "sn30", "ps-5", "ps5", "ssd", "sony",
 
 		"gaming",
 
@@ -367,7 +369,7 @@ var (
 
 		"belarus", "battalion",
 
-		"stfu",
+		"stfu", "jerk", "thunderf00t", "thunderfoot", "common sense skeptic", "rambling",
 
 		"patrons", "babylon", "boltup", "champion",
 
@@ -381,7 +383,7 @@ var (
 		// Some conferences have a "stand B20", because why not trick this bot right?
 		"booth", "stand b",
 
-		"trump", "antifa", "biden", "riot", "taliban", "kill", "beat", "ideology", "gender",
+		"trump", "antifa", "communism", "biden", "riot", "taliban", "kill", "beat", "ideology", "gender",
 
 		"surgery", "emergency",
 

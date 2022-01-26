@@ -196,7 +196,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 			break
 		}
 
-		if p.shouldIgnoreLink(&tweet.Tweet) {
+		if p.shouldIgnoreLink(tweet) {
 			tweet.Log("ignored because of link")
 			break
 		}

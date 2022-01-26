@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/dghubble/go-twitter/twitter"
+	"github.com/xarantolus/spacex-hop-bot/match"
 	"github.com/xarantolus/spacex-hop-bot/scrapers"
 	"github.com/xarantolus/spacex-hop-bot/util"
 	"mvdan.cc/xurls/v2"
@@ -85,7 +85,7 @@ func isImportantURL(uri string) (important bool) {
 }
 
 // shouldIgnoreLink returns whether this tweet should be ignored because of a linked article
-func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
+func (p *Processor) shouldIgnoreLink(tweet match.TweetWrapper) (ignore bool) {
 	// Get the text *with* URLs
 	var textWithURLs = tweet.TextWithURLs()
 
@@ -96,6 +96,7 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 	for _, u := range urls {
 		// Ignore important URLs
 		if isImportantURL(u) {
+			tweet.Log("URL %q is important", u)
 			continue
 		}
 
@@ -104,6 +105,7 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 			canonical = util.FindCanonicalURL(u, false)
 		}
 		if isImportantURL(canonical) {
+			tweet.Log("URL %q is important", canonical)
 			continue
 		}
 
@@ -116,6 +118,7 @@ func (p *Processor) shouldIgnoreLink(tweet *twitter.Tweet) (ignore bool) {
 		// Check if the host is ignored
 		host := strings.TrimPrefix(strings.ToLower(parsed.Hostname()), "www.")
 		if ignoredHosts[host] {
+			tweet.Log("URL %q has ignored host %q", parsed.String(), host)
 			return true
 		}
 

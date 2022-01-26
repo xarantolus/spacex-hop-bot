@@ -281,6 +281,12 @@ func TestLocationTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				acc:      "AdamCuker",
+				text:     "SpaceX Raptor 2.0 rocket engine test last night in McGregor, Texas @SpaceX. The video is dark due to dense fog. This was the loudest I've ever heard it. Residences could hear this test over 30+ miles away!#SpaceXtest (Incredible Roar)\nRaptor 2 Test Video: https://youtu.be/BKR3WE55cQ8",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text:     "New booster standing tall in the setting sun tonight @SpaceX #McGregor Rocket  B1072 @elonmusk",
 				acc:      "jswartzphoto",
 				hasMedia: true,
