@@ -660,6 +660,42 @@ func TestTweetThreads(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "ASAP: Other Starship HLS risks \"include things like software and hardware integration, flight rate, hardware turnaround times and reuse.\"\n\"NASA is working on all of those and trying to make sure that it's comfortable with the approach that is being proposed by SpaceX.\"",
+				acc:  "thesheetztweetz",
+				want: true,
+
+				parent: &ttest{
+					text: "ASAP also identified landing technologies accuracy / stability / hazard avoidance as another top risk to HLS Starship.\nSome of the mitigations include the fact that there will be uncrewed test landings prior to the first human landing.\"",
+					acc:  "thesheetztweetz",
+					want: true,
+
+					parent: &ttest{
+						text: "ASAP identified the required Starship cryo-fluid transfer/management of refueling as a top risk to the HLS program.",
+						acc:  "thesheetztweetz",
+						want: true,
+
+						parent: &ttest{
+							text: "ASAP: SpaceX also gave NASA a \"good understanding of some of the challenges\" the company is having with Raptor engine production.",
+							acc:  "thesheetztweetz",
+							want: true,
+
+							parent: &ttest{
+								text: "ASAP: \"NASA also conducted some site visits to Boca Chica and Hawthorne that indicated there's been significant progress in the overall production of Starship and HLS.\"",
+								acc:  "thesheetztweetz",
+								want: true,
+
+								parent: &ttest{
+									text:     "NASA's Aerospace Safety Advisory Panel says SpaceX this month provided the agency with \"an integrated master schedule\" on HLS Starship development.",
+									acc:      "thesheetztweetz",
+									want:     true,
+									hasMedia: true,
+								},
+							},
+						},
+					},
+				},
+			},
+			{
 				text: "It looks like they have also released all of the chains holding #Mechazilla back. Might see this monster flex its arms tonight if we get lucky @elonmusk #SpaceX",
 				want: true,
 				acc:  "same_user",
