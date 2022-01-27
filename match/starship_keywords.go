@@ -57,7 +57,7 @@ var (
 			to: ignoreSpaces([]string{
 				"starship", "vacuum", "sea level",
 				"spacex", "mcgregor", "engine", "rb", "rc", "rvac",
-				"launch site", "production site", "booster", "super heavy",
+				"launch site", "production", "booster", "super heavy",
 				"superheavy", "truck", "van", "raptorvan", "deliver",
 				"flare", "high bay", "nozzle", "tripod", "starbase", "static fire",
 			}),
