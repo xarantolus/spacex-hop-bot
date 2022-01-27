@@ -156,12 +156,12 @@ func TestStarshipTweetAntiOverwrite(t *testing.T) {
 	testStarshipTweets(t,
 		[]ttest{
 			{
-				text: "Normal user tweeting about Starship and Orion",
+				text: "Normal user tweeting about Starship and SLS",
 				want: false,
 			},
 			{
 				acc:  "NASA",
-				text: "NASA account tweeting about Starship and Orion",
+				text: "NASA account tweeting about Starship and SLS",
 				want: true,
 			},
 		},

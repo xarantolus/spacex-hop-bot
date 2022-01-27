@@ -43,7 +43,7 @@ func Test_startsWithAnyStarshipAntikeywords(t *testing.T) {
 		{"road closure with no information where it is", false},
 		{"https://shop.blueorigin.com/collections/new/products/new-glenn-108th-scale", true},
 		{"", false},
-		{"Starship-Orion is a good idea", true},
+		{"Starship-SLS is a good idea", true},
 		{"KSP is my favourite game!", true},
 		{"What if I add many spaces before       KSP", true},
 		{"-   .  +  - . k . -  .  .. -   . . -.- .", false},

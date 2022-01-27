@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Progress on the HLS Starship variant",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text: "It looks like Ship 22’s aft section was moved into the mid bay following speculation that it was set to be scrapped.\n\n📸: @LabPadre",
 				acc:  "spacex360",
 				want: true,
@@ -140,10 +145,6 @@ func TestBasicTweets(t *testing.T) {
 			{
 				text: "OLIT catching arms have begun their first vertical move visible on @LabPadre rover cam 1 & 2. @elonmusk @SpaceX",
 				want: true,
-			},
-			{
-				text: "Starship-Orion is a good idea",
-				want: false,
 			},
 			{
 				text: "In 2022, we are likely to see the debuts orbital flights of the two most powerful rockets ever: SpaceX’s Starship and Boeing/NASA’s SLS.\nEasily the most significant launch vehicles since the Saturn V of the Apollo era.\nHappy New Year! Many exciting days (& launches Rocket ) to come",

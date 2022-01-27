@@ -247,11 +247,13 @@ var (
 	// If a tweet contains any of these keywords, it will not be retweeted. This is a way of filtering out *non-starship* stuff
 	antiStarshipKeywords = []string{
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "hungry hippo", "rklb", "falcon", "merlin", "m1d", "f9",
-		"tesla", "rivian", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink", "sls", "nasa_sls", "ula", "vulcan", "artemis", "rogozin",
-		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "soviet", "orion",
+		"tesla", "rivian", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink",
+		"sls", "nasa_sls", "ula", "vulcan", "rogozin",
+		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "soviet",
 		"resilience", "shuttle", "challenger", "sts-51l", "sts-33", "new glenn", "china", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra", "lv0",
-		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine", "galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
+		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine",
+		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "atlasv", "relativity", "northrop grumman", "northropgrumman", "bomber",
 		"rookisaacman", "cygnus", "samsung", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
@@ -265,9 +267,9 @@ var (
 
 		"be4", "be-4", "be 4 engine",
 
-		"amazon", "kuiper", "nasaartemis", "isro",
+		"amazon", "kuiper", "isro",
 
-		"7news", "bay light",
+		"7news",
 
 		// e.g. crew-1, crew-2...
 		"crew-", "crew dragon", "dragon", "crs", "dm-",
@@ -362,14 +364,16 @@ var (
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follower", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",
 		"retweet if",
 
-		"child", "kid", "illegal", "nfl", "tiktok", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
+		"child", "kid",
+
+		"illegal", "nfl", "tiktok", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "strok", "fap", "chick", "doggy", "only fans",
 
 		"simp ", "simping",
 
 		"belarus", "battalion",
 
-		"stfu", "jerk", "thunderf00t", "thunderfoot", "common sense skeptic", "rambling",
+		"stfu", "jerk", "thunderf00t", "thunderfoot", "common sense skeptic", "rambl",
 
 		"patrons", "babylon", "boltup", "champion",
 
