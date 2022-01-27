@@ -50,7 +50,7 @@ func startsWithAny(text string, words ...string) bool {
 		currentIndex += nextIndexOffset
 
 		if iterations > 1000 {
-			log.Printf("Input text %q causes containsAny to loop longer than expected", text)
+			log.Printf("Input text %q causes startsWithAny to loop longer than expected", text)
 			return false
 		}
 	}

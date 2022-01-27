@@ -14,7 +14,7 @@ func (m *StarshipMatcher) StarshipText(text string, antiKeywords []string, skipM
 	}
 
 	// else we check if there are any interesting keywords
-	if containsAny(text, starshipKeywords...) {
+	if startsWithAny(text, starshipKeywords...) {
 		return true
 	}
 
