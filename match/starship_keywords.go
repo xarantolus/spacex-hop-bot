@@ -299,6 +299,8 @@ var (
 
 		"god", "the lord",
 
+		"xanda",
+
 		// 3d models are nice, but we only care about "real info"
 		"thanks", "thank you", "cheers", "render", "animat" /* ion/ed */, "3d", "model", "simulated", "print", "vfx", "not real", "photoshop",
 		"art", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle", "lego",

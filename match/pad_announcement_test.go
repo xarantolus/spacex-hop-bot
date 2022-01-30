@@ -10,7 +10,7 @@ func TestIsPadAnnouncement(t *testing.T) {
 		{"Just heard a pad announcement. Very hard to hear, sounded like some sort of pad operations. Could be some sort of testing?", true},
 		{"Pad speakers: clearing everything for booster lift", true},
 		{"Pad announcement over the speakers: clearing pad for static fire", true},
-
+		{"#BREAKING Ooooh. Launchpad giant voice just announced they are clearing the launch tower and launch mount. Maybe we will be getting some chopstick heavy lifting going today!!! #Starbase #Starship #SpaceX", true},
 		{"LabPadre announced something", false},
 	}
 

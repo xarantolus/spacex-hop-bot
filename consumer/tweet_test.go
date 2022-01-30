@@ -282,6 +282,15 @@ func TestLocationTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "#BREAKING Ooooh. Launchpad giant voice just announced they are clearing the launch tower and launch mount. Maybe we will be getting some chopstick heavy lifting going today!!! #Starbase #Starship #SpaceX",
+				want: true,
+			},
+			{
+				text:     "#BREAKING Ooooh. Launchpad giant voice just announced they are clearing the launch tower and launch mount. Maybe we will be getting some chopstick heavy lifting going today!!! #Starbase #Starship #SpaceX",
+				want:     true,
+				location: match.SpaceXLaunchSiteID,
+			},
+			{
 				acc:      "AdamCuker",
 				text:     "SpaceX Raptor 2.0 rocket engine test last night in McGregor, Texas @SpaceX. The video is dark due to dense fog. This was the loudest I've ever heard it. Residences could hear this test over 30+ miles away!#SpaceXtest (Incredible Roar)\nRaptor 2 Test Video: https://youtu.be/BKR3WE55cQ8",
 				hasMedia: true,
