@@ -282,6 +282,11 @@ func TestLocationTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Catch arm lift tests underway! 🦾",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text: "#BREAKING Ooooh. Launchpad giant voice just announced they are clearing the launch tower and launch mount. Maybe we will be getting some chopstick heavy lifting going today!!! #Starbase #Starship #SpaceX",
 				want: true,
 			},
