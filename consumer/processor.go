@@ -28,6 +28,8 @@ type Processor struct {
 
 	spacePeopleListID      int64
 	spacePeopleListMembers map[int64]bool
+
+	startTime time.Time
 }
 
 const (
@@ -52,6 +54,8 @@ func NewProcessor(debug bool, inTest bool, client TwitterClient, selfUser *twitt
 
 		seenTweets:             make(map[int64]bool),
 		spacePeopleListMembers: make(map[int64]bool),
+
+		startTime: time.Now(),
 	}
 
 	if !p.test {
@@ -61,6 +65,16 @@ func NewProcessor(debug bool, inTest bool, client TwitterClient, selfUser *twitt
 	}
 
 	return p
+}
+
+func (p *Processor) Stats() map[string]interface{} {
+	return map[string]interface{}{
+		"seen_tweet_count": len(p.seenTweets),
+		"user":             p.selfUser,
+		"seen_links":       p.seenLinks,
+		"start_time":       p.startTime,
+		"uptime":           time.Since(p.startTime).String(),
+	}
 }
 
 // Tweet processes the given tweet and checks whether it should be retweeted.

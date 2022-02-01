@@ -18,6 +18,7 @@ import (
 
 type httpServer struct {
 	twitter   consumer.TwitterClient
+	processor *consumer.Processor
 	tweetChan chan<- match.TweetWrapper
 }
 
@@ -87,15 +88,22 @@ func (h *httpServer) submitTweet(w http.ResponseWriter, r *http.Request) (err er
 	return
 }
 
-func RunWebServer(c config.Config, t consumer.TwitterClient, tweetChan chan<- match.TweetWrapper) {
+func (s *httpServer) stats(w http.ResponseWriter, r *http.Request) (err error) {
+	w.Header().Set("Content-Type", "application/json")
+	return json.NewEncoder(w).Encode(s.processor.Stats())
+}
+
+func RunWebServer(c config.Config, t consumer.TwitterClient, p *consumer.Processor, tweetChan chan<- match.TweetWrapper) {
 	defer panic("web server stopped running, but it should never do that")
 
 	server := &httpServer{
 		twitter:   t,
 		tweetChan: tweetChan,
+		processor: p,
 	}
 
 	http.HandleFunc("/api/v1/tweet/submit", httpErrWrapper(server.submitTweet))
+	http.HandleFunc("/api/v1/stats", httpErrWrapper(server.stats))
 
 	port := strconv.Itoa(int(c.Server.Port))
 	log.Printf("[HTTP] Server listening on port %s", port)
