@@ -11,6 +11,14 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "A booster loadspreader is being lifted. Don't panic yet, this could be a sign of depressurization.\n\n📷 @NASASpaceflight",
+				want: true,
+			},
+			{
+				text: "The load spreader is up.\n\nhttp://nasaspaceflight.com/starbaselive",
+				want: true,
+			},
+			{
 				text: "Fresh out of YC S21, Epsilon3 raises seed round to continue modernizing space and launch operations. https://buff.ly/3rUsIFn",
 				want: false,
 			},

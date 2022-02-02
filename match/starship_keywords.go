@@ -130,6 +130,14 @@ var (
 			),
 		},
 
+		// Load spreader
+		{
+			from: compose(ignoreSpaces([]string{"load spreader"})),
+			to: compose(
+				placesKeywords, liveStreams,
+			),
+		},
+
 		{
 			from: compose([]string{"lift arms"}),
 			to:   compose(nonSpecificKeywords, generalSpaceXKeywords),
@@ -269,6 +277,8 @@ var (
 		"jarvis", "glenn", "bob smith",
 
 		"be4", "be-4", "be 4 engine",
+
+		"war time", "wartime", "long range strike",
 
 		"amazon", "kuiper", "isro",
 
