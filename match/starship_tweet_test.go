@@ -285,6 +285,11 @@ func TestStarshipTweetIgnoredAccount(t *testing.T) {
 				want:            false,
 			},
 			{
+				text:            "Starship",
+				userDescription: "Spaceflight/Rocketry Artist\nShe/Her",
+				want:            false,
+			},
+			{
 				text:     "Some text",
 				location: SpaceXLaunchSiteID,
 				want:     true,

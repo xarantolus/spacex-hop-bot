@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Fresh out of YC S21, Epsilon3 raises seed round to continue modernizing space and launch operations. https://buff.ly/3rUsIFn",
+				want: false,
+			},
+			{
 				text:     "Progress on the HLS Starship variant",
 				hasMedia: true,
 				want:     true,
@@ -457,6 +461,31 @@ func TestQuestionTweets(t *testing.T) {
 func TestElonTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			// This is a real tweet
+			{
+				text: "16 story tall rocket, traveling several times faster than a bullet, backflips & fires engines to return to launch site",
+				acc:  "elonmusk",
+				want: false,
+
+				parent: &ttest{
+					text: "View of Falcon 9's stage separation from ground cameras",
+					acc:  "SpaceX",
+					want: false,
+				},
+			},
+			// Same thing, but for starship
+			{
+				text: "16 story tall rocket, traveling several times faster than a bullet, backflips & fires engines to return to launch site",
+				acc:  "elonmusk",
+				want: true,
+
+				parent: &ttest{
+					text: "View of Starship stage separation from ground cameras",
+					acc:  "SpaceX",
+					want: true,
+				},
+			},
+
 			// Starship tweet with a follow up of an unrelated question
 			{
 				text: "Will be ready in Q4.",

@@ -193,7 +193,7 @@ var (
 
 		// For Elon, we try to match anything that could be insider info
 		"elonmusk": {
-			regexp.MustCompile(`(?:booster|cryo|static fire|tower|ship|rud|faa|starbase|boca chica|lox|liquid oxygen|methane|ch4|relight|fts|flip|cargo|lunar|tfr|fts|scrub|flap)`),
+			regexp.MustCompile(`(?:booster|cryo|static fire|tower|ship|rud|faa|starbase|boca chica|lox|liquid oxygen|methane|ch4|relight|fts|cargo|lunar|tfr|fts|scrub|flap)`),
 			// Try to match things for orbital flight tests
 			regexp.MustCompile(`(?:orbit(?:.|\s)+(flight test|test flight)|(flight test|test flight)(?:.|\s)+orbit)`),
 		},
@@ -232,7 +232,7 @@ var (
 		"parody", "joke",
 
 		// 3D artists
-		"blender", "3d", "vfx", "render", "animat", /* e/ion */
+		"artist", "blender", "3d", "vfx", "render", "animat", /* e/ion */
 
 		// Sports stuff
 		"nhl",
@@ -278,6 +278,8 @@ var (
 		"crew-", "crew dragon", "dragon", "crs", "dm-",
 
 		"f22", "f-22", "jet", "b-52", "s-300", "f-1",
+
+		"seed round", "yc s", "not a starship",
 
 		// Not interested in other stuff
 		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "nft", "mint", "opensea",
