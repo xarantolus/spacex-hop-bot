@@ -64,9 +64,6 @@ func main() {
 	// and send them on this channel, then the processor will handle each incoming tweet
 	var tweetChan = make(chan match.TweetWrapper, 250)
 
-	// The web server should always run, regardless of debug mode or not
-	go jobs.RunWebServer(cfg, twitterClient, tweetChan)
-
 	if *flagDebug {
 		log.Println("[Info] Running in debug mode, no background jobs are started")
 	} else {
@@ -79,6 +76,9 @@ func main() {
 
 	// handler handles tweets by filtering & retweeting the interesting ones
 	var handler = consumer.NewProcessor(*flagDebug, false, twitterClient, selfUser, starshipMatcher, cfg.Lists.MainStarshipListID)
+
+	// The web server should always run, regardless of debug mode or not
+	go jobs.RunWebServer(cfg, twitterClient, handler, tweetChan)
 
 	// Now we just process every tweet we come across
 	for tweet := range tweetChan {
