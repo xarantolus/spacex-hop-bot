@@ -129,6 +129,10 @@ var (
 				[]string{"qd", "bqd", "arm", "catch", "lift"},
 			),
 		},
+		{
+			from: compose([]string{"lift arms"}),
+			to:   compose(nonSpecificKeywords, generalSpaceXKeywords),
+		},
 
 		// Load spreader
 		{
@@ -138,9 +142,17 @@ var (
 			),
 		},
 
+		// It looks like stuff is happening in Cape Canaveral at SpaceX Roberts Road. Not 100% though
 		{
-			from: compose([]string{"lift arms"}),
-			to:   compose(nonSpecificKeywords, generalSpaceXKeywords),
+			from: compose(
+				ignoreSpaces([]string{
+					"roberts road", "robert's road", "robert road",
+					"roberts rd", "robert's road", "robert rd",
+				}),
+			),
+			to: compose(
+				[]string{"update", "olit"},
+			),
 		},
 
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
@@ -364,7 +376,7 @@ var (
 		// Vitamin B2
 		"vitamin",
 
-		"ocisly", "jrti", "asog", "canaveral",
+		"ocisly", "jrti", "asog",
 
 		"obetraveller", "ocean cam", "oceancam", "oceanscam", "paul",
 

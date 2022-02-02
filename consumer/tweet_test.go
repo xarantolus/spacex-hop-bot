@@ -11,6 +11,16 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "The new #SpaceX facilities at #NASA's Roberts Rd in Cape Canaveral is at full go. Land has been cleared, a new booster refurbishment building is being completed and lots more unknown structures are in progress. Stay in tune for more updates as it progresses @elonmusk @MarcusHouse",
+				want: true,
+			},
+			{
+				text:     "Robert's Road update!",
+				acc:      "FarryFaz",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text: "A booster loadspreader is being lifted. Don't panic yet, this could be a sign of depressurization.\n\n📷 @NASASpaceflight",
 				want: true,
 			},
