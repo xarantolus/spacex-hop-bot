@@ -11,6 +11,19 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Compressed 24 hours of remote 4k video into 30 secs. on SpaceX's landing pad for NROL-87 mission. @NASASpaceflight @SpaceX",
+				want: false,
+			},
+			{
+				text: "Next raptor delivery seen on @nasaspaceflight cam",
+				want: true,
+			},
+			{
+				text: "In case anybody cares, @RoyalCaribbean has yet to respond to my multiple requests for comment on the Harmony of the Seas range violation. Sent an initial inquiry immediately after yesterday's scrub.",
+				acc:  "nextspaceflight",
+				want: false,
+			},
+			{
 				text: "The new #SpaceX facilities at #NASA's Roberts Rd in Cape Canaveral is at full go. Land has been cleared, a new booster refurbishment building is being completed and lots more unknown structures are in progress. Stay in tune for more updates as it progresses @elonmusk @MarcusHouse",
 				want: true,
 			},

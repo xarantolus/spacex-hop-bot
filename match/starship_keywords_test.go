@@ -254,7 +254,6 @@ func TestAlertRegex(t *testing.T) {
 func TestClosureTFRRegex(t *testing.T) {
 	var valid = []string{
 		"fts is installed",
-		"scrubbed",
 		"new notmar posted",
 		"cryo proof upcoming",
 	}

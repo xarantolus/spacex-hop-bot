@@ -72,7 +72,7 @@ var (
 			)),
 			to: []string{
 				"methane", "tanker", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",
-				"argon", "pad", "road", "highway", "close", "open", "qd", "quick disconnect",
+				"argon", "road", "highway", "close", "open", "qd", "quick disconnect",
 				"raptor", "cranex",
 			},
 		},
@@ -178,7 +178,7 @@ var (
 	})
 
 	// Regexes for road closures and testing activity
-	closureTFRRegex = regexp.MustCompile(`\b(?:closure|tfr|notmar|cryo|fts|scrub)`)
+	closureTFRRegex = regexp.MustCompile(`\b(?:closure|tfr|notmar|cryo|fts)`)
 	alertRegex      = regexp.MustCompile(`\b(?:alert|static fire|closure|cryo|evac|scrub|pad.*clear|clear.*pad)`)
 
 	// Users that are known to post better information that requires less filtering.
@@ -349,6 +349,9 @@ var (
 		"rocket explorer",
 
 		"tax",
+
+		// RC3 Seabee
+		"seabee",
 
 		// KSP planets, moons, stars etc.
 		"moho", "gilly", "kerbin", "mun", "minmus", "duna", "jool", "laythe", "vall",
