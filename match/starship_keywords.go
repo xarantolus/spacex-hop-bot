@@ -109,6 +109,11 @@ var (
 			to:   compose(seaportKeywords, generalSpaceXKeywords, []string{"deimos"}),
 		},
 
+		{
+			from: ignoreSpaces([]string{"aerial shots", "fly over"}),
+			to:   placesKeywords,
+		},
+
 		// New launch pads at different locations
 		{
 			from: compose(
@@ -278,7 +283,7 @@ var (
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine",
 		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "atlasv", "relativity", "northrop grumman", "northropgrumman", "bomber",
-		"rookisaacman", "cygnus", "samsung", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
+		"cygnus", "samsung", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
 
 		"roscosmos", "yenisey",
@@ -399,7 +404,7 @@ var (
 		"child", "kid",
 
 		"illegal", "nfl", "nhl", "draw", "tiktok", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
-		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "strok", "fap", "chick", "doggy", "only fans",
+		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "stroking", "fap", "chick", "doggy", "only fans",
 
 		"simp ", "simping",
 

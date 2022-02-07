@@ -333,6 +333,13 @@ func TestLocationTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Starbase flyover @leifviper, Stroker, @rookisaacman @slickf16 @SpaceX",
+				acc:      "KiddPoteet",
+				location: match.SpaceXBuildSiteID,
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text:     "Catch arm lift tests underway! 🦾",
 				hasMedia: true,
 				want:     true,
