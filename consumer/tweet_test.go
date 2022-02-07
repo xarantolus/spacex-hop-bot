@@ -11,6 +11,22 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "#ataresults Congrats to B18 Doubles champs Name and Name!! 😉\n\nBoth Name and Name also got 3rd in their respective B18 draws.",
+				want: false,
+			},
+			{
+				text: "Someone got DISSED by @NASASpaceflight / Chris Bergin on a public form for posting StarshipGazer and Labpadre views..\n\nIt’s obvious they care about the money more than anything else..",
+				want: false,
+			},
+			{
+				text: "So far Starship Troopers is like Fascist Degrassi and it’s brilliant",
+				want: false,
+			},
+			{
+				text: "Starship and 9/11 in the same tweet",
+				want: false,
+			},
+			{
 				text: "Compressed 24 hours of remote 4k video into 30 secs. on SpaceX's landing pad for NROL-87 mission. @NASASpaceflight @SpaceX",
 				want: false,
 			},

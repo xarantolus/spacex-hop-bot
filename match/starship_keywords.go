@@ -358,7 +358,7 @@ var (
 		"tylo", "bop", "pol", "dres", "eeloo", "kerbol",
 
 		// movies
-		"the martian",
+		"the martian", "starship trooper",
 
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
@@ -398,7 +398,7 @@ var (
 
 		"child", "kid",
 
-		"illegal", "nfl", "tiktok", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
+		"illegal", "nfl", "nhl", "draw", "tiktok", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "strok", "fap", "chick", "doggy", "only fans",
 
 		"simp ", "simping",
@@ -446,7 +446,7 @@ var (
 
 		"covid", "corona", "rona", "omicron", "tests positive", "positive test", "cdc",
 
-		"shit", "anime", "manga", "bronco", "bae",
+		"diss", "shit", "anime", "manga", "bronco", "bae", "facist", "fascist",
 
 		"abortion", "roe v. wade", "roe v wade", "roe vs. wade", "roe vs wade",
 
