@@ -352,6 +352,7 @@ var (
 		"your guess",
 
 		"not starship", "non starship", "not about starship", "discord", "wonder if", "was wondering", "years ago", "year ago",
+		"nothing to do with starship", "not related to starship", "unrelated to starship",
 
 		// kerbal space program, games, star wars != "official" news
 		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky", "kerbals", "pocket rocket", "pocketrocket", "simplerockets",

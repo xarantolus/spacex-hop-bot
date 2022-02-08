@@ -14,7 +14,6 @@ import (
 
 var (
 	ignoredHosts = map[string]bool{
-		"patreon.com":          true,
 		"gofundme.com":         true,
 		"opensea.io":           true,
 		"shop.spreadshirt.com": true,
