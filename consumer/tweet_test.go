@@ -11,6 +11,14 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "They are currently testing the catch arms at the launch site",
+				want: true,
+			},
+			{
+				text: "Second day of the presentation week. 2 days remain. Thanks to @BocaChicaGal we are getting some amazing views of the launch site. Crossing fingers for a stacking today!\n\nWatch all the action the next few days at: http://nasaspaceflight.com/starbaselive @NASASpaceflight",
+				want: true,
+			},
+			{
 				text: "#ataresults Congrats to B18 Doubles champs Name and Name!! 😉\n\nBoth Name and Name also got 3rd in their respective B18 draws.",
 				want: false,
 			},
@@ -341,6 +349,17 @@ func TestLocationTweets(t *testing.T) {
 			},
 			{
 				text:     "Catch arm lift tests underway! 🦾",
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				text:     "Full stack",
+				location: match.SpaceXLaunchSiteID,
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				location: match.SpaceXLaunchSiteID,
 				hasMedia: true,
 				want:     true,
 			},
