@@ -168,7 +168,7 @@ var (
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
 		{
 			from: ignoreSpaces([]string{"launch tower", "launch pad", "launch mount", "chop stick", "chop stix", "catch arm"}),
-			to: compose(seaportKeywords, placesKeywords, liveStreams,
+			to: compose(seaportKeywords, placesKeywords, liveStreams, nonSpecificKeywords,
 				// Launch tower arm lift/load tests
 				[]string{"lift", "load"},
 			),

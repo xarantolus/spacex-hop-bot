@@ -15,6 +15,18 @@ func TestBasicTweets(t *testing.T) {
 				want: true,
 			},
 			{
+				text: "The ship lift points have been deployed on the chopsticks",
+				want: true,
+			},
+			{
+				text: "Ship now attached to the chopsticks",
+				want: true,
+			},
+			{
+				text: "Booster now standing next to the launch tower",
+				want: true,
+			},
+			{
 				text: "Second day of the presentation week. 2 days remain. Thanks to @BocaChicaGal we are getting some amazing views of the launch site. Crossing fingers for a stacking today!\n\nWatch all the action the next few days at: http://nasaspaceflight.com/starbaselive @NASASpaceflight",
 				want: true,
 			},
