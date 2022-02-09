@@ -11,6 +11,14 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "full stack @nasaspaceflight",
+				want: true,
+			},
+			{
+				text: "PA Announcement just now: “attention on the pad, we’re 15 minutes away from ship proof.” @NASASpaceflight",
+				want: true,
+			},
+			{
 				text: "This has nothing to do with Starships...its just amazing...",
 				want: false,
 			},

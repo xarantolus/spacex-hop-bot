@@ -96,8 +96,8 @@ var (
 
 		// Testing activity
 		{
-			from: ignoreSpaces([]string{"cryogenic proof", "cryo proof"}),
-			to:   compose(nonSpecificKeywords, generalSpaceXKeywords),
+			from: ignoreSpaces([]string{"cryo proof", "proof", "stack"}),
+			to:   compose(nonSpecificKeywords, generalSpaceXKeywords, liveStreams),
 		},
 		{
 			from: []string{"road closure", "temporary flight restriction", "tfr "},

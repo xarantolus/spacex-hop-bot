@@ -7,6 +7,8 @@ func TestIsPadAnnouncement(t *testing.T) {
 		input string
 		want  bool
 	}{
+		{"PA: 15 minutes away from clearing the orbital pad for ship proof.", true},
+		{"PA Announcement just now: “attention on the pad, we’re 15 minutes away from ship proof.” @NASASpaceflight", true},
 		{"Just heard a pad announcement. Very hard to hear, sounded like some sort of pad operations. Could be some sort of testing?", true},
 		{"Pad speakers: clearing everything for booster lift", true},
 		{"Pad announcement over the speakers: clearing pad for static fire", true},
