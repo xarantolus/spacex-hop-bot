@@ -16,7 +16,7 @@ var (
 	// we should retweet
 	starshipKeywords = ignoreSpaces([]string{
 		"starship",
-		"superheavy", "super heavy",
+		"super heavy",
 
 		"orbital launch tower", "orbital tower", "olt segment",
 		"launch tower segment", "olp service tower", "olp tower",
@@ -69,6 +69,7 @@ var (
 				[]string{"orbital tank farm", "otf"},
 				[]string{"suborbital tank farm", "stf"},
 				[]string{"olm", "olt", "olit"},
+				[]string{"stage zero"},
 			)),
 			to: []string{
 				"methane", "tanker", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",
@@ -176,7 +177,7 @@ var (
 	}
 
 	// Helper slices that can be used for composing new keywords
-	seaportKeywords       = []string{"sea launch", "oil", "rig"}
+	seaportKeywords       = ignoreSpaces([]string{"sea launch", "oil", "rig"})
 	placesKeywords        = ignoreSpaces([]string{"starbase", "boca chica", "launch site", "build site"})
 	nonSpecificKeywords   = compose([]string{"ship", "booster"}, liveStreams, placesKeywords)
 	generalSpaceXKeywords = []string{"spacex"}
@@ -288,6 +289,7 @@ var (
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine",
 		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "atlasv", "relativity", "northrop grumman", "northropgrumman", "bomber",
+		"orbex", "rfa", "isar",
 		"cygnus", "samsung", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
 
@@ -396,6 +398,7 @@ var (
 
 		// I do not care about opinions on starship
 		"agree", "disagree", "throwback to", "opinion", "imo", "imho", "i think", "mfw", "vibe", "dream", "laughs in",
+		"armchair", "arm chair",
 
 		"gorgeous girl",
 

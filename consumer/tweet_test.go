@@ -11,6 +11,26 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "SuperHeavy standing still",
+				want: true,
+			},
+			{
+				text: "Looks like progress on the Deimos sea-launch platform",
+				want: true,
+			},
+			{
+				text: "So I’ve checked in with what’s happened in the US whilst I slept and they have a fully stacked Starship now - and, apparently, some kind of soup police?",
+				want: false,
+			},
+			{
+				text: "Stage Zero - Immensely Complex! (and I freaking love it) Check out the Ship QD Arm time-lapse. Watch live at here for this awesome view. https://youtu.be/7zsl4q6fwfQ",
+				want: true,
+			},
+			{
+				text: "The armchair scientists in the NSF chat get worse, always someone like: spaceX can’t stack S20 because I over boiled my eggs and burnt my toast therefore the FAA won’t let them stack it!",
+				want: false,
+			},
+			{
 				text: "full stack @nasaspaceflight",
 				want: true,
 			},

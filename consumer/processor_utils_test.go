@@ -37,6 +37,7 @@ func Test_isTagsOnly(t *testing.T) {
 	}{
 		{"", false},
 		{"Hello World!", false},
+		{"Hi @someone", false},
 		{"Hello #Starbase, nice #Starships!", false},
 
 		{"#Starbase #Starbase #SpaceX #Starship @elonmusk", true},
