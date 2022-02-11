@@ -35,6 +35,10 @@ func TestBasicTweets(t *testing.T) {
 				want: true,
 			},
 			{
+				text: "full stack @spacex",
+				want: true,
+			},
+			{
 				text: "PA Announcement just now: “attention on the pad, we’re 15 minutes away from ship proof.” @NASASpaceflight",
 				want: true,
 			},
@@ -821,6 +825,17 @@ func TestTweetThreads(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Later this year, remaining fussy bits will be gone, allowing deletion of shroud",
+				acc:  "elonmusk",
+				want: true,
+				parent: &ttest{
+					text:     "Raptor V1 vs Raptor V2.  Greatly simplified whilst increasing thrust. Costs half as much.",
+					acc:      "nasaspaceflight",
+					hasMedia: true,
+					want:     true,
+				},
+			},
+			{
 				text: "ASAP: Other Starship HLS risks \"include things like software and hardware integration, flight rate, hardware turnaround times and reuse.\"\n\"NASA is working on all of those and trying to make sure that it's comfortable with the approach that is being proposed by SpaceX.\"",
 				acc:  "thesheetztweetz",
 				want: true,
@@ -1218,6 +1233,10 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweet(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text: "What a day!!!! It has already seen a #Starship full-stack, next will be a launch from Kourou(@OneWeb), then I cross my fingers for @Astra's 4th attempt to launch and the big finale will be @elonmusk's update on the Starship program this evening!",
+				want: false,
+			},
 			{
 				text: "Starship SN15\n\nGet it on https://opensea.io/some/link",
 				want: false,

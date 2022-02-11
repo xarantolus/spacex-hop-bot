@@ -5,6 +5,7 @@ import "github.com/dghubble/go-twitter/twitter"
 const (
 	// TODO: find IDs for "Mesa del Gavilan", Stargate and generally places around/between the site.
 	// The data seems to come from foursquare, but the IDs are *not* the same on both services
+	// https://twitter.com/places/3309acacf870f6f5
 
 	// https://twitter.com/places/1380f3b60f972001
 	StarbasePlaceID = "1380f3b60f972001"

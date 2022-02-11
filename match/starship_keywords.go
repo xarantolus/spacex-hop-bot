@@ -42,7 +42,7 @@ var (
 		// Yes. I like watching tanks
 		regexp.MustCompile(`\b(gse)\s?(?:tank|-)?\s?\d+\b`),
 		// Raptor with a number
-		regexp.MustCompile(`\b((?:raptor|raptor\s+engine|rvac|rb|rc)(?:\s+(?:center|centre|boost|vacuum))?(?:\s+engine)?\s*\d+)\b`),
+		regexp.MustCompile(`\b((?:raptor|raptor\s+engine|rvac|rb|rc)(?:\s+(?:center|centre|boost|vacuum))?(?:\s+engine)?\s*v?\d+)\b`),
 	}
 
 	// moreSpecificKeywords are keywords that must be accompanied by at least one of the keywords mentioned in their slice.
@@ -289,8 +289,8 @@ var (
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine",
 		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "atlasv", "relativity", "northrop grumman", "northropgrumman", "bomber",
-		"orbex", "rfa", "isar",
-		"cygnus", "samsung", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
+		"orbex", "rfa", "isar", "oneweb",
+		"cygnus", "samsung", "s22 ultra", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
 
 		"roscosmos", "yenisey",
@@ -406,7 +406,7 @@ var (
 
 		"dearmoon", "dear moon", "inspiration4", "inspiration 4", "inspiration four", "alien",
 
-		"sale", "buy", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "discount",
+		"sale", "buy", "gift", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "discount",
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follower", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",
 		"retweet if",
 
@@ -441,7 +441,7 @@ var (
 		"olmos",
 
 		// Things that are typical questions for polls. We cannot get polls using the Twitter v1 API, so this is kind of bad
-		"feel about", "vs",
+		"feel about",
 
 		// stuff that seems like starship, but isn't
 		"starshipent", "monstax", "eshygazit", "wonho",

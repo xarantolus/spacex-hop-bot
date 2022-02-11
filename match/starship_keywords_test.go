@@ -218,6 +218,7 @@ func TestRaptorRegex(t *testing.T) {
 		"raptor engine boost 35", "raptor boost engine 35",
 		"raptor engine vacuum 5", "raptor centre 35",
 		"raptor vacuum 5", "raptor centre 35",
+		"raptor v1", "raptor v2",
 	}
 
 	var invalid = []string{"bn10", "bn1", "#b4", "bn 15", "booster b4",
