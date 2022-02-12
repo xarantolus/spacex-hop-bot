@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Super Heavy Grid Fins.\n\n#SpaceX\n\n📸 for @Teslarati",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text: "SuperHeavy standing still",
 				want: true,
 			},
@@ -388,6 +393,12 @@ func TestBasicTweets(t *testing.T) {
 func TestLocationTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text:     "Ship 20 prepares for stacking.",
+				location: match.SpaceXLaunchSiteID,
+				hasMedia: true,
+				want:     true,
+			},
 			{
 				text:     "Starbase flyover @leifviper, Stroker, @rookisaacman @slickf16 @SpaceX",
 				acc:      "KiddPoteet",
