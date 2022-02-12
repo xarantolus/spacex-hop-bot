@@ -11,6 +11,14 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "New grid fins arrived at the build site",
+				want: true,
+			},
+			{
+				text: "New booster grid fin arrived",
+				want: true,
+			},
+			{
 				text:     "Super Heavy Grid Fins.\n\n#SpaceX\n\n📸 for @Teslarati",
 				hasMedia: true,
 				want:     true,

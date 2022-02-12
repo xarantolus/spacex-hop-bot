@@ -85,8 +85,8 @@ var (
 
 		// Cranes lifting stuff like boosters etc.
 		{
-			from: compose([]string{"cranex", "liebherr lr"}),
-			to:   compose(liveStreams, generalSpaceXKeywords, nonSpecificKeywords),
+			from: ignoreSpaces([]string{"crane x", "liebherr lr", "grid fin", "fin "}),
+			to:   compose(liveStreams, generalSpaceXKeywords, nonSpecificKeywords, placesKeywords),
 		},
 
 		// Ground infrastructure
