@@ -120,14 +120,14 @@ func Test_ignoreSpaces(t *testing.T) {
 		{
 			arg: []string{"orbital launch tower", "orbital tower"},
 			wantResult: []string{
-				"orbital launch tower", "orbitallaunchtower", "orbital-launch-tower", "orbitallaunch tower", "orbital launchtower",
+				"orbital launch tower", "orbitallaunchtower", "orbital-launch-tower", "orbital_launch_tower", "orbitallaunch tower", "orbital launchtower",
 
-				"orbital tower", "orbitaltower", "orbital-tower",
+				"orbital tower", "orbitaltower", "orbital-tower", "orbital_tower",
 			},
 		},
 		{
 			arg:        []string{"a b c"},
-			wantResult: []string{"a b c", "abc", "a-b-c", "ab c", "a bc"},
+			wantResult: []string{"a b c", "abc", "a-b-c", "a_b_c", "ab c", "a bc"},
 		},
 		{
 			arg:        []string{"a", "b", "c"},
@@ -135,15 +135,15 @@ func Test_ignoreSpaces(t *testing.T) {
 		},
 		{
 			arg:        []string{"a b", "c"},
-			wantResult: []string{"a b", "ab", "a-b", "c"},
+			wantResult: []string{"a b", "ab", "a-b", "a_b", "c"},
 		},
 		{
 			arg:        []string{"starship", "superheavy", "super heavy"},
-			wantResult: []string{"starship", "superheavy", "super heavy", "super-heavy"},
+			wantResult: []string{"starship", "superheavy", "super heavy", "super-heavy", "super_heavy"},
 		},
 		{
 			arg:        []string{"sea level"},
-			wantResult: []string{"sea level", "sealevel", "sea-level"},
+			wantResult: []string{"sea level", "sealevel", "sea-level", "sea_level"},
 		},
 	}
 	for _, tt := range tests {

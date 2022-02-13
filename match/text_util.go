@@ -102,7 +102,13 @@ func ignoreSpaces(words []string) (result []string) {
 			result = append(result, nw)
 		}
 
-		if len(split) == 3 {
+		nw = strings.Join(split, "_")
+		if !dedup[nw] {
+			dedup[nw] = true
+			result = append(result, nw)
+		}
+
+		if len(split) >= 3 {
 			nw = split[0] + strings.Join(split[1:], " ")
 			if !dedup[nw] {
 				dedup[nw] = true

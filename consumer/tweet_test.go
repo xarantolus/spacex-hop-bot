@@ -11,6 +11,14 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "CraneX lift within the next 10 minutes, watch with @jessica_kirsh: https://youtube.com/...",
+				want: true,
+			},
+			{
+				text: "CraneX photo by @BocaChicaGal",
+				want: true,
+			},
+			{
 				text: "High bay stacking continues",
 				want: true,
 			},

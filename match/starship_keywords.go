@@ -70,6 +70,7 @@ var (
 				[]string{"suborbital tank farm", "stf"},
 				[]string{"olm", "olt", "olit"},
 				[]string{"stage zero"},
+				[]string{"ols"},
 			)),
 			to: []string{
 				"methane", "tanker", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",
@@ -183,9 +184,9 @@ var (
 	generalSpaceXKeywords = []string{"spacex"}
 	liveStreams           = ignoreSpaces([]string{
 		// 24/7 live camera views are often mentioned when something is shown on a screenshot
-		"labpadre", "nasaspaceflight",
+		"lab padre", "nasa space flight",
 		// Other streamers
-		"jessica_kirsh", "bocachicagal", "starship gazer",
+		"jessica kirsh", "boca chica gal", "starship gazer",
 	})
 
 	// Regexes for road closures and testing activity
