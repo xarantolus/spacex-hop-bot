@@ -1261,6 +1261,10 @@ func TestIgnoredTweet(t *testing.T) {
 				want: false,
 			},
 			{
+				text: "A second S-400 bn has also been identified",
+				want: false,
+			},
+			{
 				text: "What a day!!!! It has already seen a #Starship full-stack, next will be a launch from Kourou(@OneWeb), then I cross my fingers for @Astra's 4th attempt to launch and the big finale will be @elonmusk's update on the Starship program this evening!",
 				want: false,
 			},

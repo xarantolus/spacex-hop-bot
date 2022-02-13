@@ -165,11 +165,11 @@ func TestShipRegex(t *testing.T) {
 		"starship sn15s engines", "starship sn15's engines",
 		"starship sn20?",
 		"s300", "ship 20", "ship 20's nose", "ship 20’s nosecone section",
-		"sn-11", "s-11",
+		"sn-11",
 	}
 
 	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!",
-		"u.s. to ship 4 mln covid-19 vaccine doses to nigeria, 5.66 mln to south africa"}
+		"u.s. to ship 4 mln covid-19 vaccine doses to nigeria, 5.66 mln to south africa", "s-11"}
 
 	helpTestRegex(t, starshipMatchers[0], "starshipMatchers[0]", valid, invalid)
 }
