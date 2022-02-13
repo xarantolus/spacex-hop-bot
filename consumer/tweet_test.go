@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "High bay stacking continues",
+				want: true,
+			},
+			{
 				text: "New grid fins arrived at the build site",
 				want: true,
 			},
@@ -1252,6 +1256,10 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweet(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text: "Saturn V rolling out of High bay 3",
+				want: false,
+			},
 			{
 				text: "What a day!!!! It has already seen a #Starship full-stack, next will be a launch from Kourou(@OneWeb), then I cross my fingers for @Astra's 4th attempt to launch and the big finale will be @elonmusk's update on the Starship program this evening!",
 				want: false,
