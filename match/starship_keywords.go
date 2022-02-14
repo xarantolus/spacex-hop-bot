@@ -290,7 +290,7 @@ var (
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine",
 		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
 		"masten", "centaur", "atlas v", "atlasv", "relativity", "northrop grumman", "northropgrumman", "bomber",
-		"orbex", "rfa", "isar", "oneweb", "antares", "saturn",
+		"orbex", "rfa", "isar", "oneweb", "antares", "saturn", "usaf b",
 		"cygnus", "samsung", "s22 ultra", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
 
@@ -312,7 +312,7 @@ var (
 		// e.g. crew-1, crew-2...
 		"crew-", "crew dragon", "dragon", "crs", "dm-",
 
-		"f22", "f-22", "jet", "b-52", "s-300", "f-1",
+		"f22", "f-22", "jet", "b-52", "s-300", "f-1", "b52",
 
 		"seed round", "yc s", "not a starship",
 
@@ -405,7 +405,7 @@ var (
 
 		"meme", "ratio", "apology", "drama", "petition to", "suck", "cursed", "uwu", "cult", "qwq", "reaction", "immigrant",
 
-		"dearmoon", "dear moon", "inspiration4", "inspiration 4", "inspiration four", "alien",
+		"alien",
 
 		"sale", "buy", "gift", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "discount",
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follower", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",

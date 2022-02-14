@@ -1265,6 +1265,10 @@ func TestIgnoredTweet(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "USAF B52 CHIEF11 visible again over eastern mediterranean",
+				want: false,
+			},
+			{
 				text: "Saturn V rolling out of High bay 3",
 				want: false,
 			},
