@@ -1269,6 +1269,10 @@ func TestIgnoredTweet(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Finally high-speed Internet in the middle of the #TexasHillCountry ❗️👏🏻👏🏻 Thanks @elonmusk @SpaceX",
+				want: false,
+			},
+			{
 				text: "USAF B52 CHIEF11 visible again over eastern mediterranean",
 				want: false,
 			},

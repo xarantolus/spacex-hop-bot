@@ -86,7 +86,7 @@ var (
 
 		// Cranes lifting stuff like boosters etc.
 		{
-			from: ignoreSpaces([]string{"crane x", "liebherr lr", "grid fin", "fin "}),
+			from: ignoreSpaces([]string{"crane x", "liebherr lr", "grid fin", "fin ", "fins ", "flap ", "flaps"}),
 			to:   compose(liveStreams, generalSpaceXKeywords, nonSpecificKeywords, placesKeywords),
 		},
 

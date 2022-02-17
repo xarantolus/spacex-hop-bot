@@ -90,6 +90,14 @@ func ignoreSpaces(words []string) (result []string) {
 		}
 
 		split := strings.Fields(w)
+		if len(split) == 1 {
+			if !dedup[w] {
+				dedup[w] = true
+				result = append(result, w)
+			}
+			continue
+		}
+
 		nw := strings.Join(split, "")
 		if !dedup[nw] {
 			dedup[nw] = true
