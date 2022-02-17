@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Progress MS-19/80P: The Progress MS-19/80P cargo ship is in the final stages of a 2-day rendezvous with the International Space Station; NASA TV is providing live coverage: https://youtube.com/...",
+				want: false,
+			},
+			{
 				text: "CraneX lift within the next 10 minutes, watch with @jessica_kirsh: https://youtube.com/...",
 				want: true,
 			},
