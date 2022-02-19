@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Chopsticks are going up! Will they be used to remove the booster from the orbital launch mount?\nhttps://nasaspaceflight.com/starbaselive",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text: "Progress MS-19/80P: The Progress MS-19/80P cargo ship is in the final stages of a 2-day rendezvous with the International Space Station; NASA TV is providing live coverage: https://youtube.com/...",
 				want: false,
 			},
@@ -1265,9 +1270,14 @@ func TestAdTweets(t *testing.T) {
 	)
 }
 
-func TestIgnoredTweet(t *testing.T) {
+func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text: "On Friday, February 18, 2022, Sheriff's Deputies responded to an address in Olmito in reference to shots fired. While en route, information was given that the suspect was in the Villa Los Pinos Subdivision and had shot in the direction of a victim.",
+				acc:  "CameronCountySO",
+				want: false,
+			},
 			{
 				text: "Finally high-speed Internet in the middle of the #TexasHillCountry ❗️👏🏻👏🏻 Thanks @elonmusk @SpaceX",
 				want: false,
