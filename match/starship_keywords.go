@@ -181,7 +181,7 @@ var (
 	seaportKeywords       = ignoreSpaces([]string{"sea launch", "oil", "rig"})
 	placesKeywords        = ignoreSpaces([]string{"starbase", "boca chica", "launch site", "build site"})
 	nonSpecificKeywords   = compose([]string{"ship", "booster"}, liveStreams, placesKeywords)
-	generalSpaceXKeywords = []string{"spacex"}
+	generalSpaceXKeywords = ignoreSpaces([]string{"spacex", "space port"})
 	liveStreams           = ignoreSpaces([]string{
 		// 24/7 live camera views are often mentioned when something is shown on a screenshot
 		"lab padre", "nasa space flight",
@@ -343,7 +343,7 @@ var (
 
 		// 3d models are nice, but we only care about "real info"
 		"render", "animat" /* ion/ed */, "3d", "model", "simulated", "print", "vfx", "not real", "photoshop",
-		"art", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle", "lego",
+		"art ", "artist", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle", "lego",
 		"card game", "starship design", "daily_hopper", "daily hopper", "paper model", "papermodel",
 
 		"fantasy 4 cards", "fantasy cards",

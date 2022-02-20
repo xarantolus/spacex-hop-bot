@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Spaceport Deimos (named after a martian Moon) on the move",
+				want: true,
+			},
+			{
 				text:     "Chopsticks are going up! Will they be used to remove the booster from the orbital launch mount?\nhttps://nasaspaceflight.com/starbaselive",
 				hasMedia: true,
 				want:     true,
@@ -1273,6 +1277,16 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			// TODO:
+			// {
+			// 	text: "https://starshipsls.wixsite.com/futureastronaut/post/spacex-to-launch-starlink-4-8-with-49-more-starlink-satellites Tomorrow, @SpaceX will launch 49 more Starlink satellites on the Starlink 4-8 mission. Find out more in my new article.",
+			// 	want: false,
+			// },
+			{
+				text: "Caught a pic of Deimos next to Mars!",
+				want: false,
+			},
+
 			{
 				text: "On Friday, February 18, 2022, Sheriff's Deputies responded to an address in Olmito in reference to shots fired. While en route, information was given that the suspect was in the Villa Los Pinos Subdivision and had shot in the direction of a victim.",
 				acc:  "CameronCountySO",
