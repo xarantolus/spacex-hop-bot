@@ -14,16 +14,19 @@ import (
 
 var (
 	urlRegex = xurls.Strict()
-
-	noScriptEnter = replace.String("<noscript>", "")
-	noScriptLeave = replace.String("</noscript>", "")
-
-	noScriptReplacer = transform.Chain(noScriptEnter, noScriptLeave)
 )
 
 // FindCanonicalURL returns the canonical URL of an article if possible,
 // else the original input is returned
 func FindCanonicalURL(url string, secondTry bool) (out string) {
+	// These must be declared within the method because chains are stateful (and thus we need a new one every time). See #2 for more
+	var (
+		noScriptEnter = replace.String("<noscript>", "")
+		noScriptLeave = replace.String("</noscript>", "")
+
+		noScriptReplacer = transform.Chain(noScriptEnter, noScriptLeave)
+	)
+
 	out = url
 
 	client := http.Client{
