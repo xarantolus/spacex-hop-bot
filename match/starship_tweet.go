@@ -95,6 +95,15 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 		}
 	}
 
+	if tweet.Place != nil {
+		pkw, ok := locationKeywords[tweet.Place.ID]
+		if ok {
+			if startsWithAny(text, pkw...) {
+				return true
+			}
+		}
+	}
+
 	return false
 }
 

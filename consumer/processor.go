@@ -308,7 +308,7 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 		util.LogError(err, "fetching tweet reply with id %d in thread", tweet.InReplyToStatusID)
 
 		// If we have a matching tweet thread
-		if parent != nil && !match.ContainsStarshipAntiKeyword(parent.Text()) && p.thread(parent) {
+		if err == nil && parent != nil && !match.ContainsStarshipAntiKeyword(parent.Text()) && p.thread(parent) {
 			p.seenTweets[parent.ID] = true
 			p.retweet(parent, "thread: matched parent", match.TweetSourceUnknown)
 			didRetweet = true

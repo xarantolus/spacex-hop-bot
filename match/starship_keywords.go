@@ -163,6 +163,7 @@ var (
 				}),
 			),
 			to: compose(
+				generalSpaceXKeywords,
 				[]string{"update", "olit"},
 			),
 		},
@@ -175,6 +176,12 @@ var (
 				[]string{"lift", "load"},
 			),
 		},
+	}
+
+	locationKeywords = map[string][]string{
+		PascagoulaPlaceID: ignoreSpaces([]string{
+			"sea launch", "phobos", "deimos",
+		}),
 	}
 
 	// Helper slices that can be used for composing new keywords
@@ -281,7 +288,7 @@ var (
 
 	// If a tweet contains any of these keywords, it will not be retweeted. This is a way of filtering out *non-starship* stuff
 	antiStarshipKeywords = []string{
-		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "hungry hippo", "rklb", "falcon", "merlin", "m1d", "f9",
+		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "hungry hippo", "rklb", "falcon", "merlin", "m1d",
 		"tesla ", "rivian", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink",
 		"sls", "nasa_sls", "ula", "vulcan", "rogozin",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "soviet",
@@ -312,7 +319,7 @@ var (
 		// e.g. crew-1, crew-2...
 		"crew-", "crew dragon", "dragon", "crs", "dm-",
 
-		"f22", "f-22", "jet", "b-52", "s-300", "f-1", "b52",
+		"f22", "f-22", "jet", "b-52", "s-300", "f-1", "b52", "b350", "rs-25", "stennis",
 
 		"seed round", "yc s", "not a starship",
 

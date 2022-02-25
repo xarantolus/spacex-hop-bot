@@ -31,6 +31,10 @@ func CheckLocationStream(client *twitter.Client, tweetChan chan<- match.TweetWra
 				// It also includes LC-49, where the same thing should happen
 				// Map: https://mapper.acme.com/?ll=28.40952,-80.60944&z=10&t=M&marker0=28.21910%2C-80.79552%2Cunnamed&marker1=28.88617%2C-79.96262%2C79.2%20km%20ExNE%20of%20Merritt%20Island%20FL
 				"-80.79552,28.21910,-79.96262,28.88617",
+
+				// Pascagoula; the oil rig Phobos is in the port
+				// https://bboxfinder.com/#30.298204,-88.678894,30.457552,-88.463974
+				"-88.678894,30.298204,-88.463974,30.457552",
 			},
 			FilterLevel: "none",
 			Language:    []string{"en"},

@@ -22,6 +22,9 @@ const (
 	// https://twitter.com/places/07d9f0b85ac83003
 	BocaChicaPlaceID = "07d9f0b85ac83003"
 
+	// https://twitter.com/places/b5d9160030d685ba
+	PascagoulaPlaceID = "b5d9160030d685ba"
+
 	// Other places around the area:
 	// "Isla Blanca Park": https://twitter.com/places/11dca9a728950001
 	// "South Padre Island, TX": https://twitter.com/places/1d1f665883989434

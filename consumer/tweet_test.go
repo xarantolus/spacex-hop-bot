@@ -11,6 +11,29 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "SpaceX’s Phobos is actively being worked on before it becomes a Starship sea launching platform https://spaceexplored.com/guides/phobos-starship/",
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				text:     "Phobos in the port",
+				location: match.PascagoulaPlaceID,
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				text:     "Here are some helicopter shots I took today of the new #SpaceX Roberts Road site & the work on #Starship construction @ 39A. Notice all the new land clearing the new structures & the buildout of Hanger X for F9 refurbishment. In coop w/@FarryFaz. #NASA",
+				acc:      "GregScott_photo",
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				text:     "Flying around SpaceX’s Hanger X on Roberts Road today with @GregScott_photo",
+				acc:      "FarryFaz",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text: "Spaceport Deimos (named after a martian Moon) on the move",
 				want: true,
 			},
@@ -1277,11 +1300,19 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text: "RS-25 ignition! Static Fire on the A-1 test stand at Stennis!",
+				want: false,
+			},
 			// TODO:
 			// {
 			// 	text: "https://starshipsls.wixsite.com/futureastronaut/post/spacex-to-launch-starlink-4-8-with-49-more-starlink-satellites Tomorrow, @SpaceX will launch 49 more Starlink satellites on the Starlink 4-8 mission. Find out more in my new article.",
 			// 	want: false,
 			// },
+			{
+				text: "SpaceX has confirmed separation  and a nominal orbital insertion of the Group 4-8 Starlink stack launched this morning at 9:44am EST on a Falcon 9 this morning from SLC-40 at Cape Canaveral Space Force Station.\n\nThis successfully concludes today's mission.",
+				want: false,
+			},
 			{
 				text: "Caught a pic of Deimos next to Mars!",
 				want: false,
