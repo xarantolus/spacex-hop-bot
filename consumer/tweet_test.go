@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Deimos update pt. 69\nDeimos is now pierside for refit and generator work for 2 weeks before departure. 4 large pressure storage vessels arrived by barge today. @elonmusk",
+				want: true,
+			},
+			{
 				text:     "SpaceX’s Phobos is actively being worked on before it becomes a Starship sea launching platform https://spaceexplored.com/guides/phobos-starship/",
 				hasMedia: true,
 				want:     true,
