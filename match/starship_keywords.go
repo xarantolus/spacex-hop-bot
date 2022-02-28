@@ -431,7 +431,7 @@ var (
 
 		"patrons", "babylon", "boltup", "champion",
 
-		"red bull", "browns",
+		"red bull",
 
 		"tier list",
 

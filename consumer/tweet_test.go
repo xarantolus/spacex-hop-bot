@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "The SpaceX Deimos rig is moving and departing Port of Brownsville!",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text: "Deimos update pt. 69\nDeimos is now pierside for refit and generator work for 2 weeks before departure. 4 large pressure storage vessels arrived by barge today. @elonmusk",
 				want: true,
 			},
