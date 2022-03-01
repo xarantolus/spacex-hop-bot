@@ -16,6 +16,8 @@ var (
 	ignoredHosts = map[string]bool{
 		"gofundme.com":         true,
 		"opensea.io":           true,
+		"open.spotify.com":     true,
+		"music.apple.com":      true,
 		"shop.spreadshirt.com": true,
 		"spreadshirt.com":      true,
 		"instagram.com":        true,
