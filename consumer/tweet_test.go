@@ -11,6 +11,12 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "There is only one kind of tower I know of that has steel segments that look like this...👀\nSeen traversing the NASA Causeway headed toward KSC this afternoon were likely among the first parts of a Starship orbital integration tower arriving in Florida🚀",
+				acc:      "TrevorMahlmann",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text:     "The SpaceX Deimos rig is moving and departing Port of Brownsville!",
 				hasMedia: true,
 				want:     true,
@@ -1310,14 +1316,26 @@ func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Watch a live view of United Launch Alliance’s Atlas 5 rocket on its launch pad at Cape Canaveral, awaiting liftoff… https://t.co/yqxePuGbld",
+				want: false,
+			},
+			{
+				text: "https://starshipsls.wixsite.com/futureastronaut/post/spacex-to-launch-starlink-4-8-with-49-more-starlink-satellites Tomorrow, @SpaceX will launch 49 more Starlink satellites on the Starlink 4-8 mission. Find out more in my new article.",
+				want: false,
+			},
+			{
+				text:     "S15 in the wild #ForzaHorizon5",
+				hasMedia: true,
+				want:     false,
+			},
+			{
+				text: "Either a BUK or S300 was active in Kyiv tonight, engaged targets https://t.co/XpAXN1ra6B",
+				want: false,
+			},
+			{
 				text: "RS-25 ignition! Static Fire on the A-1 test stand at Stennis!",
 				want: false,
 			},
-			// TODO:
-			// {
-			// 	text: "https://starshipsls.wixsite.com/futureastronaut/post/spacex-to-launch-starlink-4-8-with-49-more-starlink-satellites Tomorrow, @SpaceX will launch 49 more Starlink satellites on the Starlink 4-8 mission. Find out more in my new article.",
-			// 	want: false,
-			// },
 			{
 				text: "SpaceX has confirmed separation  and a nominal orbital insertion of the Group 4-8 Starlink stack launched this morning at 9:44am EST on a Falcon 9 this morning from SLC-40 at Cape Canaveral Space Force Station.\n\nThis successfully concludes today's mission.",
 				want: false,
