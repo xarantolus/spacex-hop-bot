@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Ground breaking of Phase 1 of StarFactory at StarBase. Building is expected to be over 300,000sq. ft. by 60' tall and will replace all the large production tents. \nBuilding will extend almost to fence of Hwy 4!",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text:     "There is only one kind of tower I know of that has steel segments that look like this...👀\nSeen traversing the NASA Causeway headed toward KSC this afternoon were likely among the first parts of a Starship orbital integration tower arriving in Florida🚀",
 				acc:      "TrevorMahlmann",
 				hasMedia: true,
@@ -1315,6 +1320,11 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text:     "#GOEST lifts off from the pad!\nHere's a view from one of my remote cameras at the launch pad.",
+				hasMedia: true,
+				want:     false,
+			},
 			{
 				text: "Watch a live view of United Launch Alliance’s Atlas 5 rocket on its launch pad at Cape Canaveral, awaiting liftoff… https://t.co/yqxePuGbld",
 				want: false,

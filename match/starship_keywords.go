@@ -18,6 +18,8 @@ var (
 		"starship",
 		"super heavy",
 
+		"star factory",
+
 		"orbital launch tower", "orbital tower", "olt segment",
 		"launch tower segment", "olp service tower", "olp tower",
 		"orbital launch integration tower", "launch tower arm",
@@ -296,7 +298,7 @@ var (
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra", "lv0",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine",
 		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
-		"masten", "centaur", "atlas 5", "atlas v", "atlasv", "atlas5", "relativity", "northrop grumman", "northropgrumman", "bomber",
+		"masten", "centaur", "atlas 5", "atlas v", "atlasv", "goest", "atlas5", "relativity", "northrop grumman", "northropgrumman", "bomber",
 		"orbex", "rfa", "isar", "oneweb", "antares", "saturn", "usaf b", "ms-", "starshipsls",
 		"cygnus", "samsung", "s22 ultra", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
