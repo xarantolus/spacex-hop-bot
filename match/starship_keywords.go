@@ -111,11 +111,11 @@ var (
 		// Seaports/Oil rigs that might be used for launches/landings?
 		{
 			from: []string{"deimos"},
-			to:   compose(seaportKeywords, generalSpaceXKeywords, []string{"phobos"}),
+			to:   compose(seaportKeywords, generalSpaceXKeywords, []string{"phobos"}, liveStreams),
 		},
 		{
 			from: []string{"phobos"},
-			to:   compose(seaportKeywords, generalSpaceXKeywords, []string{"deimos"}),
+			to:   compose(seaportKeywords, generalSpaceXKeywords, []string{"deimos"}, liveStreams),
 		},
 
 		{
@@ -187,7 +187,7 @@ var (
 	}
 
 	// Helper slices that can be used for composing new keywords
-	seaportKeywords       = ignoreSpaces([]string{"sea launch", "oil", "rig"})
+	seaportKeywords       = ignoreSpaces([]string{"sea launch", "port", "oil", "rig"})
 	placesKeywords        = ignoreSpaces([]string{"starbase", "boca chica", "launch site", "build site"})
 	nonSpecificKeywords   = compose([]string{"ship", "booster"}, liveStreams, placesKeywords)
 	generalSpaceXKeywords = ignoreSpaces([]string{"spacex", "space port", "elon musk"})
@@ -380,6 +380,9 @@ var (
 		"moho", "gilly", "kerbin", "mun", "minmus", "duna", "jool", "laythe", "vall",
 		"tylo", "bop", "pol", "dres", "eeloo", "kerbol",
 
+		// Zodiac signs
+		"aries", "taurus", "gemini", "cancer", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces",
+
 		// movies
 		"the martian", "starship trooper",
 
@@ -408,7 +411,7 @@ var (
 
 		// I do not care about opinions on starship
 		"agree", "disagree", "throwback to", "opinion", "imo", "imho", "i think", "mfw", "vibe", "dream", "laughs in",
-		"armchair", "arm chair",
+		"armchair", "arm chair", "petition",
 
 		"gorgeous girl",
 
@@ -457,7 +460,7 @@ var (
 		"starshipent", "monstax", "eshygazit", "wonho",
 
 		// Account follows a sheriff
-		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "nigg", "memorial", "dead", "death", "cancer", "piss",
+		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "nigg", "memorial", "dead", "death", "piss",
 		"abus",
 
 		"nonce", "pedo",

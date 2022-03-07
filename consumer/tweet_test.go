@@ -22,6 +22,26 @@ func TestBasicTweets(t *testing.T) {
 				want:     true,
 			},
 			{
+				text:     "Deimos in the port",
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				text:     "Phobos in the port",
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				text:     "Another piece added to Phobos @nasaspaceflight",
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				text:     "Another piece added to Deimos @nasaspaceflight",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text:     "The SpaceX Deimos rig is moving and departing Port of Brownsville!",
 				hasMedia: true,
 				want:     true,
@@ -1320,6 +1340,20 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text: "Sagittarius B2 is a giant molecular cloud at the center of the Milky Way, and it's made of alcohol. An ester, ethyl formate is also responsible for the flavour of raspberries, leading some articles to postulate the cloud is smelling of ‘raspberry rum’ https://buff.ly/3vEXeEa",
+				want: false,
+			},
+			{
+				text:        "“Pathfinders” in the build yard @ Smokey’s Outpost…#SpaceX #Starbase #BocaChicaToMars #B4 #S20 #OLM #Bocachica #ElonMusk @elonmusk #DogecoinToTheMoon #Moon #Mars #Launchpad #modeling",
+				tweetSource: match.TweetSourceLocationStream,
+				location:    "somelocation",
+				want:        false,
+			},
+			{
+				text: "In just under an hour, Starlink 4-9 is set to lift off from LC-39A.\nLaunch is scheduled for 9:25 AM ET.\nBooster 1060 will be making it's 11th flight.\n📷: Me for @SuperclusterHQ",
+				want: false,
+			},
 			{
 				text:     "#GOEST lifts off from the pad!\nHere's a view from one of my remote cameras at the launch pad.",
 				hasMedia: true,

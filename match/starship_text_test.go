@@ -62,12 +62,12 @@ func TestStarshipTextMatch(t *testing.T) {
 		{"SpaceX's Phobos launch platform", true},
 		{"phobos & deimos in the port", true},
 		{"deimos & phobos in the port", true},
+		{"Phobos in the port", true},
 
 		{"Pad announcement over the speakers: clearing pad for static fire", false},
 		{"Lifting off next to the tower of Launch Complex 39A", false},
 		{"starbase", false},
 		{"Deimos in the Ocean", false},
-		{"Phobos in the port", false},
 		{"SpaceX will conduct a static fire later today", false},
 		{"Samsung S22 Ultra", false},
 		{"I mention Starship. $RKLB", false},
