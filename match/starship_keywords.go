@@ -164,9 +164,16 @@ var (
 					"roberts rd", "robert's road", "robert rd",
 				}),
 			),
-			to: compose(
-				generalSpaceXKeywords,
-				[]string{"update", "olit"},
+			to: compose(generalSpaceXKeywords, placesKeywords, liveStreams,
+				ignoreSpaces([]string{"update", "olit", "launch tower"}),
+			),
+		},
+		{
+			from: compose(
+				[]string{"cape", "canaveral"},
+			),
+			to: compose(placesKeywords, liveStreams,
+				ignoreSpaces([]string{"update", "olit", "launch tower", "tower segment"}),
 			),
 		},
 

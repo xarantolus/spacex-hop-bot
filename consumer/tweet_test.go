@@ -11,6 +11,16 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Looks like progress on the launch tower at the cape is moving along. Already have at least two sides to one section up.",
+				hasMedia: true,
+				want:     true,
+			},
+			{
+				text:     "Hey @CSI_Starbase, looks like progress on the launch tower at the cape is moving right along. Already have at least two sides to one section up.",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text:     "Ground breaking of Phase 1 of StarFactory at StarBase. Building is expected to be over 300,000sq. ft. by 60' tall and will replace all the large production tents. \nBuilding will extend almost to fence of Hwy 4!",
 				hasMedia: true,
 				want:     true,
@@ -1340,6 +1350,23 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text:     "Yet another beautiful spacex start from the cape",
+				hasMedia: true,
+				want:     false,
+			},
+			{
+				text:     "Check out this time lapse showing the retraction of half of Platform C in High Bay 3 of the Vehicle Assembly Building today at @NASAKennedy. On March 17, @NASA_SLS & @NASA_Orion will roll out to Launch Pad 39B for wet dress rehearsal for @NASAArtemis I.",
+				acc:      "NASAGroundSys",
+				hasMedia: true,
+				want:     false,
+			},
+			{
+				text:     "Half of Platform C in High Bay 3 of the Vehicle Assembly Building is now retracted, continuing to reveal more of @NASA_SLS & @NASA_Orion.",
+				acc:      "NASAGroundSys",
+				hasMedia: true,
+				want:     false,
+			},
 			{
 				text: "Sagittarius B2 is a giant molecular cloud at the center of the Milky Way, and it's made of alcohol. An ester, ethyl formate is also responsible for the flavour of raspberries, leading some articles to postulate the cloud is smelling of ‘raspberry rum’ https://buff.ly/3vEXeEa",
 				want: false,
