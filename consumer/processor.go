@@ -99,6 +99,22 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		return
 	}
 
+	// Some tweets are truncated, this means that twitter did not send the full text of the tweet.
+	// Not 100% sure why this happens, but it happens
+	if tweet.Truncated {
+		t, err := p.client.LoadStatus(tweet.ID)
+		if err != nil || t == nil {
+			util.LogError(err, "loading trucated status with id %d", tweet.ID)
+			return
+		}
+
+		tweet = match.TweetWrapper{
+			Tweet:         *t,
+			TweetSource:   tweet.TweetSource,
+			EnableLogging: tweet.EnableLogging,
+		}
+	}
+
 	switch {
 	case isElonTweet(tweet):
 		// When elon drops starship info, we want to retweet it.
