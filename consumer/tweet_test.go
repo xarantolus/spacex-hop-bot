@@ -1357,6 +1357,10 @@ func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Woah, we're halfway there 🎶🚀\n\nAs of right now, half of the platforms surrounding @NASA_SLS and @NASA_Orion have been retracted in High Bay 3 of the Vehicle Assembly Building. Who else is ready to see this massive Moon rocket roll out to Launch Complex 39B?",
+				want: false,
+			},
+			{
 				text: "As an example, here is S00012 Vanguard 2 rocket, where you can see oscillations in the solution during 1961, and the correction (red original, blue corrected) in 1962-1964",
 				want: false,
 			},
