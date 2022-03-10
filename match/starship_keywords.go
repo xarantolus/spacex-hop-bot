@@ -293,6 +293,9 @@ var (
 	antiKeywordRegexes = []*regexp.Regexp{
 		/* Falcon 9 booster numbers all start with 10 */
 		regexp.MustCompile(`\b((?:b|booster)\s*10\d{2})\b`),
+
+		/* Things that might look like a starship serial number, but aren't */
+		regexp.MustCompile(`(^|\s|[^'’])((?:s|ship)\s*\d{3,})\b`),
 	}
 
 	// If a tweet contains any of these keywords, it will not be retweeted. This is a way of filtering out *non-starship* stuff

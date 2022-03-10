@@ -11,6 +11,12 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Set the controls for the heart of the sun. @SpaceX #Starship SuperHeavy armed stacking",
+				location: "3309acacf870f6f5", // Matamoros, Tamaulipas
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text:     "Looks like progress on the launch tower at the cape is moving along. Already have at least two sides to one section up.",
 				hasMedia: true,
 				want:     true,
@@ -1350,6 +1356,10 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text: "As an example, here is S00012 Vanguard 2 rocket, where you can see oscillations in the solution during 1961, and the correction (red original, blue corrected) in 1962-1964",
+				want: false,
+			},
 			{
 				text:     "Yet another beautiful spacex start from the cape",
 				hasMedia: true,

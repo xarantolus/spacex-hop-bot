@@ -283,6 +283,16 @@ func TestFalcon9BoosterRegex(t *testing.T) {
 	helpTestRegex(t, antiKeywordRegexes[0], "antiKeywordRegexes[0]", valid, invalid)
 }
 
+func TestNonStarshipRegex(t *testing.T) {
+	var valid = []string{"s00012 vanguard", "s203198", "this is s123", "Someone will ship 500 tons of cargo to some place"}
+
+	var invalid = []string{"s10", "s 10", "sn10", "sn 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!",
+		"", "b4", "notbooster 1050", "n1025", "booster 1021", "b1072", "booster b1021", "booster 1050", "atlas5",
+	}
+
+	helpTestRegex(t, antiKeywordRegexes[1], "antiKeywordRegexes[1]", valid, invalid)
+}
+
 // containsAll returns if subset is a subset of set
 func containsAll(subset, set []string) bool {
 	var asmap = map[string]bool{}
