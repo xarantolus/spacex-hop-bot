@@ -1357,6 +1357,10 @@ func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "A famous marketing stunt inspired Toronto-based SpaceRyde's founders to create an out of this world innovation.🎈 Now, working with MDA's LaunchPad Program, they are ready for lift-off.",
+				want: false,
+			},
+			{
 				text: "Woah, we're halfway there 🎶🚀\n\nAs of right now, half of the platforms surrounding @NASA_SLS and @NASA_Orion have been retracted in High Bay 3 of the Vehicle Assembly Building. Who else is ready to see this massive Moon rocket roll out to Launch Complex 39B?",
 				want: false,
 			},

@@ -180,10 +180,12 @@ var (
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
 		{
 			from: ignoreSpaces([]string{"launch tower", "launch pad", "launch mount", "chop stick", "chop stix", "catch arm"}),
-			to: compose(seaportKeywords, placesKeywords, liveStreams, nonSpecificKeywords,
-				// Launch tower arm lift/load tests
-				[]string{"lift", "load"},
-			),
+			to:   compose(seaportKeywords, placesKeywords, liveStreams, nonSpecificKeywords), // Launch tower arm lift/load tests
+
+		},
+		{
+			from: ignoreSpaces([]string{"launch mount", "chop stick", "chop stix", "catch arm"}),
+			to:   compose([]string{"lift", "load"}, seaportKeywords, placesKeywords, liveStreams, nonSpecificKeywords),
 		},
 	}
 
@@ -197,7 +199,7 @@ var (
 	seaportKeywords       = ignoreSpaces([]string{"sea launch", "port", "oil", "rig"})
 	placesKeywords        = ignoreSpaces([]string{"starbase", "boca chica", "launch site", "build site"})
 	nonSpecificKeywords   = compose([]string{"ship", "booster"}, liveStreams, placesKeywords)
-	generalSpaceXKeywords = ignoreSpaces([]string{"spacex", "space port", "elon musk"})
+	generalSpaceXKeywords = ignoreSpaces([]string{"spacex", "space port", "elon", "musk", "gwynne", "shotwell"})
 	liveStreams           = ignoreSpaces([]string{
 		// 24/7 live camera views are often mentioned when something is shown on a screenshot
 		"lab padre", "nasa space flight",
