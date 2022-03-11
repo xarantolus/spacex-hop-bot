@@ -132,7 +132,7 @@ var (
 				// []string{"lc-39a", "lc 39a", "launch complex 39a", "launch complex-39a"},
 				generalSpaceXKeywords,
 			),
-			to: compose([]string{"environmental assessment", "tower"}),
+			to: compose([]string{"environmental assessment", "launch tower"}),
 		},
 
 		// Launch tower
@@ -304,7 +304,7 @@ var (
 	antiStarshipKeywords = []string{
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "hungry hippo", "rklb", "falcon", "merlin", "m1d",
 		"tesla ", "rivian", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink",
-		"sls", "nasa_sls", "ula", "united launch alliance", "vulcan", "rogozin",
+		"sls", "nasa_sls", "vehicle assembly building", "vab", "ula", "united launch alliance", "vulcan", "rogozin",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "soviet",
 		"resilience", "shuttle", "challenger", "sts-51l", "sts-33", "new glenn", "china", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra", "lv0",
@@ -390,7 +390,7 @@ var (
 
 		// KSP planets, moons, stars etc.
 		"moho", "gilly", "kerbin", "mun", "minmus", "duna", "jool", "laythe", "vall",
-		"tylo", "bop", "pol", "dres", "eeloo", "kerbol",
+		"tylo", "bop", "dres", "eeloo", "kerbol",
 
 		// Zodiac signs
 		"aries", "taurus", "gemini", "cancer", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces",

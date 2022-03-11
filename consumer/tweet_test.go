@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "(1/9) Lets look at what is still remaining to complete the #Widebay now that this poll has ended. \n\nIt helps to do some comparisons between the existing #Highbay and the new #Widebay. The best place to start is with the #BridgeCranes\n\n📷:@CSI_Starbase",
+				want: true,
+			},
+			{
 				text:     "Set the controls for the heart of the sun. @SpaceX #Starship SuperHeavy armed stacking",
 				location: "3309acacf870f6f5", // Matamoros, Tamaulipas
 				hasMedia: true,
@@ -1356,6 +1360,15 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text: "SpaceX to launch AST SpaceMobile's first orbital cell towers https://teslarati.com/spacex-ast-spacemobile-bluebird-launch-contract/ by @13ericralph31",
+				want: false,
+			},
+			{
+				text: "Two retractions closer to rollout day for #Artemis I! Platforms D & E are retracted inside High Bay 3 of the Vehicle Assembly Building at @NASAKennedy. Look at our Moon rocket revealing itself.",
+				acc:  "NASA_SLS",
+				want: false,
+			},
 			{
 				text: "A famous marketing stunt inspired Toronto-based SpaceRyde's founders to create an out of this world innovation.🎈 Now, working with MDA's LaunchPad Program, they are ready for lift-off.",
 				want: false,
