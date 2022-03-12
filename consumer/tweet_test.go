@@ -1361,6 +1361,10 @@ func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Doug arrived at Port Canaveral just after 2am this morning with the fairing from the Starlink 4-10 mission.\n\nhttp://nasaspaceflight.com/fleetcam",
+				want: false,
+			},
+			{
 				text: "SpaceX to launch AST SpaceMobile's first orbital cell towers https://teslarati.com/spacex-ast-spacemobile-bluebird-launch-contract/ by @13ericralph31",
 				want: false,
 			},

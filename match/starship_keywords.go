@@ -10,6 +10,10 @@ type keywordMapping struct {
 	from, to, antiKeywords []string
 }
 
+func (mapping *keywordMapping) matches(text string) bool {
+	return startsWithAny(text, mapping.from...) && startsWithAny(text, mapping.to...) && !startsWithAny(text, mapping.antiKeywords...)
+}
+
 // Note that all text here must be lowercase because the text is lowercased in the matching function
 var (
 	// If at least one of these keywords is present in a tweet (and no antiKeywords are),
@@ -310,7 +314,7 @@ var (
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra", "lv0",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine",
 		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
-		"masten", "centaur", "atlas 5", "atlas v", "atlasv", "goest", "atlas5", "relativity", "northrop grumman", "northropgrumman", "bomber",
+		"masten", "centaur", "atlas 5", "atlas v", "atlasv", "goest", "atlas5", "relativity", "northrop grumman", "northropgrumman", "bomber", "national team",
 		"orbex", "rfa", "isar", "oneweb", "antares", "saturn", "usaf b", "ms-", "starshipsls",
 		"cygnus", "samsung", "s22 ultra", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
@@ -493,5 +497,12 @@ var (
 
 		// Make sure we don't retweet anything related to horrible tragedies
 		"9/11", "911", "twin tower", "wtc", "trade center", "die", "falling",
+	}
+
+	moreSpecificAntiKeywords = []keywordMapping{
+		{
+			from: []string{"starlink"},
+			to:   []string{"doug", "bob", "vessel", "fairing"},
+		},
 	}
 )

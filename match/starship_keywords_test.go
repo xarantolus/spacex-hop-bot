@@ -119,25 +119,40 @@ func TestVariablesStringCase(t *testing.T) {
 
 // Make sure we didn't forget specifying a "from" or "to" attribute
 func TestMoreSpecificLength(t *testing.T) {
-	for i, mapping := range moreSpecificKeywords {
-		if len(mapping.from) == 0 {
-			t.Errorf("moreSpecificKeywords[%d].from must not have length 0", i)
-		}
-		if len(mapping.to) == 0 {
-			t.Errorf("moreSpecificKeywords[%d].to must not have length 0", i)
+	var testLen = func(mappingList []keywordMapping, name string) {
+		for i, mapping := range mappingList {
+			if len(mapping.from) == 0 {
+				t.Errorf("%s[%d].from must not have length 0", name, i)
+			}
+			if len(mapping.to) == 0 {
+				t.Errorf("%s[%d].to must not have length 0", name, i)
+			}
 		}
 	}
+
+	testLen(moreSpecificKeywords, "moreSpecificKeywords")
+	testLen(moreSpecificAntiKeywords, "moreSpecificAntiKeywords")
 }
 
 func TestMoreSpecificMistakes(t *testing.T) {
-	for i, mapping := range moreSpecificKeywords {
-		if containsAll(mapping.to, starshipKeywords) {
-			t.Errorf("moreSpecificKeywords[%d].to is composed with starshipKeywords, but that doesn't work and should be removed", i)
-		}
-		if containsAll(mapping.from, starshipKeywords) {
-			t.Errorf("moreSpecificKeywords[%d].from is composed with starshipKeywords, but that doesn't work and should be removed", i)
+	var testMappings = func(mapping []keywordMapping, name string) {
+		for i, mapping := range mapping {
+			if containsAll(mapping.to, starshipKeywords) {
+				t.Errorf("%s[%d].to is composed with starshipKeywords, but that doesn't work and should be removed", name, i)
+			}
+			if containsAll(mapping.from, starshipKeywords) {
+				t.Errorf("%s[%d].from is composed with starshipKeywords, but that doesn't work and should be removed", name, i)
+			}
+			if containsAll(mapping.from, antiStarshipKeywords) {
+				t.Errorf("%s[%d].from is composed with antiStarshipKeywords, but that doesn't work and should be removed", name, i)
+			}
+			if containsAll(mapping.from, antiStarshipKeywords) {
+				t.Errorf("%s[%d].from is composed with antiStarshipKeywords, but that doesn't work and should be removed", name, i)
+			}
 		}
 	}
+	testMappings(moreSpecificKeywords, "moreSpecificKeywords")
+	testMappings(moreSpecificAntiKeywords, "moreSpecificAntiKeywords")
 }
 
 // Tests for regexes

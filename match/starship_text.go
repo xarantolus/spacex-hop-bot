@@ -32,7 +32,7 @@ func (m *StarshipMatcher) StarshipText(text string, antiKeywords []string, skipM
 	// Now we check for keywords that need additional keywords to be matched,
 	// e.g. "raptor", "deimos" etc.
 	for _, mapping := range moreSpecificKeywords {
-		if startsWithAny(text, mapping.from...) && startsWithAny(text, mapping.to...) && !startsWithAny(text, mapping.antiKeywords...) {
+		if mapping.matches(text) {
 			return true
 		}
 	}
@@ -44,12 +44,18 @@ func ContainsStarshipAntiKeyword(text string) bool {
 	return containsAntikeyword(antiStarshipKeywords, strings.ToLower(text))
 }
 
-func containsAntikeyword(words []string, text string) bool {
+func containsAntikeyword(antiKeywords []string, text string) bool {
 	for _, antiRegex := range antiKeywordRegexes {
 		if antiRegex.MatchString(text) {
 			return true
 		}
 	}
 
-	return startsWithAny(text, words...)
+	for _, mapping := range moreSpecificAntiKeywords {
+		if mapping.matches(text) {
+			return true
+		}
+	}
+
+	return startsWithAny(text, antiKeywords...)
 }
