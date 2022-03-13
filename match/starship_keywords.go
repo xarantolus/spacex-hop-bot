@@ -80,7 +80,7 @@ var (
 			)),
 			to: []string{
 				"methane", "tanker", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",
-				"argon", "road", "highway", "close", "open", "qd", "quick disconnect",
+				"argon", "road", "highway", "close", "open", "qd", "sqd", "bqd", "quick disconnect",
 				"raptor", "cranex",
 			},
 		},
@@ -144,7 +144,14 @@ var (
 			from: compose([]string{"mechazilla", "olit"}),
 			to: compose(
 				placesKeywords, nonSpecificKeywords,
-				[]string{"qd", "bqd", "arm", "catch", "lift"},
+				[]string{"qd", "sqd", "bqd", "arm", "catch", "lift"},
+			),
+		},
+		{
+			from: compose([]string{"tower"}),
+			to: compose(
+				placesKeywords, nonSpecificKeywords,
+				[]string{"qd", "sqd", "bqd", "arm", "catch"},
 			),
 		},
 		{
