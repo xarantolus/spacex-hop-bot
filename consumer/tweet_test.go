@@ -11,6 +11,22 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Full stack is imminent",
+				location: match.BocaChicaBeachPlaceID,
+				want:     true,
+			},
+			{
+				text:     "Hoping to see a full stack again, potentially today!\n\nhttps://nasaspaceflight.com/starbaselive",
+				hasMedia: true,
+				want:     true,
+				quoted: &ttest{
+					text:     "Mighty fine morning… 😎🚀 - @NASASpaceflight",
+					location: match.SpaceXLaunchSiteID,
+					hasMedia: true,
+					want:     true,
+				},
+			},
+			{
 				text: "(1/9) Lets look at what is still remaining to complete the #Widebay now that this poll has ended. \n\nIt helps to do some comparisons between the existing #Highbay and the new #Widebay. The best place to start is with the #BridgeCranes\n\n📷:@CSI_Starbase",
 				want: true,
 			},

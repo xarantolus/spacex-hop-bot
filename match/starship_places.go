@@ -22,6 +22,9 @@ const (
 	// https://twitter.com/places/07d9f0b85ac83003
 	BocaChicaPlaceID = "07d9f0b85ac83003"
 
+	// https://twitter.com/places/07d9e62cfe480002
+	BocaChicaBeachPlaceID = "07d9e62cfe480002"
+
 	// https://twitter.com/places/b5d9160030d685ba
 	PascagoulaPlaceID = "b5d9160030d685ba"
 
@@ -34,6 +37,9 @@ const (
 
 func IsAtSpaceXSite(tweet *twitter.Tweet) bool {
 	return tweet.Place != nil && (tweet.Place.ID == StarbasePlaceID ||
-		tweet.Place.ID == SpaceXLaunchSiteID || tweet.Place.ID == SpaceXBuildSiteID ||
-		tweet.Place.ID == SpaceXMcGregorPlaceID || tweet.Place.ID == BocaChicaPlaceID)
+		tweet.Place.ID == SpaceXLaunchSiteID ||
+		tweet.Place.ID == SpaceXBuildSiteID ||
+		tweet.Place.ID == SpaceXMcGregorPlaceID ||
+		tweet.Place.ID == BocaChicaPlaceID ||
+		tweet.Place.ID == BocaChicaBeachPlaceID)
 }
