@@ -61,7 +61,8 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 
 	// ignore b4 when lowercase, as it's an abbreviation of "before"
 	if strings.Contains(tweet.Text(), "b4") {
-		return false
+		tweet.FullText = strings.ReplaceAll(tweet.Text(), "b4", "")
+		text = strings.ToLower(tweet.FullText)
 	}
 
 	// Check if the text matches

@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Full stack #starship #sn20 #bn4 #Starbase",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text:     "Full stack is imminent",
 				location: match.BocaChicaBeachPlaceID,
 				want:     true,
@@ -1376,6 +1381,11 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text:     "This happened b4",
+				hasMedia: true,
+				want:     false,
+			},
 			{
 				text: "Doug arrived at Port Canaveral just after 2am this morning with the fairing from the Starlink 4-10 mission.\n\nhttp://nasaspaceflight.com/fleetcam",
 				want: false,
