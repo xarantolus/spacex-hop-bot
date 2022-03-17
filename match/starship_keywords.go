@@ -340,6 +340,8 @@ var (
 
 		"amazon", "kuiper", "isro",
 
+		"yankees", "dodgers",
+
 		"7news",
 
 		// e.g. crew-1, crew-2...
