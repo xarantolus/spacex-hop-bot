@@ -35,6 +35,10 @@ func CheckLocationStream(client *twitter.Client, tweetChan chan<- match.TweetWra
 				// Pascagoula; the oil rig Phobos is in the port
 				// https://bboxfinder.com/#30.298204,-88.678894,30.457552,-88.463974
 				"-88.678894,30.298204,-88.463974,30.457552",
+
+				// Brownsville Airport, there will be a Starship prototype standing around and people will likely take pictures
+				// https://bboxfinder.com/#25.891967,-97.441134,25.918835,-97.406845
+				"-97.441134,25.891967,-97.406845,25.918835",
 			},
 			FilterLevel: "none",
 			Language:    []string{"en"},
