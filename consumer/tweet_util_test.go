@@ -11,8 +11,9 @@ import (
 )
 
 type ttest struct {
-	acc  string
-	text string
+	acc            string
+	accDescription string
+	text           string
 
 	userID int64
 
@@ -104,8 +105,9 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 		var tw = match.TweetWrapper{
 			Tweet: twitter.Tweet{
 				User: &twitter.User{
-					ScreenName: t.acc,
-					ID:         t.userID,
+					ScreenName:  t.acc,
+					ID:          t.userID,
+					Description: t.accDescription,
 				},
 				FullText: tweetText,
 				ID:       tweetID,

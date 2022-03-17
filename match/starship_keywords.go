@@ -210,7 +210,7 @@ var (
 	// Helper slices that can be used for composing new keywords
 	seaportKeywords       = ignoreSpaces([]string{"sea launch", "port", "oil", "rig"})
 	placesKeywords        = ignoreSpaces([]string{"starbase", "boca chica", "launch site", "build site"})
-	nonSpecificKeywords   = compose([]string{"ship", "booster"}, liveStreams, placesKeywords)
+	nonSpecificKeywords   = compose([]string{"ship", "booster", "orbital test flight", "orbital flight test"}, liveStreams, placesKeywords)
 	generalSpaceXKeywords = ignoreSpaces([]string{"spacex", "space port", "elon", "musk", "gwynne", "shotwell"})
 	liveStreams           = ignoreSpaces([]string{
 		// 24/7 live camera views are often mentioned when something is shown on a screenshot
