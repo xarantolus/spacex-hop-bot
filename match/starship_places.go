@@ -35,11 +35,17 @@ const (
 	// "Cape Canaveral, FL": https://twitter.com/places/1739d72c18edbb1e
 )
 
+// IsAtSpaceXSite returns whether the tweet is tagged with a location that is used by SpaceX
 func IsAtSpaceXSite(tweet *twitter.Tweet) bool {
+	return tweet.Place != nil &&
+		(tweet.Place.ID == SpaceXMcGregorPlaceID || IsAtStarshipLocation(tweet))
+}
+
+// IsAtStarshipLocation returns if the tweet is tagged with a location that is used *only* for the Starship program
+func IsAtStarshipLocation(tweet *twitter.Tweet) bool {
 	return tweet.Place != nil && (tweet.Place.ID == StarbasePlaceID ||
 		tweet.Place.ID == SpaceXLaunchSiteID ||
 		tweet.Place.ID == SpaceXBuildSiteID ||
-		tweet.Place.ID == SpaceXMcGregorPlaceID ||
 		tweet.Place.ID == BocaChicaPlaceID ||
 		tweet.Place.ID == BocaChicaBeachPlaceID)
 }

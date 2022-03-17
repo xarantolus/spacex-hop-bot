@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Full stack #SpaceX",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text:     "Full stack #starship #sn20 #bn4 #Starbase",
 				hasMedia: true,
 				want:     true,
@@ -531,6 +536,13 @@ func TestLocationTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				// It contains an antikeyword (dogecoin), but because it's from a SpaceX site and has media we retweet it anyways
+				text:     "Full Stack #DogecoinToTheMoon",
+				location: match.SpaceXLaunchSiteID,
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text:     "Ship 20 prepares for stacking.",
 				location: match.SpaceXLaunchSiteID,
 				hasMedia: true,
@@ -582,7 +594,7 @@ func TestLocationTweets(t *testing.T) {
 				want:     false,
 			},
 			{
-				text:     "Alright SpaceXers.   This a FH center?   \n @SpeedyPatriot13 @BoosterSpX @NolanTrees\n\n#Falcon9 #FalconHeavy #McGregor #SpaceX",
+				text:     "Alright SpaceXers. This a FH center?\n @SpeedyPatriot13 @BoosterSpX @NolanTrees\n\n#Falcon9 #FalconHeavy #McGregor #SpaceX",
 				acc:      "jswartzphoto",
 				hasMedia: true,
 				location: match.SpaceXMcGregorPlaceID,

@@ -44,14 +44,19 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 	}
 
 	var containsBadWords = containsAntikeyword(antiKeywords, text)
-	// If e.g. elon tweets about tesla, it should still go to the specificUserMatcher below
-	if containsBadWords && !isVeryImportant {
-		return false
-	}
 
-	// If the tweet is tagged with Starbase as location, we just retweet it
+	// If the tweet is tagged with Starbase as location, we just retweet it.
 	if !containsBadWords && IsAtSpaceXSite(&tweet.Tweet) {
 		return true
+	}
+	// In case of antikeywords being present in a tweet at a starship location, we will retweet the tweet anyways if it has media
+	if hasMedia(&tweet.Tweet) && IsAtStarshipLocation(&tweet.Tweet) {
+		return true
+	}
+
+	// Stop if we have antikeywords. However, if e.g. elon tweets about tesla *and* spacex, it should still go to the specificUserMatcher below
+	if containsBadWords && !isVeryImportant {
+		return false
 	}
 
 	// Now check if it mentions too many people

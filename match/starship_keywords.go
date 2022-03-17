@@ -444,7 +444,7 @@ var (
 		"alien",
 
 		"sale", "buy", "gift", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "discount",
-		"pre-order", "merch", "vote", "podcast", "trending", "hater", "follower", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",
+		"pre-order", "merch", "vote", "podcast", "trending", "hater", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",
 		"retweet if",
 
 		"child", "kid",
