@@ -92,8 +92,9 @@ var (
 
 		// Cranes lifting stuff like boosters etc.
 		{
-			from: ignoreSpaces([]string{"crane x", "liebherr lr", "grid fin", "fin ", "fins ", "flap ", "flaps"}),
-			to:   compose(liveStreams, generalSpaceXKeywords, nonSpecificKeywords, placesKeywords),
+			from:         ignoreSpaces([]string{"crane x", "liebherr lr", "grid fin", "fin ", "fins ", "flap ", "flaps"}),
+			to:           compose(liveStreams, generalSpaceXKeywords, nonSpecificKeywords, placesKeywords),
+			antiKeywords: []string{"whale"},
 		},
 
 		// Ground infrastructure
@@ -265,13 +266,13 @@ var (
 
 		// NASA Accounts that sometimes tweet about Starship don't need any antiKeywords - they are "allowed"
 		// to mention Starship together with e.g. Orion (which would be ignored if not for these overrides).
-		"nasa":          {},
-		"nasajpl":       {},
-		"nasa_marshall": {},
-		"nasa_gateway":  {},
-		"nasaartemis":   {},
-		"nasakennedy":   {},
-		"nasagoddard":   {},
+		"nasa":          {"high bay"},
+		"nasajpl":       {"high bay"},
+		"nasa_marshall": {"high bay"},
+		"nasa_gateway":  {"high bay"},
+		"nasaartemis":   {"high bay"},
+		"nasakennedy":   {"high bay"},
+		"nasagoddard":   {"high bay"},
 	}
 
 	// Accounts that post only Starship photos - so if they post a picture, they
@@ -315,12 +316,12 @@ var (
 	antiStarshipKeywords = []string{
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "hungry hippo", "rklb", "falcon", "merlin", "m1d",
 		"tesla ", "rivian", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink",
-		"sls", "nasa_sls", "vehicle assembly building", "vab", "ula", "united launch alliance", "vulcan", "rogozin",
+		"sls", "nasa_sls", "vehicle assembly building", "high bay 3", "vab", "ula", "united launch alliance", "vulcan", "rogozin",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "soviet",
 		"resilience", "shuttle", "challenger", "sts-51l", "sts-33", "new glenn", "china", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra", "lv0",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine",
-		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno",
+		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno", "rp-1", "rp1",
 		"masten", "centaur", "atlas 5", "atlas v", "atlasv", "goest", "atlas5", "relativity", "northrop grumman", "northropgrumman", "bomber", "national team",
 		"orbex", "rfa", "isar", "oneweb", "antares", "saturn", "usaf b", "ms-", "starshipsls",
 		"cygnus", "samsung", "s22 ultra", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",

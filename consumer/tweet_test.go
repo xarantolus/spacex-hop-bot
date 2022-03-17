@@ -1382,6 +1382,11 @@ func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Fin whales for @_! There were so many and they were so close to the ship",
+				hasMedia: true,
+				want:     false,
+			},
+			{
 				text:     "This happened b4",
 				hasMedia: true,
 				want:     false,
