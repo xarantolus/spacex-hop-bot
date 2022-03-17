@@ -1,5 +1,5 @@
 # spacex-hop-bot
-This is a [Twitter bot](https://twitter.com/wenhopbot) that informs about progress on the [SpaceX Starship](https://www.spacex.com/vehicles/starship/) by retweeting interesting tweets about it.
+This is a [Twitter bot](https://twitter.com/wenhopbot) that informs about progress on the [SpaceX Starship](https://www.spacex.com/vehicles/starship/) by retweeting interesting tweets about it. There is a special focus on tweets from locations where Starships are built/launched, tagging tweets with a location helps the bot find them.
 
 It reads tweets from the following sources:
 * All tweets from [lists the account follows](https://twitter.com/wenhopbot/lists)
@@ -18,6 +18,8 @@ It also does some background tasks:
 - Watching the [SpaceX YouTube channel](https://www.youtube.com/spacex/) for livestreams. As soon as a stream about Starship goes live (or has a countdown), the bot will tweet a link.
 - Checking the [Starship website](https://www.spacex.com/vehicles/starship/) from time to time to tweet if the mentioned date or Starship changed
 - Checking the [Environmental Review dashboard](https://www.permits.performance.gov/permitting-project/spacex-starshipsuper-heavy-launch-vehicle-program-spacex-boca-chica-launch-site) for changes and tweeting about them
+
+You can use [this Twitter search link](https://twitter.com/search?q=from%3Awenhopbot%20-filter%3Areplies) to see these tweets.
 
 ### Contributing
 If you have any suggestions for additional sources (like accounts or lists to follow) or anything else please open an issue (or write an e-mail to `x@010.one`).
