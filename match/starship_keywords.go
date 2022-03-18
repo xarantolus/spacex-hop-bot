@@ -264,6 +264,8 @@ var (
 	userAntikeywordsOverwrite = map[string][]string{
 		"elonmusk": {"tesla", "model s", "model 3", "model x", "model y", "car", "giga", "falcon", "boring company", "tunnel", "loop", "doge", "ula", "tonybruno", "jeff", "fsd", "giga berlin", "giga factory", "gigafactory", "giga press"},
 
+		"spacex": {},
+
 		// NASA Accounts that sometimes tweet about Starship don't need any antiKeywords - they are "allowed"
 		// to mention Starship together with e.g. Orion (which would be ignored if not for these overrides).
 		"nasa":          {"high bay"},
@@ -316,7 +318,7 @@ var (
 	antiStarshipKeywords = []string{
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "hungry hippo", "rklb", "falcon", "merlin", "m1d",
 		"tesla ", "rivian", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink",
-		"sls", "nasa_sls", "vehicle assembly building", "high bay 3", "vab", "ula", "united launch alliance", "vulcan", "rogozin",
+		"sls", "space launch system", "nasa_sls", "vehicle assembly building", "high bay 3", "vab", "ula", "united launch alliance", "vulcan", "rogozin",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "soviet",
 		"resilience", "shuttle", "challenger", "sts-51l", "sts-33", "new glenn", "china", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra", "lv0",
@@ -352,7 +354,7 @@ var (
 		"seed round", "yc s", "not a starship",
 
 		// Not interested in other stuff
-		"doge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "nft", "mint", "opensea",
+		"doge", "babydoge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "nft", "mint", "opensea",
 		"safemoon", "stock", "wall street", "wallstreet", "buffett", "metaverse", "terra",
 		"scam", "shill",
 
@@ -372,7 +374,9 @@ var (
 
 		"kawai", "anthem", "katy perry",
 
-		"god", "the lord",
+		"god", "the lord", "pray",
+
+		"firefight", "texaswildfire", "wildfire",
 
 		"xanda",
 
@@ -451,7 +455,7 @@ var (
 
 		"child", "kid",
 
-		"illegal", "nfl", "nhl", "draw", "tiktok", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
+		"illegal", "nfl", "nhl", "draw", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "stroking", "fap", "chick", "doggy", "only fans",
 
 		"simp ", "simping",

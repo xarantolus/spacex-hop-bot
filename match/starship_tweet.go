@@ -12,6 +12,7 @@ import (
 func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 	// Ignore OLD tweets
 	if d, err := tweet.CreatedAtTime(); err == nil && time.Since(d) > 24*time.Hour {
+		tweet.Log("StarshipTweet: tweet too old")
 		return false
 	}
 
@@ -20,6 +21,7 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 	// We do not care about tweets that are timestamped with a text more than 24 hours ago
 	// e.g. if someone posts a photo and then writes "took this on March 15, 2002"
 	if d, ok := util.ExtractDate(text, time.Now()); ok && time.Since(d) > 48*time.Hour {
+		tweet.Log("StarshipTweet: tweet mentions a date too far back")
 		return false
 	}
 
@@ -27,6 +29,7 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 	// We ignore certain (e.g. satire, artist) accounts
 	if tweet.User != nil {
 		if !isVeryImportant && m.IsOrMentionsIgnoredAccount(&tweet.Tweet) {
+			tweet.Log("StarshipTweet: at least one mentioned account is ignored")
 			return false
 		}
 	}
@@ -40,27 +43,36 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 		ak, ok := userAntikeywordsOverwrite[strings.ToLower(tweet.User.ScreenName)]
 		if ok {
 			antiKeywords = ak
+			tweet.Log("StarshipTweet: overwrote antiKeywords")
 		}
 	}
 
 	var containsBadWords = containsAntikeyword(antiKeywords, text)
 
+	if containsBadWords {
+		tweet.Log("StarshipTweet: contains bad words")
+	}
+
 	// If the tweet is tagged with Starbase as location, we just retweet it.
 	if !containsBadWords && IsAtSpaceXSite(&tweet.Tweet) {
+		tweet.Log("StarshipTweet: is at SpaceX site and has no bad words")
 		return true
 	}
 	// In case of antikeywords being present in a tweet at a starship location, we will retweet the tweet anyways if it has media
 	if hasMedia(&tweet.Tweet) && IsAtStarshipLocation(&tweet.Tweet) {
+		tweet.Log("StarshipTweet: is at Starship location and has media")
 		return true
 	}
 
 	// Stop if we have antikeywords. However, if e.g. elon tweets about tesla *and* spacex, it should still go to the specificUserMatcher below
 	if containsBadWords && !isVeryImportant {
+		tweet.Log("StarshipTweet: contains bad words and account is not important")
 		return false
 	}
 
 	// Now check if it mentions too many people
 	if strings.Count(text, "@") > 10 {
+		tweet.Log("StarshipTweet: mentions too many people")
 		return false
 	}
 
@@ -72,12 +84,14 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 
 	// Check if the text matches
 	if m.StarshipText(text, antiKeywords, false) {
+		tweet.Log("StarshipTweet: text matches")
 		return true
 	}
 	// If the text didn't match, maybe it is matched when we don't remove URLs from it.
 	// We do want to be a bit more careful here, because URLs can contain tricky sequences
 	// of characters that could trick simple matchers (e.g. t.co/s20_513)
 	if m.StarshipText(tweet.TextWithURLs(), antiKeywords, true) {
+		tweet.Log("StarshipTweet: text matches when we include URLs")
 		return true
 	}
 
@@ -86,9 +100,11 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 	if tweet.User != nil {
 		regexes, ok := specificUserMatchers[strings.ToLower(tweet.User.ScreenName)]
 		if ok {
+			tweet.Log("StarshipTweet: have specific regexes for this user")
 			// If at least one regex matches, we have a match
-			for _, m := range regexes {
+			for i, m := range regexes {
 				if m.MatchString(text) {
+					tweet.Log("StarshipTweet: regex at index %d matched", i)
 					return true
 				}
 			}
@@ -97,7 +113,9 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 		// There are some accounts that always post high-quality pictures and videos.
 		// For them we retweet *everything* that has media
 		if hqMediaAccounts[strings.ToLower(tweet.User.ScreenName)] {
-			return hasMedia(&tweet.Tweet)
+			hm := hasMedia(&tweet.Tweet)
+			tweet.Log("StarshipTweet: is hq media account, haveImage=%v", hm)
+			return hm
 		}
 	}
 
@@ -105,6 +123,7 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 		pkw, ok := locationKeywords[tweet.Place.ID]
 		if ok {
 			if startsWithAny(text, pkw...) {
+				tweet.Log("StarshipTweet: is at location %s (%s) with keywords", tweet.Place.ID, tweet.Place.FullName)
 				return true
 			}
 		}

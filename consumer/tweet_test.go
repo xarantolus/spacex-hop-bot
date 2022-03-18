@@ -11,6 +11,12 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "The launch tower at Starbase will help stack Starship and catch the Super Heavy rocket booster",
+				acc:      "SpaceX",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text: "Likely the last cryo proof before the orbital test flight",
 				want: true,
 			},
