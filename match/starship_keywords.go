@@ -86,14 +86,14 @@ var (
 		},
 
 		{
-			from: placesKeywords,
+			from: compose(placesKeywords, sitesKeywords),
 			to:   liveStreams,
 		},
 
 		// Cranes lifting stuff like boosters etc.
 		{
 			from:         ignoreSpaces([]string{"crane x", "liebherr lr", "grid fin", "fin ", "fins ", "flap ", "flaps"}),
-			to:           compose(liveStreams, generalSpaceXKeywords, nonSpecificKeywords, placesKeywords),
+			to:           compose(liveStreams, generalSpaceXKeywords, nonSpecificKeywords, placesKeywords, sitesKeywords),
 			antiKeywords: []string{"whale"},
 		},
 
@@ -125,7 +125,7 @@ var (
 
 		{
 			from: ignoreSpaces([]string{"aerial shots", "fly over"}),
-			to:   placesKeywords,
+			to:   compose(placesKeywords, sitesKeywords),
 		},
 
 		// New launch pads at different locations
@@ -144,14 +144,14 @@ var (
 		{
 			from: compose([]string{"mechazilla", "olit"}),
 			to: compose(
-				placesKeywords, nonSpecificKeywords,
+				placesKeywords, sitesKeywords, nonSpecificKeywords,
 				[]string{"qd", "sqd", "bqd", "arm", "catch", "lift"},
 			),
 		},
 		{
 			from: compose([]string{"tower"}),
 			to: compose(
-				placesKeywords, nonSpecificKeywords,
+				placesKeywords, sitesKeywords, nonSpecificKeywords,
 				[]string{"qd", "sqd", "bqd", "arm", "catch"},
 			),
 		},
@@ -164,7 +164,7 @@ var (
 		{
 			from: compose(ignoreSpaces([]string{"load spreader"})),
 			to: compose(
-				placesKeywords, liveStreams,
+				placesKeywords, sitesKeywords, liveStreams,
 			),
 		},
 
@@ -176,7 +176,7 @@ var (
 					"roberts rd", "robert's road", "robert rd",
 				}),
 			),
-			to: compose(generalSpaceXKeywords, placesKeywords, liveStreams,
+			to: compose(generalSpaceXKeywords, placesKeywords, sitesKeywords, liveStreams,
 				ignoreSpaces([]string{"update", "olit", "launch tower"}),
 			),
 		},
@@ -184,7 +184,7 @@ var (
 			from: compose(
 				[]string{"cape", "canaveral"},
 			),
-			to: compose(placesKeywords, liveStreams,
+			to: compose(placesKeywords, sitesKeywords, liveStreams,
 				ignoreSpaces([]string{"update", "olit", "launch tower", "tower segment"}),
 			),
 		},
@@ -192,12 +192,17 @@ var (
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
 		{
 			from: ignoreSpaces([]string{"launch tower", "launch pad", "launch mount", "chop stick", "chop stix", "catch arm"}),
-			to:   compose(seaportKeywords, placesKeywords, liveStreams, nonSpecificKeywords), // Launch tower arm lift/load tests
+			to:   compose(seaportKeywords, placesKeywords, sitesKeywords, liveStreams, nonSpecificKeywords), // Launch tower arm lift/load tests
 
 		},
 		{
-			from: ignoreSpaces([]string{"launch mount", "chop stick", "chop stix", "catch arm"}),
-			to:   compose([]string{"lift", "load"}, seaportKeywords, placesKeywords, liveStreams, nonSpecificKeywords),
+			from: ignoreSpaces([]string{"launch mount", "chop stick", "chop stix", "catch arm", "can crusher"}),
+			to:   compose([]string{"lift", "load"}, seaportKeywords, placesKeywords, sitesKeywords, liveStreams, nonSpecificKeywords),
+		},
+
+		{
+			from: placesKeywords,
+			to:   sitesKeywords,
 		},
 	}
 
@@ -209,7 +214,8 @@ var (
 
 	// Helper slices that can be used for composing new keywords
 	seaportKeywords       = ignoreSpaces([]string{"sea launch", "port", "oil", "rig"})
-	placesKeywords        = ignoreSpaces([]string{"starbase", "boca chica", "launch site", "build site"})
+	placesKeywords        = ignoreSpaces([]string{"starbase", "boca chica"})
+	sitesKeywords         = ignoreSpaces([]string{"launch site", "build site"})
 	nonSpecificKeywords   = compose([]string{"ship", "booster", "orbital test flight", "orbital flight test"}, liveStreams, placesKeywords)
 	generalSpaceXKeywords = ignoreSpaces([]string{"spacex", "space port", "elon", "musk", "gwynne", "shotwell"})
 	liveStreams           = ignoreSpaces([]string{
@@ -259,6 +265,7 @@ var (
 			// Try to match things for orbital flight tests
 			regexp.MustCompile(`(?:orbit(?:.|\s)+(flight test|test flight)|(flight test|test flight)(?:.|\s)+orbit)`),
 		},
+		"spacex": {regexp.MustCompile(`(starship)`)},
 	}
 
 	userAntikeywordsOverwrite = map[string][]string{
@@ -480,6 +487,8 @@ var (
 
 		"surgery", "emergency",
 
+		"homopho", "hetero ", "cis ", "season", "episode",
+
 		// Starts with "olm", which tricks the matcher
 		"olmos",
 
@@ -497,7 +506,7 @@ var (
 
 		"bomb", "arsenal",
 
-		"hospital",
+		"hospital", "midwife", "housewife",
 
 		"offend", "offensive", "fanboy", "fan boy", "fangirl", "fan girl",
 

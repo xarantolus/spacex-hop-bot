@@ -34,6 +34,9 @@ func (p *Processor) cleanup(save bool) {
 func isElonTweet(t match.TweetWrapper) bool {
 	return t.User != nil && strings.EqualFold(t.User.ScreenName, "elonmusk")
 }
+func isSpaceXTweet(t match.TweetWrapper) bool {
+	return t.User != nil && strings.EqualFold(t.User.ScreenName, "SpaceX")
+}
 
 func sameUser(t1, t2 *twitter.Tweet) bool {
 	return t1.User != nil && t2.User != nil &&

@@ -11,6 +11,22 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "NASA has selected Starship for an additional mission to the Moon with astronauts as part of the Artemis program! http://nasa.gov/press-release/nasa-provides-update-to-astronaut-moon-lander-plans-under-artemis",
+				acc:  "SpaceX",
+				want: true,
+
+				quoted: &ttest{
+					acc:      "NASAArtemis",
+					text:     "Artemis III astronauts will land on the surface aboard a @SpaceX Starship Human Landing System. These new opportunities are for missions beyond #Artemis III.",
+					hasMedia: true,
+					want:     true,
+				},
+			},
+			{
+				text: "I'm LIVE from the Starbase build site, tune in: https://youtube.com/watch?v=3195jmsakdfj",
+				want: true,
+			},
+			{
 				text:     "The launch tower at Starbase will help stack Starship and catch the Super Heavy rocket booster",
 				acc:      "SpaceX",
 				hasMedia: true,
@@ -1409,6 +1425,13 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text: "... in the later seasons of TNG ... Becky’s protest of Romeo and Jules during that whole homophobia story arc in S12",
+			},
+			{
+				text: "finally catching up on s10 of call the midwife",
+				want: false,
+			},
 			{
 				accDescription: "3d artist",
 				text:           "Starship orbital test flight",

@@ -108,11 +108,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 			return
 		}
 
-		tweet = match.TweetWrapper{
-			Tweet:         *t,
-			TweetSource:   tweet.TweetSource,
-			EnableLogging: tweet.EnableLogging,
-		}
+		tweet = tweet.Wrap(t)
 	}
 
 	switch {
@@ -122,9 +118,20 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// retweet everything that is appropriate
 		tweet.Log("is elon tweet")
 		p.thread(&tweet.Tweet)
+	case isSpaceXTweet(tweet):
+		tweet.Log("is SpaceX tweet")
+		if tweet.QuotedStatus != nil {
+			p.Tweet(tweet.Wrap(tweet.QuotedStatus))
+		}
+		if tweet.RetweetedStatus != nil {
+			p.Tweet(tweet.Wrap(tweet.RetweetedStatus))
+		}
+		if p.isStarshipTweet(tweet) {
+			p.retweet(&tweet.Tweet, "SpaceX tweet", tweet.TweetSource)
+		}
 	case tweet.RetweetedStatus != nil:
 		tweet.Log("is retweet")
-		p.Tweet(match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.RetweetedStatus, EnableLogging: tweet.EnableLogging})
+		p.Tweet(tweet.Wrap(tweet.RetweetedStatus))
 	case tweet.QuotedStatus != nil:
 		tweet.Log("is quoting")
 		// If someone quotes a tweet, we check some things.
@@ -132,13 +139,13 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		// If we have a Starship-Tweet quoting a tweet that does not contain antikeywords,
 		// we assume that the quoted tweet also contains relevant information
 
-		if p.seenTweets[tweet.QuotedStatusID] {
+		if p.seenTweets[tweet.QuotedStatusID] && !match.IsImportantAcount(tweet.User) {
 			tweet.Log("already saw this quoted tweet")
 			break
 		}
 
 		// If the quoted tweet already is about starship, we maybe only look at that one
-		quotedWrap := match.TweetWrapper{TweetSource: tweet.TweetSource, Tweet: *tweet.QuotedStatus, EnableLogging: tweet.EnableLogging}
+		quotedWrap := tweet.Wrap(tweet.QuotedStatus)
 		if p.isStarshipTweet(quotedWrap) {
 			tweet.Log("quoted is starship tweet")
 			// If it's from the *same* user, then we just assume they added additional info.
@@ -156,7 +163,7 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 		}
 
 		// The quoting tweet should be about starship AND have media
-		if !(p.isStarshipTweet(tweet) && hasMedia(&tweet.Tweet)) {
+		if !(p.isStarshipTweet(tweet) && (hasMedia(&tweet.Tweet) || match.IsImportantAcount(tweet.User))) {
 			tweet.Log("quoting tweet is not starship tweet with media")
 			break
 		}

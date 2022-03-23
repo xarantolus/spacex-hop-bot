@@ -32,3 +32,7 @@ func (t *TweetWrapper) Log(format string, a ...interface{}) {
 		log.Printf("[Processor] %s (%s): %s", util.TweetURL(&t.Tweet), t.TweetSource.String(), fmt.Sprintf(format, a...))
 	}
 }
+
+func (t *TweetWrapper) Wrap(tweet *twitter.Tweet) TweetWrapper {
+	return TweetWrapper{TweetSource: t.TweetSource, Tweet: *tweet, EnableLogging: t.EnableLogging}
+}
