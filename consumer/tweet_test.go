@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "STARBASE big voice announcement: \"Overhead drone operations will occur for the next hour.\" Get ready for B4 lift off the orbital launch mount! #Starbase #Starship #SpaceX",
+				want: true,
+			},
+			{
 				text: "NASA has selected Starship for an additional mission to the Moon with astronauts as part of the Artemis program! http://nasa.gov/press-release/nasa-provides-update-to-astronaut-moon-lander-plans-under-artemis",
 				acc:  "SpaceX",
 				want: true,
@@ -774,6 +778,18 @@ func TestQuestionTweets(t *testing.T) {
 func TestElonTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text: "♥️♥️ NASA ♥️♥️",
+				acc:  "elonmusk",
+				want: true,
+
+				quoted: &ttest{
+					text:     "Artemis III astronauts will touch down on the Moon aboard a @SpaceX Starship Human Landing System. We will be asking U.S. companies to develop astronaut Moon landers for @NASAArtemis missions beyond #Artemis III: https://go.nasa.gov/3IxKUuL",
+					acc:      "NASA",
+					hasMedia: true,
+					want:     true,
+				},
+			},
 			// This is a real tweet
 			{
 				text: "16 story tall rocket, traveling several times faster than a bullet, backflips & fires engines to return to launch site",

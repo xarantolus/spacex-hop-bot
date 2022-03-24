@@ -340,7 +340,10 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 
 	// A quoted tweet. Let's see if there's anything interesting
 	if tweet.QuotedStatusID != 0 && tweet.QuotedStatus != nil {
-		return p.thread(tweet.QuotedStatus)
+		if p.thread(tweet.QuotedStatus) {
+			p.retweet(tweet, "thread: quoted", match.TweetSourceUnknown)
+			return true
+		}
 	}
 
 	realTweet := tweet
