@@ -26,9 +26,9 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 	}
 
 	_, isVeryImportant := veryImportantAccounts[strings.ToLower(tweet.User.ScreenName)]
-	// We ignore certain (e.g. satire, artist) accounts
+	// We ignore certain (e.g. satire, artist) accounts, except when they tweet from a SpaceX site
 	if tweet.User != nil {
-		if !isVeryImportant && m.IsOrMentionsIgnoredAccount(&tweet.Tweet) {
+		if !isVeryImportant && m.IsOrMentionsIgnoredAccount(&tweet.Tweet) && !IsAtSpaceXSite(&tweet.Tweet) {
 			tweet.Log("StarshipTweet: at least one mentioned account is ignored")
 			return false
 		}

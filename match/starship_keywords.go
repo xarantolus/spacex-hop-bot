@@ -187,6 +187,7 @@ var (
 			to: compose(placesKeywords, sitesKeywords, liveStreams,
 				ignoreSpaces([]string{"update", "olit", "launch tower", "tower segment"}),
 			),
+			antiKeywords: ignoreSpaces([]string{"boat"}),
 		},
 
 		// Some words that are usually ambigious, but if combined with starship keywords they are fine
@@ -261,7 +262,7 @@ var (
 
 		// For Elon, we try to match anything that could be insider info
 		"elonmusk": {
-			regexp.MustCompile(`(?:booster|cryo|static fire|tower|ship|rud|faa|starbase|boca chica|lox|liquid oxygen|methane|ch4|relight|fts|cargo|lunar|tfr|fts|scrub|flap)`),
+			regexp.MustCompile(`(?:\s|^)(?:booster|super heavy|cryo|static fire|tower|ship|rud|faa|starbase|boca chica|lox|liquid oxygen|methane|ch4|relight|fts|cargo|lunar|tfr|scrub|flap|starship)\b`),
 			// Try to match things for orbital flight tests
 			regexp.MustCompile(`(?:orbit(?:.|\s)+(flight test|test flight)|(flight test|test flight)(?:.|\s)+orbit)`),
 		},
@@ -269,7 +270,7 @@ var (
 	}
 
 	userAntikeywordsOverwrite = map[string][]string{
-		"elonmusk": {"tesla", "model s", "model 3", "model x", "model y", "car", "giga", "falcon", "boring company", "tunnel", "loop", "doge", "ula", "tonybruno", "jeff", "fsd", "giga berlin", "giga factory", "gigafactory", "giga press"},
+		"elonmusk": {"tesla", "model s", "model 3", "model x", "model y", "car", "giga", "falcon", "boring company", "tunnel", "loop", "doge", "ula", "tonybruno", "jeff", "fsd", "giga berlin", "giga factory", "gigafactory", "giga press", "traffic", "alpha", "beta"},
 
 		"spacex": {},
 
@@ -325,9 +326,9 @@ var (
 	antiStarshipKeywords = []string{
 		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "hungry hippo", "rklb", "falcon", "merlin", "m1d",
 		"tesla ", "rivian", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink",
-		"sls", "space launch system", "nasa_sls", "vehicle assembly building", "high bay 3", "vab", "ula", "united launch alliance", "vulcan", "rogozin",
+		"sls", "space launch system", "nasa_sls", "nasa_orion", "vehicle assembly building", "high bay 3", "vab", "ula", "united launch alliance", "vulcan", "rogozin",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "soviet",
-		"resilience", "shuttle", "challenger", "sts-51l", "sts-33", "new glenn", "china", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics",
+		"resilience", "shuttle", "challenger", "sts-51l", "sts-33", "new glenn", "china", "long march", "casc", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra", "lv0",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine",
 		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno", "rp-1", "rp1",
@@ -335,6 +336,8 @@ var (
 		"orbex", "rfa", "isar", "oneweb", "antares", "saturn", "usaf b", "ms-", "starshipsls",
 		"cygnus", "samsung", "s22 ultra", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
+
+		"launch umbilical tower", "mobile service structure", "appollo",
 
 		"roscosmos", "yenisey",
 
@@ -345,7 +348,8 @@ var (
 
 		"be4", "be-4", "be 4 engine",
 
-		"war time", "wartime", "long range strike", "kyiv", "ukrain",
+		"war time", "wartime", "long range strike", "kyiv", "ukrain", "missile", "putin", "first strike",
+		"call to arms", "calltoarms",
 
 		"amazon", "kuiper", "isro",
 
@@ -383,7 +387,7 @@ var (
 
 		"god", "the lord", "pray",
 
-		"firefight", "texaswildfire", "wildfire",
+		"firefight", "texaswildfire", "wildfire", "on fire", "engulfed in flames",
 
 		"xanda",
 
@@ -406,7 +410,7 @@ var (
 		// kerbal space program, games, star wars != "official" news
 		"kerbal space program", "ksp", "no mans sky", "nomanssky", "no man’s sky", "no man's sky", "kerbals", "pocket rocket", "pocketrocket", "simplerockets",
 		"star trek", "startrek", "starcitizen", "star citizen", "battle droid", "b1-series", "civil war", "jabba the hutt", "sfs", "space flight simulator",
-		"rocket explorer", "forza",
+		"rocket explorer", "forza", "star wars", "starwars",
 
 		"tax",
 
@@ -425,6 +429,8 @@ var (
 
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
+
+		"ourmillion22",
 
 		"suprem", "aryan",
 
@@ -487,7 +493,7 @@ var (
 
 		"surgery", "emergency",
 
-		"homopho", "hetero ", "cis ", "season", "episode",
+		"homopho", "hetero ", "cis ", "season",
 
 		// Starts with "olm", which tricks the matcher
 		"olmos",
@@ -500,13 +506,13 @@ var (
 
 		// Account follows a sheriff
 		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "nigg", "memorial", "dead", "death", "piss",
-		"abus",
+		"abus", "gun",
 
 		"nonce", "pedo",
 
 		"bomb", "arsenal",
 
-		"hospital", "midwife", "housewife",
+		"hospital", "midwife", "housewife", "baby face", "babyface",
 
 		"offend", "offensive", "fanboy", "fan boy", "fangirl", "fan girl",
 

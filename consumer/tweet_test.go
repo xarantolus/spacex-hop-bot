@@ -566,9 +566,19 @@ func TestLocationTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
-				text:     "Starship!",
-				acc:      "Dogecoin & crypto fan",
+				// Even ignored accounts are allowed if they tweet from an important place
+				text:           "Starship!",
+				accDescription: "Dogecoin & crypto fan",
+				location:       match.SpaceXBuildSiteID,
+				hasMedia:       true,
+				want:           true,
+			},
+			{
+				// Even ignored accounts are allowed if they tweet from an important place
+				text:     "Took this image, it's similar to my 3D renders!",
+				userID:   match.TestIgnoredUserID,
 				location: match.SpaceXBuildSiteID,
+				hasMedia: true,
 				want:     true,
 			},
 			{
@@ -778,6 +788,35 @@ func TestQuestionTweets(t *testing.T) {
 func TestElonTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			// Top-level tweet
+			{
+				acc:  "elonmusk",
+				text: "Tesla and Starship engines are currently the two hardest problems.",
+				want: true,
+			},
+			{
+				text: "I usually drive an alpha build, but switch to beta right before release so I know what Tesla owners are getting",
+				acc:  "elonmusk",
+				want: false,
+
+				parent: &ttest{
+					text: "What version are you driving",
+					acc:  "teslaownersSV",
+					want: false,
+
+					parent: &ttest{
+						text: "This is pretty good. 10.12 will have major improvements for tricky unprotected lefts & heavy traffic in general. We’re also making good progress with single stack.",
+						acc:  "elonmusk",
+						want: false,
+
+						parent: &ttest{
+							text: "#FSDBeta 10.11.1 has huge improvements. Best build so far. @elonmusk",
+							acc:  "teslaownersSV",
+							want: false,
+						},
+					},
+				},
+			},
 			{
 				text: "♥️♥️ NASA ♥️♥️",
 				acc:  "elonmusk",
@@ -907,13 +946,6 @@ func TestElonTweets(t *testing.T) {
 					want: true,
 				},
 			},
-			// Top-level tweet
-			{
-				acc:  "elonmusk",
-				text: "Tesla and Starship engines are currently the two hardest problems.",
-				want: true,
-			},
-
 			{
 				acc:  "elonmusk",
 				text: "Each Raptor 1 engine above produces 185 metric tons of force. Raptor 2 just started production & will do 230+ tons or over half a million pounds of force.",
@@ -1442,7 +1474,70 @@ func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Someone else brought it up in a conversation and just...",
+				want: false,
+				parent: &ttest{
+					text: "So did we all collectively forget that dearMoon was Yusaku Maezawa’s lunar “will you be my girlfriend” competition for a month or so 2 years ago because I sure as hell did",
+					want: false,
+				},
+			},
+			{
+				text:     "FORGET CAPE CANAVERAL…\nLook what happened at Cape Cornwall last week\nProud to share @RealHomerHickam’s  #RocketBoys story\nAnd how a dad, @RookIsaacman went to space\nAnd look… this dad’s got one of @ElonMusk’s StarShip on his shoulders!\nLaunching the #OurMillion22👩‍👩‍👦‍👦 appeal",
+				hasMedia: true,
+				want:     false,
+			},
+			{
+				text:     "LAST NIGHT: The West bound lane of HWY 100 was temporarily closed last night due to a vehicle on fire.  Teenagers driving back from SPI noticed their car was emitting smoke. They pulled over, got out of the vehicle before the vehicle became engulfed in flames.",
+				acc:      "SheriffGarza",
+				hasMedia: true,
+				want:     false,
+			},
+			{
+				text:     "Cape Canaveral's iconic Missile Row played a vital role in the development of US rocketry. After many years of silence, rockets are returning to its historic launch pads. You can read about its history and its future over at @NASASpaceflight",
+				hasMedia: true,
+				want:     false,
+			},
+			{
+				text:     "Finally, at long last we have the @StackUpDotOrg\nRex Brickheads that we gave away during our #CallToArms last year! \nI’ll be getting these shipped out/delivered to their proper homes soon. 👀\nIf you won one, keep your eyes out on your mail!",
+				hasMedia: true,
+				want:     false,
+			},
+			{
+				text: "Bob and fast-boat Maverick departed Port Canaveral a short while ago to support the Transporter-4 mission.\nhttp://nasaspaceflight.com/fleetcam",
+				want: false,
+			},
+			{
+				text: "C'mon @thedrive, NASA's Artemis I is sitting on the launch pad right now, and 3 more human rated @NASA_Orion crew modules are in production right which will all send humans to the Moon.",
+				want: false,
+			},
+			{
+				text: "The Apollo 16 space vehicle bracketed with the Launch Umbilical Tower (LUT) to the left and the Mobile Service Structure (MSS) to the right during March, 1972. The space vehicle was rolled out to the Launch Pad twice due to  spacecraft repairs. #Apollo16 #Apollo50",
+				want: false,
+			},
+			{
+				text: "Also, cryogenics are generally terrible for ballistic missile systems.",
+				want: false,
+				acc:  "nextspaceflight",
+
+				parent: &ttest{
+					text: "I am sorry, but this excuse is total BS. It is industry standard to broadcast the primary countdown loop. Pretty much all of the U.S. launch providers do it, and NASA did it during Shuttle. If you are worried about ITAR, you make the callout on a different loop.",
+					want: false,
+					acc:  "nextspaceflight",
+
+					quoted: &ttest{
+						text: "NASA's Tom Whitmeyer says press won't have access to countdown loops for the Space Launch System's wet dress rehearsal next week (breaking frm tradition) because of ITAR concerns and fears that adversaries will glean cryogenic timing info for clues into ballistic missile systems.",
+
+						want: false,
+					},
+				},
+			},
+			{
+				text: "On March 26, the Solar Orbiter spacecraft completed its closest pass of the Sun yet — passing just 48 million kilometers above its surface. On its trek to perihelion, Solar Orbiter took some of the highest resolution images of the Sun ever taken.\n\nARTICLE:\nhttps://www.nasaspaceflight.com/2022/03/solar-orbiter-close-pass/",
+				want: false,
+			},
+			{
 				text: "... in the later seasons of TNG ... Becky’s protest of Romeo and Jules during that whole homophobia story arc in S12",
+				want: false,
 			},
 			{
 				text: "finally catching up on s10 of call the midwife",
