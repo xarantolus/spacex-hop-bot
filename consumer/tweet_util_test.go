@@ -63,6 +63,8 @@ func (r *TestTwitterClient) Tweet(text string, inReplyToID *int64) (t *twitter.T
 	panic("Tweet() called in test. Either implement it or this is a mistake")
 }
 
+const testBotSelfUserID = 513513
+
 func testStarshipRetweets(t *testing.T, tweets []ttest) {
 	t.Helper()
 
@@ -72,7 +74,7 @@ func testStarshipRetweets(t *testing.T, tweets []ttest) {
 			tweets:            make(map[int64]*twitter.Tweet),
 		}
 
-		p = NewProcessor(false, true, t, &twitter.User{ID: 5}, match.NewStarshipMatcherForTests(), 0)
+		p = NewProcessor(false, true, t, &twitter.User{ID: testBotSelfUserID}, match.NewStarshipMatcherForTests(), 0)
 		return
 	}
 

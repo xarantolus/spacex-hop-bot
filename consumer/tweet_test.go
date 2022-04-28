@@ -11,6 +11,28 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				// this is the test user ID; we don't want to retweet our own tweets
+				userID: testBotSelfUserID,
+				text:   "S20 standing on the pad",
+				want:   false,
+			},
+			{
+				text: "S20 standing on the pad",
+				want: true,
+			},
+			{
+				text: "Last month the FCC asked SpaceX a series of questions about their next generation Starlink constellation, Starlink v2.0, or \"Gen2\". SpaceX responded back and affirms they will definitely launch it using Starship and could be ready as soon as (Future Date)",
+				want: true,
+			},
+			{
+				text: "Raptor fired on McGregor Live 5 minutes ago",
+				want: true,
+			},
+			{
+				text: "Merlin fired on McGregor Live 5 minutes ago",
+				want: false,
+			},
+			{
 				text: "STARBASE big voice announcement: \"Overhead drone operations will occur for the next hour.\" Get ready for B4 lift off the orbital launch mount! #Starbase #Starship #SpaceX",
 				want: true,
 			},
@@ -361,10 +383,6 @@ func TestBasicTweets(t *testing.T) {
 				want: true,
 			},
 			{
-				text: "Last month the FCC asked SpaceX a series of questions about their next generation Starlink constellation, Starlink v2.0, or \"Gen2\". SpaceX responded back and affirms they will definitely launch it using Starship and could be ready as soon as March 2022",
-				want: true,
-			},
-			{
 				text: "My starlink dish arrived",
 				want: false,
 			},
@@ -471,16 +489,6 @@ func TestBasicTweets(t *testing.T) {
 				acc:      "NASASpaceflight",
 				hasMedia: true,
 				want:     true,
-			},
-			{
-				// this is the test user ID; we don't want to retweet our own tweets
-				userID: 5,
-				text:   "S20 standing on the pad",
-				want:   false,
-			},
-			{
-				text: "S20 standing on the pad",
-				want: true,
 			},
 			{
 				text: "Unrelated",
@@ -1473,6 +1481,15 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			// {
+			// 	text: "#DYK our Orbital Outpost SN-5000 service module offers free-flyer, logistics services for low-Earth orbit & cislunar destinations? It can carry 6,500 lbs. of pressurized & 3,500 lbs. of unpressurized cargo with 3 external mounting locations! #SpaceSymposium #TeamSNC",
+			// 	acc:  "SierraNevCorp",
+			// 	want: false,
+			// },
+			// {
+			// 	text: "Buckle up for another stacked cast this Tuesday morning 🥞🥞🥞\n💸Elon Musk named to $TWTR's board of directors\n🔥@WarnerMedia\nCEO @jasonkilar joins for an exclusive interview\n+ $AMZN looks to take on Starlink with satellite-based internet",
+			// 	want: false,
+			// },
 			{
 				text: "Someone else brought it up in a conversation and just...",
 				want: false,

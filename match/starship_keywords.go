@@ -60,13 +60,13 @@ var (
 		// Engines
 		{
 			from: []string{"raptor"},
-			to: ignoreSpaces([]string{
+			to: compose(liveStreams, ignoreSpaces([]string{
 				"starship", "vacuum", "sea level",
 				"spacex", "mcgregor", "engine", "rb", "rc", "rvac",
 				"launch site", "production", "booster", "super heavy",
 				"superheavy", "truck", "van", "raptorvan", "deliver",
 				"flare", "high bay", "nozzle", "tripod", "starbase", "static fire",
-			}),
+			})),
 		},
 
 		// Stuff noticed on live streams
@@ -222,6 +222,8 @@ var (
 	liveStreams           = ignoreSpaces([]string{
 		// 24/7 live camera views are often mentioned when something is shown on a screenshot
 		"lab padre", "nasa space flight",
+		"mc gregor live", "star base live",
+
 		// Other streamers
 		"jessica kirsh", "boca chica gal", "starship gazer",
 	})
@@ -362,11 +364,13 @@ var (
 
 		"f22", "f-22", "jet", "b-52", "s-300", "f-1", "b52", "b350", "rs-25", "stennis",
 
+		"b16 doubl",
+
 		"seed round", "yc s", "not a starship",
 
 		// Not interested in other stuff
 		"doge", "babydoge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "nft", "mint", "opensea",
-		"safemoon", "stock", "wall street", "wallstreet", "buffett", "metaverse", "terra",
+		"safemoon", "stock", "wall street", "wallstreet", "buffett", "metaverse", "terra", "twtr", "board of director",
 		"scam", "shill",
 
 		"no tfr",
@@ -394,7 +398,7 @@ var (
 		// 3d models are nice, but we only care about "real info"
 		"render", "animat" /* ion/ed */, "3d", "model", "simulated", "print", "vfx", "not real", "photoshop",
 		"art ", "artist", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle", "lego",
-		"card game", "starship design", "daily_hopper", "daily hopper", "paper model", "papermodel",
+		"card game", "starship design", "daily_hopper", "daily hopper", "paper model", "papermodel", "toy",
 
 		"fantasy 4 cards", "fantasy cards",
 
@@ -454,7 +458,7 @@ var (
 
 		// I do not care about opinions on starship
 		"agree", "disagree", "throwback to", "opinion", "imo", "imho", "i think", "mfw", "vibe", "dream", "laughs in",
-		"armchair", "arm chair", "petition",
+		"armchair", "arm chair", "petition", "trust me bro",
 
 		"gorgeous girl",
 

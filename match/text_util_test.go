@@ -145,6 +145,10 @@ func Test_ignoreSpaces(t *testing.T) {
 			arg:        []string{"sea level"},
 			wantResult: []string{"sea level", "sealevel", "sea-level", "sea_level"},
 		},
+		{
+			arg:        []string{"mc gregor live"},
+			wantResult: []string{"mc gregor live", "mcgregorlive", "mc-gregor-live", "mc_gregor_live", "mcgregor live", "mc gregorlive"},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
