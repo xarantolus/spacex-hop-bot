@@ -80,7 +80,7 @@ var (
 			)),
 			to: []string{
 				"methane", "tanker", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",
-				"argon", "road", "highway", "close", "open", "qd", "sqd", "bqd", "quick disconnect",
+				"argon", "road", "highway", "qd", "sqd", "bqd", "quick disconnect",
 				"raptor", "cranex",
 			},
 		},

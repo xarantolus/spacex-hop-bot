@@ -48,7 +48,7 @@ func CheckDashboard(twitterClient consumer.TwitterClient) {
 		previousTweetID = 0
 
 	sleep:
-		time.Sleep(time.Minute + time.Duration(rand.Intn(90))*time.Second)
+		time.Sleep(time.Minute + time.Duration(rand.Intn(30))*time.Second)
 	}
 }
 

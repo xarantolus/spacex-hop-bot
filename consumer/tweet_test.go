@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				// Contains "STF" (suborbital tank farm) and "open"
+				text: "Fantastic news!🥳 MIRI, the UK's main contribution to the @ESA_Webb, has opened its eye to the sky! 💫 MIRI's painstaking alignment process was supported by scientists and engineers from @ukatc and RAL Space. Huge congratulations to everyone involved!👏 👉https://ralspace.stfc.ac.uk/Pages/Webb%E2%80%99s-coolest-instrument-captures-first-star.aspx",
+				want: false,
+			},
+			{
 				// this is the test user ID; we don't want to retweet our own tweets
 				userID: testBotSelfUserID,
 				text:   "S20 standing on the pad",
