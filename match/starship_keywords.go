@@ -78,11 +78,11 @@ var (
 				[]string{"stage zero"},
 				[]string{"ols"},
 			)),
-			to: []string{
+			to: ignoreSpaces([]string{
 				"methane", "tanker", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",
-				"argon", "road", "highway", "qd", "sqd", "bqd", "quick disconnect",
-				"raptor", "cranex",
-			},
+				"argon", "road", "highway", "hwy", "qd", "sqd", "bqd", "quick disconnect",
+				"raptor", "crane x",
+			}),
 		},
 
 		{
@@ -470,7 +470,7 @@ var (
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",
 		"retweet if",
 
-		"child", "kid",
+		"child", "kid", "parenthood",
 
 		"illegal", "nfl", "nhl", "draw", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "stroking", "fap", "chick", "doggy", "only fans",
@@ -510,7 +510,7 @@ var (
 
 		// Account follows a sheriff
 		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "nigg", "memorial", "dead", "death", "piss",
-		"abus", "gun",
+		"abus", "gun", "injur",
 
 		"nonce", "pedo",
 

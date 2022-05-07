@@ -1486,6 +1486,9 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text: "Amber Heard describes using make-up and 'super heavy, red matte lipstick' to conceal injuries before appearing on talk show",
+			},
 			// {
 			// 	text: "#DYK our Orbital Outpost SN-5000 service module offers free-flyer, logistics services for low-Earth orbit & cislunar destinations? It can carry 6,500 lbs. of pressurized & 3,500 lbs. of unpressurized cargo with 3 external mounting locations! #SpaceSymposium #TeamSNC",
 			// 	acc:  "SierraNevCorp",
