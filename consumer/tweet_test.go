@@ -11,11 +11,6 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
-				// Contains "STF" (suborbital tank farm) and "open"
-				text: "Fantastic news!🥳 MIRI, the UK's main contribution to the @ESA_Webb, has opened its eye to the sky! 💫 MIRI's painstaking alignment process was supported by scientists and engineers from @ukatc and RAL Space. Huge congratulations to everyone involved!👏 👉https://ralspace.stfc.ac.uk/Pages/Webb%E2%80%99s-coolest-instrument-captures-first-star.aspx",
-				want: false,
-			},
-			{
 				// this is the test user ID; we don't want to retweet our own tweets
 				userID: testBotSelfUserID,
 				text:   "S20 standing on the pad",
@@ -1487,17 +1482,22 @@ func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				// Contains "STF" (suborbital tank farm) and "open"
+				text: "Fantastic news!🥳 MIRI, the UK's main contribution to the @ESA_Webb, has opened its eye to the sky! 💫 MIRI's painstaking alignment process was supported by scientists and engineers from @ukatc and RAL Space. Huge congratulations to everyone involved!👏 👉https://ralspace.stfc.ac.uk/Pages/Webb%E2%80%99s-coolest-instrument-captures-first-star.aspx",
+				want: false,
+			},
+			{
 				text: "Amber Heard describes using make-up and 'super heavy, red matte lipstick' to conceal injuries before appearing on talk show",
 			},
-			// {
-			// 	text: "#DYK our Orbital Outpost SN-5000 service module offers free-flyer, logistics services for low-Earth orbit & cislunar destinations? It can carry 6,500 lbs. of pressurized & 3,500 lbs. of unpressurized cargo with 3 external mounting locations! #SpaceSymposium #TeamSNC",
-			// 	acc:  "SierraNevCorp",
-			// 	want: false,
-			// },
-			// {
-			// 	text: "Buckle up for another stacked cast this Tuesday morning 🥞🥞🥞\n💸Elon Musk named to $TWTR's board of directors\n🔥@WarnerMedia\nCEO @jasonkilar joins for an exclusive interview\n+ $AMZN looks to take on Starlink with satellite-based internet",
-			// 	want: false,
-			// },
+			{
+				text: "#DYK our Orbital Outpost SN-5000 service module offers free-flyer, logistics services for low-Earth orbit & cislunar destinations? It can carry 6,500 lbs. of pressurized & 3,500 lbs. of unpressurized cargo with 3 external mounting locations! #SpaceSymposium #TeamSNC",
+				acc:  "SierraNevCorp",
+				want: false,
+			},
+			{
+				text: "Buckle up for another stacked cast this Tuesday morning 🥞🥞🥞\n💸Elon Musk named to $TWTR's board of directors\n🔥@WarnerMedia\nCEO @jasonkilar joins for an exclusive interview\n+ $AMZN looks to take on Starlink with satellite-based internet",
+				want: false,
+			},
 			{
 				text: "Someone else brought it up in a conversation and just...",
 				want: false,
