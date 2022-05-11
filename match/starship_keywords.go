@@ -77,6 +77,7 @@ var (
 				[]string{"olm", "olt", "olit"},
 				[]string{"stage zero"},
 				[]string{"ols"},
+				nonSpecificKeywords,
 			)),
 			to: ignoreSpaces([]string{
 				"methane", "tanker", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",

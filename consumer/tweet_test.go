@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "The Booster Quick Disconnect did a high speed retraction test at 11:06 local time.",
+				want: true,
+			},
+			{
 				// this is the test user ID; we don't want to retweet our own tweets
 				userID: testBotSelfUserID,
 				text:   "S20 standing on the pad",
