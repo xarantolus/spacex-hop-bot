@@ -106,8 +106,9 @@ var (
 
 		// Testing activity
 		{
-			from: ignoreSpaces([]string{"cryo proof", "proof", "stack"}),
-			to:   compose(nonSpecificKeywords, generalSpaceXKeywords, liveStreams),
+			from:         ignoreSpaces([]string{"cryo proof", "proof", "stack"}),
+			to:           compose(nonSpecificKeywords, generalSpaceXKeywords, liveStreams),
+			antiKeywords: []string{"twitter"},
 		},
 		{
 			from: []string{"road closure", "temporary flight restriction", "tfr "},
@@ -275,7 +276,8 @@ var (
 	userAntikeywordsOverwrite = map[string][]string{
 		"elonmusk": {"tesla", "model s", "model 3", "model x", "model y", "car", "giga", "falcon", "boring company", "tunnel", "loop", "doge", "ula", "tonybruno", "jeff", "fsd", "giga berlin", "giga factory", "gigafactory", "giga press", "traffic", "alpha", "beta"},
 
-		"spacex": {},
+		"spacex":  {},
+		"faanews": {},
 
 		// NASA Accounts that sometimes tweet about Starship don't need any antiKeywords - they are "allowed"
 		// to mention Starship together with e.g. Orion (which would be ignored if not for these overrides).
@@ -284,7 +286,7 @@ var (
 		"nasa_marshall": {"high bay"},
 		"nasa_gateway":  {"high bay"},
 		"nasaartemis":   {"high bay"},
-		"nasakennedy":   {"high bay"},
+		"nasakennedy":   {"high bay", "starliner", "boeing"},
 		"nasagoddard":   {"high bay"},
 	}
 
@@ -343,6 +345,8 @@ var (
 		"launch umbilical tower", "mobile service structure", "appollo",
 
 		"roscosmos", "yenisey",
+
+		"twitter deal",
 
 		"hubble", "nasahubble",
 
@@ -510,7 +514,7 @@ var (
 		"starshipent", "monstax", "eshygazit", "wonho",
 
 		// Account follows a sheriff
-		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "nigg", "memorial", "dead", "death", "piss",
+		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "nigg", "memorial", "dead", "death", "suicide", "piss",
 		"abus", "gun", "injur",
 
 		"nonce", "pedo",

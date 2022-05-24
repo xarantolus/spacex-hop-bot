@@ -11,6 +11,16 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Something about the SpaceX Starship and SuperHeavy Project",
+				acc:  "FAANews",
+				want: true,
+			},
+			{
+				text:     "Raptor 2 from different angles",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text: "The Booster Quick Disconnect did a high speed retraction test at 11:06 local time.",
 				want: true,
 			},
@@ -1485,6 +1495,10 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text: "Elon Musk says Twitter deal “cannot move forward” until proof of number of fake accounts is provided",
+				want: false,
+			},
 			{
 				// Contains "STF" (suborbital tank farm) and "open"
 				text: "Fantastic news!🥳 MIRI, the UK's main contribution to the @ESA_Webb, has opened its eye to the sky! 💫 MIRI's painstaking alignment process was supported by scientists and engineers from @ukatc and RAL Space. Huge congratulations to everyone involved!👏 👉https://ralspace.stfc.ac.uk/Pages/Webb%E2%80%99s-coolest-instrument-captures-first-star.aspx",
