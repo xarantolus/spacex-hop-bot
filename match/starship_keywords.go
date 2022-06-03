@@ -68,6 +68,10 @@ var (
 				"flare", "high bay", "nozzle", "tripod", "starbase", "static fire",
 			})),
 		},
+		{
+			from: ignoreSpaces([]string{"mc gregor"}),
+			to:   ignoreSpaces([]string{"tri pod", "raptor"}),
+		},
 
 		// Stuff noticed on live streams
 		{
@@ -77,7 +81,8 @@ var (
 				[]string{"olm", "olt", "olit"},
 				[]string{"stage zero"},
 				[]string{"ols"},
-				nonSpecificKeywords,
+				[]string{"booster", "orbital test flight", "orbital flight test"},
+				liveStreams, placesKeywords,
 			)),
 			to: ignoreSpaces([]string{
 				"methane", "tanker", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",
@@ -219,7 +224,7 @@ var (
 	seaportKeywords       = ignoreSpaces([]string{"sea launch", "port", "oil", "rig"})
 	placesKeywords        = ignoreSpaces([]string{"starbase", "boca chica"})
 	sitesKeywords         = ignoreSpaces([]string{"launch site", "build site"})
-	nonSpecificKeywords   = compose([]string{"ship", "booster", "orbital test flight", "orbital flight test"}, liveStreams, placesKeywords)
+	nonSpecificKeywords   = compose(ignoreSpaces([]string{"ship", "booster", "orbital test flight", "orbital flight test"}), liveStreams, placesKeywords)
 	generalSpaceXKeywords = ignoreSpaces([]string{"spacex", "space port", "elon", "musk", "gwynne", "shotwell"})
 	liveStreams           = ignoreSpaces([]string{
 		// 24/7 live camera views are often mentioned when something is shown on a screenshot
@@ -440,6 +445,8 @@ var (
 		"velociraptor", "jurassic", "cretaceous", "dino",
 
 		"ourmillion22",
+
+		"kitty hawk",
 
 		"suprem", "aryan",
 

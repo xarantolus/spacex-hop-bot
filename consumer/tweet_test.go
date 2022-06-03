@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Tripod is chilling at McGregor! Possible firing coming up.\nhttp://nsf.live/mcgregor",
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				text: "Something about the SpaceX Starship and SuperHeavy Project",
 				acc:  "FAANews",
 				want: true,
@@ -810,6 +815,16 @@ func TestQuestionTweets(t *testing.T) {
 func TestElonTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			// {
+			// 	parent: &ttest{
+			// 		text: "What's going on at starbase?",
+			// 		want: true,
+			// 	},
+
+			// 	text: "Rocket seems fine",
+			// 	acc:  "elonmusk",
+			// 	want: true,
+			// },
 			// Top-level tweet
 			{
 				acc:  "elonmusk",
@@ -1495,6 +1510,10 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text: "Sri Lanka's central bank has secured foreign exchange to pay for fuel and cooking gas shipments that will ease crippling shortages, its governor said, but police fired tear gas and water canon to push back student protesters",
+				want: false,
+			},
 			{
 				text: "Elon Musk says Twitter deal “cannot move forward” until proof of number of fake accounts is provided",
 				want: false,
