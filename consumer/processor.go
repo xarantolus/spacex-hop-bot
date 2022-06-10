@@ -252,18 +252,23 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 			case match.IsPadAnnouncement(tweet.Text()):
 				// If we have a pad announcement - those are usually tweets without media
 				p.retweet(&tweet.Tweet, "location + pad announcement", tweet.TweetSource)
+			case linksToLiveStream(&tweet.Tweet):
+				p.retweet(&tweet.Tweet, "location + live stream", tweet.TweetSource)
 			default:
 				tweet.Log("location tweet ignored because it doesn't have media and is no pad announcement")
 				log.Printf("[Processor] Ignoring %s because it's from the location stream and has no media", util.TweetURL(&tweet.Tweet))
 			}
 		} else {
-			// If a tweet contains *only hashtags*, we only retweet it if it has media
-			if isTagsOnly(tweet.Text()) {
+			switch {
+			case isTagsOnly(tweet.Text()):
+				// If a tweet contains *only hashtags*, we only retweet it if it has media
 				tweet.Log("tweet only has tags")
 				if hasMedia(&tweet.Tweet) {
 					p.retweet(&tweet.Tweet, "normal matcher, only tags, but media", tweet.TweetSource)
 				}
-			} else {
+			case match.IsAtSpaceXSite(&tweet.Tweet) && linksToLiveStream(&tweet.Tweet):
+				p.retweet(&tweet.Tweet, "live stream at spacex site", tweet.TweetSource)
+			default:
 				p.retweet(&tweet.Tweet, "normal matcher", tweet.TweetSource)
 			}
 		}

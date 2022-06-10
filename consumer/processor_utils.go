@@ -2,12 +2,14 @@ package consumer
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 	"strings"
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/xarantolus/spacex-hop-bot/match"
+	"github.com/xarantolus/spacex-hop-bot/scrapers"
 	"github.com/xarantolus/spacex-hop-bot/util"
 )
 
@@ -93,6 +95,28 @@ func (p *Processor) isReply(t *twitter.Tweet) bool {
 	}
 
 	return p.isReply(t)
+}
+
+func linksToLiveStream(tweet *twitter.Tweet) bool {
+	if tweet.Entities == nil {
+		return false
+	}
+
+	for _, u := range tweet.Entities.Urls {
+		if !strings.Contains(u.ExpandedURL, "youtu") {
+			continue
+		}
+		liveVid, err := scrapers.YouTubeLive(u.ExpandedURL)
+		if errors.Is(err, scrapers.ErrNoVideo) ||
+			util.LogError(err, "scraping youtube live at %q", u.URL) {
+			continue
+		}
+		if liveVid.IsLive || liveVid.IsUpcoming {
+			return true
+		}
+	}
+
+	return false
 }
 
 func isQuestion(tweet *twitter.Tweet) bool {

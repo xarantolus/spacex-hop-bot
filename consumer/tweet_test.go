@@ -593,6 +593,28 @@ func TestLocationTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:        "Just heard over the SpaceX PA system that S24 will be lifted shortly!",
+				acc:         "locationstream+location",
+				location:    match.SpaceXLaunchSiteID,
+				want:        true,
+				tweetSource: match.TweetSourceLocationStream,
+			},
+			{
+				text:        "Just heard over the SpaceX PA system that S24 will be lifted shortly!",
+				acc:         "locationstream+location+media",
+				location:    match.SpaceXLaunchSiteID,
+				hasMedia:    true,
+				want:        true,
+				tweetSource: match.TweetSourceLocationStream,
+			},
+			{
+				text:     "Just heard over the SpaceX PA system that S24 will be lifted shortly!",
+				acc:      "location+media",
+				location: match.SpaceXLaunchSiteID,
+				hasMedia: true,
+				want:     true,
+			},
+			{
 				// Even ignored accounts are allowed if they tweet from an important place
 				text:           "Starship!",
 				accDescription: "Dogecoin & crypto fan",
