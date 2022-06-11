@@ -226,6 +226,7 @@ var (
 	sitesKeywords         = ignoreSpaces([]string{"launch site", "build site"})
 	nonSpecificKeywords   = compose(ignoreSpaces([]string{"ship", "booster", "orbital test flight", "orbital flight test"}), liveStreams, placesKeywords)
 	generalSpaceXKeywords = ignoreSpaces([]string{"spacex", "space port", "elon", "musk", "gwynne", "shotwell"})
+	testCampaignKeywords  = ignoreSpaces([]string{"static fire", "cryo", "detank", "can crusher", "test stand", "full stack"})
 	liveStreams           = ignoreSpaces([]string{
 		// 24/7 live camera views are often mentioned when something is shown on a screenshot
 		"lab padre", "nasa space flight",

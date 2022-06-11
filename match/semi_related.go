@@ -6,6 +6,7 @@ var starshipRelatedWhenElonReplies = compose(
 	starshipKeywords,
 	placesKeywords,
 	nonSpecificKeywords,
+	testCampaignKeywords,
 )
 
 func ElonReplyIsStarshipRelated(text string) bool {
