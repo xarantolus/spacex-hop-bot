@@ -837,6 +837,23 @@ func TestQuestionTweets(t *testing.T) {
 func TestElonTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text: "Mars colonial transporter",
+				acc:  "elonmusk",
+				want: true,
+
+				parent: &ttest{
+					text: "Absolutely bonkers! I can’t wait to hear the rumble of a rocket that’s over twice as powerful as the Saturn V 😍",
+					acc:  "Erdayastronaut",
+					want: true,
+
+					quoted: &ttest{
+						text: "33 Raptor rocket engines, each producing 230 metric tons of force",
+						acc:  "elonmusk",
+						want: true,
+					},
+				},
+			},
 			// {
 			// 	parent: &ttest{
 			// 		text: "What's going on at starbase?",
