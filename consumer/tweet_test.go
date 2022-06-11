@@ -854,16 +854,16 @@ func TestElonTweets(t *testing.T) {
 					},
 				},
 			},
-			// {
-			// 	parent: &ttest{
-			// 		text: "What's going on at starbase?",
-			// 		want: true,
-			// 	},
+			{
+				parent: &ttest{
+					text: "What's going on at starbase?",
+					want: true,
+				},
 
-			// 	text: "Rocket seems fine",
-			// 	acc:  "elonmusk",
-			// 	want: true,
-			// },
+				text: "Rocket seems fine",
+				acc:  "elonmusk",
+				want: true,
+			},
 			// Top-level tweet
 			{
 				acc:  "elonmusk",
@@ -974,8 +974,7 @@ func TestElonTweets(t *testing.T) {
 								hasMedia: true,
 								userID:   match.TestIgnoredUserID,
 
-								// This *should* probably be true, but would require a bigger rewrite of the thread logic
-								want: false,
+								want: true,
 							},
 						},
 					},
@@ -992,7 +991,7 @@ func TestElonTweets(t *testing.T) {
 					hasMedia: true,
 					userID:   match.TestIgnoredUserID,
 
-					want: false,
+					want: true,
 				},
 			},
 			// Someone asking a question below an elon tweet and getting an answer

@@ -357,7 +357,9 @@ func (p *Processor) thread(tweet *twitter.Tweet) (didRetweet bool) {
 	}
 
 	// Now actually match the tweet
-	if didRetweet || p.matcher.StarshipTweet(match.TweetWrapper{TweetSource: match.TweetSourceUnknown, Tweet: *realTweet}) {
+	if didRetweet ||
+		p.matcher.StarshipTweet(match.TweetWrapper{TweetSource: match.TweetSourceUnknown, Tweet: *realTweet}) ||
+		match.ElonReplyIsStarshipRelated(tweet.Text()) {
 		p.retweet(tweet, "thread: matched", match.TweetSourceUnknown)
 		return true
 	}
