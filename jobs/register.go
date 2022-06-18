@@ -21,7 +21,7 @@ func Register(
 	go CheckYouTubeLive(wrappedTwitterClient, selfUser, matcher, linkChan)
 
 	// When the gov dashboard changes, we want to tweet about it
-	go CheckDashboard(wrappedTwitterClient)
+	// go CheckDashboard(wrappedTwitterClient)
 
 	// When the webpage mentions a new date/starship, we tweet about that
 	go StarshipWebsiteChanges(wrappedTwitterClient, linkChan)

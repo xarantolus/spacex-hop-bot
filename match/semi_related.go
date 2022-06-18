@@ -12,5 +12,6 @@ var starshipRelatedWhenElonReplies = compose(
 func ElonReplyIsStarshipRelated(text string) bool {
 	text = strings.ToLower(text)
 
-	return startsWithAny(text, starshipRelatedWhenElonReplies...)
+	_, contains := startsWithAny(text, starshipRelatedWhenElonReplies...)
+	return contains
 }

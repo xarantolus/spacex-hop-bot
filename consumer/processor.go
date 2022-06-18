@@ -156,6 +156,10 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 					tweet.Log("quoted is starship tweet with same user and has media")
 					p.retweet(tweet.QuotedStatus, "quoted media", tweet.TweetSource)
 				}
+				if hasMedia(&tweet.Tweet) && p.isStarshipTweet(tweet) {
+					tweet.Log("quoting starship tweet has media")
+					p.retweet(&tweet.Tweet, "quoting starship tweet with media", tweet.TweetSource)
+				}
 			} else {
 				tweet.Log("quoted is starship tweet with different user")
 				p.Tweet(quotedWrap)

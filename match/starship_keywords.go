@@ -11,7 +11,17 @@ type keywordMapping struct {
 }
 
 func (mapping *keywordMapping) matches(text string) bool {
-	return startsWithAny(text, mapping.from...) && startsWithAny(text, mapping.to...) && !startsWithAny(text, mapping.antiKeywords...)
+	_, ok := startsWithAny(text, mapping.from...)
+	if !ok {
+		return false
+	}
+	_, ok = startsWithAny(text, mapping.to...)
+	if !ok {
+		return false
+	}
+
+	_, ok = startsWithAny(text, mapping.antiKeywords...)
+	return !ok
 }
 
 // Note that all text here must be lowercase because the text is lowercased in the matching function
@@ -223,8 +233,8 @@ var (
 	// Helper slices that can be used for composing new keywords
 	seaportKeywords       = ignoreSpaces([]string{"sea launch", "port", "oil", "rig"})
 	placesKeywords        = ignoreSpaces([]string{"starbase", "boca chica"})
-	sitesKeywords         = ignoreSpaces([]string{"launch site", "build site"})
-	nonSpecificKeywords   = compose(ignoreSpaces([]string{"ship", "booster", "orbital test flight", "orbital flight test"}), liveStreams, placesKeywords)
+	sitesKeywords         = ignoreSpaces([]string{"launch site", "build site", "production site"})
+	nonSpecificKeywords   = compose(ignoreSpaces([]string{"ship", "booster", "stage zero", "orbital test flight", "orbital flight test"}), liveStreams, placesKeywords)
 	generalSpaceXKeywords = ignoreSpaces([]string{"spacex", "space port", "elon", "musk", "gwynne", "shotwell"})
 	testCampaignKeywords  = ignoreSpaces([]string{"static fire", "cryo", "detank", "can crusher", "test stand", "full stack"})
 	liveStreams           = ignoreSpaces([]string{
@@ -307,6 +317,7 @@ var (
 	veryImportantAccounts = map[string]bool{
 		"elonmusk": true,
 		"spacex":   true,
+		"faanews":  true,
 	}
 
 	// If an account has any of these words in its description, we don't retweet tweets from it
@@ -330,7 +341,7 @@ var (
 		regexp.MustCompile(`\b((?:b|booster)\s*10\d{2})\b`),
 
 		/* Things that might look like a starship serial number, but aren't */
-		regexp.MustCompile(`(^|\s|[^'’])((?:s|ship)\s*\d{3,})\b`),
+		regexp.MustCompile(`(^|\s)((?:s|ship)\s*\d{3,})\b`),
 	}
 
 	// If a tweet contains any of these keywords, it will not be retweeted. This is a way of filtering out *non-starship* stuff

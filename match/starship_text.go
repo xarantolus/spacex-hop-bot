@@ -9,12 +9,12 @@ func (m *StarshipMatcher) StarshipText(text string, antiKeywords []string, skipM
 	text = strings.ToLower(text)
 
 	// If we find ignored words, we ignore the tweet
-	if containsAntikeyword(antiKeywords, text) {
+	if _, contains := containsAntikeyword(antiKeywords, text); contains {
 		return false
 	}
 
 	// else we check if there are any interesting keywords
-	if startsWithAny(text, starshipKeywords...) {
+	if _, contains := startsWithAny(text, starshipKeywords...); contains {
 		return true
 	}
 
@@ -41,19 +41,20 @@ func (m *StarshipMatcher) StarshipText(text string, antiKeywords []string, skipM
 }
 
 func ContainsStarshipAntiKeyword(text string) bool {
-	return containsAntikeyword(antiStarshipKeywords, strings.ToLower(text))
+	_, contains := containsAntikeyword(antiStarshipKeywords, strings.ToLower(text))
+	return contains
 }
 
-func containsAntikeyword(antiKeywords []string, text string) bool {
+func containsAntikeyword(antiKeywords []string, text string) (word string, contains bool) {
 	for _, antiRegex := range antiKeywordRegexes {
 		if antiRegex.MatchString(text) {
-			return true
+			return "(antiKeywordRegex)" + antiRegex.String(), true
 		}
 	}
 
 	for _, mapping := range moreSpecificAntiKeywords {
 		if mapping.matches(text) {
-			return true
+			return "(moreSpecificAntiKeywords)", true
 		}
 	}
 

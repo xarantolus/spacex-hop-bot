@@ -1162,6 +1162,19 @@ func TestTweetThreads(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Couple stills from another camera of last nights 110 sec Raptor 2 Tripod test.   Evening Tripod tests are the best!    ♦️🔥♦️ Can’t wait to see the first 3 minute test.  Thanks for keeping the Tripod stand alive and active @SpaceX",
+				acc:      "jswartzphoto",
+				hasMedia: true,
+				want:     true,
+
+				quoted: &ttest{
+					text:     "Raptor 2.0 upclose last night anyone?   Love me some mach diamonds from the Tripod stand @SpaceX McGregor!   110 seconds of pure power.  Everyday it seems like they push each test a little longer. 🔥🚀\n#SpaceXTests #SpaceX #Raptor #RaptorHour",
+					acc:      "jswartzphoto",
+					hasMedia: true,
+					want:     true,
+				},
+			},
+			{
 				text: "Later this year, remaining fussy bits will be gone, allowing deletion of shroud",
 				acc:  "elonmusk",
 				want: true,

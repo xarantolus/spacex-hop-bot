@@ -28,7 +28,7 @@ func Test_startsWithAnyGeneric(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
-			if got := startsWithAny(tt.argText, searchedPrefixes...); got != tt.want {
+			if _, got := startsWithAny(tt.argText, searchedPrefixes...); got != tt.want {
 				t.Errorf("containsAny(%q) = %v, want %v", tt.argText, got, tt.want)
 			}
 		})
@@ -54,7 +54,7 @@ func Test_startsWithAnyStarshipAntikeywords(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(t.Name(), func(t *testing.T) {
-			if got := startsWithAny(strings.ToLower(tt.argText), antiStarshipKeywords...); got != tt.want {
+			if _, got := startsWithAny(strings.ToLower(tt.argText), antiStarshipKeywords...); got != tt.want {
 				t.Errorf("containsAny(%q) = %v, want %v", tt.argText, got, tt.want)
 			}
 		})

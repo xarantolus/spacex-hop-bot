@@ -47,10 +47,10 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 		}
 	}
 
-	var containsBadWords = containsAntikeyword(antiKeywords, text)
+	word, containsBadWords := containsAntikeyword(antiKeywords, text)
 
 	if containsBadWords {
-		tweet.Log("StarshipTweet: contains bad words")
+		tweet.Log("StarshipTweet: contains bad word %q", word)
 	}
 
 	// If the tweet is tagged with Starbase as location, we just retweet it.
@@ -122,7 +122,7 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 	if tweet.Place != nil {
 		pkw, ok := locationKeywords[tweet.Place.ID]
 		if ok {
-			if startsWithAny(text, pkw...) {
+			if _, contains := startsWithAny(text, pkw...); contains {
 				tweet.Log("StarshipTweet: is at location %s (%s) with keywords", tweet.Place.ID, tweet.Place.FullName)
 				return true
 			}

@@ -16,9 +16,9 @@ func containsAny(text string, words ...string) bool {
 }
 
 // startsWithAny checks whether any of words is the start of a sequence of words in the text
-func startsWithAny(text string, words ...string) bool {
+func startsWithAny(text string, words ...string) (word string, contains bool) {
 	if len(words) == 0 {
-		return false
+		return "", false
 	}
 
 	var iterations = 0
@@ -36,7 +36,7 @@ func startsWithAny(text string, words ...string) bool {
 
 		for _, w := range words {
 			if strings.HasPrefix(text[currentIndex:], w) {
-				return true
+				return w, true
 			}
 		}
 
@@ -51,11 +51,11 @@ func startsWithAny(text string, words ...string) bool {
 
 		if iterations > 1000 {
 			log.Printf("Input text %q causes startsWithAny to loop longer than expected", text)
-			return false
+			return "", false
 		}
 	}
 
-	return false
+	return "", false
 }
 
 func isAlphanumerical(r rune) bool {

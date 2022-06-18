@@ -303,6 +303,7 @@ func TestNonStarshipRegex(t *testing.T) {
 
 	var invalid = []string{"s10", "s 10", "sn10", "sn 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!",
 		"", "b4", "notbooster 1050", "n1025", "booster 1021", "b1072", "booster b1021", "booster 1050", "atlas5",
+		"last nights 110 sec Raptor 2 Tripod test.   Evening Tripod tests are the best!",
 	}
 
 	helpTestRegex(t, antiKeywordRegexes[1], "antiKeywordRegexes[1]", valid, invalid)
