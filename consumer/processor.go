@@ -260,7 +260,9 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 				p.retweet(&tweet.Tweet, "location + live stream", tweet.TweetSource)
 			default:
 				tweet.Log("location tweet ignored because it doesn't have media and is no pad announcement")
-				log.Printf("[Processor] Ignoring %s because it's from the location stream and has no media", util.TweetURL(&tweet.Tweet))
+				if !p.test {
+					log.Printf("[Processor] Ignoring %s because it's from the location stream and has no media", util.TweetURL(&tweet.Tweet))
+				}
 			}
 		} else {
 			switch {
