@@ -110,7 +110,7 @@ var (
 		{
 			from:         ignoreSpaces([]string{"crane x", "liebherr lr", "grid fin", "fin ", "fins ", "flap ", "flaps"}),
 			to:           compose(liveStreams, generalSpaceXKeywords, nonSpecificKeywords, placesKeywords, sitesKeywords),
-			antiKeywords: []string{"whale"},
+			antiKeywords: ignoreSpaces([]string{"whale", "cold gas"}),
 		},
 
 		// Ground infrastructure
@@ -355,7 +355,7 @@ var (
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine",
 		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno", "rp-1", "rp1",
 		"masten", "centaur", "atlas 5", "atlas v", "atlasv", "goest", "atlas5", "relativity", "northrop grumman", "northropgrumman", "bomber", "national team",
-		"orbex", "rfa", "isar", "oneweb", "antares", "usaf b", "ms-", "starshipsls",
+		"orbex", "rfa", "isar", "oneweb", "antares", "vega", "usaf b", "ms-", "starshipsls",
 		"cygnus", "samsung", "s22 ultra", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
 
@@ -421,6 +421,8 @@ var (
 		"render", "animat" /* ion/ed */, "3d", "model", "simulated", "print", "vfx", "not real", "photoshop",
 		"art ", "artist", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle", "lego",
 		"card game", "starship design", "daily_hopper", "daily hopper", "paper model", "papermodel", "toy",
+
+		"watercolor",
 
 		"fantasy 4 cards", "fantasy cards",
 
@@ -551,6 +553,9 @@ var (
 		"abortion", "roe v. wade", "roe v wade", "roe vs. wade", "roe vs wade",
 
 		"starshipcongrss", "starshipcongress", "congress", "starflight academy",
+
+		// Sometimes the bot get confused because of "eiffel tower"
+		"eiffel",
 
 		// Make sure we don't retweet anything related to horrible tragedies
 		"9/11", "911", "twin tower", "wtc", "trade center", "die", "falling",

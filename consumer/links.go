@@ -40,6 +40,9 @@ var (
 
 		// HQ media site often linked with image tweets
 		"cnunezimages.com": "*",
+
+		"apps.fcc.gov": "*",
+		"faa.gov":      "*",
 	}
 
 	highQualityYouTubeStreams = map[string]bool{
@@ -55,6 +58,13 @@ var (
 
 		// Starship Gazer
 		"UCBVnapKtPTNYl4phaGXxYng": true,
+	}
+
+	noTimeoutHosts = map[string]bool{
+		"patreon.com":       true,
+		"faa.gov":           true,
+		"apps.fcc.gov":      true,
+		"starshipgazer.com": true,
 	}
 
 	urlRegex *regexp.Regexp
@@ -127,6 +137,11 @@ func (p *Processor) shouldIgnoreLink(tweet match.TweetWrapper) (ignore bool) {
 		// of external websites
 		if p.test {
 			continue
+		}
+
+		if noTimeoutHosts[host] {
+			tweet.Log("URL %q is not timeouted because its host is %q", parsed.String(), host)
+			return false
 		}
 
 		if host == "youtube.com" || host == "youtu.be" {
