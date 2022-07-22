@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "The FAA is in “close contact with SpaceX as the company looks into the fire that occurred” yesterday during Super Heavy tests in Texas, a spokesman says. No formal FAA mishap investigation because the explosion wasn’t part of a scheduled launch campaign.",
+				want: true,
+			},
+			{
 				text:     "Tripod is chilling at McGregor! Possible firing coming up.\nhttp://nsf.live/mcgregor",
 				hasMedia: true,
 				want:     true,
@@ -1583,6 +1587,20 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text:     "Orbital Class Booster RTLS (timelapse). Cold Gas Thrusters. Grid Fins. Engine Gimballing. Good software. Clever people.",
+				acc:      "NASASpaceflight",
+				hasMedia: true,
+				want:     false,
+			},
+			{
+				text: "Photographer Craig P. Burrows catches the unusual in the usual, small natural things: this spider web, for example, looks like a tiny Eiffel tower [source: http://bit.ly/2ENEKaY] [author's site: http://cpburrows.com]",
+				want: false,
+			},
+			{
+				text: "ESA's new medium-lift #VegaC rocket is nearly ready for its inaugural flight, with its four fully-stacked stages now ready for payload integration. Flight #VV21 will lift off from Europe’s Spaceport in French Guiana as soon as 7 July.\nMore details 👉 https://esa.int/Enabling_Suppo",
+				want: false,
+			},
 			{
 				text: "Sri Lanka's central bank has secured foreign exchange to pay for fuel and cooking gas shipments that will ease crippling shortages, its governor said, but police fired tear gas and water canon to push back student protesters",
 				want: false,

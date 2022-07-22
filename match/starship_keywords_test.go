@@ -309,6 +309,14 @@ func TestNonStarshipRegex(t *testing.T) {
 	helpTestRegex(t, antiKeywordRegexes[1], "antiKeywordRegexes[1]", valid, invalid)
 }
 
+func TestAgeRegex(t *testing.T) {
+	var valid = []string{"5yo", "5y/o", "5 y/o", "5 year old"}
+
+	var invalid = []string{"yo", " yo"}
+
+	helpTestRegex(t, antiKeywordRegexes[2], "antiKeywordRegexes[2]", valid, invalid)
+}
+
 // containsAll returns if subset is a subset of set
 func containsAll(subset, set []string) bool {
 	var asmap = map[string]bool{}

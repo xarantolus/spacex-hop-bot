@@ -342,22 +342,26 @@ var (
 
 		/* Things that might look like a starship serial number, but aren't */
 		regexp.MustCompile(`(^|\s)((?:s|ship)\s*\d{3,})\b`),
+
+		// Things like "7yo", "8 yo", "15y/o"
+		regexp.MustCompile(`\b(\d{1,2})\s*(?:yo|y/o|years?\s*old)\b`),
 	}
 
 	// If a tweet contains any of these keywords, it will not be retweeted. This is a way of filtering out *non-starship* stuff
 	antiStarshipKeywords = []string{
-		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "hungry hippo", "rklb", "falcon", "merlin", "m1d",
+		"electron", "blue origin", "neutron", "rocket lab", "rocketlab", "hungry hippo", "rklb", "falcon", "fairing half", "merlin", "m1d",
 		"tesla ", "rivian", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink",
 		"sls", "space launch system", "nasa_sls", "nasa_orion", "vehicle assembly building", "high bay 3", "vab", "ula", "united launch alliance", "vulcan", "rogozin",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "soviet",
 		"resilience", "shuttle", "challenger", "sts-51l", "sts-33", "new glenn", "china", "long march", "casc", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra", "lv0",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine",
-		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno", "rp-1", "rp1",
+		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno", "rp-1", "rp1", "biofuel", "bio fuel",
 		"masten", "centaur", "atlas 5", "atlas v", "atlasv", "goest", "atlas5", "relativity", "northrop grumman", "northropgrumman", "bomber", "national team",
 		"orbex", "rfa", "isar", "oneweb", "antares", "vega", "usaf b", "ms-", "starshipsls",
 		"cygnus", "samsung", "s22 ultra", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
+		"skoltech",
 
 		"launch umbilical tower", "mobile service structure", "appollo",
 
@@ -429,6 +433,8 @@ var (
 		"8bitdo", "sn30", "ps-5", "ps5", "ssd", "sony",
 
 		"gaming",
+
+		"son", "daughter",
 
 		"your guess",
 
@@ -535,7 +541,7 @@ var (
 		"starshipent", "monstax", "eshygazit", "wonho",
 
 		// Account follows a sheriff
-		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "investigat", "body", "nigg", "memorial", "dead", "death", "suicide", "piss",
+		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "body", "nigg", "memorial", "dead", "death", "suicide", "piss", "wwii", "ww ii", "wwll", "ww ll",
 		"abus", "gun", "injur",
 
 		"nonce", "pedo",
