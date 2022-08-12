@@ -357,7 +357,7 @@ var (
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra", "lv0",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine",
 		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno", "rp-1", "rp1", "biofuel", "bio fuel",
-		"masten", "centaur", "atlas 5", "atlas v", "atlasv", "goest", "atlas5", "relativity", "northrop grumman", "northropgrumman", "bomber", "national team",
+		"masten", "centaur", "atlas", "relativity", "northrop grumman", "northropgrumman", "bomber", "national team",
 		"orbex", "rfa", "isar", "oneweb", "antares", "vega", "usaf b", "ms-", "starshipsls",
 		"cygnus", "samsung", "s22 ultra", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
@@ -382,6 +382,8 @@ var (
 		"amazon", "kuiper", "isro",
 
 		"yankees", "dodgers",
+
+		"radian raptor",
 
 		"7news",
 

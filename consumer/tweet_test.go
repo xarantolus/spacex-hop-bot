@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Hydraulic failure on the chopsticks. No lift tonight me thinks. 😬\n\nhttps://youtu.be/G88b6mzmCuI",
+				want: true,
+			},
+			{
 				text: "The FAA is in “close contact with SpaceX as the company looks into the fire that occurred” yesterday during Super Heavy tests in Texas, a spokesman says. No formal FAA mishap investigation because the explosion wasn’t part of a scheduled launch campaign.",
 				want: true,
 			},
@@ -1587,6 +1591,11 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				text:     "Mighty Atlas clears the tower, carrying #SBIRSGEO6 to geostationary orbit.\nIf you missed this launch, you really should check out the replay. It was incredible!\nReplay: https://youtu.be/RTmqGFa4xIo\n\nOverview: https://nasaspaceflight.com/2022/08/atlas-final-sbirs-geo/",
+				hasMedia: true,
+				want:     false,
+			},
 			{
 				text:     "Orbital Class Booster RTLS (timelapse). Cold Gas Thrusters. Grid Fins. Engine Gimballing. Good software. Clever people.",
 				acc:      "NASASpaceflight",
