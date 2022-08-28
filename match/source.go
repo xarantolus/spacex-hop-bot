@@ -9,6 +9,7 @@ import (
 )
 
 // go get -u golang.org/x/tools/cmd/stringer
+//
 //go:generate stringer -type=TweetSource
 type TweetSource int
 

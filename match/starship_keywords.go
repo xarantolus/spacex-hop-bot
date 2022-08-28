@@ -361,7 +361,7 @@ var (
 		"orbex", "rfa", "isar", "oneweb", "antares", "vega", "usaf b", "ms-", "starshipsls",
 		"cygnus", "samsung", "s22 ultra", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
-		"skoltech",
+		"skoltech", "bmw",
 
 		"launch umbilical tower", "mobile service structure", "appollo",
 
