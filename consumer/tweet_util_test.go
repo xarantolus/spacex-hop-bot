@@ -36,6 +36,10 @@ type TestTwitterClient struct {
 	tweets map[int64]*twitter.Tweet
 }
 
+func (t *TestTwitterClient) UnRetweet(tweetID int64) error {
+	panic("UnRetweet() called in test. This is a mistake")
+}
+
 func (r *TestTwitterClient) LoadStatus(tweetID int64) (*twitter.Tweet, error) {
 	t, ok := r.tweets[tweetID]
 	if ok {

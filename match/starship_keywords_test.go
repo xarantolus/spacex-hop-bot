@@ -179,12 +179,12 @@ func TestShipRegex(t *testing.T) {
 		"starship number 15", "starship 15",
 		"starship sn15s engines", "starship sn15's engines",
 		"starship sn20?",
-		"s300", "ship 20", "ship 20's nose", "ship 20’s nosecone section",
+		"ship 20", "ship 20's nose", "ship 20’s nosecone section",
 		"sn-11",
 	}
 
 	var invalid = []string{"booster 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!",
-		"u.s. to ship 4 mln covid-19 vaccine doses to nigeria, 5.66 mln to south africa", "s-11"}
+		"u.s. to ship 4 mln covid-19 vaccine doses to nigeria, 5.66 mln to south africa", "s-11", "s70414937", "s300"}
 
 	helpTestRegex(t, starshipMatchers[0], "starshipMatchers[0]", valid, invalid)
 }
@@ -299,7 +299,7 @@ func TestFalcon9BoosterRegex(t *testing.T) {
 }
 
 func TestNonStarshipRegex(t *testing.T) {
-	var valid = []string{"s00012 vanguard", "s203198", "this is s123", "Someone will ship 500 tons of cargo to some place"}
+	var valid = []string{"s00012 vanguard", "s70414937", "s203198", "this is s123", "Someone will ship 500 tons of cargo to some place"}
 
 	var invalid = []string{"s10", "s 10", "sn10", "sn 10", "bn10", "b3496", "wordsn 10", "company's 20 cars", "company's 2021 report", "s3 dropping on netflix!",
 		"", "b4", "notbooster 1050", "n1025", "booster 1021", "b1072", "booster b1021", "booster 1050", "atlas5",

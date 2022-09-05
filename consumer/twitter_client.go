@@ -12,6 +12,7 @@ type TwitterClient interface {
 	AddListMember(listID int64, userID int64) (err error)
 
 	Retweet(*twitter.Tweet) error
+	UnRetweet(tweetID int64) error
 
 	Tweet(text string, inReplyToID *int64) (*twitter.Tweet, error)
 }
@@ -19,6 +20,11 @@ type TwitterClient interface {
 type NormalTwitterClient struct {
 	Client *twitter.Client
 	Debug  bool
+}
+
+func (n *NormalTwitterClient) UnRetweet(tweetID int64) error {
+	_, _, err := n.Client.Statuses.Unretweet(tweetID, nil)
+	return err
 }
 
 func (n *NormalTwitterClient) LoadStatus(tweetID int64) (tweet *twitter.Tweet, err error) {

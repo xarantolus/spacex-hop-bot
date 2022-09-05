@@ -26,6 +26,7 @@ func httpErrWrapper(f func(w http.ResponseWriter, r *http.Request) error) http.H
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := f(w, r)
 		if err != nil {
+			log.Printf("[Error] in %s %s: %s", r.Method, r.URL.Path, err.Error())
 			if strings.Contains(r.URL.Path, "/api/") {
 				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusInternalServerError)
@@ -39,6 +40,29 @@ func httpErrWrapper(f func(w http.ResponseWriter, r *http.Request) error) http.H
 	}
 }
 
+func parseTweetID(ustr string) (tweetID int64, err error) {
+	u, err := url.ParseRequestURI(ustr)
+	if err != nil {
+		return
+	}
+
+	if !strings.HasSuffix(u.Host, "twitter.com") {
+		return 0, fmt.Errorf("URL host must be *.twitter.com, but was %s", u.Host)
+	}
+
+	pathSplit := strings.Split(u.Path, "/")
+	if len(pathSplit) < 4 {
+		return 0, fmt.Errorf("URL does not point to a tweet")
+	}
+
+	parsedID, err := strconv.ParseInt(pathSplit[3], 10, 64)
+	if err != nil {
+		return 0, fmt.Errorf("URL does not contain a tweet ID: %w", err)
+	}
+
+	return parsedID, nil
+}
+
 func (h *httpServer) submitTweet(w http.ResponseWriter, r *http.Request) (err error) {
 	type incomingJSON struct {
 		TweetURL string `json:"url"`
@@ -50,39 +74,35 @@ func (h *httpServer) submitTweet(w http.ResponseWriter, r *http.Request) (err er
 		return
 	}
 
-	u, err := url.ParseRequestURI(body.TweetURL)
+	parsedID, err := parseTweetID(body.TweetURL)
 	if err != nil {
 		return
 	}
 
-	if !strings.HasSuffix(u.Host, "twitter.com") {
-		return fmt.Errorf("URL host must be *.twitter.com, but was %s", u.Host)
-	}
-
-	pathSplit := strings.Split(u.Path, "/")
-	if len(pathSplit) < 4 {
-		return fmt.Errorf("URL does not point to a tweet")
-	}
-
-	parsedID, err := strconv.ParseInt(pathSplit[3], 10, 64)
-	if err != nil {
-		return fmt.Errorf("URL does not contain a tweet ID: %w", err)
-	}
-
 	status, err := h.twitter.LoadStatus(parsedID)
-	if err != nil {
-		return fmt.Errorf("loading tweet: %w", err)
-	}
 
-	select {
-	case h.tweetChan <- match.TweetWrapper{
-		TweetSource:   match.TweetSourceUnknown,
-		Tweet:         *status,
-		EnableLogging: true,
-	}:
-		break
-	case <-time.After(1 * time.Second):
-		return fmt.Errorf("could not send tweet on tweetChan: timeout")
+	// If we cannot load the tweet, it could be that we're blocked.
+	if err != nil || (status != nil && status.Retweeted) {
+		log.Printf("Unretweeting tweet with id %d\n", parsedID)
+		err = h.twitter.UnRetweet(parsedID)
+		if err != nil {
+			return
+		}
+		log.Printf("Unretweeted tweet with id %d\n", parsedID)
+	} else if status != nil {
+		// Put it into the matcher
+		select {
+		case h.tweetChan <- match.TweetWrapper{
+			TweetSource:   match.TweetSourceUnknown,
+			Tweet:         *status,
+			EnableLogging: true,
+		}:
+			break
+		case <-time.After(1 * time.Second):
+			return fmt.Errorf("could not send tweet on tweetChan: timeout")
+		}
+	} else {
+		return fmt.Errorf("could not load tweet with id %d", parsedID)
 	}
 
 	return

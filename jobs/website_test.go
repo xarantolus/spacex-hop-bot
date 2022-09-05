@@ -20,6 +20,10 @@ type TestTweetingClient struct {
 	tweetedTweetReply *int64
 }
 
+func (r *TestTweetingClient) UnRetweet(tweetID int64) error {
+	panic("UnRetweet not implemented")
+}
+
 func (r *TestTweetingClient) LoadStatus(tweetID int64) (*twitter.Tweet, error) {
 	panic("LoadStatus not implemented")
 }
