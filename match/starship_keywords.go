@@ -234,7 +234,7 @@ var (
 	seaportKeywords       = ignoreSpaces([]string{"sea launch", "port", "oil", "rig"})
 	placesKeywords        = ignoreSpaces([]string{"starbase", "boca chica"})
 	sitesKeywords         = ignoreSpaces([]string{"launch site", "build site", "production site"})
-	nonSpecificKeywords   = compose(ignoreSpaces([]string{"ship", "booster", "stage zero", "orbital test flight", "orbital flight test"}), liveStreams, placesKeywords)
+	nonSpecificKeywords   = compose(ignoreSpaces([]string{"ship", "booster", "stage zero", "orbital test flight", "orbital flight test", "orbital flight"}), liveStreams, placesKeywords)
 	generalSpaceXKeywords = ignoreSpaces([]string{"spacex", "space port", "elon", "musk", "gwynne", "shotwell"})
 	testCampaignKeywords  = ignoreSpaces([]string{"static fire", "cryo", "detank", "can crusher", "test stand", "full stack"})
 	liveStreams           = ignoreSpaces([]string{

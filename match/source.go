@@ -37,3 +37,7 @@ func (t *TweetWrapper) Log(format string, a ...interface{}) {
 func (t *TweetWrapper) Wrap(tweet *twitter.Tweet) TweetWrapper {
 	return TweetWrapper{TweetSource: t.TweetSource, Tweet: *tweet, EnableLogging: t.EnableLogging}
 }
+
+func Wrap(tweet *twitter.Tweet) TweetWrapper {
+	return TweetWrapper{TweetSource: TweetSourceUnknown, Tweet: *tweet}
+}

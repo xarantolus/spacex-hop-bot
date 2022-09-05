@@ -846,6 +846,16 @@ func TestElonTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "If testing goes well, as soon as next month",
+				acc:  "ElonMusk",
+				want: true,
+
+				parent: &ttest{
+					text: "Any updates on how long until orbital flight will happen @elonmusk?",
+					want: true,
+				},
+			},
+			{
 				text: "Probably next week",
 				acc:  "elonmusk",
 				want: true,
