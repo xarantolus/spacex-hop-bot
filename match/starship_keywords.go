@@ -424,7 +424,7 @@ var (
 		"xanda",
 
 		// 3d models are nice, but we only care about "real info"
-		"render", "animat" /* ion/ed */, "3d", "model", "simulated", "print", "vfx", "not real", "photoshop",
+		"render", "animat" /* ion/ed */, "3d", "model", "simulated", "vfx", "not real", "photoshop",
 		"art ", "artist", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle", "lego",
 		"card game", "starship design", "daily_hopper", "daily hopper", "paper model", "papermodel", "toy",
 
