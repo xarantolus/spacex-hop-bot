@@ -860,6 +860,39 @@ func TestElonTweets(t *testing.T) {
 					want: true,
 				},
 			},
+			// {
+			// 	text: "The super weird thing is that Falcon 9 is still the only orbital booster to land or refly after all these years!",
+			// 	acc:  "elonmusk",
+			// 	want: false,
+
+			// 	parent: &ttest{
+			// 		text: "crazy how something that seemed impossible can be done relatively routinely now \n\nengineering is magic",
+			// 		want: false,
+
+			// 		parent: &ttest{
+			// 			text: "Feels like déjà vu all over again haha",
+			// 			acc:  "elonmusk",
+			// 			want: false,
+
+			// 			quoted: &ttest{
+			// 				text:     "Falcon 9’s first stage has landed on Landing Zone 4",
+			// 				acc:      "SpaceX",
+			// 				hasMedia: true,
+			// 				want:     false,
+			// 			},
+			// 		},
+			// 	},
+			// },
+			// {
+			// 	text: "Yes, about 20% more thrust & 20% less mass, but focus has been heavily on production rate & reliability. Mass, thrust & Isp will all improve, as will production rate, reliability & cost. This is the only way to make life multi-planetary and extend consciousness into the void.",
+			// 	acc:  "elonmusk",
+			// 	want: true,
+
+			// 	parent: &ttest{
+			// 		text: "Raptor 1 vs Raptor 2! We’re working on a video to accompany the last part of the Elon convo on Raptor! We’re not sure on their mass but we approximate ~2,000 kg for Raptor 1 & ~1,600 kg for Raptor 2. Is this close @elonmusk? Incredible renders by @IzanRamos2002 & @Caspar_Stanley!",
+			// 		acc:  "Erdayastronaut",
+			// 	},
+			// },
 			{
 				text: "Probably next week",
 				acc:  "elonmusk",
@@ -1606,6 +1639,25 @@ func TestAdTweets(t *testing.T) {
 func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
+			{
+				acc:      "Airbus",
+				text:     "From the sky✈️and all the way to outer space🪐we make it fly!\nOur Airbus #Beluga is flying the Airbus-built @eutelsat_official #HOTBIRD 13G telecom satellite 🛰 from Toulouse 🇫🇷 right to its launch pad🚀at the Kennedy Space Center 🇺🇸",
+				hasMedia: true,
+				want:     false,
+			},
+			{
+				text:     "Today I had a great time talking to families about our fantastic spacecraft and mission @EuropaClipper in @NASAJPL’s High Bay! 🛰️I’ll be there tomorrow as well, come say hi if you’re around! 😁📸: @stokes_flow",
+				hasMedia: true,
+				want:     false,
+			},
+			{
+				text: "Join us for the CCSO Halloween-Themed National Night Out on Friday, October 21, 2022, from 6 pm to 8:30 pm at 7300 Old Alice Road in Olmito. Make sure to wear a costume and bring your trick-or-treat bag! It's a Family Event with Games, Food, Drinks, Music, and Prizes.  Join Us!",
+				want: false,
+			},
+			{
+				text: "📹#Eutelsat10B: impressive behind the scenes of the preparation and the departure last week from our #Cannes site 🚢heading to Cape Canaveral launch site in Florida #staytuned 🚀#spaceforlife #connectivity",
+				want: false,
+			},
 			{
 				text:     "Mighty Atlas clears the tower, carrying #SBIRSGEO6 to geostationary orbit.\nIf you missed this launch, you really should check out the replay. It was incredible!\nReplay: https://youtu.be/RTmqGFa4xIo\n\nOverview: https://nasaspaceflight.com/2022/08/atlas-final-sbirs-geo/",
 				hasMedia: true,

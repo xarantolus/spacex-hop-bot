@@ -430,6 +430,8 @@ var (
 
 		"watercolor",
 
+		"airbus", "beluga", "europaclipper", "europa clipper",
+
 		"fantasy 4 cards", "fantasy cards",
 
 		"8bitdo", "sn30", "ps-5", "ps5", "ssd", "sony",
@@ -471,6 +473,10 @@ var (
 		"kitty hawk",
 
 		"suprem", "aryan",
+
+		"costume", "helloween",
+
+		"canne", "eutelsat",
 
 		"aircraft", "aerial refueling", "firepower",
 
@@ -544,7 +550,7 @@ var (
 
 		// Account follows a sheriff
 		"arrest", "violence ", "assault", "rape", "weapon", "victim", "murder", "crime", "body", "nigg", "memorial", "dead", "death", "suicide", "piss", "wwii", "ww ii", "wwll", "ww ll",
-		"abus", "gun", "injur",
+		"abus", "gun", "injur", "narc",
 
 		"nonce", "pedo",
 
