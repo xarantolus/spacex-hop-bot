@@ -1640,6 +1640,10 @@ func TestIgnoredTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "\"I wouldn't say it's recession-proof but it's certainly recession resilient.\" @elonmusk",
+				want: false,
+			},
+			{
 				acc:      "Airbus",
 				text:     "From the sky✈️and all the way to outer space🪐we make it fly!\nOur Airbus #Beluga is flying the Airbus-built @eutelsat_official #HOTBIRD 13G telecom satellite 🛰 from Toulouse 🇫🇷 right to its launch pad🚀at the Kennedy Space Center 🇺🇸",
 				hasMedia: true,

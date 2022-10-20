@@ -123,7 +123,7 @@ var (
 		{
 			from:         ignoreSpaces([]string{"cryo proof", "proof", "stack"}),
 			to:           compose(nonSpecificKeywords, generalSpaceXKeywords, liveStreams),
-			antiKeywords: []string{"twitter"},
+			antiKeywords: []string{"twitter", "recession"},
 		},
 		{
 			from: []string{"road closure", "temporary flight restriction", "tfr "},
@@ -397,7 +397,7 @@ var (
 		"seed round", "yc s", "not a starship",
 
 		// Not interested in other stuff
-		"doge", "babydoge", "coin", "btc", "fsd", "spce", "dogecoin", "crypto", "nft", "mint", "opensea",
+		"doge", "babydoge", "coin", "btc", "fsd", "spce", "dogecoin", "doge coin", "crypto", "nft", "mint", "opensea",
 		"safemoon", "stock", "wall street", "wallstreet", "buffett", "metaverse", "terra", "twtr", "board of director",
 		"scam", "shill",
 
