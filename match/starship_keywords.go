@@ -353,7 +353,7 @@ var (
 		"tesla ", "rivian", "giga press", "gigapress", "gigafactory", "openai", "boring", "hyperloop", "solarcity", "neuralink",
 		"sls", "space launch system", "nasa_sls", "nasa_orion", "vehicle assembly building", "high bay 3", "vab", "ula", "united launch alliance", "vulcan", "rogozin",
 		"virgingalactic", "virgin galactic", "virgin orbit", "virginorbit", "blueorigin", "boeing", "starliner", "soyuz", "soviet",
-		"resilience", "shuttle", "challenger", "sts-51l", "sts-33", "new glenn", "china", "long march", "casc", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics",
+		"resilience", "shuttle", "challenger", "sts-51l", "sts-33", "new glenn", "china", "wenchang", "long march", "casc", "shenzhou", "india", "chinese", "japan", "space plane", "russia", "new shepard", "tsla", "dynetics",
 		"ares", "titan", "ariane", "srb", "solid rocket booster", "terran", "relativity space", "relativityspace", "astra", "lv0",
 		"spaceshipthree", "spaceshiptwo", "spaceshipone", "vss enterprise", "starship enterprise", "archer", "sisko", "vss imagine",
 		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno", "rp-1", "rp1", "biofuel", "bio fuel",
