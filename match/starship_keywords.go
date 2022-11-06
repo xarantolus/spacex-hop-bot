@@ -286,7 +286,7 @@ var (
 			// Try to match things for orbital flight tests
 			regexp.MustCompile(`(?:orbit(?:.|\s)+(flight test|test flight)|(flight test|test flight)(?:.|\s)+orbit)`),
 		},
-		"spacex": {regexp.MustCompile(`(starship)`)},
+		"spacex": {regexp.MustCompile(`(starship|starbase|raptor|super heavy)`)},
 	}
 
 	userAntikeywordsOverwrite = map[string][]string{
@@ -427,6 +427,7 @@ var (
 		"render", "animat" /* ion/ed */, "3d", "model", "simulated", "vfx", "not real", "photoshop",
 		"art ", "artist", "mission patch", "drawing", "board game", "starshipshuffle", "starship shuffle", "lego",
 		"card game", "starship design", "daily_hopper", "daily hopper", "paper model", "papermodel", "toy",
+		"starshipsimulator", "starship simulator", "gamedev", "game dev", "space game", "spacegame",
 
 		"watercolor",
 
@@ -520,6 +521,8 @@ var (
 		"belarus", "battalion",
 
 		"stfu", "jerk", "thunderf00t", "thunderfoot", "common sense skeptic", "rambl",
+
+		"football",
 
 		"patrons", "babylon", "boltup", "champion",
 
