@@ -471,6 +471,8 @@ var (
 
 		"ourmillion22",
 
+		"military", "veteran",
+
 		"kitty hawk",
 
 		"suprem", "aryan",
