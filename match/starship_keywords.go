@@ -469,6 +469,8 @@ var (
 		// not *that* kind of raptor
 		"velociraptor", "jurassic", "cretaceous", "dino",
 
+		"shadow ban", "shadowban",
+
 		"ourmillion22",
 
 		"military", "veteran",
@@ -578,6 +580,8 @@ var (
 
 		// Make sure we don't retweet anything related to horrible tragedies
 		"9/11", "911", "twin tower", "wtc", "trade center", "die", "falling",
+
+		"dallasairshow", "dallas air show", "air show", "airshow", "air show crash",
 	}
 
 	moreSpecificAntiKeywords = []keywordMapping{
