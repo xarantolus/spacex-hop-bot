@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Overpressure notice for booster SF is out!",
+				want: true,
+			},
+			{
 				text:     "Super Heavy on the Orbital launch table\n\n#SpaceX #Starship #Starbase @elonmusk\n\nYou can find and support me and my work here! \n\nYoutube:\nhttps://youtu.be/x_MoMYOhicw\n\nWebsite: \nhttps://oversteze.wixsite.com/ezekieloverstreet\n\nPrints:\nhttps://oversteze.darkroom.tech\n\nPatreon:\nhttps://patreon.com/EzekielOverstreet",
 				hasMedia: true,
 				want:     true,
