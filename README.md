@@ -1,7 +1,7 @@
 # spacex-hop-bot
 This is a [Twitter bot](https://twitter.com/wenhopbot) that informs about progress on the [SpaceX Starship](https://www.spacex.com/vehicles/starship/) by retweeting interesting tweets about it. There is a special focus on tweets from locations where Starships are built/launched, tagging tweets with a location helps the bot find them.
 
-Each day the bot sees and rates an average of 20k Tweets (~14 per minute), of which around 25-50 are retweeted (some outliers are of course special events like launches). An extensive test suite is used to minimize the probability of misjudgements.
+Each day the bot sees and rates an average of 25k tweets (~17 per minute), of which around 20-50 are retweeted (some outliers are of course special events like launches). An extensive test suite is used to minimize the probability of misjudgements.
 
 The bot reads tweets from the following sources:
 * All tweets from [lists the account follows](https://twitter.com/wenhopbot/lists)
