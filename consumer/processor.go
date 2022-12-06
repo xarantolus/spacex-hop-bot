@@ -24,7 +24,8 @@ type Processor struct {
 	// map[URL]last Retweet time
 	seenLinks map[string]time.Time
 
-	seenTweets map[int64]bool
+	seenTweets      map[int64]bool
+	retweetedTweets map[int64]bool
 
 	spacePeopleListID      int64
 	spacePeopleListMembers map[int64]bool
@@ -53,6 +54,7 @@ func NewProcessor(debug bool, inTest bool, client TwitterClient, selfUser *twitt
 		spacePeopleListID: spacePeopleListID,
 
 		seenTweets:             make(map[int64]bool),
+		retweetedTweets:        make(map[int64]bool),
 		spacePeopleListMembers: make(map[int64]bool),
 
 		startTime: time.Now(),
@@ -69,11 +71,12 @@ func NewProcessor(debug bool, inTest bool, client TwitterClient, selfUser *twitt
 
 func (p *Processor) Stats() map[string]interface{} {
 	return map[string]interface{}{
-		"seen_tweet_count": len(p.seenTweets),
-		"user":             p.selfUser,
-		"seen_links":       p.seenLinks,
-		"start_time":       p.startTime,
-		"uptime":           time.Since(p.startTime).String(),
+		"tweets_seen_count":      len(p.seenTweets),
+		"tweets_retweeted_count": len(p.retweetedTweets),
+		"user":                   p.selfUser,
+		"seen_links":             p.seenLinks,
+		"start_time":             p.startTime,
+		"uptime":                 time.Since(p.startTime).String(),
 	}
 }
 
@@ -299,6 +302,8 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string, source match.Tw
 		}
 		return
 	}
+
+	p.retweetedTweets[tweet.ID] = true
 
 	if !p.test {
 		// save tweet so we can reproduce why it was matched
