@@ -549,6 +549,9 @@ var (
 
 		"homopho", "hetero ", "cis ", "season",
 
+		// "B35" bio diesel
+		"biodiesel", "bio diesel",
+
 		// Starts with "olm", which tricks the matcher
 		"olmos",
 
