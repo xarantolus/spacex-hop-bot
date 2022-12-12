@@ -588,6 +588,9 @@ var (
 		"9/11", "911", "twin tower", "wtc", "trade center", "die", "falling",
 
 		"dallasairshow", "dallas air show", "air show", "airshow", "air show crash",
+
+		// TODO: remove this before Booster 21 comes out, but this is to ignore some jet
+		"b21", "b 21",
 	}
 
 	moreSpecificAntiKeywords = []keywordMapping{
