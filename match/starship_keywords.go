@@ -72,15 +72,11 @@ var (
 			from: []string{"raptor"},
 			to: compose(liveStreams, ignoreSpaces([]string{
 				"starship", "vacuum", "sea level",
-				"spacex", "mcgregor", "engine", "rb", "rc", "rvac",
+				"spacex", "mc gregor", "engine", "rb", "rc", "rvac",
 				"launch site", "production", "booster", "super heavy",
-				"superheavy", "truck", "van", "raptorvan", "deliver",
-				"flare", "high bay", "nozzle", "tripod", "starbase", "static fire",
+				"superheavy", "truck", "van", "raptorvan", "deliver", "tri pod",
+				"flare", "flame", "high bay", "nozzle", "tripod", "starbase", "static fire",
 			})),
-		},
-		{
-			from: ignoreSpaces([]string{"mc gregor"}),
-			to:   ignoreSpaces([]string{"tri pod", "raptor"}),
 		},
 
 		// Stuff noticed on live streams
@@ -91,7 +87,7 @@ var (
 				[]string{"olm", "olt", "olit"},
 				[]string{"stage zero"},
 				[]string{"ols"},
-				[]string{"booster", "orbital test flight", "orbital flight test"},
+				[]string{"booster", "orbital test flight", "orbital flight test", "oft"},
 				liveStreams, placesKeywords,
 			)),
 			to: ignoreSpaces([]string{
@@ -520,7 +516,7 @@ var (
 
 		"child", "kid", "parenthood",
 
-		"illegal", "nfl", "nhl", "draw", "vax", "vacc", "booster shot", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
+		"illegal", "nfl", "nhl", "draw", "vax", "shoot", "tik tok", "self harm", "sex", "cock", "s3x", "gspot", "g-spot", "fuck", "dick", "bullshit", "bikini",
 		"booty", "cudd", "bathroom", "penis", "vagi", "furry", "stroking", "fap", "chick", "doggy", "only fans",
 
 		"simp ", "simping",
@@ -573,7 +569,7 @@ var (
 
 		"offend", "offensive", "fanboy", "fan boy", "fangirl", "fan girl",
 
-		"covid", "corona", "rona", "omicron", "tests positive", "positive test", "cdc",
+		"covid", "corona", "rona", "omicron", "tests positive", "positive test", "cdc", "c19", "vacc", "booster shot", "unvacc",
 
 		"diss", "shit", "anime", "manga", "bronco", "bae", "facist", "fascist",
 

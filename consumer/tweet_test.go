@@ -28,7 +28,7 @@ func TestBasicTweets(t *testing.T) {
 				want: true,
 			},
 			{
-				text:     "Tripod is chilling at McGregor! Possible firing coming up.\nhttp://nsf.live/mcgregor",
+				text:     "Tripod is chilling at McGregor! Possible raptor firing coming up.\nhttp://nsf.live/mcgregor",
 				hasMedia: true,
 				want:     true,
 			},
