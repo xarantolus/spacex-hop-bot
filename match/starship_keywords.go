@@ -235,7 +235,7 @@ var (
 	sitesKeywords         = ignoreSpaces([]string{"launch site", "build site", "production site"})
 	nonSpecificKeywords   = compose(ignoreSpaces([]string{"ship", "booster", "stage zero", "orbital test flight", "orbital flight test", "orbital flight"}), liveStreams, placesKeywords)
 	generalSpaceXKeywords = ignoreSpaces([]string{"spacex", "space port", "elon", "musk", "gwynne", "shotwell"})
-	testCampaignKeywords  = ignoreSpaces([]string{"static fire", "cryo", "detank", "can crusher", "test stand", "full stack", "over pressure"})
+	testCampaignKeywords  = ignoreSpaces([]string{"static fire", "cryo", "detank", "can crusher", "test stand", "full stack", "over pressure", "wdr", "wet dress"})
 	liveStreams           = ignoreSpaces([]string{
 		// 24/7 live camera views are often mentioned when something is shown on a screenshot
 		"lab padre", "nasa space flight",
@@ -457,7 +457,7 @@ var (
 
 		// KSP planets, moons, stars etc.
 		"moho", "gilly", "kerbin", "mun", "minmus", "duna", "jool", "laythe", "vall",
-		"tylo", "bop", "dres", "eeloo", "kerbol",
+		"tylo", "bop", "eeloo", "kerbol",
 
 		// Zodiac signs
 		"aries", "taurus", "gemini", "cancer", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces",
@@ -513,6 +513,8 @@ var (
 		"sale", "buy", "gift", "shop", "store", "purchase", "shirt", "sweater", "giveaway", "give away", "retweet", "birthday", "discount",
 		"pre-order", "merch", "vote", "podcast", "trending", "hater", "unfollow", "top friends", "plush", "black friday", "blackfriday", "newprofilepic",
 		"retweet if",
+
+		"irrational",
 
 		"child", "kid", "parenthood",
 

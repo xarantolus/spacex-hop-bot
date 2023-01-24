@@ -24,10 +24,11 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 		tweet.Log("StarshipTweet: tweet mentions a date too far back")
 		return false
 	}
-
-	_, isVeryImportant := veryImportantAccounts[strings.ToLower(tweet.User.ScreenName)]
-	// We ignore certain (e.g. satire, artist) accounts, except when they tweet from a SpaceX site
+	var isVeryImportant bool
 	if tweet.User != nil {
+		_, isVeryImportant = veryImportantAccounts[strings.ToLower(tweet.User.ScreenName)]
+
+		// We ignore certain (e.g. satire, artist) accounts, except when they tweet from a SpaceX site
 		if !isVeryImportant && m.IsOrMentionsIgnoredAccount(&tweet.Tweet) && !IsAtSpaceXSite(&tweet.Tweet) {
 			tweet.Log("StarshipTweet: at least one mentioned account is ignored")
 			return false

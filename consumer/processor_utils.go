@@ -139,9 +139,17 @@ func hasMedia(tweet *twitter.Tweet) bool {
 	return tweet.Entities != nil && len(tweet.Entities.Media) > 0 || tweet.ExtendedEntities != nil && len(tweet.ExtendedEntities.Media) > 0
 }
 
-// saveTweet appends the given tweet to a JSON file for later inspections, especially in case of wrong retweets
-func (p *Processor) saveTweet(tweet *twitter.Tweet) {
-	f, err := os.OpenFile("retweeted.ndjson", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
+// saveRetweetedTweet appends the given tweet to a JSON file for later inspections, especially in case of wrong retweets
+func (p *Processor) saveRetweetedTweet(tweet *twitter.Tweet) {
+	p.saveTweet(tweet, "retweeted.ndjson")
+}
+
+func (p *Processor) saveNonRetweetedTweet(tweet *twitter.Tweet) {
+	p.saveTweet(tweet, "not_retweeted.ndjson")
+}
+
+func (p *Processor) saveTweet(tweet *twitter.Tweet, filename string) {
+	f, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		util.LogError(err, "open tweet file")
 		return

@@ -284,6 +284,10 @@ func (p *Processor) Tweet(tweet match.TweetWrapper) {
 	}
 
 	p.seenTweets[tweet.ID] = true
+
+	if !tweet.Retweeted {
+		p.saveNonRetweetedTweet(&tweet.Tweet)
+	}
 }
 
 // retweet retweets the given tweet, but if it fails it doesn't care
@@ -307,7 +311,7 @@ func (p *Processor) retweet(tweet *twitter.Tweet, reason string, source match.Tw
 
 	if !p.test {
 		// save tweet so we can reproduce why it was matched
-		p.saveTweet(tweet)
+		p.saveRetweetedTweet(tweet)
 
 		// Add the user to our space people list
 		// We ignore those from the location stream as they might not always tweet about starship

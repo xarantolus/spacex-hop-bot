@@ -11,6 +11,19 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Starship is getting frosty during today's wet dress testing. Ship fueling is underway!",
+				want: true,
+			},
+			{
+				text: "Very good progress with the full stack Starship WDR. Booster and Ship continue to prop load. Very impressive sights and sounds.",
+				want: true,
+			},
+			{
+				text: "Frost is visible on both Super Heavy and Starship this afternoon as SpaceX continues to get deeper into its wet-dress rehearsal for the massive launch vehicle. Looks good so far.",
+				acc:  "SciGuySpace",
+				want: true,
+			},
+			{
 				text: "Overpressure notice for booster SF is out!",
 				want: true,
 			},
