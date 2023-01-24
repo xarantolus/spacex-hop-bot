@@ -11,6 +11,10 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text: "Raptors seem to be in chill mode",
+				want: true,
+			},
+			{
 				text: "Starship is getting frosty during today's wet dress testing. Ship fueling is underway!",
 				want: true,
 			},

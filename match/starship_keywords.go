@@ -76,7 +76,8 @@ var (
 				"launch site", "production", "booster", "super heavy",
 				"superheavy", "truck", "van", "raptorvan", "deliver", "tri pod",
 				"flare", "flame", "high bay", "nozzle", "tripod", "starbase", "static fire",
-			})),
+				"chill", "frost",
+			}), testCampaignKeywords),
 		},
 
 		// Stuff noticed on live streams
