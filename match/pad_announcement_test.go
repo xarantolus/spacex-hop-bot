@@ -16,6 +16,7 @@ func TestIsPadAnnouncement(t *testing.T) {
 		{"#BREAKING Ooooh. Launchpad giant voice just announced they are clearing the launch tower and launch mount. Maybe we will be getting some chopstick heavy lifting going today!!! #Starbase #Starship #SpaceX", true},
 		{"LabPadre announced something", false},
 		{"Just heard over the SpaceX PA system that S24 will be lifted shortly!", true},
+		{"Blue lights just flashed on the OLIT for a split second! #Starship", true},
 	}
 
 	for _, tt := range tests {

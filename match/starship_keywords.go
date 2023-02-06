@@ -76,7 +76,7 @@ var (
 				"launch site", "production", "booster", "super heavy",
 				"superheavy", "truck", "van", "raptorvan", "deliver", "tri pod",
 				"flare", "flame", "high bay", "nozzle", "tripod", "starbase", "static fire",
-				"chill", "frost",
+				"chill", "frost", "deluge",
 			}), testCampaignKeywords),
 		},
 
@@ -95,7 +95,12 @@ var (
 				"methane", "tanker", "lox", "ch4", "lch4", "ln2", "frost", "fire", "vent",
 				"argon", "road", "highway", "hwy", "qd", "sqd", "bqd", "quick disconnect",
 				"raptor", "crane x",
+				"deluge",
 			}),
+		},
+		{
+			from: placesKeywords,
+			to:   []string{"tank", "lift"},
 		},
 
 		{
@@ -166,7 +171,7 @@ var (
 			from: compose([]string{"tower"}),
 			to: compose(
 				placesKeywords, sitesKeywords, nonSpecificKeywords,
-				[]string{"qd", "sqd", "bqd", "arm", "catch"},
+				[]string{"qd", "sqd", "bqd", "arm", "catch", "deluge"},
 			),
 		},
 		{

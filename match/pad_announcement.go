@@ -11,6 +11,10 @@ var padMappings = []keywordMapping{
 		from: ignoreSpaces([]string{"announce", "speaker", "pa system", "pad"}),
 		to:   ignoreSpaces([]string{"lift", "clear"}),
 	},
+	{
+		from: ignoreSpaces([]string{"light", "bank"}),
+		to:   ignoreSpaces([]string{"flash", "blink", "status", "entry", "personnel", "clear", "wind"}),
+	},
 }
 
 func IsPadAnnouncement(text string) bool {
