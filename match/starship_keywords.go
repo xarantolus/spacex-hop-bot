@@ -364,9 +364,12 @@ var (
 		"galaxy note", "galaxy s", "bezos", "jeff who", "branson", "tory", "bruno", "rp-1", "rp1", "biofuel", "bio fuel",
 		"masten", "centaur", "atlas", "relativity", "northrop grumman", "northropgrumman", "bomber", "national team",
 		"orbex", "rfa", "isar", "oneweb", "antares", "vega", "usaf b", "ms-", "starshipsls",
-		"cygnus", "samsung", "s22 ultra", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
+		"cygnus", "samsung", "oneui", "one ui", "s22 ultra", "angara", "firefly", "rolls-royce", "agrifood", "iot", "vs-50", "solid-propellant", "solid propellant",
 		"são paulo", "sao paulo", "vlm-", "ac1", "arca", "ecorocket", "korea", "nuri", "mars rover", "perseverance", "curiosity", "ingenuity", "zhurong",
 		"skoltech", "bmw",
+
+		"orbiter sn",
+		"charro",
 
 		"launch umbilical tower", "mobile service structure", "appollo",
 
@@ -578,6 +581,7 @@ var (
 		"offend", "offensive", "fanboy", "fan boy", "fangirl", "fan girl",
 
 		"covid", "corona", "rona", "omicron", "tests positive", "positive test", "cdc", "c19", "vacc", "booster shot", "unvacc",
+		"get the boost", "gets the boost", "mask",
 
 		"diss", "shit", "anime", "manga", "bronco", "bae", "facist", "fascist",
 
