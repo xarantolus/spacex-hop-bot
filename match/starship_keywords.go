@@ -377,6 +377,8 @@ var (
 
 		"twitter deal",
 
+		"blender",
+
 		"hubble", "nasahubble",
 
 		// Blue Origins' Starship... kind of clone i guess?
@@ -599,6 +601,8 @@ var (
 
 		// TODO: remove this before Booster 21 comes out, but this is to ignore some jet
 		"b21", "b 21",
+
+		"xm8",
 	}
 
 	moreSpecificAntiKeywords = []keywordMapping{
