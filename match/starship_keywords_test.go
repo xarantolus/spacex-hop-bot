@@ -24,10 +24,6 @@ func getAllSlices() (res []slice) {
 				name:  "starshipKeywords",
 				slice: starshipKeywords,
 			},
-			{
-				name:  "ignoredAccountDescriptionKeywords",
-				slice: ignoredAccountDescriptionKeywords,
-			},
 		}...,
 	)
 

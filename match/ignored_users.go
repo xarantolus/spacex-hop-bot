@@ -42,7 +42,7 @@ func (i *Ignorer) IsOrMentionsIgnoredAccount(tweet *twitter.Tweet) bool {
 	// Now search the user description to see if any negative keywords stand out
 	desc := strings.ToLower(tweet.User.Description)
 	for _, k := range i.keywords {
-		if _, contains := startsWithAny(desc, k); contains {
+		if strings.Contains(desc, k) {
 			return true
 		}
 	}
