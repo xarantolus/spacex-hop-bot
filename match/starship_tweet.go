@@ -96,6 +96,13 @@ func (m *StarshipMatcher) StarshipTweet(tweet TweetWrapper) bool {
 		return true
 	}
 
+	// There might also be keywords for tweets with media
+	if hasMedia(&tweet.Tweet) {
+		if _, contains := startsWithAny(text, starshipMediaKeywords...); contains {
+			return true
+		}
+	}
+
 	// Now check if we have a matcher for this specific user.
 	// These users usually post high-quality information
 	if tweet.User != nil {

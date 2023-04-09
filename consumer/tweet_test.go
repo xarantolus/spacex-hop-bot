@@ -11,6 +11,11 @@ func TestBasicTweets(t *testing.T) {
 	testStarshipRetweets(t,
 		[]ttest{
 			{
+				text:     "Good morning Spitter! First night in the Starbase area was a bit turbulent, but waking up to this view is totally worth it. More to come in the next days.",
+				want:     true,
+				hasMedia: true,
+			},
+			{
 				text: "Starbase tank parade",
 				want: true,
 			},

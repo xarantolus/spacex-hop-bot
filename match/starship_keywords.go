@@ -49,6 +49,10 @@ var (
 		"orbital launch site",
 	})
 
+	starshipMediaKeywords = ignoreSpaces(compose(
+		liveStreams, placesKeywords,
+	))
+
 	// starshipMatchers are more specific regexes that act like starshipKeywords
 	starshipMatchers = []*regexp.Regexp{
 		// Starship SNx
@@ -548,6 +552,8 @@ var (
 
 		// Annoying elon musk quotes
 		"consciousness",
+		// Other quotes
+		"tolkien",
 
 		// Some conferences have a "stand B20", because why not trick this bot right?
 		"booth", "stand b",
