@@ -63,8 +63,10 @@ var (
 	noTimeoutHosts = map[string]bool{
 		"patreon.com":       true,
 		"faa.gov":           true,
+		"apps.faa.gov":      true,
 		"apps.fcc.gov":      true,
 		"starshipgazer.com": true,
+		"spacex.com":        true,
 	}
 
 	urlRegex *regexp.Regexp
