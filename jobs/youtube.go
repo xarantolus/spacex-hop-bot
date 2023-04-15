@@ -105,8 +105,10 @@ func tweetInterval(streamStartsIn time.Duration) time.Duration {
 		return 15 * time.Minute
 	case streamStartsIn < 4*time.Hour:
 		return time.Hour
+	case streamStartsIn < 24*time.Hour:
+		return 6 * time.Hour
 	default:
-		return 2 * time.Hour
+		return 12 * time.Hour
 	}
 }
 
